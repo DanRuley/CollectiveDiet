@@ -8,6 +8,6 @@
         android:id="@+id/foodTextSample"
         android:layout_width="match_parent"
         android:layout_height="328dp"
-        android:text="TextView"
+        android:text="food fragment"
         android:textSize="24sp" />
 </LinearLayout>
