@@ -29,6 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         >
 
         <androidx.appcompat.widget.Toolbar
@@ -36,7 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/blue"
-            app:popupTheme="@style/Theme.TheCollectiveDiet.PopupOverlay" />
+            app:popupTheme="@style/Theme.TheCollectiveDiet.PopupOverlay"
+
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,14 +50,23 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:background="@color/blue"
+        android:background="#3d5978"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/activity_main_drawer"
+
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"/>
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_main" />
+        layout="@layout/content_main"
+        android:layout_width="414dp"
+        android:layout_height="615dp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar3"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        tools:layout_editor_absoluteX="-2dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
