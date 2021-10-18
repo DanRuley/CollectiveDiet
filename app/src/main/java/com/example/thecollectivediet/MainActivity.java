@@ -86,6 +86,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
+        if(id == R.id.nav_stats){
+            Stats_fragment fragment = new Stats_fragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
+        }
+
+        if(id == R.id.nav_TCD){
+            TCD_fragment fragment = new TCD_fragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
+        }
+
         //Ask Android to remember which menu options the user has chosen
         transaction.addToBackStack(null);
 
