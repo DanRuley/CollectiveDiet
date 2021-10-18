@@ -15,8 +15,8 @@
 
     <!--top and bottom bars of app-->
     <include
-        android:id="@+id/app_bars.xml"
-        layout="@layout/app_bars"
+        android:id="@+id/app_bar_main.xml"
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
