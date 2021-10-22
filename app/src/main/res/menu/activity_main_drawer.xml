@@ -3,13 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view"
     >
-
     <group android:checkableBehavior="single">
 
+        <item
+            android:id="@+id/nav_TCD"
+            android:icon="@drawable/ic_menu_tcd"
+            android:title=""
+            android:iconTint="@color/white"/>
         <item
             android:id="@+id/nav_food"
             android:icon="@drawable/food_pic"
             android:title="Food"
             android:iconTint="@color/white"/>
+        <item
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/ic_menu_stats"
+            android:title="stats"
+            android:iconTint="@color/white"/>
+
     </group>
 </menu>

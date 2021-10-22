@@ -2,9 +2,14 @@ package com.example.thecollectivediet;
 
 import android.app.Notification;
 import android.os.Bundle;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
+
+import android.view.Menu;
 import android.view.View;
 import com.google.android.material.navigation.NavigationView;
 
@@ -16,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -37,6 +43,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnavigationview);
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item){
+                int id = item.getItemId();
+                //Create a transaction
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                if(id == R.id.bottom_nav_food){
+                    //Create a new fragment of the appropriate type
+                    FoodFragment fragment = new FoodFragment();
+                    transaction.replace(R.id.fragmentHolder, fragment);
+                }
+
+                if(id == R.id.bottom_nav_stats){
+                    Stats_fragment fragment = new Stats_fragment();
+                    transaction.replace(R.id.fragmentHolder, fragment);
+                }
+
+                if(id == R.id.bottom_nav_TCD){
+                    TCD_fragment fragment = new TCD_fragment();
+                    transaction.replace(R.id.fragmentHolder, fragment);
+                }
+
+                //Ask Android to remember which menu options the user has chosen
+                transaction.addToBackStack(null);
+
+                //Implement the change
+                transaction.commit();
+                return true;
+            }
+        });
+
 
         //For now, the app will open straight to the food fragment. When this
         //temp code is erased, the app will open to content_main.xml
@@ -86,6 +126,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
+        if(id == R.id.nav_stats){
+            Stats_fragment fragment = new Stats_fragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
+        }
+
+        if(id == R.id.nav_TCD){
+            TCD_fragment fragment = new TCD_fragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
+        }
+
         //Ask Android to remember which menu options the user has chosen
         transaction.addToBackStack(null);
 
@@ -97,4 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
+
+
 }
