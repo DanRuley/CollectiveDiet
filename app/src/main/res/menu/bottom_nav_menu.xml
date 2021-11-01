@@ -3,21 +3,26 @@
 
 
 
-        <item
+        <!--<item
             android:enabled="true"
             android:id="@+id/bottom_nav_TCD"
             android:icon="@drawable/ic_menu_tcd"
             android:title=""
-            android:iconTint="@color/white"/>
+            android:iconTint="@color/white"/>-->
+        <item
+                android:id="@+id/bottom_nav_us"
+                android:icon="@drawable/ic_menu_us"
+                android:title=""/>
+
         <item
             android:id="@+id/bottom_nav_food"
             android:icon="@drawable/ic_menu_food2"
             android:title="Food"
             android:iconTint="@color/white"/>
         <item
-            android:id="@+id/bottom_nav_stats"
-            android:icon="@drawable/ic_menu_stats"
-            android:title="stats"
+            android:id="@+id/bottom_nav_profile"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="Profile"
             android:iconTint="@color/white"/>
 
 

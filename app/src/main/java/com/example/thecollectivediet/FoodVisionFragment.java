@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class FoodFragment extends Fragment {
+public class FoodVisionFragment extends Fragment {
 
 
     /*@Override

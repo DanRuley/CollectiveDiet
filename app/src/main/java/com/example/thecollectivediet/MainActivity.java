@@ -61,17 +61,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if(id == R.id.bottom_nav_food){
                     //Create a new fragment of the appropriate type
-                    FoodFragment fragment = new FoodFragment();
+                    FoodVisionFragment fragment = new FoodVisionFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if(id == R.id.bottom_nav_stats){
-                    StatsFragment fragment = new StatsFragment();
+                if(id == R.id.bottom_nav_profile){
+                    ProfileFragment fragment = new ProfileFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if(id == R.id.bottom_nav_TCD){
-                    TCDFragment fragment = new TCDFragment();
+                if(id == R.id.bottom_nav_us){
+                    UsFragment fragment = new UsFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //////////////////////////////////////////////////////////////temp code
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                 FoodFragment fragment = new FoodFragment();
+                 FoodVisionFragment fragment = new FoodVisionFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
 
         //Ask Android to remember which menu options the user has chosen
@@ -129,17 +129,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //on click item
         if(id == R.id.nav_food){
             //Create a new fragment of the appropriate type
-            FoodFragment fragment = new FoodFragment();
+            FoodVisionFragment fragment = new FoodVisionFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_stats){
-            StatsFragment fragment = new StatsFragment();
+        if(id == R.id.nav_profile){
+            ProfileFragment fragment = new ProfileFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_tcd){
-            TCDFragment fragment = new TCDFragment();
+        if(id == R.id.nav_us){
+            UsFragment fragment = new UsFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 

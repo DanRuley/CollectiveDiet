@@ -6,23 +6,35 @@
 
     <group android:checkableBehavior="single">
 
-        <item
+        <!--<item
             android:id="@+id/nav_tcd"
             android:icon="@drawable/ic_menu_tcd2"
             android:title="The Collective Diet"
             android:iconTint="@color/white"
 
 
-            />
+            />-->
         <item
             android:id="@+id/nav_food"
             android:icon="@drawable/ic_menu_food2"
             android:title="Food"
             android:iconTint="@color/white"/>
         <item
-            android:id="@+id/nav_stats"
-            android:icon="@drawable/ic_menu_stats"
-            android:title="stats"
+            android:id="@+id/nav_me"
+            android:icon="@drawable/ic_menu_me"
+            android:title="Me"
+            android:iconTint="@color/white"/>
+
+        <item
+            android:id="@+id/nav_us"
+            android:icon="@drawable/ic_menu_us"
+            android:title="Us"
+            android:iconTint="@color/white"/>
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="Profile"
             android:iconTint="@color/white"/>
 
     </group>
