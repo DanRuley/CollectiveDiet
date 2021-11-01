@@ -3,16 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view"
     >
+
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_TCD"
-            android:icon="@drawable/ic_menu_tcd"
-            android:title=""
-            android:iconTint="@color/white"/>
+            android:id="@+id/nav_tcd"
+            android:icon="@drawable/ic_menu_tcd2"
+            android:title="The Collective Diet"
+            android:iconTint="@color/white"
+
+
+            />
         <item
             android:id="@+id/nav_food"
-            android:icon="@drawable/food_pic"
+            android:icon="@drawable/ic_menu_food2"
             android:title="Food"
             android:iconTint="@color/white"/>
         <item

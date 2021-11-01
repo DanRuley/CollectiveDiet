@@ -1,16 +1,9 @@
 package com.example.thecollectivediet;
 
-import android.app.Notification;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.Menu;
-import android.view.View;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -20,11 +13,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.view.MenuItem;
-import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -44,7 +38,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnavigationview);
+       /* //camera button
+        Button liveCamera = findViewById(R.id.take_pic);
+
+        liveCamera.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, LiveCam.class));
+            }
+        });*/
+
+
+
+        //Bottom navigation tool bar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_toolbar);
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(MenuItem item){
@@ -59,12 +66,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 if(id == R.id.bottom_nav_stats){
-                    Stats_fragment fragment = new Stats_fragment();
+                    StatsFragment fragment = new StatsFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
                 if(id == R.id.bottom_nav_TCD){
-                    TCD_fragment fragment = new TCD_fragment();
+                    TCDFragment fragment = new TCDFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
@@ -127,12 +134,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if(id == R.id.nav_stats){
-            Stats_fragment fragment = new Stats_fragment();
+            StatsFragment fragment = new StatsFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_TCD){
-            TCD_fragment fragment = new TCD_fragment();
+        if(id == R.id.nav_tcd){
+            TCDFragment fragment = new TCDFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 

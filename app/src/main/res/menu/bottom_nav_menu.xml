@@ -11,7 +11,7 @@
             android:iconTint="@color/white"/>
         <item
             android:id="@+id/bottom_nav_food"
-            android:icon="@drawable/food_pic"
+            android:icon="@drawable/ic_menu_food2"
             android:title="Food"
             android:iconTint="@color/white"/>
         <item
