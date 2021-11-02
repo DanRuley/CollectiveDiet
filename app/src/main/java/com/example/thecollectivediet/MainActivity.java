@@ -75,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
+                if(id == R.id.bottom_nav_me){
+                    MeFragment fragment = new MeFragment();
+                    transaction.replace(R.id.fragmentHolder, fragment);
+                }
+
                 //Ask Android to remember which menu options the user has chosen
                 transaction.addToBackStack(null);
 
@@ -140,6 +145,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(id == R.id.nav_us){
             UsFragment fragment = new UsFragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
+        }
+
+        if(id == R.id.nav_me){
+            MeFragment fragment = new MeFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 

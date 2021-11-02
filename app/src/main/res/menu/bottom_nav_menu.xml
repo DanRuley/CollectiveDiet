@@ -10,15 +10,21 @@
             android:title=""
             android:iconTint="@color/white"/>-->
         <item
-                android:id="@+id/bottom_nav_us"
-                android:icon="@drawable/ic_menu_us"
-                android:title=""/>
-
-        <item
             android:id="@+id/bottom_nav_food"
             android:icon="@drawable/ic_menu_food2"
-            android:title="Food"
+            android:title="Food Vision"
             android:iconTint="@color/white"/>
+        <item
+                android:id="@+id/bottom_nav_me"
+                android:icon="@drawable/ic_menu_me"
+                android:title="Me"
+                android:iconTint="@color/white"/>
+        <item
+                android:id="@+id/bottom_nav_us"
+                android:icon="@drawable/ic_menu_us"
+                android:title="Us"/>
+
+
         <item
             android:id="@+id/bottom_nav_profile"
             android:icon="@drawable/ic_menu_profile"

@@ -17,7 +17,7 @@
         <item
             android:id="@+id/nav_food"
             android:icon="@drawable/ic_menu_food2"
-            android:title="Food"
+            android:title="Food Vision"
             android:iconTint="@color/white"/>
         <item
             android:id="@+id/nav_me"
