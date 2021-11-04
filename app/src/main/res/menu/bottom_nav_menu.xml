@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
 
@@ -10,19 +11,25 @@
             android:title=""
             android:iconTint="@color/white"/>-->
         <item
-            android:id="@+id/bottom_nav_food"
-            android:icon="@drawable/ic_menu_food2"
-            android:title="Food Vision"
-            android:iconTint="@color/white"/>
+            android:id="@+id/bottom_nav_me"
+            android:icon="@drawable/ic_menu_me"
+            android:title="Me"
+            android:iconTint="@color/white"
+
+
+            />
         <item
-                android:id="@+id/bottom_nav_me"
-                android:icon="@drawable/ic_menu_me"
-                android:title="Me"
-                android:iconTint="@color/white"/>
+            android:id="@+id/bottom_nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Camera"
+            android:iconTint="@color/white"
+            />
+
         <item
                 android:id="@+id/bottom_nav_us"
                 android:icon="@drawable/ic_menu_us"
-                android:title="Us"/>
+                android:title="Us"
+                android:iconTint="@color/white"/>
 
 
         <item

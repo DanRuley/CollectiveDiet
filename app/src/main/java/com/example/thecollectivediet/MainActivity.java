@@ -38,17 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-       /* //camera button
-        Button liveCamera = findViewById(R.id.take_pic);
-
-        liveCamera.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                startActivity(new Intent(MainActivity.this, LiveCam.class));
-            }
-        });*/
-
-
 
         //Bottom navigation tool bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_toolbar);
@@ -59,9 +48,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //Create a transaction
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                if(id == R.id.bottom_nav_food){
+                if(id == R.id.bottom_nav_camera){
                     //Create a new fragment of the appropriate type
-                    FoodVisionFragment fragment = new FoodVisionFragment();
+                    CameraFragment fragment = new CameraFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
@@ -95,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //////////////////////////////////////////////////////////////temp code
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                 FoodVisionFragment fragment = new FoodVisionFragment();
+                 MeFragment fragment = new MeFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
 
         //Ask Android to remember which menu options the user has chosen
@@ -134,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //on click item
         if(id == R.id.nav_food){
             //Create a new fragment of the appropriate type
-            FoodVisionFragment fragment = new FoodVisionFragment();
+            CameraFragment fragment = new CameraFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
