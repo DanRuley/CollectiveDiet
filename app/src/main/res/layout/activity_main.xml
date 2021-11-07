@@ -30,6 +30,7 @@
         app:menu="@menu/activity_main_drawer"
         android:background="#3d5978"
         app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>

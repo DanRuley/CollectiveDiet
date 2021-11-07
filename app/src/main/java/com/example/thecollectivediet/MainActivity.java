@@ -1,16 +1,9 @@
 package com.example.thecollectivediet;
 
-import android.app.Notification;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.Menu;
-import android.view.View;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -20,11 +13,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.view.MenuItem;
-import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -44,7 +38,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnavigationview);
+
+        //Bottom navigation tool bar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_toolbar);
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(MenuItem item){
@@ -52,19 +48,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //Create a transaction
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                if(id == R.id.bottom_nav_food){
+                if(id == R.id.bottom_nav_camera){
                     //Create a new fragment of the appropriate type
-                    FoodFragment fragment = new FoodFragment();
+                    CameraFragment fragment = new CameraFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if(id == R.id.bottom_nav_stats){
-                    Stats_fragment fragment = new Stats_fragment();
+                if(id == R.id.bottom_nav_profile){
+                    ProfileFragment fragment = new ProfileFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if(id == R.id.bottom_nav_TCD){
-                    TCD_fragment fragment = new TCD_fragment();
+                if(id == R.id.bottom_nav_us){
+                    UsFragment fragment = new UsFragment();
+                    transaction.replace(R.id.fragmentHolder, fragment);
+                }
+
+                if(id == R.id.bottom_nav_me){
+                    MeFragment fragment = new MeFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //////////////////////////////////////////////////////////////temp code
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                 FoodFragment fragment = new FoodFragment();
+                 MeFragment fragment = new MeFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
 
         //Ask Android to remember which menu options the user has chosen
@@ -122,17 +123,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //on click item
         if(id == R.id.nav_food){
             //Create a new fragment of the appropriate type
-            FoodFragment fragment = new FoodFragment();
+            CameraFragment fragment = new CameraFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_stats){
-            Stats_fragment fragment = new Stats_fragment();
+        if(id == R.id.nav_profile){
+            ProfileFragment fragment = new ProfileFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_TCD){
-            TCD_fragment fragment = new TCD_fragment();
+        if(id == R.id.nav_us){
+            UsFragment fragment = new UsFragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
+        }
+
+        if(id == R.id.nav_me){
+            MeFragment fragment = new MeFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 

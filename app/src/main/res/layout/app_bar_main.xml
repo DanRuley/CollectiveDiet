@@ -6,10 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="678dp"
-        android:theme="@style/Theme.TheCollectiveDiet.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.TheCollectiveDiet.AppBarOverlay"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,23 +32,27 @@
 
         <include
             layout="@layout/content_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+           >
+
+        </include>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomnavigationview"
+        android:id="@+id/bottom_navigation_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.TheCollectiveDiet.AppBarOverlay"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_nav_menu"
         android:background="@color/blue"
+        android:theme="@style/Theme.TheCollectiveDiet.AppBarOverlay"
         app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white">
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:menu="@menu/bottom_nav_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
