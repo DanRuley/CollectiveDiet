@@ -13,6 +13,8 @@ public class MeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance){
         View v = inflater.inflate(R.layout.fragment_me, container, false);
 
+
+
         return v;
     }
 }
