@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/DanRuley/Documents/tcd-android/app/src/main/res/layout/activity_main.xml" value="0.3671875" />
+        <entry key="..\:/Users/DanRuley/Documents/tcd-android/app/src/main/res/layout/app_bar_main.xml" value="0.3671875" />
+        <entry key="..\:/Users/DanRuley/Documents/tcd-android/app/src/main/res/layout/fragment_me.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/DanRuley/Documents/tcd-android/app/src/main/res/layout/fragment_us.xml" value="0.3671875" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable-anydpi/ic_menu_TCD.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable-anydpi/ic_menu_food2.xml" value="0.2703125" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable-anydpi/ic_menu_me.xml" value="0.2703125" />
