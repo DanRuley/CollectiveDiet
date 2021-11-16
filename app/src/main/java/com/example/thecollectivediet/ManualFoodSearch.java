@@ -5,11 +5,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
@@ -17,14 +20,15 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 
 import java.util.List;
 
-public class FoodSearch extends Fragment {
+public class ManualFoodSearch extends Fragment {
 
     EditText foodInput;
     Button searchBtn;
     Context ctx;
     FoodSearchController controller;
+    ListView foodResultList;
 
-    public FoodSearch() {
+    public ManualFoodSearch() {
 
     }
 
@@ -46,13 +50,28 @@ public class FoodSearch extends Fragment {
         foodInput = v.findViewById(R.id.foodInput);
         searchBtn = v.findViewById(R.id.foodSearchButton);
 
+        foodResultList = v.findViewById(R.id.foodResultList);
+
         controller = new FoodSearchController(ctx);
 
+//        searchBtn.setOnClickListener(view -> controller.test(foodInput.getText().toString(), new FoodSearchController.VolleyResponseListener<List<FoodResult>>() {
+//
+//            @Override
+//            public void onResponse(List<FoodResult> response) {
+//                Log.d("x", response.toString());
+//            }
+//
+//
+//            @Override
+//            public void onError(String error) {
+//                Log.d("y", error);
+//            }
+//        }));
         searchBtn.setOnClickListener(view -> controller.searchFoodByName(foodInput.getText().toString(), new FoodSearchController.VolleyResponseListener<List<FoodResult>>() {
 
             @Override
             public void onResponse(List<FoodResult> response) {
-                Toast.makeText(getActivity(), response.toString(), Toast.LENGTH_SHORT).show();
+                populateList(response);
             }
 
             @Override
@@ -60,5 +79,11 @@ public class FoodSearch extends Fragment {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }
         }));
+    }
+
+    private void populateList(List<FoodResult> response) {
+        MainActivity.hideKeyboard(getActivity());
+        ArrayAdapter adapter = new ArrayAdapter(ctx, android.R.layout.simple_list_item_1, response);
+        foodResultList.setAdapter(adapter);
     }
 }

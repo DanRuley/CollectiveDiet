@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
@@ -19,40 +20,24 @@ import java.util.List;
 
 public class MeFragment extends Fragment {
 
-    EditText foodInput;
-    Button searchBtn;
-    Context ctx;
-    FoodSearchController controller;
+    Button manualEntry;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
         View v = inflater.inflate(R.layout.fragment_me, container, false);
 
-        initializeComponents(v);
+        manualEntry = v.findViewById(R.id.manualEntry);
+
+        manualEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         return v;
-    }
-
-    private void initializeComponents(View v) {
-        ctx = this.getActivity();
-        controller = new FoodSearchController(ctx);
-
-        foodInput = v.findViewById(R.id.foodInput);
-        searchBtn = v.findViewById(R.id.foodSearchButton);
-
-        controller = new FoodSearchController(ctx);
-
-        searchBtn.setOnClickListener(view -> controller.searchFoodByName(foodInput.getText().toString(), new FoodSearchController.VolleyResponseListener<List<FoodResult>>() {
-
-            @Override
-            public void onResponse(List<FoodResult> response) {
-                Toast.makeText(getActivity(), response.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-            }
-        }));
     }
 }
