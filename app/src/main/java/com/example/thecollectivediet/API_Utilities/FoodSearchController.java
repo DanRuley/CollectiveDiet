@@ -46,7 +46,7 @@ public class FoodSearchController {
     public void searchFoodByName(String foodName, VolleyResponseListener<List<FoodResult>> listener) {
         List<FoodResult> foods = new ArrayList<>();
 
-        String url = "https://trackapi.nutritionix.com/v2/search/instant?query=apple";
+        String url = "https://trackapi.nutritionix.com/v2/search/instant?query=" + foodName;
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {

@@ -7,8 +7,8 @@
 
     <EditText
         android:id="@+id/foodInput"
-        android:layout_width="0dp"
-        android:layout_height="105dp"
+        android:layout_width="388dp"
+        android:layout_height="87dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
@@ -16,28 +16,32 @@
         android:hint="Enter food item e.g. apple"
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/foodSearchButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/foodSearchButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/foodSearchButton"
-        android:layout_width="144dp"
-        android:layout_height="87dp"
+        android:layout_width="142dp"
+        android:layout_height="76dp"
         android:layout_marginStart="16dp"
         android:text="Search Food"
+        app:layout_constraintBottom_toTopOf="@id/foodResultRecycler"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodInput"
-        app:layout_constraintBottom_toTopOf="@id/foodResultList"/>
+        app:layout_constraintTop_toBottomOf="@+id/foodInput" />
 
-    <ListView
-        android:id="@+id/foodResultList"
-        android:layout_width="409dp"
-        android:layout_height="521dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/foodResultRecycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodSearchButton" />
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +28,9 @@ public class ManualFoodSearch extends Fragment {
     Button searchBtn;
     Context ctx;
     FoodSearchController controller;
-    ListView foodResultList;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager layoutManager;
 
     public ManualFoodSearch() {
 
@@ -50,28 +54,19 @@ public class ManualFoodSearch extends Fragment {
         foodInput = v.findViewById(R.id.foodInput);
         searchBtn = v.findViewById(R.id.foodSearchButton);
 
-        foodResultList = v.findViewById(R.id.foodResultList);
+        recyclerView = v.findViewById(R.id.foodResultRecycler);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(ctx);
+        recyclerView.setLayoutManager(layoutManager);
 
         controller = new FoodSearchController(ctx);
 
-//        searchBtn.setOnClickListener(view -> controller.test(foodInput.getText().toString(), new FoodSearchController.VolleyResponseListener<List<FoodResult>>() {
-//
-//            @Override
-//            public void onResponse(List<FoodResult> response) {
-//                Log.d("x", response.toString());
-//            }
-//
-//
-//            @Override
-//            public void onError(String error) {
-//                Log.d("y", error);
-//            }
-//        }));
         searchBtn.setOnClickListener(view -> controller.searchFoodByName(foodInput.getText().toString(), new FoodSearchController.VolleyResponseListener<List<FoodResult>>() {
 
             @Override
             public void onResponse(List<FoodResult> response) {
-                populateList(response);
+                populateRecycler(response);
             }
 
             @Override
@@ -81,9 +76,10 @@ public class ManualFoodSearch extends Fragment {
         }));
     }
 
-    private void populateList(List<FoodResult> response) {
+    private void populateRecycler(List<FoodResult> response) {
         MainActivity.hideKeyboard(getActivity());
-        ArrayAdapter adapter = new ArrayAdapter(ctx, android.R.layout.simple_list_item_1, response);
-        foodResultList.setAdapter(adapter);
+
+        mAdapter = new RecyclerViewAdapter(response, ctx);
+        recyclerView.setAdapter(mAdapter);
     }
 }
