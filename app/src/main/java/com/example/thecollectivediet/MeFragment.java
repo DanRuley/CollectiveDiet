@@ -14,24 +14,32 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 
+
+/*
+    This fragment will hold a tab layout for other fragments related to the "Me" part of the app.
+    This class/fragment will use the class FragmentAdapter to allow users to navigate the tabs
+    by swiping left or right.
+ */
 public class MeFragment extends Fragment {
 
+    //declare components (Buttons, Views, Text, etc...)
         TabLayout tabLayout;
         ViewPager2 pager2;
         FragmentAdapter adapter;
 
-
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+
+            //Inflate the view
             View v = inflater.inflate(R.layout.fragment_me, container, false);
 
+            //Initialize components
             tabLayout = v.findViewById(R.id.tab_layout);
             pager2 = v.findViewById(R.id.view_pager2);
 
+            //Setup FragmentAdapter and tabs in tab layout
             FragmentManager fm = getActivity().getSupportFragmentManager();
             adapter = new FragmentAdapter(fm, getLifecycle());
             pager2.setAdapter(adapter);
-
-
 
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override

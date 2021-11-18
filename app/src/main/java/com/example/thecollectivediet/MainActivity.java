@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //
+
+        //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
@@ -44,9 +44,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        //Bottom navigation tool bar
+        //Bottom navigation tool bar on the bottom of the app screen will be used for
+        //navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_toolbar);
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
+
+            //When icon in bottom app is selected, switch to appropriate fragment
             @Override
             public boolean onNavigationItemSelected(MenuItem item){
                 int id = item.getItemId();
@@ -84,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-        //For now, the app will open straight to the food fragment. When this
-        //temp code is erased, the app will open to content_main.xml
-        //////////////////////////////////////////////////////////////temp code
+        //For now, the app will open straight to the food fragment.
+        //This will be the first screen the user will see
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                  MeFragment fragment = new MeFragment();
@@ -98,9 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Implement the change
         transaction.commit();
 
-         drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        ///////////////////////////////////////////////////////////////end temp code
     }
 
     @Override
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //Navigation via the drawer
     //Handle navigation view item clicks here
     @Override
     public boolean onNavigationItemSelected( MenuItem item) {
