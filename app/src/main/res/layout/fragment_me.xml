@@ -7,7 +7,7 @@
 
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="70dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
     </com.google.android.material.tabs.TabLayout>
 
 
-    <FrameLayout
+    <!--<FrameLayout
         android:id="@+id/simpleFrameLayout"
         layout="@layout/content_main"
         android:layout_width="0dp"
@@ -45,5 +45,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout">
 
-    </FrameLayout>
+    </FrameLayout>-->
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,72 +7,59 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TableLayout;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 
 public class MeFragment extends Fragment {
 
-    TabLayout tabLayout;
-    FrameLayout frameLayout;
+        TabLayout tabLayout;
+        ViewPager2 pager2;
+        FragmentAdapter adapter;
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance){
-        View v = inflater.inflate(R.layout.fragment_me, container, false);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+            View v = inflater.inflate(R.layout.fragment_me, container, false);
 
-        tabLayout = v.findViewById(R.id.tabLayout);
-        //frameLayout = v.findViewById(R.id.include);
-        // perform setOnTabSelectedListener event on TabLayout
-        CameraFragment fragment = new CameraFragment();
-        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+            tabLayout = v.findViewById(R.id.tab_layout);
+            pager2 = v.findViewById(R.id.view_pager2);
 
-        fm.replace(R.id.simpleFrameLayout, fragment);
-        fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fm.commit();
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            adapter = new FragmentAdapter(fm, getLifecycle());
+            pager2.setAdapter(adapter);
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-// called when tab selected
-                //Fragment fragment = null;
-                switch (tab.getPosition()) {
-                    case 0:
-                        CameraFragment fragment = new CameraFragment();
-                        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
 
-                        fm.replace(R.id.simpleFrameLayout, fragment);
-                        fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        fm.commit();
-                        break;
-//                    case 1:
-//                        fragment = new SecondFragment();
-//                        break;
-//                    case 2:
-//                        fragment = new ThirdFragment();
-//                        break;
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    pager2.setCurrentItem(tab.getPosition());
                 }
-               // FragmentManager fm = getSupportFragmentManager();
-//                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-//                //FragmentTransaction ft = fm.beginTransaction();
-//                fm.replace(R.id.simpleFrameLayout, fragment);
-//                fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                fm.commit();
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-// called when tab unselected
-            }
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-// called when a tab is reselected
-            }
-        });
-        return v;
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
+
+            pager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    tabLayout.selectTab(tabLayout.getTabAt(position));
+                }
+            });
+            return v;
+        }
     }
-}
+
+
+
