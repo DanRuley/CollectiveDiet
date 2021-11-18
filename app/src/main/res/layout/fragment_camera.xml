@@ -37,16 +37,21 @@
         android:text="take pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="197dp"
-        android:layout_height="201dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="215dp"
+        android:layout_marginEnd="97dp"
+        android:layout_marginBottom="182dp"
         android:text="Food Item"
         android:textAlignment="center"
         android:textColor="#F6F3F3"
         android:textSize="34sp"
-        tools:layout_editor_absoluteX="117dp"
-        tools:layout_editor_absoluteY="215dp" />
+        app:layout_constraintBottom_toTopOf="@+id/take_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
