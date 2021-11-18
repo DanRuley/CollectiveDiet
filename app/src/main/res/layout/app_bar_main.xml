@@ -20,10 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"><!-- This is necessary to allow scrolling components - otherwise the app bar steals the vertical movement (something similar may also be necessary for horizontal scrolling, not sure yet) -->
 
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
