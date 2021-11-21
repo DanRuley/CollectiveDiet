@@ -18,13 +18,13 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.List;
 
-public class MeFragment extends Fragment {
+public class TodayFragment extends Fragment {
 
     Button manualEntry;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
-        View v = inflater.inflate(R.layout.fragment_me, container, false);
+        View v = inflater.inflate(R.layout.fragment_today, container, false);
 
         manualEntry = v.findViewById(R.id.manualEntry);
 
