@@ -4,13 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TableLayout;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 
@@ -20,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
     This class/fragment will use the class FragmentAdapter to allow users to navigate the tabs
     by swiping left or right.
  */
-public class MeFragment extends Fragment {
+public class MeTabLayoutFragment extends Fragment {
 
     //declare components (Buttons, Views, Text, etc...)
         TabLayout tabLayout;
@@ -30,7 +26,7 @@ public class MeFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
             //Inflate the view
-            View v = inflater.inflate(R.layout.fragment_me, container, false);
+            View v = inflater.inflate(R.layout.fragment_me_tab_layout, container, false);
 
             //Initialize components
             tabLayout = v.findViewById(R.id.tab_layout);

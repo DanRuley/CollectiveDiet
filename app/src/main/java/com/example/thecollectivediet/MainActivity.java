@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuItem;
-import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 if(id == R.id.bottom_nav_me){
-                    MeFragment fragment = new MeFragment();
+                    MeTabLayoutFragment fragment = new MeTabLayoutFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //This will be the first screen the user will see
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                 MeFragment fragment = new MeFragment();
+                 MeTabLayoutFragment fragment = new MeTabLayoutFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
 
         //Ask Android to remember which menu options the user has chosen
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if(id == R.id.nav_me){
-            MeFragment fragment = new MeFragment();
+            MeTabLayoutFragment fragment = new MeTabLayoutFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
