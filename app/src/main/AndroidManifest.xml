@@ -8,6 +8,7 @@
 
     <!-- Declare permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -20,7 +21,8 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="The Collective Diet"
-            android:theme="@style/Theme.TheCollectiveDiet.NoActionBar">
+            android:theme="@style/Theme.TheCollectiveDiet.NoActionBar"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
