@@ -24,9 +24,6 @@ import java.util.Map;
 
 public class FoodSearchController {
 
-    private static int foodCount = 10;
-    private static String queryURLStart = "https://api.nal.usda.gov/fdc/v1/foods/search?query=";
-    private static String queryURLEnd = "&pageSize=10&api_key=NGhWlKmkJ6qwX4mLMBhvwU6b68vgICJiReWayDEg";
     private Context ctx;
 
     public FoodSearchController(Context _ctx) {
@@ -84,32 +81,4 @@ public class FoodSearchController {
         };
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
-
-
-//    public void searchFoodByName(String foodName, final VolleyResponseListener<List<FoodResult>> listener) {
-//
-//        System.out.println("ran");
-//        String url = queryURLStart + foodName + queryURLEnd;
-//        List<FoodResult> foods = new ArrayList<>();
-//
-//        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
-//            try {
-//                System.out.println("ran");
-//                JSONArray foodList = response.getJSONArray("foods");
-//                Gson gson = new Gson();
-//                for (int i = 0; i < foodList.length(); i++) {
-//                    JSONObject food = (JSONObject) foodList.get(i);
-//                    foods.add(gson.fromJson(food.toString(), FoodResult.class));
-//                }
-//                listener.onResponse(foods);
-//            } catch (JSONException e) {
-//                listener.onError((e.getMessage()));
-//            }
-//
-//        }, error -> {
-//            listener.onError(error.getMessage());
-//        });
-//
-//        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
-//    }
 }

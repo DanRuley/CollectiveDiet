@@ -15,17 +15,22 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    Toolbar toolbar;
+    DrawerLayout drawer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+
+        //Setup button, views, etc in the activity_main layout
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
@@ -36,33 +41,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        //Bottom navigation tool bar
+        //Bottom navigation tool bar on the bottom of the app screen will be used for
+        //navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_toolbar);
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
+
+            //When icon in bottom app is selected, switch to appropriate fragment
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(MenuItem item){
                 int id = item.getItemId();
                 //Create a transaction
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                if (id == R.id.bottom_nav_camera) {
+                if(id == R.id.bottom_nav_camera){
                     //Create a new fragment of the appropriate type
                     CameraFragment fragment = new CameraFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if (id == R.id.bottom_nav_profile) {
+                if(id == R.id.bottom_nav_profile){
                     ProfileFragment fragment = new ProfileFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if (id == R.id.bottom_nav_us) {
+                if(id == R.id.bottom_nav_us){
                     UsFragment fragment = new UsFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if (id == R.id.bottom_nav_me) {
-                    MeFragment fragment = new MeFragment();
+                if(id == R.id.bottom_nav_me){
+                    MeTabLayoutFragment fragment = new MeTabLayoutFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
@@ -76,15 +84,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-        //For now, the app will open straight to the food fragment. When this
-        //temp code is erased, the app will open to content_main.xml
-        //////////////////////////////////////////////////////////////temp code
+        //For now, the app will open straight to the food fragment.
+        //This will be the first screen the user will see
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        MeFragment fragment = new MeFragment();
-        transaction.replace(R.id.fragmentHolder, fragment);
-
-
+                 MeTabLayoutFragment fragment = new MeTabLayoutFragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
 
         //Ask Android to remember which menu options the user has chosen
         transaction.addToBackStack(null);
@@ -94,25 +99,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        ///////////////////////////////////////////////////////////////end temp code
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed(){
         //If the drawer is open, close it
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         }
         //else, if the drawer is closed, rely on super class default behavior
-        else {
+        else{
             super.onBackPressed();
         }
     }
 
+    //Navigation via the drawer
     //Handle navigation view item clicks here
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected( MenuItem item) {
 
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -120,24 +125,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Create a new fragment of the appropriate type depending
         //on click item
-        if (id == R.id.nav_food) {
+        if(id == R.id.nav_food){
             //Create a new fragment of the appropriate type
             CameraFragment fragment = new CameraFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if (id == R.id.nav_profile) {
+        if(id == R.id.nav_profile){
             ProfileFragment fragment = new ProfileFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if (id == R.id.nav_us) {
+        if(id == R.id.nav_us){
             UsFragment fragment = new UsFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if (id == R.id.nav_me) {
-            MeFragment fragment = new MeFragment();
+        if(id == R.id.nav_me){
+            MeTabLayoutFragment fragment = new MeTabLayoutFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 

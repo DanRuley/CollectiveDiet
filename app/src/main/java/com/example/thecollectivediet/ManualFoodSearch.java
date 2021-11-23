@@ -66,7 +66,7 @@ public class ManualFoodSearch extends Fragment {
 
             @Override
             public void onResponse(List<FoodResult> response) {
-                populateRecycler(response);
+                    populateRecycler(response);
             }
 
             @Override
