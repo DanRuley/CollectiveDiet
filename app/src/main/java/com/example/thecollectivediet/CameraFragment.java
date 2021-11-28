@@ -35,31 +35,39 @@ import java.util.concurrent.ExecutionException;
 
 public class CameraFragment extends Fragment {
 
-    Executors executor;
+    //Buttons and views
     PreviewView previewView;
-    private ImageCapture mImageCapture;
+    Button takePic;
 
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;/////xxxxx
+    ProcessCameraProvider cameraProvider;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_camera, container, false);
 
-        previewView = v.findViewById(R.id.view_camera);
+        //initialize components
+        initializeComponents(v);
+
+        //set up preview, imageCapture,
         cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
         cameraProviderFuture.addListener(() -> {
             try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                bindPreview(cameraProvider);
+                cameraProvider = cameraProviderFuture.get();
+                bindPreview(cameraProvider, v);
             } catch (ExecutionException | InterruptedException e) {
                 // No errors need to be handled for this Future.
                 // This should never be reached.
             }
         }, ContextCompat.getMainExecutor(getActivity()));
-        //startCamera();
+
+
+
+
         return v;
     }
-    void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, View view) {
+
         Preview preview = new Preview.Builder()
                 .build();
 
@@ -69,48 +77,18 @@ public class CameraFragment extends Fragment {
 
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
-    }
-    /*private void startCamera() {
-        ListenableFuture cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
-
-        cameraProviderFuture.addListener(() -> {
-            try {
-                // Camera provider is now guaranteed to be available
-                ProcessCameraProvider cameraProvider = (ProcessCameraProvider) cameraProviderFuture.get();
-                // Set up the view finder use case to display camera preview
-                Preview preview = new Preview.Builder().build();
-
-
-                CameraSelector cameraSelector = new CameraSelector.Builder()
-                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+        ImageCapture imageCapture =
+                new ImageCapture.Builder()
+                        .setTargetRotation(view.getDisplay().getRotation())
                         .build();
 
+        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageCapture, preview);
+    }
 
+    private void initializeComponents(View view)
+    {
+        previewView = view.findViewById(R.id.view_camera);
+        takePic = view.findViewById(R.id.take_pic);
 
-
-
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll();
-                // Bind use cases to camera
-                // Attach use cases to the camera with the same lifecycle owner
-                Camera camera = cameraProvider.bindToLifecycle(
-                        ((LifecycleOwner) this),
-                        cameraSelector,
-                        preview,
-                        mImageCapture
-
-                );
-
-
-
-                preview.setSurfaceProvider(mPreviewView.getSurfaceProvider());
-
-            } catch (InterruptedException | ExecutionException e) {
-                // Currently no exceptions thrown. cameraProviderFuture.get() should
-                // not block since the listener is being called, so no need to
-                // handle InterruptedException.
-            }
-        }, ContextCompat.getMainExecutor(getActivity()));
-    }*/
+    }
 }
