@@ -27,7 +27,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0" >
+
+    </androidx.camera.view.PreviewView>
 
     <Button
         android:id="@+id/take_pic"
@@ -54,4 +56,24 @@
         app:layout_constraintBottom_toTopOf="@+id/take_pic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="290dp"
+        android:layout_height="143dp"
+        android:text="TextView"
+        android:textColor="#F8F2F2"
+        android:textSize="34sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="163dp"
+        android:layout_height="322dp"
+        app:layout_constraintBottom_toTopOf="@+id/take_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        android:src="@drawable/food_pic"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
