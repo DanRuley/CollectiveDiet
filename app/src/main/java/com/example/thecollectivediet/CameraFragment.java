@@ -102,10 +102,18 @@ public class CameraFragment extends Fragment {
 
     private void initializeComponents(View view)
     {
+        //views
         previewView = view.findViewById(R.id.view_camera);
-        takePic = view.findViewById(R.id.take_pic);
         imageView2 = view.findViewById(R.id.imageView2);
 
+        //buttons
+        takePic = view.findViewById(R.id.take_pic);
+
+        /*
+        Listener for "take pic" button in camera view. This listener will take a pic,
+        place pic in an image view, and then be used for inference using Tensorflow lite.
+        A string will be returned to be used in the food search function.
+        */
         takePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,18 +121,21 @@ public class CameraFragment extends Fragment {
                 imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback(){
                     @Override
                     public void onCaptureSuccess(ImageProxy imageProxy){
-                        //todo
-                        //Image image = imageProxy.getImage();
-                        Bitmap bit = convertImageProxyToBitmap(imageProxy);
 
+
+                        //Change imageProxy to bitmap to be used with imageView
+                        Bitmap bit = convertImageProxyToBitmap(imageProxy);
                         imageView2.setImageBitmap(bit);
-                        //super.onCaptureSuccess(imageProxy);
+
+                        //Make sure to close the image buffer for next pic
                         imageProxy.close();
+
+                        //todo send the pic out for inference
 
                     }
                     @Override
                     public void onError(ImageCaptureException e){
-                        //todo on error
+
                         super.onError(e);
                     }
                 });
@@ -132,6 +143,9 @@ public class CameraFragment extends Fragment {
         });
     }
 
+    /*
+    Converts ImageProxy to Bitmap
+     */
     private Bitmap convertImageProxyToBitmap(ImageProxy image) {
         ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
         byteBuffer.rewind();
@@ -141,27 +155,5 @@ public class CameraFragment extends Fragment {
         return BitmapFactory.decodeByteArray(clonedBytes, 0, clonedBytes.length);
     }
 
-    private Bitmap toBitmap(Image image) {
-        Image.Plane[] planes = image.getPlanes();
-        ByteBuffer yBuffer = planes[0].getBuffer();
-        ByteBuffer uBuffer = planes[1].getBuffer();
-        ByteBuffer vBuffer = planes[2].getBuffer();
 
-        int ySize = yBuffer.remaining();
-        int uSize = uBuffer.remaining();
-        int vSize = vBuffer.remaining();
-
-        byte[] nv21 = new byte[ySize + uSize + vSize];
-        //U and V are swapped
-        yBuffer.get(nv21, 0, ySize);
-        vBuffer.get(nv21, ySize, vSize);
-        uBuffer.get(nv21, ySize + vSize, uSize);
-
-        YuvImage yuvImage = new YuvImage(nv21, ImageFormat.NV21, image.getWidth(), image.getHeight(), null);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        yuvImage.compressToJpeg(new Rect(0, 0, yuvImage.getWidth(), yuvImage.getHeight()), 75, out);
-
-        byte[] imageBytes = out.toByteArray();
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-    }
 }
