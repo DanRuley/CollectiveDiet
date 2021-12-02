@@ -77,5 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //todo create listener to serialize list here via the + button???????????????????????
 
+        //prototype
+
     }
 }
