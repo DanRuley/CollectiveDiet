@@ -14,16 +14,16 @@
         android:layout_marginBottom="315dp"
         android:text="Me Frag"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/manualEntry"
+        app:layout_constraintBottom_toTopOf="@+id/logFood"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/manualEntry"
+        android:id="@+id/logFood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="94dp"
-        android:text="Manual Food Entry"
+        android:text="Add Food To Log"
         app:icon="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

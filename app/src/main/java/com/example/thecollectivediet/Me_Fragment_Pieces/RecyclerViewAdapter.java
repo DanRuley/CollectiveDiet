@@ -1,5 +1,4 @@
-package com.example.thecollectivediet;
-
+package com.example.thecollectivediet.Me_Fragment_Pieces;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,10 +13,11 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
+import com.example.thecollectivediet.R;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.FoodSearchHolder> {
     List<FoodResult> foodResults;
     Context ctx;
 
@@ -28,17 +28,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FoodSearchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         //inflater parameters: the layout you want to inflate, the parent, and attach to root T/F
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_recycler_element, parent, false);
-        MyViewHolder holder = new MyViewHolder(v);
+        FoodSearchHolder holder = new FoodSearchHolder(v);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FoodSearchHolder holder, int position) {
         // create a ProgressDrawable object which we will show as placeholder
         CircularProgressDrawable drawable = new CircularProgressDrawable(this.ctx);
         drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);
@@ -59,16 +59,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class FoodSearchHolder extends RecyclerView.ViewHolder {
         ImageView foodPicture;
         TextView foodName;
         TextView foodServing;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public FoodSearchHolder(@NonNull View itemView) {
             super(itemView);
             foodPicture = itemView.findViewById(R.id.foodRecImage);
             foodName = itemView.findViewById(R.id.foodRecName);
             foodServing = itemView.findViewById(R.id.foodRecServing);
         }
     }
+    
 }

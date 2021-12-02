@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Me_Fragment_Pieces;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.thecollectivediet.Me_Fragment_Pieces.MeFragmentAdapter;
+import com.example.thecollectivediet.R;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -21,7 +24,7 @@ public class MeTabLayoutFragment extends Fragment {
     //declare components (Buttons, Views, Text, etc...)
         TabLayout tabLayout;
         ViewPager2 pager2;
-        FragmentAdapter adapter;
+        MeFragmentAdapter adapter;
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
@@ -34,7 +37,7 @@ public class MeTabLayoutFragment extends Fragment {
 
             //Setup FragmentAdapter and tabs in tab layout
             FragmentManager fm = getActivity().getSupportFragmentManager();
-            adapter = new FragmentAdapter(fm, getLifecycle());
+            adapter = new MeFragmentAdapter(fm, getLifecycle());
             pager2.setAdapter(adapter);
 
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

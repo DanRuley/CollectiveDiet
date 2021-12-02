@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Me_Fragment_Pieces;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,8 +11,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
     in a tab layout which can be navigated via the tabs or by swiping left or right.
 
  */
-public class FragmentAdapter extends FragmentStateAdapter {
-    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+public class MeFragmentAdapter extends FragmentStateAdapter {
+    public MeFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 

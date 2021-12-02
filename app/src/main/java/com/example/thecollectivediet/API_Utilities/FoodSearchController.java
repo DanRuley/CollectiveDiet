@@ -9,6 +9,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.thecollectivediet.JSON_Marshall_Objects.BrandedFoodResult;
+import com.example.thecollectivediet.JSON_Marshall_Objects.CommonFoodResult;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodDetails;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.google.gson.Gson;
 
@@ -25,9 +28,15 @@ import java.util.Map;
 public class FoodSearchController {
 
     private Context ctx;
+    private static HashMap<String, String> headers;
 
     public FoodSearchController(Context _ctx) {
         this.ctx = _ctx;
+
+        headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        headers.put("x-app-id", "efc835c2");
+        headers.put("x-app-key", "4d6be0c8e692f9a473f0b30d5377ce69");
     }
 
     /**
@@ -38,6 +47,36 @@ public class FoodSearchController {
         void onResponse(T response);
 
         void onError(String error);
+    }
+
+    public void getCommonNutrients(String commonFoodName, VolleyResponseListener<String> listener) {
+        FoodDetails details;
+        JSONObject jsonBody = null;
+        String url = "https://trackapi.nutritionix.com/v2/natural/nutrients";
+        try {
+            jsonBody = new JSONObject("{\"query\":\"" + commonFoodName + "\"}");
+        } catch (JSONException e) {
+            listener.onError(e.getMessage());
+        }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                response -> {
+                    Gson gson = new Gson();
+                    String s = response.toString();
+                    Log.d("API Response", s);
+                    listener.onResponse(s);
+                },
+                error -> {
+                    Log.d("ERROR", "error => " + error.toString());
+                    listener.onError(error.toString());
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
+        };
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
     public void searchFoodByName(String foodName, VolleyResponseListener<List<FoodResult>> listener) {
@@ -52,11 +91,11 @@ public class FoodSearchController {
                         JSONArray brandedFoods = response.getJSONArray("branded");
                         for (int i = 0; i < commonFoods.length(); i++) {
                             JSONObject food = (JSONObject) commonFoods.get(i);
-                            foods.add(gson.fromJson(food.toString(), FoodResult.class));
+                            foods.add(gson.fromJson(food.toString(), CommonFoodResult.class));
                         }
                         for (int i = 0; i < brandedFoods.length(); i++) {
                             JSONObject food = (JSONObject) brandedFoods.get(i);
-                            foods.add(gson.fromJson(food.toString(), FoodResult.class));
+                            foods.add(gson.fromJson(food.toString(), BrandedFoodResult.class));
                         }
                         listener.onResponse(foods);
                     } catch (JSONException e) {
@@ -70,13 +109,8 @@ public class FoodSearchController {
                 }
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                params.put("x-app-id", "efc835c2");
-                params.put("x-app-key", "4d6be0c8e692f9a473f0b30d5377ce69");
-
-                return params;
+            public Map<String, String> getHeaders() {
+                return headers;
             }
         };
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);

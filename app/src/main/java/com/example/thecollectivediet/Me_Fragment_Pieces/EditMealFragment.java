@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Me_Fragment_Pieces;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.thecollectivediet.R;
 
 public class EditMealFragment extends Fragment {
 
