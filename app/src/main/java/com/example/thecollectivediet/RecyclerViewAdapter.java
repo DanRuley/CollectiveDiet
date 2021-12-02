@@ -22,6 +22,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context ctx;
 
     public RecyclerViewAdapter(List<FoodResult> foodResults, Context _ctx) {
+
+
         this.foodResults = foodResults;
         this.ctx = _ctx;
     }
@@ -55,6 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
+
         return foodResults.size();
     }
 
@@ -66,9 +69,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            foodPicture = itemView.findViewById(R.id.editRecImage);
-            foodName = itemView.findViewById(R.id.editRecName);
-            foodServing = itemView.findViewById(R.id.editRecServing);
+            foodPicture = itemView.findViewById(R.id.foodRecImage);
+            foodName = itemView.findViewById(R.id.foodRecName);
+            foodServing = itemView.findViewById(R.id.foodRecServing);
         }
+
+
+        //todo create listener to serialize list here via the + button???????????????????????
+
     }
 }

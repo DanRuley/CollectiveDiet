@@ -6,47 +6,47 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/editRecImage"
+        android:id="@+id/foodRecImage"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/editRecDivider"
+        app:layout_constraintBottom_toTopOf="@+id/foodRecDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/editRecName"
+        android:id="@+id/foodRecName"
         android:layout_width="220dp"
         android:layout_height="36dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="Food Name"
-        app:layout_constraintBottom_toTopOf="@+id/editRecServing"
-        app:layout_constraintStart_toEndOf="@+id/editRecImage"
+        app:layout_constraintBottom_toTopOf="@+id/foodRecServing"
+        app:layout_constraintStart_toEndOf="@+id/foodRecImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/editRecDivider"
+        android:id="@+id/foodRecDivider"
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editRecImage" />
+        app:layout_constraintTop_toBottomOf="@+id/foodRecImage" />
 
     <TextView
-        android:id="@+id/editRecServing"
+        android:id="@+id/foodRecServing"
         android:layout_width="220dp"
         android:layout_height="36dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="Serving Size"
-        app:layout_constraintBottom_toTopOf="@+id/editRecDivider"
-        app:layout_constraintStart_toStartOf="@+id/editRecName"
-        app:layout_constraintTop_toBottomOf="@+id/editRecName" />
+        app:layout_constraintBottom_toTopOf="@+id/foodRecDivider"
+        app:layout_constraintStart_toStartOf="@+id/foodRecName"
+        app:layout_constraintTop_toBottomOf="@+id/foodRecName" />
 
     <ImageButton
         android:id="@+id/addFoodIcon"
