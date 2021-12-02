@@ -66,9 +66,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            foodPicture = itemView.findViewById(R.id.foodRecImage);
-            foodName = itemView.findViewById(R.id.foodRecName);
-            foodServing = itemView.findViewById(R.id.foodRecServing);
+            foodPicture = itemView.findViewById(R.id.editRecImage);
+            foodName = itemView.findViewById(R.id.editRecName);
+            foodServing = itemView.findViewById(R.id.editRecServing);
         }
     }
 }

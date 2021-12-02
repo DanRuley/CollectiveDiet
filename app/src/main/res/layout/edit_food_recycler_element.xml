@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/editRecDate"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="Date"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/blue"/>
+
     <ImageView
         android:id="@+id/editRecImage"
         android:layout_width="90dp"
@@ -13,7 +24,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/editRecDivider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editRecDate"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -25,7 +36,7 @@
         android:text="Food Name"
         app:layout_constraintBottom_toTopOf="@+id/editRecServing"
         app:layout_constraintStart_toEndOf="@+id/editRecImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/editRecDate" />
 
     <View
         android:id="@+id/editRecDivider"
@@ -48,16 +59,6 @@
         app:layout_constraintStart_toStartOf="@+id/editRecName"
         app:layout_constraintTop_toBottomOf="@+id/editRecName" />
 
-    <ImageButton
-        android:id="@+id/addFoodIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:background="#CDDC39"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
