@@ -17,8 +17,10 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +92,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View v) {
                     serializer = new JSONSerializer("EditMealsList.json", ctx);
 
+                    if(list == null){
+                        list = new ArrayList<FoodResult>();
+                        try {
+                            serializer.save(list);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                     try {
                         list = serializer.load();
