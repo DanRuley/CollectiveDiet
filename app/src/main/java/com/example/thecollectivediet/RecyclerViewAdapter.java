@@ -92,16 +92,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View v) {
                     serializer = new JSONSerializer("EditMealsList.json", ctx);
 
-                    if(list == null){
-                        list = new ArrayList<FoodResult>();
-                        try {
-                            serializer.save(list);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+
 
                     try {
                         list = serializer.load();
