@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
@@ -36,8 +38,15 @@ public class EditMealFragment extends Fragment {
 
         }
 
-        recyclerView = v.findViewById(R.id.editRecycler);
-        adapter = new RecyclerEditFood(getActivity(), list);
+        recyclerView = v.findViewById(R.id.editResultRecycler);
+        adapter = new RecyclerEditFoodAdapter(getActivity(), list);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());///////////??????????
+
+        recyclerView.setAdapter(adapter);
         return v;
     }
 }

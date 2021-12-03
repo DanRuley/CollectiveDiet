@@ -33,6 +33,18 @@ public class FoodResult {
         this.locale = locale;
     }
 
+    //temporary constructor
+    public FoodResult(String food_name, String serving_unit, String tag_name, String serving_qty) {
+        this.food_name = food_name;
+        this.serving_unit = serving_unit;
+        this.tag_name = tag_name;
+        this.serving_qty = serving_qty;
+        this.common_type = common_type;
+        this.tag_id = tag_id;
+        this.photo = photo;
+        this.locale = locale;
+    }
+
     public FoodResult() {
 
     }

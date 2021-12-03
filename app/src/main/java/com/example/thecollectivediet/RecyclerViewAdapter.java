@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,9 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -66,18 +71,45 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView foodPicture;
         TextView foodName;
         TextView foodServing;
+        ImageButton addButton;
+
+        ArrayList<FoodResult> list;
+        JSONSerializer serializer;
+        JSONObject jo;
+        FoodResult fr;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             foodPicture = itemView.findViewById(R.id.foodRecImage);
             foodName = itemView.findViewById(R.id.foodRecName);
             foodServing = itemView.findViewById(R.id.foodRecServing);
+            addButton = itemView.findViewById(R.id.addFoodIcon);
+
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    serializer = new JSONSerializer("EditMealsList.json", ctx);
+
+
+                    try {
+                        list = serializer.load();
+
+                        if (list.size() > 31) {
+
+                        } else {
+                            fr = new FoodResult(foodName.getText().toString(), "ass", "ass", foodServing.getText().toString());
+                            list.add(fr);
+                            serializer.save(list);
+                        }
+
+                    } catch (Exception e) {
+                        list = new ArrayList<FoodResult>();
+                    }
+                }
+            });
         }
 
 
-        //todo create listener to serialize list here via the + button???????????????????????
-
-        //prototype
 
     }
 }

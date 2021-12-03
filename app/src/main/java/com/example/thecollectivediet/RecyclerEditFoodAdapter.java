@@ -16,12 +16,12 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 
 import java.util.List;
 
-public class RecyclerEditFood extends RecyclerView.Adapter<RecyclerEditFood.EditViewHolder> {
+public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFoodAdapter.EditViewHolder> {
 
     private List<FoodResult> foodResultList;
     private Context context;
 
-    public RecyclerEditFood(Context context, List<FoodResult> foodResults){
+    public RecyclerEditFoodAdapter(Context context, List<FoodResult> foodResults){
 
         //todo probably need to deserialize list here instead of using foodResults **********************
         this.context = context;
@@ -30,7 +30,7 @@ public class RecyclerEditFood extends RecyclerView.Adapter<RecyclerEditFood.Edit
 
     @NonNull
     @Override
-    public RecyclerEditFood.EditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerEditFoodAdapter.EditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.edit_food_recycler_element, parent, false);
 
@@ -38,7 +38,7 @@ public class RecyclerEditFood extends RecyclerView.Adapter<RecyclerEditFood.Edit
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerEditFood.EditViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerEditFoodAdapter.EditViewHolder holder, int position) {
 
         // create a ProgressDrawable object which we will show as placeholder
         CircularProgressDrawable drawable = new CircularProgressDrawable(this.context);
@@ -49,12 +49,12 @@ public class RecyclerEditFood extends RecyclerView.Adapter<RecyclerEditFood.Edit
         holder.editFoodName.setText(foodResultList.get(position).getFood_name());
         holder.editFoodServing.setText(foodResultList.get(position).getServing_qty() + " " + foodResultList.get(position).getServing_unit());
 
-        Glide.with(this.context).load(foodResultList.get(position).getPhotoURL()).placeholder(drawable).into(holder.editFoodPicture);
+        //Glide.with(this.context).load(foodResultList.get(position).getPhotoURL()).placeholder(drawable).into(holder.editFoodPicture);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return foodResultList.size();
     }
 
     public class EditViewHolder extends RecyclerView.ViewHolder {
