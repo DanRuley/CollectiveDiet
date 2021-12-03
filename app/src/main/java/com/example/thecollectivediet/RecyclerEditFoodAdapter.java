@@ -19,13 +19,21 @@ import java.util.List;
 public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFoodAdapter.EditViewHolder> {
 
     private List<FoodResult> foodResultList;
+    private List<EditFoodObject> list;
     private Context context;
 
-    public RecyclerEditFoodAdapter(Context context, List<FoodResult> foodResults){
+//    public RecyclerEditFoodAdapter(Context context, List<FoodResult> foodResults){
+//
+//        //todo probably need to deserialize list here instead of using foodResults **********************
+//        this.context = context;
+//        this.foodResultList = foodResults;
+//    }
+
+    public RecyclerEditFoodAdapter(Context context, List<EditFoodObject> foodResults){
 
         //todo probably need to deserialize list here instead of using foodResults **********************
         this.context = context;
-        this.foodResultList = foodResults;
+        this.list = foodResults;
     }
 
     @NonNull
@@ -46,15 +54,16 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
         drawable.setCenterRadius(30f);
         drawable.setStrokeWidth(5f);
 
-        holder.editFoodName.setText(foodResultList.get(position).getFood_name());
-        holder.editFoodServing.setText(foodResultList.get(position).getServing_qty() + " " + foodResultList.get(position).getServing_unit());
+        holder.editFoodName.setText(list.get(position).getNameText());
+        holder.editFoodServing.setText(list.get(position).getInfoText());
 
         //Glide.with(this.context).load(foodResultList.get(position).getPhotoURL()).placeholder(drawable).into(holder.editFoodPicture);
     }
 
     @Override
     public int getItemCount() {
-        return foodResultList.size();
+        //return foodResultList.size();
+        return list.size();
     }
 
     public class EditViewHolder extends RecyclerView.ViewHolder {

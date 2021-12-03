@@ -30,14 +30,71 @@ public class JSONSerializer {
         this.context = context;
     }
 
-    //save list for edit meal list of meals
-    public void save(List<FoodResult> list) throws IOException, JSONException {
+//    //save list for edit meal list of meals
+//    public void save(List<FoodResult> list) throws IOException, JSONException {
+//
+//        //Make an array in JSON format
+//        JSONArray jsonArray = new JSONArray();
+//
+//        //load with list of FoodResult(s)
+//        for(FoodResult n : list){
+//            jsonArray.put(n.convertToJSON());
+//        }
+//
+//        //Now write to private disk space of our app
+//        Writer writer = null;
+//        try{
+//            OutputStream out = context.openFileOutput(fileName, context.MODE_PRIVATE);
+//
+//            writer = new OutputStreamWriter(out);
+//            writer.write(jsonArray.toString());
+//        }finally {
+//            if(writer != null){
+//                writer.close();
+//            }
+//        }
+//    }
+//
+//    //load list used in edit meals frag
+//    public ArrayList<FoodResult> load() throws IOException, JSONException{
+//
+//        ArrayList<FoodResult> list = new ArrayList<FoodResult>();
+//
+//        BufferedReader reader = null;
+//        try{
+//            InputStream in = context.openFileInput(fileName);
+//            reader = new BufferedReader(new InputStreamReader(in));
+//            StringBuilder jsonString = new StringBuilder();
+//            String line = null;
+//
+//            while((line = reader.readLine()) != null){
+//                jsonString.append(line);
+//            }
+//
+//            JSONArray jsonArray = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
+//
+//            for(int i = 0; i < jsonArray.length(); i++)
+//            {
+//                list.add( new FoodResult(jsonArray.getJSONObject(i)));
+//            }
+//        } catch (FileNotFoundException e){
+//            //only happens when list is fresh
+//        } finally {
+//            if (reader != null){
+//                reader.close();
+//            }
+//        }
+//
+//        return list;
+//    }
+
+    public void save(List<EditFoodObject> list) throws IOException, JSONException {
 
         //Make an array in JSON format
         JSONArray jsonArray = new JSONArray();
 
         //load with list of FoodResult(s)
-        for(FoodResult n : list){
+        for(EditFoodObject n : list){
             jsonArray.put(n.convertToJSON());
         }
 
@@ -56,9 +113,9 @@ public class JSONSerializer {
     }
 
     //load list used in edit meals frag
-    public ArrayList<FoodResult> load() throws IOException, JSONException{
+    public ArrayList<EditFoodObject> load() throws IOException, JSONException{
 
-        ArrayList<FoodResult> list = new ArrayList<FoodResult>();
+        ArrayList<EditFoodObject> list = new ArrayList<EditFoodObject>();
 
         BufferedReader reader = null;
         try{
@@ -75,7 +132,7 @@ public class JSONSerializer {
 
             for(int i = 0; i < jsonArray.length(); i++)
             {
-                list.add( new FoodResult(jsonArray.getJSONObject(i)));
+                list.add( new EditFoodObject(jsonArray.getJSONObject(i)));
             }
         } catch (FileNotFoundException e){
             //only happens when list is fresh

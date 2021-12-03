@@ -75,10 +75,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView foodServing;
         ImageButton addButton;
 
-        ArrayList<FoodResult> list;
+        //ArrayList<FoodResult> list;
+        ArrayList<EditFoodObject> list;
         JSONSerializer serializer;
         JSONObject jo;
-        FoodResult fr;
+        //FoodResult fr;
+        EditFoodObject food;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,13 +102,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         if (list.size() > 31) {
 
                         } else {
-                            fr = new FoodResult(foodName.getText().toString(), "ass", "ass", foodServing.getText().toString());
-                            list.add(fr);
+                            //fr = new FoodResult(foodName.getText().toString(), "ass", "ass", foodServing.getText().toString());
+                            food = new EditFoodObject(foodName.getText().toString(), foodServing.getText().toString());
+                            //list.add(fr);
+                            list.add(food);
                             serializer.save(list);
                         }
 
                     } catch (Exception e) {
-                        list = new ArrayList<FoodResult>();
+                        //list = new ArrayList<FoodResult>();
                     }
                 }
             });

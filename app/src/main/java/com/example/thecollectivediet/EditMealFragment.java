@@ -18,7 +18,8 @@ import java.util.List;
 public class EditMealFragment extends Fragment {
 
     private JSONSerializer serializer;
-    private List<FoodResult> list;
+    //private List<FoodResult> list;
+    private List<EditFoodObject> list;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -34,7 +35,7 @@ public class EditMealFragment extends Fragment {
         try{
             list = serializer.load();
         } catch (Exception e){
-            list = new ArrayList<FoodResult>();
+            //list = new ArrayList<FoodResult>();
 
         }
 
