@@ -68,14 +68,14 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
 
     public class EditViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView editFoodPicture;
+        //ImageView editFoodPicture;
         TextView editFoodName;
         TextView editFoodServing;
         public EditViewHolder(View view){
 
             super(view);
 
-            editFoodPicture = itemView.findViewById(R.id.editRecImage);
+            //editFoodPicture = itemView.findViewById(R.id.editRecImage);
             editFoodName = itemView.findViewById(R.id.editRecName);
             editFoodServing = itemView.findViewById(R.id.editRecServing);
         }

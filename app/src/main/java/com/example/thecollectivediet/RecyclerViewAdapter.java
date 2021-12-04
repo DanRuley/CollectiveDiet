@@ -112,7 +112,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 food = new EditFoodObject(foodName.getText().toString(), foodServing.getText().toString());
 
-                list.add(food);
+                list.add(0,food);
                 serializer.save(list);
 
 
