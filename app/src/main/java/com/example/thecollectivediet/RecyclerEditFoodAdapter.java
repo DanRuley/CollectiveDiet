@@ -56,6 +56,7 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
 
         holder.editFoodName.setText(list.get(position).getNameText());
         holder.editFoodServing.setText(list.get(position).getInfoText());
+        holder.editDate.setText(list.get(position).getDateText());
 
         //Glide.with(this.context).load(foodResultList.get(position).getPhotoURL()).placeholder(drawable).into(holder.editFoodPicture);
     }
@@ -71,6 +72,7 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
         //ImageView editFoodPicture;
         TextView editFoodName;
         TextView editFoodServing;
+        TextView editDate;
         public EditViewHolder(View view){
 
             super(view);
@@ -78,6 +80,7 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
             //editFoodPicture = itemView.findViewById(R.id.editRecImage);
             editFoodName = itemView.findViewById(R.id.editRecName);
             editFoodServing = itemView.findViewById(R.id.editRecServing);
+            editDate = itemView.findViewById(R.id.editRecDate);
         }
     }
 }

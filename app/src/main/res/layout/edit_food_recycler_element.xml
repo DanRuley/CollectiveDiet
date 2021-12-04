@@ -10,7 +10,7 @@
         android:id="@+id/editRecDate"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/purple_500"
+        android:background="@color/purple_200"
         android:text="Date"
         android:textAlignment="center"
         android:textColor="@color/white"
