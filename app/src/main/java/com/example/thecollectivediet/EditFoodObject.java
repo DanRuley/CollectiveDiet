@@ -1,5 +1,7 @@
 package com.example.thecollectivediet;
 
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,6 +9,7 @@ public class EditFoodObject {
 
     private String name;
     private String info;
+
 
     //For serialization
     private static final String JSON_NAME = "name";

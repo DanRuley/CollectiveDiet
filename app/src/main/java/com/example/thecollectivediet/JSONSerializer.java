@@ -91,6 +91,7 @@ public class JSONSerializer {
     public void save(List<EditFoodObject> list) throws IOException, JSONException {
 
         //Make an array in JSON format
+        //
         JSONArray jsonArray = new JSONArray();
 
         //load with list of FoodResult(s)

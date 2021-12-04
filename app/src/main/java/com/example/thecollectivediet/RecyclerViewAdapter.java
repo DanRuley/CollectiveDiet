@@ -70,16 +70,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        //UI components
         ImageView foodPicture;
         TextView foodName;
         TextView foodServing;
         ImageButton addButton;
 
-        //ArrayList<FoodResult> list;
+       //Used for serialization
         ArrayList<EditFoodObject> list;
         JSONSerializer serializer;
         JSONObject jo;
-        //FoodResult fr;
         EditFoodObject food;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -92,30 +92,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    serializer = new JSONSerializer("EditMealsList.json", ctx);
 
-
-
-                    try {
-                        list = serializer.load();
-
-                        if (list.size() > 31) {
-
-                        } else {
-                            //fr = new FoodResult(foodName.getText().toString(), "ass", "ass", foodServing.getText().toString());
-                            food = new EditFoodObject(foodName.getText().toString(), foodServing.getText().toString());
-                            //list.add(fr);
-                            list.add(food);
-                            serializer.save(list);
-                        }
-
-                    } catch (Exception e) {
-                        //list = new ArrayList<FoodResult>();
-                    }
+                    food = new EditFoodObject(foodName.getText().toString(), foodServing.getText().toString());
+                    addFoodToList(food);
                 }
             });
         }
 
+        private  void addFoodToList(EditFoodObject food){
+            serializer = new JSONSerializer("EditMealsList.json", ctx);
+
+            try {
+                list = serializer.load();
+
+                //Used 30 to keep list short
+                if (list.size() > 30) {
+                    list.remove(0);
+                }
+
+                food = new EditFoodObject(foodName.getText().toString(), foodServing.getText().toString());
+
+                list.add(food);
+                serializer.save(list);
+
+
+            } catch (Exception e) {
+                //error
+            }
+        }
 
 
     }
