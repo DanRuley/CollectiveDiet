@@ -2,6 +2,8 @@ package com.example.thecollectivediet;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.example.thecollectivediet.Me_Fragment_Pieces.MeTabLayoutFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
@@ -9,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
@@ -156,6 +159,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    @Override
+    public FragmentManager getSupportFragmentManager() {
+        hideKeyboard(this);
+        return super.getSupportFragmentManager();
     }
 
     public static void hideKeyboard(Activity activity) {

@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Me_Fragment_Pieces;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,8 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.thecollectivediet.R;
 
 public class EditMealFragment extends Fragment {
 
