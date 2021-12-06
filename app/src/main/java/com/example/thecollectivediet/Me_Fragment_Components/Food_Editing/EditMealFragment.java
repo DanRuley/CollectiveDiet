@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
+import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
+import com.example.thecollectivediet.JSONSerializer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.RecyclerEditFoodAdapter;
 
 public class EditMealFragment extends Fragment {
 

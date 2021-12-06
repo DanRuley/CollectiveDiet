@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
+import com.example.thecollectivediet.JSONSerializer;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
@@ -105,6 +106,12 @@ public class ManualFoodSearch extends Fragment {
                     TextView f = dialog.findViewById(R.id.foodNameTxt);
                     f.setText(response);
 
+                    dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty(), ctx);
+                        }
+                    });
                     dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());
 
                     dialog.show();

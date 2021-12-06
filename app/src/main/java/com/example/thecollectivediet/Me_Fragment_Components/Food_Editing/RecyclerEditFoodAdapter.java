@@ -4,32 +4,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.bumptech.glide.Glide;
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
+import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
 
 import java.util.List;
 
 public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFoodAdapter.EditViewHolder> {
 
-    private List<FoodResult> foodResultList;
     private List<EditFoodObject> list;
     private Context context;
 
-//    public RecyclerEditFoodAdapter(Context context, List<FoodResult> foodResults){
-//
-//        //todo probably need to deserialize list here instead of using foodResults **********************
-//        this.context = context;
-//        this.foodResultList = foodResults;
-//    }
 
-    public RecyclerEditFoodAdapter(Context context, List<EditFoodObject> foodResults){
+    public RecyclerEditFoodAdapter(Context context, List<EditFoodObject> foodResults) {
 
         //todo probably need to deserialize list here instead of using foodResults **********************
         this.context = context;
@@ -48,17 +38,9 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
     @Override
     public void onBindViewHolder(@NonNull RecyclerEditFoodAdapter.EditViewHolder holder, int position) {
 
-        // create a ProgressDrawable object which we will show as placeholder
-        CircularProgressDrawable drawable = new CircularProgressDrawable(this.context);
-        drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);
-        drawable.setCenterRadius(30f);
-        drawable.setStrokeWidth(5f);
-
         holder.editFoodName.setText(list.get(position).getNameText());
         holder.editFoodServing.setText(list.get(position).getInfoText());
         holder.editDate.setText(list.get(position).getDateText());
-
-        //Glide.with(this.context).load(foodResultList.get(position).getPhotoURL()).placeholder(drawable).into(holder.editFoodPicture);
     }
 
     @Override
@@ -73,7 +55,8 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
         TextView editFoodName;
         TextView editFoodServing;
         TextView editDate;
-        public EditViewHolder(View view){
+
+        public EditViewHolder(View view) {
 
             super(view);
 
