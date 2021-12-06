@@ -1,8 +1,12 @@
 package com.example.thecollectivediet.Me_Fragment_Pieces;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
@@ -23,6 +30,7 @@ import java.util.List;
 
 public class ManualFoodSearch extends Fragment {
 
+    static String savedText;
     EditText foodInput;
     Button searchBtn;
     Context ctx;
@@ -30,10 +38,6 @@ public class ManualFoodSearch extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
-
-    public ManualFoodSearch() {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +47,14 @@ public class ManualFoodSearch extends Fragment {
 
         initializeComponents(v);
 
+        if (savedText != null) {
+            foodInput.setText(savedText);
+            searchBtn.performClick();
+        }
+
         return v;
     }
+
 
     private void initializeComponents(View v) {
         ctx = this.getActivity();
@@ -65,7 +75,8 @@ public class ManualFoodSearch extends Fragment {
 
             @Override
             public void onResponse(List<FoodResult> response) {
-                    populateRecycler(response);
+                savedText = foodInput.getText().toString();
+                populateRecycler(response);
             }
 
             @Override
@@ -75,10 +86,38 @@ public class ManualFoodSearch extends Fragment {
         }));
     }
 
+
     private void populateRecycler(List<FoodResult> response) {
         MainActivity.hideKeyboard(getActivity());
 
-        mAdapter = new RecyclerViewAdapter(response, ctx);
+        mAdapter = new RecyclerViewAdapter(response, ctx, foodItem -> {
+
+            controller.getCommonNutrients(foodItem.getFood_name(), new FoodSearchController.VolleyResponseListener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Dialog dialog = new Dialog(ctx);
+
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                    dialog.setContentView(R.layout.confirm_food_add);
+                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+                    TextView f = dialog.findViewById(R.id.foodNameTxt);
+                    f.setText(response);
+
+                    dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());
+
+                    dialog.show();
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        });
         recyclerView.setAdapter(mAdapter);
     }
 }

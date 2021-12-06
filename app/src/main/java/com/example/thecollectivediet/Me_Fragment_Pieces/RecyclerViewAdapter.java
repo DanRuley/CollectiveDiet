@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,12 +19,19 @@ import com.example.thecollectivediet.R;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.FoodSearchHolder> {
+
+    public interface OnFoodItemClickListener {
+        void onFoodItemClick(FoodResult foodItem);
+    }
+
     List<FoodResult> foodResults;
     Context ctx;
+    OnFoodItemClickListener listener;
 
-    public RecyclerViewAdapter(List<FoodResult> foodResults, Context _ctx) {
+    public RecyclerViewAdapter(List<FoodResult> foodResults, Context _ctx, OnFoodItemClickListener listener) {
         this.foodResults = foodResults;
         this.ctx = _ctx;
+        this.listener = listener;
     }
 
     @NonNull
@@ -39,18 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull FoodSearchHolder holder, int position) {
-        // create a ProgressDrawable object which we will show as placeholder
-        CircularProgressDrawable drawable = new CircularProgressDrawable(this.ctx);
-        drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);
-        drawable.setCenterRadius(30f);
-        drawable.setStrokeWidth(5f);
-        // set all other properties as you would see fit and start it
-        drawable.start();
-
-        holder.foodName.setText(foodResults.get(position).getFood_name());
-        holder.foodServing.setText(foodResults.get(position).getServing_qty() + " " + foodResults.get(position).getServing_unit());
-
-        Glide.with(this.ctx).load(foodResults.get(position).getPhotoURL()).placeholder(drawable).into(holder.foodPicture);
+        holder.bind(foodResults.get(position), listener, position, ctx);
     }
 
     @Override
@@ -70,6 +67,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             foodName = itemView.findViewById(R.id.foodRecName);
             foodServing = itemView.findViewById(R.id.foodRecServing);
         }
+
+        public void bind(final FoodResult food, final OnFoodItemClickListener listener, final int position, Context ctx) {
+            // create a ProgressDrawable object which we will show as placeholder
+            CircularProgressDrawable drawable = new CircularProgressDrawable(ctx);
+            drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);
+            drawable.setCenterRadius(30f);
+            drawable.setStrokeWidth(5f);
+            // set all other properties as you would see fit and start it
+            drawable.start();
+
+            this.foodName.setText(foodResults.get(position).getFood_name());
+            this.foodServing.setText(foodResults.get(position).getServing_qty() + " " + foodResults.get(position).getServing_unit());
+
+            Glide.with(ctx).load(foodResults.get(position).getPhotoURL()).placeholder(drawable).into(this.foodPicture);
+
+            itemView.setOnClickListener(v -> listener.onFoodItemClick(food));
+        }
+
+
     }
-    
+
 }

@@ -4,13 +4,13 @@ public class BrandedFoodResult extends FoodResult {
 
     private String nix_brand_id;
     private String brand_name_item_name;
-    private int nf_calories;
+    private double nf_calories;
     private String brand_name;
     private int region;
     private int brand_type;
     private String nix_item_id;
 
-    public BrandedFoodResult(String food_name, String serving_unit, String serving_qty, Photo photo, String locale, String nix_brand_id, String brand_name_item_name, int nf_calories, String brand_name, int region, int brand_type, String nix_item_id) {
+    public BrandedFoodResult(String food_name, String serving_unit, String serving_qty, Photo photo, String locale, String nix_brand_id, String brand_name_item_name, double nf_calories, String brand_name, int region, int brand_type, String nix_item_id) {
         super(food_name, serving_unit, serving_qty, photo, locale);
         this.nix_brand_id = nix_brand_id;
         this.brand_name_item_name = brand_name_item_name;
@@ -37,7 +37,7 @@ public class BrandedFoodResult extends FoodResult {
         this.brand_name_item_name = brand_name_item_name;
     }
 
-    public int getNf_calories() {
+    public double getNf_calories() {
         return nf_calories;
     }
 
