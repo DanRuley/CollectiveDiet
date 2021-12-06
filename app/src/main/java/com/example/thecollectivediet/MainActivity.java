@@ -3,7 +3,10 @@ package com.example.thecollectivediet;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.example.thecollectivediet.Me_Fragment_Pieces.MeTabLayoutFragment;
+
+import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
+import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
+import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
@@ -16,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{

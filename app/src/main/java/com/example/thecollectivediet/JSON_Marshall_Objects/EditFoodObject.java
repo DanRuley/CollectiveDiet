@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 
