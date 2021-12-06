@@ -1,7 +1,13 @@
 package com.example.thecollectivediet;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.YuvImage;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Size;
@@ -9,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.camera.core.AspectRatio;
@@ -17,6 +24,7 @@ import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
@@ -26,6 +34,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -35,82 +45,115 @@ import java.util.concurrent.ExecutionException;
 
 public class CameraFragment extends Fragment {
 
-    Executors executor;
+    //Buttons and views
     PreviewView previewView;
-    private ImageCapture mImageCapture;
+    Button takePic;
+    ImageView imageView2;
 
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;/////xxxxx
+    //camera
+    Preview preview;
+    CameraSelector cameraSelector;
+    ImageCapture imageCapture;
+    ProcessCameraProvider cameraProvider;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_camera, container, false);
 
-        previewView = v.findViewById(R.id.view_camera);
+        //initialize components
+        initializeComponents(v);
+
+        //set up preview, imageCapture,
         cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
         cameraProviderFuture.addListener(() -> {
             try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                bindPreview(cameraProvider);
+                cameraProvider = cameraProviderFuture.get();
+                bindPreview(cameraProvider, v);
             } catch (ExecutionException | InterruptedException e) {
                 // No errors need to be handled for this Future.
                 // This should never be reached.
             }
         }, ContextCompat.getMainExecutor(getActivity()));
-        //startCamera();
+
+
+
+
         return v;
     }
-    void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
-        Preview preview = new Preview.Builder()
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, View view) {
+
+         preview = new Preview.Builder()
                 .build();
 
-        CameraSelector cameraSelector = new CameraSelector.Builder()
+         cameraSelector = new CameraSelector.Builder()
                 .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                 .build();
 
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
-    }
-    /*private void startCamera() {
-        ListenableFuture cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
-
-        cameraProviderFuture.addListener(() -> {
-            try {
-                // Camera provider is now guaranteed to be available
-                ProcessCameraProvider cameraProvider = (ProcessCameraProvider) cameraProviderFuture.get();
-                // Set up the view finder use case to display camera preview
-                Preview preview = new Preview.Builder().build();
-
-
-                CameraSelector cameraSelector = new CameraSelector.Builder()
-                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+         imageCapture =
+                new ImageCapture.Builder()
+                        .setTargetRotation(view.getDisplay().getRotation())
                         .build();
 
+        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageCapture, preview);
+    }
+
+    private void initializeComponents(View view)
+    {
+        //views
+        previewView = view.findViewById(R.id.view_camera);
+        imageView2 = view.findViewById(R.id.imageView2);
+
+        //buttons
+        takePic = view.findViewById(R.id.take_pic);
+
+        /*
+        Listener for "take pic" button in camera view. This listener will take a pic,
+        place pic in an image view, and then be used for inference using Tensorflow lite.
+        A string will be returned to be used in the food search function.
+        */
+        takePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback(){
+                    @Override
+                    public void onCaptureSuccess(ImageProxy imageProxy){
 
 
+                        //Change imageProxy to bitmap to be used with imageView
+                        Bitmap bit = convertImageProxyToBitmap(imageProxy);
+                        imageView2.setImageBitmap(bit);
 
+                        //Make sure to close the image buffer for next pic
+                        imageProxy.close();
 
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll();
-                // Bind use cases to camera
-                // Attach use cases to the camera with the same lifecycle owner
-                Camera camera = cameraProvider.bindToLifecycle(
-                        ((LifecycleOwner) this),
-                        cameraSelector,
-                        preview,
-                        mImageCapture
+                        //todo send the pic out for inference
 
-                );
+                    }
+                    @Override
+                    public void onError(ImageCaptureException e){
 
-
-
-                preview.setSurfaceProvider(mPreviewView.getSurfaceProvider());
-
-            } catch (InterruptedException | ExecutionException e) {
-                // Currently no exceptions thrown. cameraProviderFuture.get() should
-                // not block since the listener is being called, so no need to
-                // handle InterruptedException.
+                        super.onError(e);
+                    }
+                });
             }
-        }, ContextCompat.getMainExecutor(getActivity()));
-    }*/
+        });
+    }
+
+    /*
+    Converts ImageProxy to Bitmap
+     */
+    private Bitmap convertImageProxyToBitmap(ImageProxy image) {
+        ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
+        byteBuffer.rewind();
+        byte[] bytes = new byte[byteBuffer.capacity()];
+        byteBuffer.get(bytes);
+        byte[] clonedBytes = bytes.clone();
+        return BitmapFactory.decodeByteArray(clonedBytes, 0, clonedBytes.length);
+    }
+
+
 }
