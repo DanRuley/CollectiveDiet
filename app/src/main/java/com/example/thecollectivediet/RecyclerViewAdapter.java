@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,11 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -22,6 +29,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context ctx;
 
     public RecyclerViewAdapter(List<FoodResult> foodResults, Context _ctx) {
+
+
         this.foodResults = foodResults;
         this.ctx = _ctx;
     }
@@ -55,20 +64,63 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
+
         return foodResults.size();
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        //UI components
         ImageView foodPicture;
         TextView foodName;
         TextView foodServing;
+        ImageButton addButton;
+
+       //Used for serialization
+        ArrayList<EditFoodObject> list;
+        JSONSerializer serializer;
+        JSONObject jo;
+        EditFoodObject food;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             foodPicture = itemView.findViewById(R.id.foodRecImage);
             foodName = itemView.findViewById(R.id.foodRecName);
             foodServing = itemView.findViewById(R.id.foodRecServing);
+            addButton = itemView.findViewById(R.id.addFoodIcon);
+
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    food = new EditFoodObject(foodName.getText().toString(), foodServing.getText().toString());
+                    addFoodToList(food);
+                }
+            });
         }
+
+        private  void addFoodToList(EditFoodObject food){
+            serializer = new JSONSerializer("EditMealsList.json", ctx);
+
+            try {
+                list = serializer.load();
+
+                //Used 30 to keep list short
+                if (list.size() > 30) {
+                    list.remove(0);
+                }
+
+                food = new EditFoodObject(foodName.getText().toString(), foodServing.getText().toString());
+
+                list.add(0,food);
+                serializer.save(list);
+
+
+            } catch (Exception e) {
+                //error
+            }
+        }
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class FoodResult {
 
@@ -12,7 +13,28 @@ public class FoodResult {
     private int tag_id;
     private Photo photo;
 
+    //For serialization
+    private static final String JSON_NAME = "name";
+    private static final String JSON_SERVING_SIZE = "servingSize";
+
+    public FoodResult(JSONObject jo) throws JSONException{
+        this.food_name = jo.getString(JSON_NAME);
+        this.serving_qty = jo.getString(JSON_SERVING_SIZE);
+    }
+
     public FoodResult(String food_name, String serving_unit, String tag_name, String serving_qty, String common_type, int tag_id, Photo photo, String locale) {
+        this.food_name = food_name;
+        this.serving_unit = serving_unit;
+        this.tag_name = tag_name;
+        this.serving_qty = serving_qty;
+        this.common_type = common_type;
+        this.tag_id = tag_id;
+        this.photo = photo;
+        this.locale = locale;
+    }
+
+    //temporary constructor
+    public FoodResult(String food_name, String serving_unit, String tag_name, String serving_qty) {
         this.food_name = food_name;
         this.serving_unit = serving_unit;
         this.tag_name = tag_name;
@@ -126,6 +148,16 @@ public class FoodResult {
         public void setThumb(String thumb) {
             this.thumb = thumb;
         }
+    }
+
+    //Method to serialize FoodResult object
+    public JSONObject convertToJSON() throws JSONException{
+        JSONObject jo = new JSONObject();
+
+        jo.put(JSON_NAME, food_name);
+        jo.put(JSON_SERVING_SIZE, serving_qty);
+
+        return jo;
     }
 }
 
