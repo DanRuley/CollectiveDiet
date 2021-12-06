@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Camera_Fragment_Components;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -39,6 +39,7 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import com.example.thecollectivediet.R;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;

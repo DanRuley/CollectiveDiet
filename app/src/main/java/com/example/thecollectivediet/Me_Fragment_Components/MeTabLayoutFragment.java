@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Pieces;
+package com.example.thecollectivediet.Me_Fragment_Components;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.thecollectivediet.Me_Fragment_Pieces.MeFragmentAdapter;
+import com.example.thecollectivediet.Me_Fragment_Components.MeFragmentAdapter;
 import com.example.thecollectivediet.R;
 import com.google.android.material.tabs.TabLayout;
 

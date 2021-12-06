@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Pieces;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,9 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
-import com.example.thecollectivediet.JSONSerializer;
+import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.MainActivity;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.RecyclerViewAdapter;
 import com.example.thecollectivediet.R;
 
 import java.util.List;
@@ -109,7 +110,8 @@ public class ManualFoodSearch extends Fragment {
                     dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty(), ctx);
+
+                             JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty(), ctx);
                         }
                     });
                     dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());

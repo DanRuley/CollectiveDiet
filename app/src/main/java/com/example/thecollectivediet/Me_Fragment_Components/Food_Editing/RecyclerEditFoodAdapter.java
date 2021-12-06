@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
+import com.example.thecollectivediet.R;
 
 import java.util.List;
 

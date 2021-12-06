@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Pieces;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodDetails;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.ManualFoodSearch;
 import com.example.thecollectivediet.R;
 
 import java.io.BufferedWriter;

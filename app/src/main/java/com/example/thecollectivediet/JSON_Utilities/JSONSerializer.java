@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.JSON_Utilities;
 
 import android.content.Context;
 
@@ -62,7 +62,7 @@ public class JSONSerializer {
 
             //Used 30 to keep list short
             if (list.size() > 30) {
-                list.remove(0);
+                list.remove(list.size()-1);
             }
 
             EditFoodObject food = new EditFoodObject(foodName, foodServing);
