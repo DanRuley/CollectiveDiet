@@ -23,7 +23,7 @@ public class TodayFragment extends Fragment {
         manualEntry = v.findViewById(R.id.logFood);
 
         manualEntry.setOnClickListener(v1 -> {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentHolder, new FoodLogFragment());
             transaction.addToBackStack(null);
             transaction.commit();

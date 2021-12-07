@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Editing.EditMealFragment;
 
 /*
     This class is used as the adapter in MeFragment. This allows users to view other fragments
@@ -26,8 +25,6 @@ public class MeFragmentAdapter extends FragmentStateAdapter {
         {
             case 1 :
                 return new com.example.thecollectivediet.Me_Fragment_Components.Food_Editing.EditMealFragment();
-           // case 2 :
-             //   return new ThirdFragment();
         }
 
         return new TodayFragment();

@@ -35,7 +35,7 @@ public class MeTabLayoutFragment extends Fragment {
             pager2 = v.findViewById(R.id.view_pager2);
 
             //Setup FragmentAdapter and tabs in tab layout
-            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
             adapter = new MeFragmentAdapter(fm, getLifecycle());
             pager2.setAdapter(adapter);
 

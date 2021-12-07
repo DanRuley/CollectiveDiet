@@ -43,20 +43,37 @@ public class FoodSearchController {
         void onError(String error);
     }
 
-    public void getNutrients(FoodResult foodSearchResult, VolleyResponseListener<String> listener) {
+    public void getNutrients(FoodResult foodSearchResult, VolleyResponseListener<FoodNutrients> listener) {
         if (foodSearchResult instanceof CommonFoodResult)
             getCommonNutrients(foodSearchResult.getAPI_Identifier(), listener);
         else
             getBrandedNutrients(foodSearchResult.getAPI_Identifier(), listener);
     }
 
-    private void getBrandedNutrients(String food_name, VolleyResponseListener<String> listener) {
+    private void getBrandedNutrients(String apiID, VolleyResponseListener<FoodNutrients> listener) {
+        String url = "https://trackapi.nutritionix.com/v2/search/item?nix_item_id=" + apiID;
 
-
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        Gson gson = new Gson();
+                        FoodNutrients nutrients = gson.fromJson(response.getJSONArray("foods").get(0).toString(), FoodNutrients.class);
+                        listener.onResponse(nutrients);
+                    } catch (JSONException e) {
+                        listener.onError(e.getMessage());
+                    }
+                },
+                error -> listener.onError(error.toString())
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
+        };
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
-    public void getCommonNutrients(String commonFoodName, VolleyResponseListener<String> listener) {
-        FoodDetails details;
+    public void getCommonNutrients(String commonFoodName, VolleyResponseListener<FoodNutrients> listener) {
         JSONObject jsonBody = null;
         String url = "https://trackapi.nutritionix.com/v2/natural/nutrients";
         try {
@@ -67,19 +84,19 @@ public class FoodSearchController {
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
                 response -> {
-                    Gson gson = new Gson();
-                    String s = response.toString();
-                    Log.d("API Response", s);
-                    listener.onResponse(s);
-
+                    try {
+                        Gson gson = new Gson();
+                        FoodNutrients nutrients = null;
+                        nutrients = gson.fromJson(response.getJSONArray("foods").get(0).toString(), FoodNutrients.class);
+                        listener.onResponse(nutrients);
+                    } catch (JSONException e) {
+                        listener.onError(e.getMessage());
+                    }
                 },
-                error -> {
-                    Log.d("ERROR", "error => " + error.toString());
-                    listener.onError(error.toString());
-                }
+                error -> listener.onError(error.toString())
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 return headers;
             }
         };
@@ -110,10 +127,7 @@ public class FoodSearchController {
                         listener.onError(e.getMessage());
                     }
                 },
-                error -> {
-                    Log.d("ERROR", "error => " + error.toString());
-                    listener.onError(error.toString());
-                }
+                error -> listener.onError(error.toString())
         ) {
             @Override
             public Map<String, String> getHeaders() {

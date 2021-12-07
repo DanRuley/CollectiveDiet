@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.MainActivity;
@@ -91,9 +92,9 @@ public class ManualFoodSearch extends Fragment {
 
         mAdapter = new FoodSearchRecyclerViewAdapter(response, ctx, foodItem -> {
 
-            controller.getCommonNutrients(foodItem.getFood_name(), new FoodSearchController.VolleyResponseListener<String>() {
+            controller.getNutrients(foodItem, new FoodSearchController.VolleyResponseListener<FoodNutrients>() {
                 @Override
-                public void onResponse(String response) {
+                public void onResponse(FoodNutrients response) {
                     Dialog dialog = new Dialog(ctx);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -101,16 +102,9 @@ public class ManualFoodSearch extends Fragment {
                     dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
                     TextView f = dialog.findViewById(R.id.foodNameTxt);
-                    f.setText(response);
+                    f.setText(response.getFood_name());
 
-                    dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(v -> JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty(), ctx));
-                    dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                             JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty(), ctx);
-                        }
-                    });
+                    dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(v -> JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty() + foodItem.getServing_unit(), ctx));
                     dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());
 
                     dialog.show();

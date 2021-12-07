@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
 
 import com.example.thecollectivediet.R;
-
-import java.io.FileOutputStream;
 
 public class FoodLogFragment extends Fragment {
 
@@ -56,7 +53,7 @@ public class FoodLogFragment extends Fragment {
         res = v.findViewById(R.id.res);
 
         addFoodBtn.setOnClickListener(v1 -> {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
             transaction.addToBackStack(null);
             transaction.commit();

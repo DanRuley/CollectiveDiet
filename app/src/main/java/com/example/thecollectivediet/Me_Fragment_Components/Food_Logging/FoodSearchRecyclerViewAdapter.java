@@ -39,9 +39,7 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
 
         //inflater parameters: the layout you want to inflate, the parent, and attach to root T/F
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_recycler_element, parent, false);
-        FoodSearchHolder holder = new FoodSearchHolder(v);
-
-        return holder;
+        return new FoodSearchHolder(v);
     }
 
     @Override
