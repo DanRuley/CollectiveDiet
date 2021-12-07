@@ -1,10 +1,12 @@
-package com.example.thecollectivediet.Me_Fragment_Pieces;
+package com.example.thecollectivediet.Me_Fragment_Components;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Editing.EditMealFragment;
 
 /*
     This class is used as the adapter in MeFragment. This allows users to view other fragments

@@ -2,7 +2,7 @@ package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 import org.json.JSONException;
 
-public class FoodResult {
+public abstract class FoodResult {
 
     private String food_name;
     private String serving_unit;
@@ -20,6 +20,8 @@ public class FoodResult {
     public FoodResult() {
 
     }
+
+    public abstract String getAPI_Identifier();
 
     public String getFood_name() {
         return food_name;

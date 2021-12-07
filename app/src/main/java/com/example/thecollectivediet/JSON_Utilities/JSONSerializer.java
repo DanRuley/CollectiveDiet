@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.JSON_Utilities;
 
 import android.content.Context;
 

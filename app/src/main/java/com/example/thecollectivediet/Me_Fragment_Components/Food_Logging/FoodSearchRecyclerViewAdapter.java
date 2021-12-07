@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Pieces;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +17,7 @@ import com.example.thecollectivediet.R;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.FoodSearchHolder> {
+public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSearchRecyclerViewAdapter.FoodSearchHolder> {
 
     public interface OnFoodItemClickListener {
         void onFoodItemClick(FoodResult foodItem);
@@ -28,7 +27,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context ctx;
     OnFoodItemClickListener listener;
 
-    public RecyclerViewAdapter(List<FoodResult> foodResults, Context _ctx, OnFoodItemClickListener listener) {
+    public FoodSearchRecyclerViewAdapter(List<FoodResult> foodResults, Context _ctx, OnFoodItemClickListener listener) {
         this.foodResults = foodResults;
         this.ctx = _ctx;
         this.listener = listener;

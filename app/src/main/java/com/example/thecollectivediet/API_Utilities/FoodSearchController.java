@@ -5,14 +5,8 @@ import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.example.thecollectivediet.JSON_Marshall_Objects.BrandedFoodResult;
-import com.example.thecollectivediet.JSON_Marshall_Objects.CommonFoodResult;
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodDetails;
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
+import com.example.thecollectivediet.JSON_Marshall_Objects.*;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -49,6 +43,18 @@ public class FoodSearchController {
         void onError(String error);
     }
 
+    public void getNutrients(FoodResult foodSearchResult, VolleyResponseListener<String> listener) {
+        if (foodSearchResult instanceof CommonFoodResult)
+            getCommonNutrients(foodSearchResult.getAPI_Identifier(), listener);
+        else
+            getBrandedNutrients(foodSearchResult.getAPI_Identifier(), listener);
+    }
+
+    private void getBrandedNutrients(String food_name, VolleyResponseListener<String> listener) {
+
+
+    }
+
     public void getCommonNutrients(String commonFoodName, VolleyResponseListener<String> listener) {
         FoodDetails details;
         JSONObject jsonBody = null;
@@ -65,6 +71,7 @@ public class FoodSearchController {
                     String s = response.toString();
                     Log.d("API Response", s);
                     listener.onResponse(s);
+
                 },
                 error -> {
                     Log.d("ERROR", "error => " + error.toString());

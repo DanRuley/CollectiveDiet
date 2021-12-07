@@ -78,6 +78,11 @@ public class BrandedFoodResult extends FoodResult {
     }
 
     @Override
+    public String getAPI_Identifier() {
+        return nix_item_id;
+    }
+
+    @Override
     public String toString() {
         return "BrandedFoodResult{" +
                 "nix_brand_id='" + nix_brand_id + '\'' +

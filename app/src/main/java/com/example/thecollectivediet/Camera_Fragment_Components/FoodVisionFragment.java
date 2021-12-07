@@ -1,19 +1,16 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Camera_Fragment_Components;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.navigation.NavigationView;
+import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
+import com.example.thecollectivediet.R;
 
 public class FoodVisionFragment extends Fragment {
 

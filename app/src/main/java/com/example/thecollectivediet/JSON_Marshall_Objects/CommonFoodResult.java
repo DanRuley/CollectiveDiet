@@ -5,8 +5,6 @@ public class CommonFoodResult extends FoodResult {
     private String tag_name;
     private int tag_it;
 
-
-
     public CommonFoodResult(String food_name, String serving_unit, String serving_qty, Photo photo, String locale, String tag_name) {
         super(food_name, serving_unit, serving_qty, photo, locale);
         this.tag_name = tag_name;
@@ -26,6 +24,11 @@ public class CommonFoodResult extends FoodResult {
 
     public void setTag_it(int tag_it) {
         this.tag_it = tag_it;
+    }
+
+    @Override
+    public String getAPI_Identifier() {
+        return getFood_name();
     }
 
     @Override

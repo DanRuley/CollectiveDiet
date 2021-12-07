@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Pieces;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,17 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
-import com.example.thecollectivediet.JSONSerializer;
+import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 
 import java.util.List;
 
 import com.example.thecollectivediet.R;
-import com.example.thecollectivediet.RecyclerEditFoodAdapter;
 
 public class EditMealFragment extends Fragment {
 
     private JSONSerializer serializer;
-    //private List<FoodResult> list;
     private List<EditFoodObject> list;
 
     RecyclerView recyclerView;
