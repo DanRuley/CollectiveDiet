@@ -104,6 +104,13 @@ public class ManualFoodSearch extends Fragment {
                     f.setText(response);
 
                     dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(v -> JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty(), ctx));
+                    dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                             JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty(), ctx);
+                        }
+                    });
                     dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());
 
                     dialog.show();

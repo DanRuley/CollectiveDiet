@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
+
 import com.example.thecollectivediet.R;
 
 import java.io.FileOutputStream;

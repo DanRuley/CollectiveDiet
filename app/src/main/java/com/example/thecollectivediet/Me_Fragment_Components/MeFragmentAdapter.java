@@ -25,7 +25,7 @@ public class MeFragmentAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 1 :
-                return new EditMealFragment();
+                return new com.example.thecollectivediet.Me_Fragment_Components.Food_Editing.EditMealFragment();
            // case 2 :
              //   return new ThirdFragment();
         }
