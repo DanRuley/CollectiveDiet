@@ -5,6 +5,8 @@ import static java.lang.Math.min;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -52,6 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.ManualFoodSearch;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ml.LiteModelAiyVisionClassifierFoodV11;
 import com.google.android.material.snackbar.Snackbar;
@@ -82,48 +85,7 @@ public class CameraFragment extends Fragment {
 
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-//        View v = inflater.inflate(R.layout.fragment_camera, container, false);
-//
-//        // Register the permissions callback, which handles the user's response to the
-//// system permissions dialog. Save the return value, an instance of
-//// ActivityResultLauncher, as an instance variable.
-//        requestPermissionLauncher =
-//                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                    if (isGranted) {
-//                        // Permission is granted. Continue the action or workflow in your
-//                        // app.
-//                    } else {
-//                        // Explain to the user that the feature is unavailable because the
-//                        // features requires a permission that the user has denied. At the
-//                        // same time, respect the user's decision. Don't link to system
-//                        // settings in an effort to convince the user to change their
-//                        // decision.
-//                    }
-//                });
-//
-//
-//        //initialize components
-//        initializeComponents(v);
-//
-//        //set up preview, imageCapture,
-//        cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
-//        cameraProviderFuture.addListener(() -> {
-//            try {
-//                cameraProvider = cameraProviderFuture.get();
-//                bindPreview(cameraProvider, v);
-//            } catch (ExecutionException | InterruptedException e) {
-//                // No errors need to be handled for this Future.
-//                // This should never be reached.
-//            }
-//        }, ContextCompat.getMainExecutor(getActivity()));
-//
-//
-//
-//
-//        return v;
-//    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -241,15 +203,30 @@ public class CameraFragment extends Fragment {
                     public void onCaptureSuccess(ImageProxy imageProxy){
                         //Change imageProxy to bitmap to be used with imageView
                         Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
-                        imageView2.setImageBitmap(bitmap);
 
                         // Get a prediction given the image taken from camera
                         String prediction = classifyImage(bitmap);
 
-                        //TODO: Do something with prediction
+                        //Save string in SharedPreferences to use in ManualFoodSearch frag
+                        SharedPreferences prefs;
+                        SharedPreferences.Editor editor;
 
-                        //Make sure to close the image buffer for next pie
+                        //Any class in this app can use this
+                        prefs = getActivity().getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
+
+                        editor = prefs.edit();
+
+                        editor.putString("prediction", prediction);
+                        editor.commit();
+
+                        //Make sure to close the image buffer for next picture
                         imageProxy.close();
+
+                        //Switch over to ManualFoodSearch frag
+                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     }
                     @Override
                     public void onError(ImageCaptureException e){

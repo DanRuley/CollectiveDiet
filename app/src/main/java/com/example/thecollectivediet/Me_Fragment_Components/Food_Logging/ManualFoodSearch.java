@@ -2,6 +2,7 @@ package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -39,6 +40,9 @@ public class ManualFoodSearch extends Fragment {
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +51,19 @@ public class ManualFoodSearch extends Fragment {
 
         initializeComponents(v);
 
-        if (savedText != null) {
+        prefs = ctx.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
+        editor = prefs.edit();
+
+        String food = prefs.getString("prediction", "null");
+
+        if(!food.equals("null"))
+        {
+            editor.putString("prediction", "null");
+            editor.commit();
+            foodInput.setText(food);
+            searchBtn.performClick();
+        }
+        else if (savedText != null) {
             foodInput.setText(savedText);
             searchBtn.performClick();
         }

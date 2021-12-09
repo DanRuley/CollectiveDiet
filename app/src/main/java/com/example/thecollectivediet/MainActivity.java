@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
 
-//        ARL = registerForActivityResult(requestPermissionLauncher);
+//
+
 
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         //else, if the drawer is closed, rely on super class default behavior
         else{
-            super.onBackPressed();
+            //super.onBackPressed();
         }
     }
 
