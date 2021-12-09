@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +19,15 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
@@ -27,6 +36,7 @@ import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ManualFoodSearch extends Fragment {
 
@@ -95,19 +105,7 @@ public class ManualFoodSearch extends Fragment {
             controller.getNutrients(foodItem, new FoodSearchController.VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients response) {
-                    Dialog dialog = new Dialog(ctx);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                    dialog.setContentView(R.layout.confirm_food_add);
-                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-                    TextView f = dialog.findViewById(R.id.foodNameTxt);
-                    f.setText(response.getFood_name());
-
-                    dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(v -> JSONSerializer.addFoodToList(foodItem.getFood_name(), foodItem.getServing_qty() + foodItem.getServing_unit(), ctx));
-                    dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());
-
-                    dialog.show();
+                    setupLogAddDialog(response, foodItem.getPhotoURL());
                 }
 
                 @Override
@@ -117,5 +115,40 @@ public class ManualFoodSearch extends Fragment {
             });
         });
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void setupLogAddDialog(FoodNutrients response, String photoURL) {
+
+        Dialog dialog = new Dialog(ctx);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialog.setContentView(R.layout.confirm_food_add);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+        ((TextView) dialog.findViewById(R.id.foodNameTxt)).setText(String.format("%s, Serving Size: %s %s", response.getFood_name(), response.getServing_qty(), response.getServing_unit()));
+        ((TextView) dialog.findViewById(R.id.foodCalTxt)).setText(String.format("%d Calories", Math.round(response.getNf_calories())));
+        ((TextView) dialog.findViewById(R.id.foodFatTxt)).setText(String.format("Fat:                       %.2f g", response.getNf_total_fat()));
+        ((TextView) dialog.findViewById(R.id.foodCarbTxt)).setText(String.format("Carbohydrates:    %.2f g", response.getNf_total_carbohydrate()));
+        ((TextView) dialog.findViewById(R.id.foodProteinTxt)).setText(String.format("Protein:                %.2f g", response.getNf_protein()));
+
+        // create a ProgressDrawable object which we will show as placeholder
+        CircularProgressDrawable drawable = new CircularProgressDrawable(ctx);
+        drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);
+        drawable.setCenterRadius(30f);
+        drawable.setStrokeWidth(5f);
+        // set all other properties as you would see fit and start it
+        drawable.start();
+
+        ImageView img = dialog.findViewById(R.id.confirmImage);
+        Glide.with(ctx).load(photoURL).placeholder(drawable).into(img);
+
+        dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(v -> {
+            JSONSerializer.addFoodToList(response.getFood_name(), response.getServing_qty() + response.getServing_unit(), ctx);
+            Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").placeholder(drawable).into(img);
+        });
+
+        dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 }
