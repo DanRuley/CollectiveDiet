@@ -246,10 +246,6 @@ public class CameraFragment extends Fragment {
 
                         //send the pic out for inference
 
-                        //Todo temp max of 20 results for now
-                        ImageClassifier.ImageClassifierOptions options = ImageClassifier.ImageClassifierOptions.builder().setMaxResults(20).build();
-
-//                        //Todo get model path from sergio
 
 
                     }
