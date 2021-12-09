@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.YuvImage;
@@ -45,17 +46,20 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ml.LiteModelAiyVisionClassifierFoodV11;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.tensorflow.lite.Tensor;
 import org.tensorflow.lite.support.image.TensorImage;
-import org.tensorflow.lite.task.core.vision.ImageProcessingOptions;
-import org.tensorflow.lite.task.vision.classifier.ImageClassifier;
+import org.tensorflow.lite.support.label.Category;
 
 import java.util.concurrent.ExecutionException;
 
@@ -235,28 +239,73 @@ public class CameraFragment extends Fragment {
                 imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback(){
                     @Override
                     public void onCaptureSuccess(ImageProxy imageProxy){
-
-
                         //Change imageProxy to bitmap to be used with imageView
                         Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
                         imageView2.setImageBitmap(bitmap);
 
-                        //Make sure to close the image buffer for next pic
+                        // Get a prediction given the image taken from camera
+                        String prediction = classifyImage(bitmap);
+
+                        //TODO: Do something with prediction
+
+                        //Make sure to close the image buffer for next pie
                         imageProxy.close();
-
-                        //send the pic out for inference
-
-
-
                     }
                     @Override
                     public void onError(ImageCaptureException e){
-
                         super.onError(e);
                     }
                 });
             }
         });
+    }
+
+
+    public Bitmap resizeBitmap(Bitmap bitmap, int newHeight, int newWidth) {
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
+        float scaleHeight = ((float) newHeight) / height;
+        float scaleWidth = ((float) newWidth) / width;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
+        return newBitmap;
+    }
+
+    /**
+     * Uses Tensorflow lite model to classify the type of food in the bitmap.
+     * @param bitmap bitmap does not need resizing
+     * @return String prediction
+     */
+    private String classifyImage(Bitmap bitmap) {
+        int newWidth = 240;
+        int newHeight = 240;
+        bitmap = resizeBitmap(bitmap, newWidth, newHeight);
+        String prediction = "";
+        try {
+            // Load model and classify image
+            LiteModelAiyVisionClassifierFoodV11 model = LiteModelAiyVisionClassifierFoodV11.newInstance(getActivity());
+            // Image input
+            TensorImage image = TensorImage.fromBitmap(bitmap);
+            // Run classifier
+            LiteModelAiyVisionClassifierFoodV11.Outputs outputs = model.process(image);
+            List<Category> probability = outputs.getProbabilityAsCategoryList();
+            // Find highest label score
+            float maxScore = 0;
+            for (int i = 0; i < probability.size(); i++) {
+                Category currFood = probability.get(i);
+                float currScore = currFood.getScore();
+                if (currScore > maxScore) {
+                    maxScore = currScore;
+                    prediction = currFood.getLabel();
+                }
+            }
+            model.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return prediction;
     }
 
     /*
