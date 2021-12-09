@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-//for collective diet/////////////////////
+
 
 
 task clean(type: Delete) {

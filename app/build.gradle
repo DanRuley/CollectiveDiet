@@ -62,4 +62,23 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha30"
     // If you want to additionally use the CameraX Extensions library
     implementation "androidx.camera:camera-extensions:1.0.0-alpha30"
+
+    //TensorFlow dependencies
+    // Import the Task Vision Library dependency (NNAPI is included)
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.3.0'
+    // Import the GPU delegate plugin Library for GPU inference
+    implementation 'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.3.0'
+
+
+    //Permissions dependencies
+    def activity_version = "1.4.0"
+    // Java language implementation
+    implementation "androidx.activity:activity:$activity_version"
+    def fragment_version = "1.4.0"
+    // Java language implementation
+    implementation "androidx.fragment:fragment:$fragment_version"
+    // Kotlin
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    // Testing Fragments in Isolation
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }

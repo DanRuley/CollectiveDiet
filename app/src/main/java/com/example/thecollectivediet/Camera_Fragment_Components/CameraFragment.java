@@ -1,6 +1,11 @@
 package com.example.thecollectivediet.Camera_Fragment_Components;
 
+import static android.hardware.SensorManager.getOrientation;
+import static java.lang.Math.min;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -11,12 +16,16 @@ import android.media.Image;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Size;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
@@ -29,6 +38,7 @@ import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,9 +50,16 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 import com.example.thecollectivediet.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.tensorflow.lite.support.image.TensorImage;
+import org.tensorflow.lite.task.core.vision.ImageProcessingOptions;
+import org.tensorflow.lite.task.vision.classifier.ImageClassifier;
+
 import java.util.concurrent.ExecutionException;
+
+
 
 public class CameraFragment extends Fragment {
 
@@ -57,31 +74,127 @@ public class CameraFragment extends Fragment {
     ImageCapture imageCapture;
     ProcessCameraProvider cameraProvider;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    Display display;
+
+    private ActivityResultLauncher<String> requestPermissionLauncher;
+
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+//        View v = inflater.inflate(R.layout.fragment_camera, container, false);
+//
+//        // Register the permissions callback, which handles the user's response to the
+//// system permissions dialog. Save the return value, an instance of
+//// ActivityResultLauncher, as an instance variable.
+//        requestPermissionLauncher =
+//                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+//                    if (isGranted) {
+//                        // Permission is granted. Continue the action or workflow in your
+//                        // app.
+//                    } else {
+//                        // Explain to the user that the feature is unavailable because the
+//                        // features requires a permission that the user has denied. At the
+//                        // same time, respect the user's decision. Don't link to system
+//                        // settings in an effort to convince the user to change their
+//                        // decision.
+//                    }
+//                });
+//
+//
+//        //initialize components
+//        initializeComponents(v);
+//
+//        //set up preview, imageCapture,
+//        cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
+//        cameraProviderFuture.addListener(() -> {
+//            try {
+//                cameraProvider = cameraProviderFuture.get();
+//                bindPreview(cameraProvider, v);
+//            } catch (ExecutionException | InterruptedException e) {
+//                // No errors need to be handled for this Future.
+//                // This should never be reached.
+//            }
+//        }, ContextCompat.getMainExecutor(getActivity()));
+//
+//
+//
+//
+//        return v;
+//    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_camera, container, false);
 
-        //initialize components
-        initializeComponents(v);
+        // Register the permissions callback, which handles the user's response to the
+// system permissions dialog. Save the return value, an instance of
+// ActivityResultLauncher, as an instance variable.
+        requestPermissionLauncher =
+                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+                        // Permission is granted. Continue the action or workflow in your
+                        // app.
 
-        //set up preview, imageCapture,
-        cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
-        cameraProviderFuture.addListener(() -> {
-            try {
-                cameraProvider = cameraProviderFuture.get();
-                bindPreview(cameraProvider, v);
-            } catch (ExecutionException | InterruptedException e) {
-                // No errors need to be handled for this Future.
-                // This should never be reached.
-            }
-        }, ContextCompat.getMainExecutor(getActivity()));
+                        //initialize components
+                        initializeComponents(v);
+
+                        //set up preview, imageCapture,
+                        cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
+                        cameraProviderFuture.addListener(() -> {
+                            try {
+                                cameraProvider = cameraProviderFuture.get();
+                                bindPreview(cameraProvider, v);
+                            } catch (ExecutionException | InterruptedException e) {
+                                // No errors need to be handled for this Future.
+                                // This should never be reached.
+                            }
+                        }, ContextCompat.getMainExecutor(getActivity()));
+                    } else {
+                        // Explain to the user that the feature is unavailable because the
+                        // features requires a permission that the user has denied. At the
+                        // same time, respect the user's decision. Don't link to system
+                        // settings in an effort to convince the user to change their
+                        // decision.
+                    }
+                });
 
 
+        if (ContextCompat.checkSelfPermission(
+                getActivity(), Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED) {
+            // You can use the API that requires the permission.
+            //initialize components
+            initializeComponents(v);
+
+            //set up preview, imageCapture,
+            cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
+            cameraProviderFuture.addListener(() -> {
+                try {
+                    cameraProvider = cameraProviderFuture.get();
+                    bindPreview(cameraProvider, v);
+                } catch (ExecutionException | InterruptedException e) {
+                    // No errors need to be handled for this Future.
+                    // This should never be reached.
+                }
+            }, ContextCompat.getMainExecutor(getActivity()));
+        }
+//        else if (shouldShowRequestPermissionRationale(...)) {
+//            // In an educational UI, explain to the user why your app requires this
+//            // permission for a specific feature to behave as expected. In this UI,
+//            // include a "cancel" or "no thanks" button that allows the user to
+//            // continue using your app without granting the permission.
+//            showInContextUI(...);
+//        }
+        else {
+            // You can directly ask for the permission.
+            // The registered ActivityResultCallback gets the result of this request.
+            requestPermissionLauncher.launch(
+                    Manifest.permission.CAMERA);
+        }
 
 
         return v;
     }
+
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider, View view) {
 
          preview = new Preview.Builder()
@@ -125,13 +238,19 @@ public class CameraFragment extends Fragment {
 
 
                         //Change imageProxy to bitmap to be used with imageView
-                        Bitmap bit = convertImageProxyToBitmap(imageProxy);
-                        imageView2.setImageBitmap(bit);
+                        Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
+                        imageView2.setImageBitmap(bitmap);
 
                         //Make sure to close the image buffer for next pic
                         imageProxy.close();
 
-                        //todo send the pic out for inference
+                        //send the pic out for inference
+
+                        //Todo temp max of 20 results for now
+                        ImageClassifier.ImageClassifierOptions options = ImageClassifier.ImageClassifierOptions.builder().setMaxResults(20).build();
+
+//                        //Todo get model path from sergio
+
 
                     }
                     @Override
@@ -155,6 +274,9 @@ public class CameraFragment extends Fragment {
         byte[] clonedBytes = bytes.clone();
         return BitmapFactory.decodeByteArray(clonedBytes, 0, clonedBytes.length);
     }
+
+
+
 
 
 }
