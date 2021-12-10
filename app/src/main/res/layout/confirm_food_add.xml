@@ -30,24 +30,22 @@
 
     <TextView
         android:id="@+id/foodNameTxt"
-        android:layout_width="304dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/confirmImage"
+        app:layout_constraintTop_toBottomOf="@+id/confirmText" />
 
     <TextView
         android:id="@+id/foodCalTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/foodNameTxt"
         app:layout_constraintTop_toBottomOf="@+id/foodNameTxt" />
 
     <TextView
@@ -74,5 +72,27 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@+id/foodFatTxt"
         app:layout_constraintTop_toBottomOf="@+id/foodFatTxt" />
+
+    <ImageView
+        android:id="@+id/confirmImage"
+        android:layout_width="111dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmText"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/confirmText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Add to Food Log?"
+        android:textSize="24sp"
+
+        app:layout_constraintBottom_toTopOf="@id/foodNameTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/confirmImage"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,20 @@ package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 public class FoodNutrients {
     String food_name;
+    String brand_name;
+    String serving_unit;
+    float serving_qty;
+    float serving_weight_grams;
+    float nf_calories;
+    float nf_total_fat;
+    float nf_saturated_fat;
+    float nf_cholesterol;
+    float nf_sodium;
+    float nf_total_carbohydrate;
+    float nf_dietary_fiber;
+    float nf_sugars;
+    float nf_protein;
+    float nf_potassium;
 
     public String getFood_name() {
         return food_name;
@@ -19,7 +33,7 @@ public class FoodNutrients {
         this.brand_name = brand_name;
     }
 
-    public int getServing_qty() {
+    public float getServing_qty() {
         return serving_qty;
     }
 
@@ -115,19 +129,12 @@ public class FoodNutrients {
         this.nf_potassium = nf_potassium;
     }
 
-    String brand_name;
-    int serving_qty;
-    String serving_unit;
-    float serving_weight_grams;
-    float nf_calories;
-    float nf_saturated_fat;
-    float nf_cholesterol;
-    float nf_sodium;
-    float nf_total_carbohydrate;
-    float nf_dietary_fiber;
-    float nf_sugars;
-    float nf_protein;
-    float nf_potassium;
+    public float getNf_total_fat() {
+        return nf_total_fat;
+    }
 
+    public void setNf_total_fat(float nf_total_fat) {
+        this.nf_total_fat = nf_total_fat;
+    }
 
 }
