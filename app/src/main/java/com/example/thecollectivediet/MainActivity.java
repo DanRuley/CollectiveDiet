@@ -128,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //else, if the drawer is closed, rely on super class default behavior
         else{
             //super.onBackPressed();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            MeTabLayoutFragment fragment = new MeTabLayoutFragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     }
 
