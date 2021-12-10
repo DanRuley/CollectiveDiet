@@ -204,6 +204,16 @@ public class CameraFragment extends Fragment {
                         //Change imageProxy to bitmap to be used with imageView
                         Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
 
+//                        Matrix matrix = new Matrix();
+//
+//                        matrix.postRotate(90);
+//
+//                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
+//
+//                        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+
+                       // imageView2.setImageBitmap(rotatedBitmap);
+
                         // Get a prediction given the image taken from camera
                         String prediction = classifyImage(bitmap);
 
