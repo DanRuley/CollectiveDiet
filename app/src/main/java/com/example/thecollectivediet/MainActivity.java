@@ -1,6 +1,9 @@
 package com.example.thecollectivediet;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -32,14 +35,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ActivityResultLauncher ARL;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
+        editor = prefs.edit();
+        String firstTime = prefs.getString("firstTime", "null");
 
-//
+        if(firstTime.equals("null")) {
+            editor.putString("firstTime", "true");
+            editor.commit();
 
+            Intent intent = new Intent(this, Activity_Intro.class);
+            startActivity(intent);
+        }
 
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);

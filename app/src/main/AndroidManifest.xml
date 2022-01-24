@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.thecollectivediet">
-
     <!-- Declare features -->
-    <uses-feature android:name="android.hardware.camera"
-        android:required="true"/>
-
-    <!-- Declare permissions -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- Declare permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheCollectiveDiet">
+        <activity
+            android:name=".Activity_Intro"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

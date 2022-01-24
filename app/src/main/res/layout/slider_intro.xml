@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/intro_image_1"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="108dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:civ_border_color="@color/blue"
+        app:civ_border_width="2dp"
+        app:civ_circle_background_color="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/intro_image_1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="Welcome"
+        android:fontFamily="@font/inconsolata_variablefont_wdthwght"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro_image_1" />
+
+    <TextView
+        android:id="@+id/txt_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/intro_image_1"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/inconsolata_variablefont_wdthwght"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/txt_header"
+        app:layout_constraintStart_toStartOf="@+id/txt_header"
+        app:layout_constraintTop_toBottomOf="@+id/txt_header" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
