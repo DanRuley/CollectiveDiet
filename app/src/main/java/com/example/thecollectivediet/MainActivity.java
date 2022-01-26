@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
+import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
 import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            startActivity(intent);
 //        }
 
-        Intent intent = new Intent(this, Activity_Intro.class);
+        Intent intent = new Intent(this, IntroActivity.class);
         startActivity(intent);
 
         //Setup button, views, etc in the activity_main layout

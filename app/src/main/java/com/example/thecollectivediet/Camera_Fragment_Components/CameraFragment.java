@@ -184,7 +184,7 @@ public class CameraFragment extends Fragment {
     {
         //views
         previewView = view.findViewById(R.id.view_camera);
-        imageView2 = view.findViewById(R.id.imageView2);
+
 
         //buttons
         takePic = view.findViewById(R.id.take_pic);

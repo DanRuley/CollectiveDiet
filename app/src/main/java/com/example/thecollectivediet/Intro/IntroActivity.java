@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Intro;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.thecollectivediet.Intro.Intro_ViewPagerAdapter;
+import com.example.thecollectivediet.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,7 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 
-public class Activity_Intro extends AppCompatActivity {
+public class IntroActivity extends AppCompatActivity {
 
     static final int WELCOME = 0;
     static final int INTRO = 1;
@@ -53,6 +55,22 @@ public class Activity_Intro extends AppCompatActivity {
         Button continue_button = findViewById(R.id.continue_btn);
         continue_button.setVisibility(View.INVISIBLE);
 
+        continue_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //skip button used to skip intro
+        Button skip_button = findViewById(R.id.skip_button);
+
+        skip_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_WIDE);
@@ -83,12 +101,7 @@ public class Activity_Intro extends AppCompatActivity {
             }
         });
 
-        continue_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
         //progress bar shown as dots
         dotsIndicator = (DotsIndicator) findViewById(R.id.dots_indicator);
@@ -117,7 +130,7 @@ public class Activity_Intro extends AppCompatActivity {
                 if (position == INTRO) {
                     refreshAnimation();
                     signInButton.setVisibility(View.INVISIBLE);
-                    continue_button.setVisibility(View.VISIBLE);
+                    continue_button.setVisibility(View.INVISIBLE);
                 }
 
                 if (position == SIGN_IN) {

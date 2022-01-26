@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogFragment;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.ManualFoodSearch;
 import com.example.thecollectivediet.R;
 
 public class TodayFragment extends Fragment {
@@ -24,7 +25,7 @@ public class TodayFragment extends Fragment {
 
         manualEntry.setOnClickListener(v1 -> {
             FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentHolder, new FoodLogFragment());
+            transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
             transaction.addToBackStack(null);
             transaction.commit();
         });
