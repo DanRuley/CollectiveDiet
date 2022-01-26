@@ -1,4 +1,4 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Intro;
 
 import android.content.Context;
 import android.media.Image;
@@ -14,6 +14,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.thecollectivediet.R;
 
 import org.checkerframework.common.value.qual.ArrayLen;
 import org.w3c.dom.Text;

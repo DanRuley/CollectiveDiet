@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheCollectiveDiet">
         <activity
-            android:name=".Activity_Intro"
+            android:name=".Intro.IntroActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

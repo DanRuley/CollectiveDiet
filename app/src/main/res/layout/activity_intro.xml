@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_animation123"
     android:id="@+id/layout1"
-    tools:context=".Activity_Intro">
+    tools:context=".Intro.IntroActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/intro_viewpager"

@@ -1,18 +1,17 @@
-package com.example.thecollectivediet;
+package com.example.thecollectivediet.Intro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AnimationSet;
 import android.widget.Button;
 
+import com.example.thecollectivediet.R;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
-public class Activity_Intro extends AppCompatActivity {
+public class IntroActivity extends AppCompatActivity {
 
     //create slider view in activity view
     private ViewPager viewPager;

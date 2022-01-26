@@ -79,7 +79,7 @@ dependencies {
     // Testing Fragments in Isolation
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
-    //Intro (on boarding) Activity
+    //com.example.thecollectivediet.Intro (on boarding) Activity
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.tbuonomo:dotsindicator:4.2'
 }

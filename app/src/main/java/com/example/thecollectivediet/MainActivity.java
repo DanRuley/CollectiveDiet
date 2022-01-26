@@ -8,13 +8,13 @@ import android.os.Bundle;
 
 
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
+import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -43,15 +43,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //"firstTime" will be saved to SharedPreferences and will be used to determine
+        //whether the user is using app for the first time and needs to see the
+        //welcome walk through.
         prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
         editor = prefs.edit();
         String firstTime = prefs.getString("firstTime", "null");
 
+        //This will run automatically for all first time users
         if(firstTime.equals("null")) {
             editor.putString("firstTime", "true");
             editor.commit();
 
-            Intent intent = new Intent(this, Activity_Intro.class);
+            Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
 
@@ -211,24 +215,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-//    // Register the permissions callback, which handles the user's response to the
-//// system permissions dialog. Save the return value, an instance of
-//// ActivityResultLauncher, as an instance variable.
-//    private ActivityResultLauncher requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                if (isGranted) {
-//                    // Permission is granted. Continue the action or workflow in your
-//                    // app.
-//                } else {
-//                    // Explain to the user that the feature is unavailable because the
-//                    // features requires a permission that the user has denied. At the
-//                    // same time, respect the user's decision. Don't link to system
-//                    // settings in an effort to convince the user to change their
-//                    // decision.
-//                }
-//            });
-//
-//
-//    private ActivityResultLauncher registerForActivityResult(ActivityResultLauncher requestPermissionLauncher) {
-//    }
+
 }
