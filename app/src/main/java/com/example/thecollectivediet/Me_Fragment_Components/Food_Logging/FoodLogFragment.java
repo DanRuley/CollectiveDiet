@@ -35,7 +35,6 @@ public class FoodLogFragment extends Fragment {
 
         initializeComponents(v);
 
-
         return v;
     }
 

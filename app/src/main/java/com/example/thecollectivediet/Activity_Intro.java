@@ -58,6 +58,7 @@ public class Activity_Intro extends AppCompatActivity {
         signInButton.setSize(SignInButton.SIZE_WIDE);
         signInButton.setVisibility(View.INVISIBLE);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestServerAuthCode(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
