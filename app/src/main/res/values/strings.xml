@@ -4,6 +4,7 @@
     <string name="nav_header_title">The Collective Diet</string>
     <string name="nav_header_subtitle">TheCollectiveDiet.com</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="server_client_id">706133075330-qf512k7jbgop9er5duir4op376mu85vj.apps.googleusercontent.com</string>
 
     <color name="blue">#0000FF</color>
     <!-- TODO: Remove or change this placeholder text -->

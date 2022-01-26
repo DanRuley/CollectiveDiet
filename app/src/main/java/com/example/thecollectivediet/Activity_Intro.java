@@ -1,18 +1,22 @@
 package com.example.thecollectivediet;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AnimationSet;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.gms.common.SignInButton;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
+
 public class Activity_Intro extends AppCompatActivity {
+
+    static final int WELCOME = 0;
+    static final int INTRO = 1;
+    static final int SIGN_IN = 2;
 
     //create slider view in activity view
     private ViewPager viewPager;
@@ -37,11 +41,16 @@ public class Activity_Intro extends AppCompatActivity {
         Button continue_button = findViewById(R.id.continue_btn);
         continue_button.setVisibility(View.INVISIBLE);
 
-        continue_button.setOnClickListener(new View.OnClickListener(){
+
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setVisibility(View.INVISIBLE);
+
+        continue_button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-               finish();
+                finish();
             }
         });
 
@@ -63,30 +72,21 @@ public class Activity_Intro extends AppCompatActivity {
             //Determines which slide/view from into is shown
             @Override
             public void onPageSelected(int position) {
-                if(position == 0){
-                    relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
-                    AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-                    animationDrawable.setEnterFadeDuration(2500);
-                    animationDrawable.setExitFadeDuration(1000);
-                    animationDrawable.start();
+                if (position == WELCOME) {
+                    refreshAnimation();
+                    continue_button.setVisibility(View.INVISIBLE);
+                    signInButton.setVisibility(View.INVISIBLE);
                 }
 
-                if(position == 1){
-                    relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
-                    AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-                    animationDrawable.setEnterFadeDuration(2500);
-                    animationDrawable.setExitFadeDuration(1000);
-                    animationDrawable.start();
-
+                if (position == INTRO) {
+                    refreshAnimation();
+                    signInButton.setVisibility(View.INVISIBLE);
                     continue_button.setVisibility(View.VISIBLE);
                 }
 
-                if(position == 2){
-                    relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
-                    AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-                    animationDrawable.setEnterFadeDuration(2500);
-                    animationDrawable.setExitFadeDuration(1000);
-                    animationDrawable.start();
+                if (position == SIGN_IN) {
+                    refreshAnimation();
+                    signInButton.setVisibility(View.VISIBLE);
                     continue_button.setVisibility(View.VISIBLE);
                 }
             }
@@ -94,6 +94,14 @@ public class Activity_Intro extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+
+            void refreshAnimation() {
+                relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
+                AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+                animationDrawable.setEnterFadeDuration(2500);
+                animationDrawable.setExitFadeDuration(1000);
+                animationDrawable.start();
             }
         });
     }

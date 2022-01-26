@@ -1,31 +1,28 @@
 package com.example.thecollectivediet;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-
-import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
-import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
-import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
+import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
+import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -43,17 +40,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
-        editor = prefs.edit();
-        String firstTime = prefs.getString("firstTime", "null");
+//        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
+//        editor = prefs.edit();
+//        String firstTime = prefs.getString("firstTime", "null");
+//
+//        if(firstTime.equals("null")) {
+//            editor.putString("firstTime", "true");
+//            editor.commit();
+//
+//            Intent intent = new Intent(this, Activity_Intro.class);
+//            startActivity(intent);
+//        }
 
-        if(firstTime.equals("null")) {
-            editor.putString("firstTime", "true");
-            editor.commit();
-
-            Intent intent = new Intent(this, Activity_Intro.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, Activity_Intro.class);
+        startActivity(intent);
 
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
