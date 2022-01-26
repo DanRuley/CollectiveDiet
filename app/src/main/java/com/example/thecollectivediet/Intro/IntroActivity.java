@@ -1,24 +1,41 @@
-package com.example.thecollectivediet.Intro;
+package com.example.thecollectivediet;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.example.thecollectivediet.R;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.Task;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
-public class IntroActivity extends AppCompatActivity {
+
+public class Activity_Intro extends AppCompatActivity {
+
+    static final int WELCOME = 0;
+    static final int INTRO = 1;
+    static final int SIGN_IN = 2;
 
     //create slider view in activity view
     private ViewPager viewPager;
     private Intro_ViewPagerAdapter viewPagerAdapter;
     //used to show progress in intro walkthrough
     private DotsIndicator dotsIndicator;
-
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +53,40 @@ public class IntroActivity extends AppCompatActivity {
         Button continue_button = findViewById(R.id.continue_btn);
         continue_button.setVisibility(View.INVISIBLE);
 
-        continue_button.setOnClickListener(new View.OnClickListener(){
 
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setVisibility(View.INVISIBLE);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestServerAuthCode(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        // GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //update ui
+
+        ActivityResultLauncher<Intent> signInResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                    handleSignInResult(task);
+                }
+            }
+        });
+
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                signInResult.launch(mGoogleSignInClient.getSignInIntent());
+            }
+        });
+
+        continue_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -62,30 +108,21 @@ public class IntroActivity extends AppCompatActivity {
             //Determines which slide/view from into is shown
             @Override
             public void onPageSelected(int position) {
-                if(position == 0){
-                    relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
-                    AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-                    animationDrawable.setEnterFadeDuration(2500);
-                    animationDrawable.setExitFadeDuration(1000);
-                    animationDrawable.start();
+                if (position == WELCOME) {
+                    refreshAnimation();
+                    continue_button.setVisibility(View.INVISIBLE);
+                    signInButton.setVisibility(View.INVISIBLE);
                 }
 
-                if(position == 1){
-                    relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
-                    AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-                    animationDrawable.setEnterFadeDuration(2500);
-                    animationDrawable.setExitFadeDuration(1000);
-                    animationDrawable.start();
-
+                if (position == INTRO) {
+                    refreshAnimation();
+                    signInButton.setVisibility(View.INVISIBLE);
                     continue_button.setVisibility(View.VISIBLE);
                 }
 
-                if(position == 2){
-                    relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
-                    AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-                    animationDrawable.setEnterFadeDuration(2500);
-                    animationDrawable.setExitFadeDuration(1000);
-                    animationDrawable.start();
+                if (position == SIGN_IN) {
+                    refreshAnimation();
+                    signInButton.setVisibility(View.VISIBLE);
                     continue_button.setVisibility(View.VISIBLE);
                 }
             }
@@ -94,6 +131,20 @@ public class IntroActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
+
+            void refreshAnimation() {
+                relativeLayout.setBackgroundResource(R.drawable.gradient_animation123);
+                AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+                animationDrawable.setEnterFadeDuration(2500);
+                animationDrawable.setExitFadeDuration(1000);
+                animationDrawable.start();
+            }
         });
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> task) {
+        String msg = "Hello, " + task.getResult().getDisplayName();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

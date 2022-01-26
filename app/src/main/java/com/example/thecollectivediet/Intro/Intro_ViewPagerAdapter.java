@@ -1,7 +1,6 @@
-package com.example.thecollectivediet.Intro;
+package com.example.thecollectivediet;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.example.thecollectivediet.R;
-
-import org.checkerframework.common.value.qual.ArrayLen;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 
 public class Intro_ViewPagerAdapter extends PagerAdapter {
@@ -35,16 +23,18 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
 
     LayoutInflater layoutInflater = null;
 
-    int[] list = new int[]{R.drawable.ic_launcher_foreground,R.drawable.food_pic};
+    int[] list = new int[]{R.drawable.ic_launcher_foreground, R.drawable.food_pic, R.drawable.googleg_color};
 
     String[] textHeader = new String[]{
             "WELCOME",
-            "Collective Diet is cool because...."
+            "Collective Diet is cool because....",
+            "Sign in to get started!"
     };
 
     String[] textBody = new String[]{
             "Food Entry",
-            "Take pics and stuff..."
+            "Take pics and stuff...",
+            "Use your google account to sign in"
     };
 
     @Override
@@ -78,7 +68,7 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-    container.removeView((View) object);
+        container.removeView((View) object);
     }
 
 }
