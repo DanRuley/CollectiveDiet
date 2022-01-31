@@ -25,6 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logFood"
         android:orientation="vertical"
+        android:background="@color/peach"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -55,6 +56,7 @@
             </TextView>
 
             <ImageView
+                android:id="@+id/mood_image"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
 
@@ -65,6 +67,7 @@
             </ImageView>
 
             <RatingBar
+                android:id="@+id/mood_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:stepSize="1"
@@ -94,6 +97,7 @@
             </TextView>
 
             <ImageView
+                android:id="@+id/energy_image"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
 
@@ -104,6 +108,7 @@
             </ImageView>
 
             <RatingBar
+                android:id="@+id/energy_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:stepSize="1"
@@ -133,6 +138,7 @@
             </TextView>
 
             <ImageView
+                android:id="@+id/hunger_image"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
 
@@ -143,6 +149,7 @@
             </ImageView>
 
             <RatingBar
+                android:id="@+id/hunger_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:stepSize="1"
@@ -172,6 +179,7 @@
             </TextView>
 
             <ImageView
+                android:id="@+id/focus_image"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
 
@@ -182,6 +190,7 @@
             </ImageView>
 
             <RatingBar
+                android:id="@+id/focus_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:stepSize="1"

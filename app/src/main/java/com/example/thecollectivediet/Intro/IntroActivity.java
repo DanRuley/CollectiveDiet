@@ -35,7 +35,7 @@ public class IntroActivity extends AppCompatActivity {
     //create slider view in activity view
     private ViewPager viewPager;
     private Intro_ViewPagerAdapter viewPagerAdapter;
-    //used to show progress in intro walkthrough
+    //used to show progress in intro walk through
     private DotsIndicator dotsIndicator;
     private GoogleSignInClient mGoogleSignInClient;
 
