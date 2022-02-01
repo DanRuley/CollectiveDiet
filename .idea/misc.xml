@@ -36,6 +36,11 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/main.xml" value="0.2" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14322916666666666" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile.xml" value="0.26205128205128203" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile1.xml" value="0.26205128205128203" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile2.xml" value="0.26205128205128203" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile3.xml" value="0.26205128205128203" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_profile.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/dialog_bg.xml" value="0.11018518518518519" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_animation123.xml" value="0.11018518518518519" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_background_1.xml" value="0.11018518518518519" />
@@ -44,7 +49,9 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14322916666666666" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/layout_bg.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/rating_display.xml" value="0.10462962962962963" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/survey_layout_bg.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/activity_intro.xml" value="0.264" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/app_bar_main.xml" value="0.4" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/confirm_food_add.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
@@ -56,7 +63,7 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_food_search.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_food_vision.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_me_tab_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_today.xml" value="0.128" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_us.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/nav_header_main.xml" value="0.25416666666666665" />
