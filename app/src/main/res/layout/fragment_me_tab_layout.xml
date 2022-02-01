@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="@color/light_blue"
         app:tabSelectedTextColor="@color/black"
+        app:tabTextAppearance="@style/tab_text"
         >
 
         <com.google.android.material.tabs.TabItem
@@ -31,7 +32,8 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Something..." />
+            android:text="Profile"
+            />
     </com.google.android.material.tabs.TabLayout>
 
 

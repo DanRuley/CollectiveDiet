@@ -22,4 +22,11 @@
     <style name="Theme.TheCollectiveDiet.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.TheCollectiveDiet.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/quintessential_regular</item>
+        <item name="textFillColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
