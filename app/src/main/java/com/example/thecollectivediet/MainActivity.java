@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 //        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
 //        editor = prefs.edit();
