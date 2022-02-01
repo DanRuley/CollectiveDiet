@@ -16,24 +16,26 @@ import com.example.thecollectivediet.R;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
-    Button manualEntry;
     int choice;
 
+    //Rating bars
     RatingBar moodRatingBar;
     RatingBar energyRatingBar;
     RatingBar hungerRatingBar;
     RatingBar focusRatingBar;
 
+    //List of images for rating bars
     int[] moodList = new int[]{R.drawable.mood_rank1, R.drawable.mood_rank2, R.drawable.mood_rank3, R.drawable.mood_rank4};
     int[] energyList = new int[]{R.drawable.energy_rank1, R.drawable.energy_rank2, R.drawable.energy_rank3,R.drawable.energy_rank4};
     int[] hungerList = new int[]{R.drawable.hunger_rank1, R.drawable.hunger_rank2, R.drawable.hunger_rank3,R.drawable.hunger_rank4};
     int[] focusList = new int[]{R.drawable.focus_rank1,R.drawable.focus_rank2, R.drawable.focus_rank3,R.drawable.focus_rank4};
 
-
+    //hooks for images
     ImageView moodImage;
     ImageView energyImage;
     ImageView hungerImage;
     ImageView focusImage;
+    ImageView mealImage; //edit meal button
 
 
     @Override
@@ -46,15 +48,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         hungerImage = v.findViewById(R.id.hunger_image);
         focusImage = v.findViewById(R.id.focus_image);
 
-        //buttons
-        manualEntry = v.findViewById(R.id.logFood);
-
-        manualEntry.setOnClickListener(v1 -> {
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
+        mealImage = v.findViewById(R.id.meal);
+        mealImage.setOnClickListener(this);
 
         //Rating bar for mood
         moodRatingBar = (RatingBar)v.findViewById(R.id.mood_ratingbar);
@@ -124,5 +119,16 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        switch (v.getId())
+        {
+            case R.id.meal:
+            {
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            }
+        }
     }
 }
