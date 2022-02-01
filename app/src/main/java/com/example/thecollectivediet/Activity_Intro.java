@@ -1,7 +1,9 @@
 package com.example.thecollectivediet;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -36,6 +38,7 @@ public class Activity_Intro extends AppCompatActivity {
     //used to show progress in intro walkthrough
     private DotsIndicator dotsIndicator;
     private GoogleSignInClient mGoogleSignInClient;
+    private Activity ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class Activity_Intro extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2500);
         animationDrawable.setExitFadeDuration(1000);
         animationDrawable.start();
+        ctx = this;
 
         //continue button found on the last slide
         Button continue_button = findViewById(R.id.continue_btn);
@@ -58,7 +62,6 @@ public class Activity_Intro extends AppCompatActivity {
         signInButton.setSize(SignInButton.SIZE_WIDE);
         signInButton.setVisibility(View.INVISIBLE);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestServerAuthCode(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -68,6 +71,8 @@ public class Activity_Intro extends AppCompatActivity {
         ActivityResultLauncher<Intent> signInResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
+                Task<GoogleSignInAccount> task1 = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                     handleSignInResult(task);
@@ -86,6 +91,7 @@ public class Activity_Intro extends AppCompatActivity {
         continue_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ctx.setResult(RESULT_CANCELED);
                 finish();
             }
         });
@@ -144,7 +150,27 @@ public class Activity_Intro extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         String msg = "Hello, " + task.getResult().getDisplayName();
+        GoogleSignInAccount account = task.getResult();
+        String name = account.getDisplayName();
+        String email = account.getEmail();
+        String id = account.getId();
+
+        SharedPreferences prefs;
+        SharedPreferences.Editor editor;
+
+        //Any class in this app can use this
+        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
+
+        editor = prefs.edit();
+
+        editor.putString("user", name);
+        editor.putString("id", id);
+        editor.putString("user_email", email);
+
+        editor.commit();
+
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        this.setResult(RESULT_OK);
         finish();
     }
 }
