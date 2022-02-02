@@ -77,7 +77,8 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
             this.foodName.setText(foodResults.get(position).getProduct_name());
             this.foodServing.setText("One serving");
 
-            Glide.with(ctx).load(foodResults.get(position).getImage_url()).placeholder(drawable).into(this.foodPicture);
+            String imgURL = food.getImage_url() == null ? "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png" : food.getImage_url();
+            Glide.with(ctx).load(imgURL).placeholder(drawable).into(this.foodPicture);
 
             itemView.setOnClickListener(v -> listener.onFoodItemClick(food));
         }

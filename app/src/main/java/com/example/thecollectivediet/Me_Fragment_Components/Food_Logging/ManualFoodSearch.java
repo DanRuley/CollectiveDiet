@@ -108,7 +108,7 @@ public class ManualFoodSearch extends Fragment {
 
         mAdapter = new FoodSearchRecyclerViewAdapter(response, ctx, foodItem -> {
 
-            controller.getNutrients(String.valueOf(getId()), new FoodSearchController.VolleyResponseListener<FoodNutrients>() {
+            controller.getNutrients(String.valueOf(foodItem.getId()), new FoodSearchController.VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients response) {
                     setupLogAddDialog(response, foodItem.getImage_url());
@@ -146,7 +146,7 @@ public class ManualFoodSearch extends Fragment {
         drawable.start();
 
         ImageView img = dialog.findViewById(R.id.confirmImage);
-        Glide.with(ctx).load(photoURL).placeholder(drawable).into(img);
+        Glide.with(ctx).load(photoURL == null ? "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png" : photoURL).placeholder(drawable).into(img);
 
         dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(v -> {
             JSONSerializer.addFoodToList(response.getProduct_name(), "100 grams", ctx);
