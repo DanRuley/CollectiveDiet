@@ -1,6 +1,7 @@
 package com.example.thecollectivediet;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,8 +10,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,7 +21,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
-import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
@@ -50,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
-//        editor = prefs.edit();
+        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
+        editor = prefs.edit();
 //        String firstTime = prefs.getString("firstTime", "null");
 //
 //        if(firstTime.equals("null")) {
@@ -72,27 +70,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
 
-                            TextView login = findViewById(R.id.toolbar_login);
+                        TextView login1 = findViewById(R.id.toolbar_login);
+                        String username = prefs.getString("user", "null");
+                        login1.setText(username);
+
+                    } else {
+                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestEmail()
+                                .build();
+                        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+
+                        if (account != null && !account.isExpired()) {
+                            TextView login1 = findViewById(R.id.toolbar_login);
                             String username = prefs.getString("user", "null");
-                            login.setText(username);
-
-                        } else {
-                            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                    .requestEmail()
-                                    .build();
-                            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-                            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-
-                            if (account != null && !account.isExpired()) {
-                                TextView login = findViewById(R.id.toolbar_login);
-                                String username = prefs.getString("user", "null");
-                                login.setText(username);
-                            }
+                            login1.setText(username);
                         }
                     }
                 });
