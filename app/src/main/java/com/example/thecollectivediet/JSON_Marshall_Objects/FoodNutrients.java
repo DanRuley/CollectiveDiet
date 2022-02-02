@@ -1,140 +1,509 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 public class FoodNutrients {
-    String food_name;
-    String brand_name;
-    String serving_unit;
-    float serving_qty;
-    float serving_weight_grams;
-    float nf_calories;
-    float nf_total_fat;
-    float nf_saturated_fat;
-    float nf_cholesterol;
-    float nf_sodium;
-    float nf_total_carbohydrate;
-    float nf_dietary_fiber;
-    float nf_sugars;
-    float nf_protein;
-    float nf_potassium;
 
-    public String getFood_name() {
-        return food_name;
+    long id;
+    String product_name;
+    float fat_100g;
+    float carbohydrates_100g;
+    float proteins_100g;
+    String fat_unit;
+    String carbohydrates_unit;
+    String proteins_unit;
+    float energy_kcal_100g;
+    float sugars_100g;
+    float sodium_100g;
+    float fiber_100g;
+    float cholesterol_100g;
+    float calcium_100g;
+    float vitamin_c_100g;
+    float vitamin_a_100g;
+    float vitamin_d_100g;
+    float vitamin_b6_100g;
+    float potassium_100g;
+    float vitamin_b12_100g;
+    float saturated_fat_100g;
+    float trans_fat_100g;
+    float magnesium_100g;
+    float zinc_100g;
+    float monounsaturated_fat_100g;
+    float polyunsaturated_fat_100g;
+    float omega_3_fat_100g;
+    String sugars_unit;
+    String sodium_unit;
+    String fiber_unit;
+    String cholesterol_unit;
+    String calcium_unit;
+    String vitamin_c_unit;
+    String vitamin_a_unit;
+    String vitamin_d_unit;
+    String vitamin_b6_unit;
+    String potassium_unit;
+    String vitamin_b12_unit;
+    String saturated_fat_unit;
+    String trans_fat_unit;
+    String magnesium_unit;
+    String zinc_unit;
+    String monounsaturated_fat_unit;
+    String polyunsaturated_fat_unit;
+    String omega_3_fat_unit;
+
+    public FoodNutrients(long id, String product_name, float fat_100g, float carbohydrates_100g, float proteins_100g, String fat_unit, String carbohydrates_unit, String proteins_unit, float energy_kcal_100g, float sugars_100g, float sodium_100g, float fiber_100g, float cholesterol_100g, float calcium_100g, float vitamin_c_100g, float vitamin_a_100g, float vitamin_d_100g, float vitamin_b6_100g, float potassium_100g, float vitamin_b12_100g, float saturated_fat_100g, float trans_fat_100g, float magnesium_100g, float zinc_100g, float monounsaturated_fat_100g, float polyunsaturated_fat_100g, float omega_3_fat_100g, String sugars_unit, String sodium_unit, String fiber_unit, String cholesterol_unit, String calcium_unit, String vitamin_c_unit, String vitamin_a_unit, String vitamin_d_unit, String vitamin_b6_unit, String potassium_unit, String vitamin_b12_unit, String saturated_fat_unit, String trans_fat_unit, String magnesium_unit, String zinc_unit, String monounsaturated_fat_unit, String polyunsaturated_fat_unit, String omega_3_fat_unit) {
+        this.id = id;
+        this.product_name = product_name;
+        this.fat_100g = fat_100g;
+        this.carbohydrates_100g = carbohydrates_100g;
+        this.proteins_100g = proteins_100g;
+        this.fat_unit = fat_unit;
+        this.carbohydrates_unit = carbohydrates_unit;
+        this.proteins_unit = proteins_unit;
+        this.energy_kcal_100g = energy_kcal_100g;
+        this.sugars_100g = sugars_100g;
+        this.sodium_100g = sodium_100g;
+        this.fiber_100g = fiber_100g;
+        this.cholesterol_100g = cholesterol_100g;
+        this.calcium_100g = calcium_100g;
+        this.vitamin_c_100g = vitamin_c_100g;
+        this.vitamin_a_100g = vitamin_a_100g;
+        this.vitamin_d_100g = vitamin_d_100g;
+        this.vitamin_b6_100g = vitamin_b6_100g;
+        this.potassium_100g = potassium_100g;
+        this.vitamin_b12_100g = vitamin_b12_100g;
+        this.saturated_fat_100g = saturated_fat_100g;
+        this.trans_fat_100g = trans_fat_100g;
+        this.magnesium_100g = magnesium_100g;
+        this.zinc_100g = zinc_100g;
+        this.monounsaturated_fat_100g = monounsaturated_fat_100g;
+        this.polyunsaturated_fat_100g = polyunsaturated_fat_100g;
+        this.omega_3_fat_100g = omega_3_fat_100g;
+        this.sugars_unit = sugars_unit;
+        this.sodium_unit = sodium_unit;
+        this.fiber_unit = fiber_unit;
+        this.cholesterol_unit = cholesterol_unit;
+        this.calcium_unit = calcium_unit;
+        this.vitamin_c_unit = vitamin_c_unit;
+        this.vitamin_a_unit = vitamin_a_unit;
+        this.vitamin_d_unit = vitamin_d_unit;
+        this.vitamin_b6_unit = vitamin_b6_unit;
+        this.potassium_unit = potassium_unit;
+        this.vitamin_b12_unit = vitamin_b12_unit;
+        this.saturated_fat_unit = saturated_fat_unit;
+        this.trans_fat_unit = trans_fat_unit;
+        this.magnesium_unit = magnesium_unit;
+        this.zinc_unit = zinc_unit;
+        this.monounsaturated_fat_unit = monounsaturated_fat_unit;
+        this.polyunsaturated_fat_unit = polyunsaturated_fat_unit;
+        this.omega_3_fat_unit = omega_3_fat_unit;
     }
 
-    public void setFood_name(String food_name) {
-        this.food_name = food_name;
+    @Override
+    public String toString() {
+        return "FoodNutrients{" +
+                "id=" + id +
+                ", product_name='" + product_name + '\'' +
+                ", fat_100g=" + fat_100g +
+                ", carbohydrates_100g=" + carbohydrates_100g +
+                ", proteins_100g=" + proteins_100g +
+                ", fat_unit='" + fat_unit + '\'' +
+                ", carbohydrates_unit='" + carbohydrates_unit + '\'' +
+                ", proteins_unit='" + proteins_unit + '\'' +
+                ", energy_kcal_100g=" + energy_kcal_100g +
+                ", sugars_100g=" + sugars_100g +
+                ", sodium_100g=" + sodium_100g +
+                ", fiber_100g=" + fiber_100g +
+                ", cholesterol_100g=" + cholesterol_100g +
+                ", calcium_100g=" + calcium_100g +
+                ", vitamin_c_100g=" + vitamin_c_100g +
+                ", vitamin_a_100g=" + vitamin_a_100g +
+                ", vitamin_d_100g=" + vitamin_d_100g +
+                ", vitamin_b6_100g=" + vitamin_b6_100g +
+                ", potassium_100g=" + potassium_100g +
+                ", vitamin_b12_100g=" + vitamin_b12_100g +
+                ", saturated_fat_100g=" + saturated_fat_100g +
+                ", trans_fat_100g=" + trans_fat_100g +
+                ", magnesium_100g=" + magnesium_100g +
+                ", zinc_100g=" + zinc_100g +
+                ", monounsaturated_fat_100g=" + monounsaturated_fat_100g +
+                ", polyunsaturated_fat_100g=" + polyunsaturated_fat_100g +
+                ", omega_3_fat_100g=" + omega_3_fat_100g +
+                ", sugars_unit='" + sugars_unit + '\'' +
+                ", sodium_unit='" + sodium_unit + '\'' +
+                ", fiber_unit='" + fiber_unit + '\'' +
+                ", cholesterol_unit='" + cholesterol_unit + '\'' +
+                ", calcium_unit='" + calcium_unit + '\'' +
+                ", vitamin_c_unit='" + vitamin_c_unit + '\'' +
+                ", vitamin_a_unit='" + vitamin_a_unit + '\'' +
+                ", vitamin_d_unit='" + vitamin_d_unit + '\'' +
+                ", vitamin_b6_unit='" + vitamin_b6_unit + '\'' +
+                ", potassium_unit='" + potassium_unit + '\'' +
+                ", vitamin_b12_unit='" + vitamin_b12_unit + '\'' +
+                ", saturated_fat_unit='" + saturated_fat_unit + '\'' +
+                ", trans_fat_unit='" + trans_fat_unit + '\'' +
+                ", magnesium_unit='" + magnesium_unit + '\'' +
+                ", zinc_unit='" + zinc_unit + '\'' +
+                ", monounsaturated_fat_unit='" + monounsaturated_fat_unit + '\'' +
+                ", polyunsaturated_fat_unit='" + polyunsaturated_fat_unit + '\'' +
+                ", omega_3_fat_unit='" + omega_3_fat_unit + '\'' +
+                '}';
     }
 
-    public String getBrand_name() {
-        return brand_name;
+    public long getId() {
+        return id;
     }
 
-    public void setBrand_name(String brand_name) {
-        this.brand_name = brand_name;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public float getServing_qty() {
-        return serving_qty;
+    public String getProduct_name() {
+        return product_name;
     }
 
-    public void setServing_qty(int serving_qty) {
-        this.serving_qty = serving_qty;
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
     }
 
-    public String getServing_unit() {
-        return serving_unit;
+    public float getFat_100g() {
+        return fat_100g;
     }
 
-    public void setServing_unit(String serving_unit) {
-        this.serving_unit = serving_unit;
+    public void setFat_100g(float fat_100g) {
+        this.fat_100g = fat_100g;
     }
 
-    public float getServing_weight_grams() {
-        return serving_weight_grams;
+    public float getCarbohydrates_100g() {
+        return carbohydrates_100g;
     }
 
-    public void setServing_weight_grams(float serving_weight_grams) {
-        this.serving_weight_grams = serving_weight_grams;
+    public void setCarbohydrates_100g(float carbohydrates_100g) {
+        this.carbohydrates_100g = carbohydrates_100g;
     }
 
-    public float getNf_calories() {
-        return nf_calories;
+    public float getProteins_100g() {
+        return proteins_100g;
     }
 
-    public void setNf_calories(float nf_calories) {
-        this.nf_calories = nf_calories;
+    public void setProteins_100g(float proteins_100g) {
+        this.proteins_100g = proteins_100g;
     }
 
-    public float getNf_saturated_fat() {
-        return nf_saturated_fat;
+    public String getFat_unit() {
+        return fat_unit;
     }
 
-    public void setNf_saturated_fat(float nf_saturated_fat) {
-        this.nf_saturated_fat = nf_saturated_fat;
+    public void setFat_unit(String fat_unit) {
+        this.fat_unit = fat_unit;
     }
 
-    public float getNf_cholesterol() {
-        return nf_cholesterol;
+    public String getCarbohydrates_unit() {
+        return carbohydrates_unit;
     }
 
-    public void setNf_cholesterol(float nf_cholesterol) {
-        this.nf_cholesterol = nf_cholesterol;
+    public void setCarbohydrates_unit(String carbohydrates_unit) {
+        this.carbohydrates_unit = carbohydrates_unit;
     }
 
-    public float getNf_sodium() {
-        return nf_sodium;
+    public String getProteins_unit() {
+        return proteins_unit;
     }
 
-    public void setNf_sodium(float nf_sodium) {
-        this.nf_sodium = nf_sodium;
+    public void setProteins_unit(String proteins_unit) {
+        this.proteins_unit = proteins_unit;
     }
 
-    public float getNf_total_carbohydrate() {
-        return nf_total_carbohydrate;
+    public float getEnergy_kcal_100g() {
+        return energy_kcal_100g;
     }
 
-    public void setNf_total_carbohydrate(float nf_total_carbohydrate) {
-        this.nf_total_carbohydrate = nf_total_carbohydrate;
+    public void setEnergy_kcal_100g(float energy_kcal_100g) {
+        this.energy_kcal_100g = energy_kcal_100g;
     }
 
-    public float getNf_dietary_fiber() {
-        return nf_dietary_fiber;
+    public float getSugars_100g() {
+        return sugars_100g;
     }
 
-    public void setNf_dietary_fiber(float nf_dietary_fiber) {
-        this.nf_dietary_fiber = nf_dietary_fiber;
+    public void setSugars_100g(float sugars_100g) {
+        this.sugars_100g = sugars_100g;
     }
 
-    public float getNf_sugars() {
-        return nf_sugars;
+    public float getSodium_100g() {
+        return sodium_100g;
     }
 
-    public void setNf_sugars(float nf_sugars) {
-        this.nf_sugars = nf_sugars;
+    public void setSodium_100g(float sodium_100g) {
+        this.sodium_100g = sodium_100g;
     }
 
-    public float getNf_protein() {
-        return nf_protein;
+    public float getFiber_100g() {
+        return fiber_100g;
     }
 
-    public void setNf_protein(float nf_protein) {
-        this.nf_protein = nf_protein;
+    public void setFiber_100g(float fiber_100g) {
+        this.fiber_100g = fiber_100g;
     }
 
-    public float getNf_potassium() {
-        return nf_potassium;
+    public float getCholesterol_100g() {
+        return cholesterol_100g;
     }
 
-    public void setNf_potassium(float nf_potassium) {
-        this.nf_potassium = nf_potassium;
+    public void setCholesterol_100g(float cholesterol_100g) {
+        this.cholesterol_100g = cholesterol_100g;
     }
 
-    public float getNf_total_fat() {
-        return nf_total_fat;
+    public float getCalcium_100g() {
+        return calcium_100g;
     }
 
-    public void setNf_total_fat(float nf_total_fat) {
-        this.nf_total_fat = nf_total_fat;
+    public void setCalcium_100g(float calcium_100g) {
+        this.calcium_100g = calcium_100g;
     }
 
+    public float getVitamin_c_100g() {
+        return vitamin_c_100g;
+    }
+
+    public void setVitamin_c_100g(float vitamin_c_100g) {
+        this.vitamin_c_100g = vitamin_c_100g;
+    }
+
+    public float getVitamin_a_100g() {
+        return vitamin_a_100g;
+    }
+
+    public void setVitamin_a_100g(float vitamin_a_100g) {
+        this.vitamin_a_100g = vitamin_a_100g;
+    }
+
+    public float getVitamin_d_100g() {
+        return vitamin_d_100g;
+    }
+
+    public void setVitamin_d_100g(float vitamin_d_100g) {
+        this.vitamin_d_100g = vitamin_d_100g;
+    }
+
+    public float getVitamin_b6_100g() {
+        return vitamin_b6_100g;
+    }
+
+    public void setVitamin_b6_100g(float vitamin_b6_100g) {
+        this.vitamin_b6_100g = vitamin_b6_100g;
+    }
+
+    public float getPotassium_100g() {
+        return potassium_100g;
+    }
+
+    public void setPotassium_100g(float potassium_100g) {
+        this.potassium_100g = potassium_100g;
+    }
+
+    public float getVitamin_b12_100g() {
+        return vitamin_b12_100g;
+    }
+
+    public void setVitamin_b12_100g(float vitamin_b12_100g) {
+        this.vitamin_b12_100g = vitamin_b12_100g;
+    }
+
+    public float getSaturated_fat_100g() {
+        return saturated_fat_100g;
+    }
+
+    public void setSaturated_fat_100g(float saturated_fat_100g) {
+        this.saturated_fat_100g = saturated_fat_100g;
+    }
+
+    public float getTrans_fat_100g() {
+        return trans_fat_100g;
+    }
+
+    public void setTrans_fat_100g(float trans_fat_100g) {
+        this.trans_fat_100g = trans_fat_100g;
+    }
+
+    public float getMagnesium_100g() {
+        return magnesium_100g;
+    }
+
+    public void setMagnesium_100g(float magnesium_100g) {
+        this.magnesium_100g = magnesium_100g;
+    }
+
+    public float getZinc_100g() {
+        return zinc_100g;
+    }
+
+    public void setZinc_100g(float zinc_100g) {
+        this.zinc_100g = zinc_100g;
+    }
+
+    public float getMonounsaturated_fat_100g() {
+        return monounsaturated_fat_100g;
+    }
+
+    public void setMonounsaturated_fat_100g(float monounsaturated_fat_100g) {
+        this.monounsaturated_fat_100g = monounsaturated_fat_100g;
+    }
+
+    public float getPolyunsaturated_fat_100g() {
+        return polyunsaturated_fat_100g;
+    }
+
+    public void setPolyunsaturated_fat_100g(float polyunsaturated_fat_100g) {
+        this.polyunsaturated_fat_100g = polyunsaturated_fat_100g;
+    }
+
+    public float getOmega_3_fat_100g() {
+        return omega_3_fat_100g;
+    }
+
+    public void setOmega_3_fat_100g(float omega_3_fat_100g) {
+        this.omega_3_fat_100g = omega_3_fat_100g;
+    }
+
+    public String getSugars_unit() {
+        return sugars_unit;
+    }
+
+    public void setSugars_unit(String sugars_unit) {
+        this.sugars_unit = sugars_unit;
+    }
+
+    public String getSodium_unit() {
+        return sodium_unit;
+    }
+
+    public void setSodium_unit(String sodium_unit) {
+        this.sodium_unit = sodium_unit;
+    }
+
+    public String getFiber_unit() {
+        return fiber_unit;
+    }
+
+    public void setFiber_unit(String fiber_unit) {
+        this.fiber_unit = fiber_unit;
+    }
+
+    public String getCholesterol_unit() {
+        return cholesterol_unit;
+    }
+
+    public void setCholesterol_unit(String cholesterol_unit) {
+        this.cholesterol_unit = cholesterol_unit;
+    }
+
+    public String getCalcium_unit() {
+        return calcium_unit;
+    }
+
+    public void setCalcium_unit(String calcium_unit) {
+        this.calcium_unit = calcium_unit;
+    }
+
+    public String getVitamin_c_unit() {
+        return vitamin_c_unit;
+    }
+
+    public void setVitamin_c_unit(String vitamin_c_unit) {
+        this.vitamin_c_unit = vitamin_c_unit;
+    }
+
+    public String getVitamin_a_unit() {
+        return vitamin_a_unit;
+    }
+
+    public void setVitamin_a_unit(String vitamin_a_unit) {
+        this.vitamin_a_unit = vitamin_a_unit;
+    }
+
+    public String getVitamin_d_unit() {
+        return vitamin_d_unit;
+    }
+
+    public void setVitamin_d_unit(String vitamin_d_unit) {
+        this.vitamin_d_unit = vitamin_d_unit;
+    }
+
+    public String getVitamin_b6_unit() {
+        return vitamin_b6_unit;
+    }
+
+    public void setVitamin_b6_unit(String vitamin_b6_unit) {
+        this.vitamin_b6_unit = vitamin_b6_unit;
+    }
+
+    public String getPotassium_unit() {
+        return potassium_unit;
+    }
+
+    public void setPotassium_unit(String potassium_unit) {
+        this.potassium_unit = potassium_unit;
+    }
+
+    public String getVitamin_b12_unit() {
+        return vitamin_b12_unit;
+    }
+
+    public void setVitamin_b12_unit(String vitamin_b12_unit) {
+        this.vitamin_b12_unit = vitamin_b12_unit;
+    }
+
+    public String getSaturated_fat_unit() {
+        return saturated_fat_unit;
+    }
+
+    public void setSaturated_fat_unit(String saturated_fat_unit) {
+        this.saturated_fat_unit = saturated_fat_unit;
+    }
+
+    public String getTrans_fat_unit() {
+        return trans_fat_unit;
+    }
+
+    public void setTrans_fat_unit(String trans_fat_unit) {
+        this.trans_fat_unit = trans_fat_unit;
+    }
+
+    public String getMagnesium_unit() {
+        return magnesium_unit;
+    }
+
+    public void setMagnesium_unit(String magnesium_unit) {
+        this.magnesium_unit = magnesium_unit;
+    }
+
+    public String getZinc_unit() {
+        return zinc_unit;
+    }
+
+    public void setZinc_unit(String zinc_unit) {
+        this.zinc_unit = zinc_unit;
+    }
+
+    public String getMonounsaturated_fat_unit() {
+        return monounsaturated_fat_unit;
+    }
+
+    public void setMonounsaturated_fat_unit(String monounsaturated_fat_unit) {
+        this.monounsaturated_fat_unit = monounsaturated_fat_unit;
+    }
+
+    public String getPolyunsaturated_fat_unit() {
+        return polyunsaturated_fat_unit;
+    }
+
+    public void setPolyunsaturated_fat_unit(String polyunsaturated_fat_unit) {
+        this.polyunsaturated_fat_unit = polyunsaturated_fat_unit;
+    }
+
+    public String getOmega_3_fat_unit() {
+        return omega_3_fat_unit;
+    }
+
+    public void setOmega_3_fat_unit(String omega_3_fat_unit) {
+        this.omega_3_fat_unit = omega_3_fat_unit;
+    }
 }

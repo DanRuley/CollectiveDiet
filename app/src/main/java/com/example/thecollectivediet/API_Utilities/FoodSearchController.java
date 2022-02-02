@@ -1,15 +1,16 @@
 package com.example.thecollectivediet.API_Utilities;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.thecollectivediet.JSON_Marshall_Objects.*;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,23 +44,17 @@ public class FoodSearchController {
         void onError(String error);
     }
 
-    public void getNutrients(FoodResult foodSearchResult, VolleyResponseListener<FoodNutrients> listener) {
-        if (foodSearchResult instanceof CommonFoodResult)
-            getCommonNutrients(foodSearchResult.getAPI_Identifier(), listener);
-        else
-            getBrandedNutrients(foodSearchResult.getAPI_Identifier(), listener);
-    }
 
-    private void getBrandedNutrients(String apiID, VolleyResponseListener<FoodNutrients> listener) {
-        String url = "https://trackapi.nutritionix.com/v2/search/item?nix_item_id=" + apiID;
+    public void getNutrients(String foodID, VolleyResponseListener<FoodNutrients> listener) {
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/FoodIdSearch?food_id=" + foodID;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
                         Gson gson = new Gson();
-                        FoodNutrients nutrients = gson.fromJson(response.getJSONArray("foods").get(0).toString(), FoodNutrients.class);
+                        FoodNutrients nutrients = gson.fromJson(response.toString(), FoodNutrients.class);
                         listener.onResponse(nutrients);
-                    } catch (JSONException e) {
+                    } catch (JsonSyntaxException e) {
                         listener.onError(e.getMessage());
                     }
                 },
@@ -73,67 +68,26 @@ public class FoodSearchController {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
-    public void getCommonNutrients(String commonFoodName, VolleyResponseListener<FoodNutrients> listener) {
-        JSONObject jsonBody = null;
-        String url = "https://trackapi.nutritionix.com/v2/natural/nutrients";
-        try {
-            jsonBody = new JSONObject("{\"query\":\"" + commonFoodName + "\"}");
-        } catch (JSONException e) {
-            listener.onError(e.getMessage());
-        }
-
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
-                response -> {
-                    try {
-                        Gson gson = new Gson();
-                        FoodNutrients nutrients = null;
-                        nutrients = gson.fromJson(response.getJSONArray("foods").get(0).toString(), FoodNutrients.class);
-                        listener.onResponse(nutrients);
-                    } catch (JSONException e) {
-                        listener.onError(e.getMessage());
-                    }
-                },
-                error -> listener.onError(error.toString())
-        ) {
-            @Override
-            public Map<String, String> getHeaders() {
-                return headers;
-            }
-        };
-        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
-    }
-
     public void searchFoodByName(String foodName, VolleyResponseListener<List<FoodResult>> listener) {
         List<FoodResult> foods = new ArrayList<>();
 
-        String url = "https://trackapi.nutritionix.com/v2/search/instant?query=" + foodName;
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/RelatedFoods?food=" + foodName;
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
                         Gson gson = new Gson();
-                        JSONArray commonFoods = response.getJSONArray("common");
-                        JSONArray brandedFoods = response.getJSONArray("branded");
-                        for (int i = 0; i < commonFoods.length(); i++) {
-                            JSONObject food = (JSONObject) commonFoods.get(i);
-                            foods.add(gson.fromJson(food.toString(), CommonFoodResult.class));
-                        }
-                        for (int i = 0; i < brandedFoods.length(); i++) {
-                            JSONObject food = (JSONObject) brandedFoods.get(i);
-                            foods.add(gson.fromJson(food.toString(), BrandedFoodResult.class));
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject food = (JSONObject) response.get(i);
+                            foods.add(gson.fromJson(food.toString(), FoodResult.class));
                         }
                         listener.onResponse(foods);
-                    } catch (JSONException e) {
+                    } catch (JSONException | JsonSyntaxException e) {
                         e.printStackTrace();
                         listener.onError(e.getMessage());
                     }
                 },
                 error -> listener.onError(error.toString())
-        ) {
-            @Override
-            public Map<String, String> getHeaders() {
-                return headers;
-            }
-        };
+        );
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 }

@@ -1,100 +1,74 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
-import org.json.JSONException;
+public class FoodResult {
 
-public abstract class FoodResult {
 
-    private String food_name;
-    private String serving_unit;
-    private String serving_qty;
-    private Photo photo;
+    private long id;
+    private String product_name;
+    private String nova_group;
+    private String nutriscore_grade;
+    private String image_url;
 
-    public FoodResult(String food_name, String serving_unit, String serving_qty, Photo photo, String locale) {
-        this.food_name = food_name;
-        this.serving_unit = serving_unit;
-        this.serving_qty = serving_qty;
-        this.photo = photo;
-        this.locale = locale;
+
+    public FoodResult(long id, String product_name, String nova_group, String nutriscore_grade, String image_url) {
+        this.id = id;
+        this.product_name = product_name;
+        this.nova_group = nova_group;
+        this.nutriscore_grade = nutriscore_grade;
+        this.image_url = image_url;
     }
 
-    public FoodResult() {
-
+    public long getId() {
+        return id;
     }
 
-    public abstract String getAPI_Identifier();
-
-    public String getFood_name() {
-        return food_name;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setFood_name(String food_name) {
-        this.food_name = food_name;
+    public String getProduct_name() {
+        return product_name;
     }
 
-    public String getServing_unit() {
-        return serving_unit;
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
     }
 
-    public void setServing_unit(String serving_unit) {
-        this.serving_unit = serving_unit;
+    public String getNova_group() {
+        return nova_group;
     }
 
-    public String getServing_qty() {
-        return serving_qty;
+    public void setNova_group(String nova_group) {
+        this.nova_group = nova_group;
     }
 
-    public void setServing_qty(String serving_qty) {
-        this.serving_qty = serving_qty;
+    public String getNutriscore_grade() {
+        return nutriscore_grade;
     }
 
-    public Photo getPhoto() {
-        return photo;
+    public void setNutriscore_grade(String nutriscore_grade) {
+        this.nutriscore_grade = nutriscore_grade;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public String getLocale() {
-        return locale;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public String getPhotoURL() {
-        return photo.getThumb();
-    }
-
-    private String locale;
 
 
     @Override
     public String toString() {
         return "FoodResult{" +
-                "\nfood_name='" + food_name + '\'' +
-                "\nserving_unit='" + serving_unit + '\'' +
-                "\nserving_qty='" + serving_qty + '\'' +
-                "\nphotoUrl='" + photo.getThumb() + '\'' +
-                "\nlocale='" + locale + '\'' +
+                "id=" + id +
+                ", product_name='" + product_name + '\'' +
+                ", nova_group='" + nova_group + '\'' +
+                ", nutriscore_grade='" + nutriscore_grade + '\'' +
+                ", image_url='" + image_url + '\'' +
                 '}';
     }
 
-    public class Photo {
-        String thumb;
 
-        public Photo(String thumb) {
-            this.thumb = thumb;
-        }
-
-        public String getThumb() {
-            return thumb;
-        }
-
-        public void setThumb(String thumb) {
-            this.thumb = thumb;
-        }
-    }
 }
-
