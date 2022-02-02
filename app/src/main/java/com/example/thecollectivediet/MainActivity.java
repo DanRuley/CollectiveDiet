@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,14 +23,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
+import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
 import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
     DrawerLayout drawer;
@@ -42,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
 //        prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
 //        editor = prefs.edit();
 //        String firstTime = prefs.getString("firstTime", "null");
@@ -55,8 +62,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            startActivity(intent);
 //        }
 
+        TextView login = findViewById(R.id.toolbar_login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+
+                            TextView login = findViewById(R.id.toolbar_login);
+                            String username = prefs.getString("user", "null");
+                            login.setText(username);
+
+                        } else {
+                            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                    .requestEmail()
+                                    .build();
+                            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+                            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+
+                            if (account != null && !account.isExpired()) {
+                                TextView login = findViewById(R.id.toolbar_login);
+                                String username = prefs.getString("user", "null");
+                                login.setText(username);
+                            }
+                        }
+                    }
+                });
+
         Intent intent = new Intent(this, IntroActivity.class);
-        startActivity(intent);
+        someActivityResultLauncher.launch(intent);
+        //startActivity(intent);
 
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
