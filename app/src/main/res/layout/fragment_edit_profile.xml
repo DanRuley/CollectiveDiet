@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_animation_profile">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".EditProfileFragment">
+
+
+        <ImageView
+            android:id="@+id/iv_backbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginVertical="10dp"
+            android:src="@drawable/ic_action_back">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/iv_backbutton"
+            android:padding="10dp"
+            android:text="Edit Profile"
+            android:textSize="35sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_savechanges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:text="save changes"
+            android:textColor="@color/teal_700"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_button_white">
+
+        </TextView>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@id/iv_backbutton"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@id/divider"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_menu_camera"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/tv_editphoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_image"
+            android:layout_centerHorizontal="true"
+            android:text="Edit Photo"
+            android:textColor="@color/teal_700"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_button_white">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/ev_firstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_editphoto"
+            android:layout_margin="10dp"
+            android:hint="First Name"
+            android:inputType="text"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_firstname"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <EditText
+            android:id="@+id/ev_lastname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ev_firstname"
+            android:layout_margin="10dp"
+            android:hint="Last Name"
+            android:inputType="text"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_lastname"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <EditText
+            android:id="@+id/ev_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider3"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:hint="age"
+            android:inputType="number"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_age"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <EditText
+            android:id="@+id/ev_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider4"
+            android:layout_margin="10dp"
+            android:hint="sex"
+            android:inputType="text"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_sex"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <EditText
+            android:id="@+id/ev_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider5"
+            android:layout_margin="10dp"
+            android:hint="weight"
+            android:inputType="number"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_weight"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <EditText
+            android:id="@+id/ev_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider6"
+            android:layout_margin="10dp"
+            android:hint="height"
+            android:inputType="number"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_height"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <EditText
+            android:id="@+id/ev_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider7"
+            android:layout_margin="10dp"
+            android:hint="Country"
+            android:inputType="text"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_country"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+        <EditText
+            android:id="@+id/ev_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider8"
+            android:layout_margin="10dp"
+            android:hint="City"
+            android:inputType="text"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <View
+            android:id="@+id/divider9"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/ev_city"
+            android:background="?android:attr/listDivider">
+
+        </View>
+
+
+    </RelativeLayout>
+</ScrollView>
