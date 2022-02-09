@@ -60,10 +60,11 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private ActivityResultLauncher<String[]> multiplePermissionActivityResultLauncher;
 
     final String[] PERMISSIONS = {
+           // Manifest.permission.MANAGE_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.MANAGE_EXTERNAL_STORAGE
+            Manifest.permission.CAMERA
+
     };
     /*
     Shared Preferences
@@ -263,16 +264,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     cameraActivityResultLauncher.launch(cameraIntent);/////////////////
-//                if (ContextCompat.checkSelfPermission(
-//                        context, Manifest.permission.CAMERA) ==
-//                        PackageManager.PERMISSION_GRANTED)
-//                {
-//                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    cameraActivityResultLauncher.launch(cameraIntent);
-//                } else {
-//                    cameraRequestPermissionLauncher.launch(
-//                            Manifest.permission.CAMERA);
-//                }
 
                 break;
             }
@@ -281,21 +272,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
                 if (isExternalStorageWritable()) {
                     saveProfileImage(bitmap);
-                };/////////////////////////////////////////////
-                //Get permission to take pic and save to device
-//                if (ContextCompat.checkSelfPermission(
-//                        context, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-//                        PackageManager.PERMISSION_GRANTED)
-//                {
-//                   // saveProfileImage(bitmap);
-//                    requestPermissionLauncher.launch(
-//                            Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//                } else {
-////                    requestPermissionLauncher.launch(
-////                            Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//                }
-
-                //save user info
+                }
                 saveStats();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -362,6 +339,8 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 //
 //            String fname = "Thumbnail_profile.jpg";
             //File root = Environment.getExternalStorageDirectory();
+
+            File rt = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
             //File root = context.getFilesDir();
             String m = Environment.getExternalStorageState();
@@ -369,7 +348,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             //myDir.mkdirs();
             String fname = "Thumbnail_profile.jpg";
 
-            File file = new File(root, fname);
+            File file = new File(rt, fname);
             if (file.exists()) {
                 file.delete();
             }
