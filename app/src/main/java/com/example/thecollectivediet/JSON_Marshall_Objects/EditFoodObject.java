@@ -1,7 +1,5 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,28 +18,30 @@ public class EditFoodObject {
     private static final String JSON_SERVING_SIZE = "servingSize";
     private static final String JSON_DATE = "date";
 
-    public EditFoodObject(String name, String info){
+    public EditFoodObject(String name, String info) {
         this.name = name;
         this.info = info;
         currentTime = Calendar.getInstance().getTime();
         this.date = currentTime.toString();
     }
 
-    public EditFoodObject(JSONObject jo) throws JSONException{
+    public EditFoodObject(JSONObject jo) throws JSONException {
         this.name = jo.getString(JSON_NAME);
         this.info = jo.getString(JSON_SERVING_SIZE);
         this.date = jo.getString(JSON_DATE);
     }
 
-    public String getNameText(){
+    public String getNameText() {
         return name;
     }
 
-    public String getInfoText(){
+    public String getInfoText() {
         return info;
     }
 
-    public String getDateText(){ return date; }
+    public String getDateText() {
+        return date;
+    }
 
     //Method to serialize FoodResult object
     public JSONObject convertToJSON() throws JSONException {

@@ -9,9 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,15 +22,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
+import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
 import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -38,13 +41,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     DrawerLayout drawer;
 
-    ActivityResultLauncher ARL;
-
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
+    static User currentUser;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -61,40 +64,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        }
 
         TextView login = findViewById(R.id.toolbar_login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        login.setOnClickListener(v -> {
 
-            }
         });
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
 
-                        TextView login1 = findViewById(R.id.toolbar_login);
-                        String username = prefs.getString("user", "null");
-                        login1.setText(username);
+                    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+                    boolean b = account.isExpired();
+                    if (result.getResultCode() == Activity.RESULT_OK || (account != null && !account.isExpired())) {
 
-                    } else {
-                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestEmail()
-                                .build();
-                        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+                        User_API_Controller.handleNewSignIn(account, this, new VolleyResponseListener<User>() {
+                            @Override
+                            public void onResponse(User response) {
+                                TextView login1 = findViewById(R.id.toolbar_login);
+                                login1.setText(response.getUser_name() != null ? response.getUser_name() : "");
+                            }
 
-                        if (account != null && !account.isExpired()) {
-                            TextView login1 = findViewById(R.id.toolbar_login);
-                            String username = prefs.getString("user", "null");
-                            login1.setText(username);
-                        }
+                            @Override
+                            public void onError(String error) {
+                                Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 
         Intent intent = new Intent(this, IntroActivity.class);
         someActivityResultLauncher.launch(intent);
-        //startActivity(intent);
 
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
@@ -114,43 +112,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Bottom navigation tool bar on the bottom of the app screen will be used for
         //navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_toolbar);
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
+        //When icon in bottom app is selected, switch to appropriate fragment
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            //Create a transaction
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-            //When icon in bottom app is selected, switch to appropriate fragment
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item){
-                int id = item.getItemId();
-                //Create a transaction
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                if(id == R.id.bottom_nav_camera){
-                    //Create a new fragment of the appropriate type
-                    CameraFragment fragment = new CameraFragment();
-                    transaction.replace(R.id.fragmentHolder, fragment);
-                }
-
-                if(id == R.id.bottom_nav_profile){
-                    ProfileFragment fragment = new ProfileFragment();
-                    transaction.replace(R.id.fragmentHolder, fragment);
-                }
-
-                if(id == R.id.bottom_nav_us){
-                    UsFragment fragment = new UsFragment();
-                    transaction.replace(R.id.fragmentHolder, fragment);
-                }
-
-                if(id == R.id.bottom_nav_me){
-                    MeTabLayoutFragment fragment = new MeTabLayoutFragment();
-                    transaction.replace(R.id.fragmentHolder, fragment);
-                }
-
-                //Ask Android to remember which menu options the user has chosen
-                transaction.addToBackStack(null);
-
-                //Implement the change
-                transaction.commit();
-                return true;
+            if (id == R.id.bottom_nav_camera) {
+                //Create a new fragment of the appropriate type
+                CameraFragment fragment = new CameraFragment();
+                transaction.replace(R.id.fragmentHolder, fragment);
             }
+
+            if (id == R.id.bottom_nav_profile) {
+                ProfileFragment fragment = new ProfileFragment();
+                transaction.replace(R.id.fragmentHolder, fragment);
+            }
+
+            if (id == R.id.bottom_nav_us) {
+                UsFragment fragment = new UsFragment();
+                transaction.replace(R.id.fragmentHolder, fragment);
+            }
+
+            if (id == R.id.bottom_nav_me) {
+                MeTabLayoutFragment fragment = new MeTabLayoutFragment();
+                transaction.replace(R.id.fragmentHolder, fragment);
+            }
+
+            //Ask Android to remember which menu options the user has chosen
+            transaction.addToBackStack(null);
+
+            //Implement the change
+            transaction.commit();
+            return true;
         });
 
 
@@ -158,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //This will be the first screen the user will see
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                 MeTabLayoutFragment fragment = new MeTabLayoutFragment();
-            transaction.replace(R.id.fragmentHolder, fragment);
+        MeTabLayoutFragment fragment = new MeTabLayoutFragment();
+        transaction.replace(R.id.fragmentHolder, fragment);
 
         //Ask Android to remember which menu options the user has chosen
         transaction.addToBackStack(null);
@@ -172,16 +166,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         //If the drawer is open, close it
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
         //else, if the drawer is closed, rely on super class default behavior
-        else{
+        else {
             //super.onBackPressed();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             MeTabLayoutFragment fragment = new MeTabLayoutFragment();
@@ -194,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Navigation via the drawer
     //Handle navigation view item clicks here
     @Override
-    public boolean onNavigationItemSelected( MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
 
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -202,23 +195,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Create a new fragment of the appropriate type depending
         //on click item
-        if(id == R.id.nav_food){
+        if (id == R.id.nav_food) {
             //Create a new fragment of the appropriate type
             CameraFragment fragment = new CameraFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_profile){
+        if (id == R.id.nav_profile) {
             ProfileFragment fragment = new ProfileFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_us){
+        if (id == R.id.nav_us) {
             UsFragment fragment = new UsFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_me){
+        if (id == R.id.nav_me) {
             MeTabLayoutFragment fragment = new MeTabLayoutFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
@@ -235,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @NonNull
     @Override
     public FragmentManager getSupportFragmentManager() {
         hideKeyboard(this);
@@ -251,25 +245,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-//    // Register the permissions callback, which handles the user's response to the
-//// system permissions dialog. Save the return value, an instance of
-//// ActivityResultLauncher, as an instance variable.
-//    private ActivityResultLauncher requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                if (isGranted) {
-//                    // Permission is granted. Continue the action or workflow in your
-//                    // app.
-//                } else {
-//                    // Explain to the user that the feature is unavailable because the
-//                    // features requires a permission that the user has denied. At the
-//                    // same time, respect the user's decision. Don't link to system
-//                    // settings in an effort to convince the user to change their
-//                    // decision.
-//                }
-//            });
-//
-//
-//    private ActivityResultLauncher registerForActivityResult(ActivityResultLauncher requestPermissionLauncher) {
-//    }
 }

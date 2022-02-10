@@ -23,6 +23,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
+import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
@@ -87,7 +88,7 @@ public class ManualFoodSearch extends Fragment {
 
         controller = new FoodSearchController(ctx);
 
-        searchBtn.setOnClickListener(view -> controller.searchFoodByName(foodInput.getText().toString(), new FoodSearchController.VolleyResponseListener<List<FoodResult>>() {
+        searchBtn.setOnClickListener(view -> controller.searchFoodByName(foodInput.getText().toString(), new VolleyResponseListener<List<FoodResult>>() {
 
             @Override
             public void onResponse(List<FoodResult> response) {
@@ -108,7 +109,7 @@ public class ManualFoodSearch extends Fragment {
 
         mAdapter = new FoodSearchRecyclerViewAdapter(response, ctx, foodItem -> {
 
-            controller.getNutrients(String.valueOf(foodItem.getId()), new FoodSearchController.VolleyResponseListener<FoodNutrients>() {
+            controller.getNutrients(String.valueOf(foodItem.getId()), new VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients response) {
                     setupLogAddDialog(response, foodItem.getImage_url());

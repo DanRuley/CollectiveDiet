@@ -4,31 +4,31 @@ public class FoodNutrients {
 
     long id;
     String product_name;
-    float fat_100g;
-    float carbohydrates_100g;
-    float proteins_100g;
+    Float fat_100g;
+    Float carbohydrates_100g;
+    Float proteins_100g;
     String fat_unit;
     String carbohydrates_unit;
     String proteins_unit;
-    float energy_kcal_100g;
-    float sugars_100g;
-    float sodium_100g;
-    float fiber_100g;
-    float cholesterol_100g;
-    float calcium_100g;
-    float vitamin_c_100g;
-    float vitamin_a_100g;
-    float vitamin_d_100g;
-    float vitamin_b6_100g;
-    float potassium_100g;
-    float vitamin_b12_100g;
-    float saturated_fat_100g;
-    float trans_fat_100g;
-    float magnesium_100g;
-    float zinc_100g;
-    float monounsaturated_fat_100g;
-    float polyunsaturated_fat_100g;
-    float omega_3_fat_100g;
+    Float energy_kcal_100g;
+    Float sugars_100g;
+    Float sodium_100g;
+    Float fiber_100g;
+    Float cholesterol_100g;
+    Float calcium_100g;
+    Float vitamin_c_100g;
+    Float vitamin_a_100g;
+    Float vitamin_d_100g;
+    Float vitamin_b6_100g;
+    Float potassium_100g;
+    Float vitamin_b12_100g;
+    Float saturated_fat_100g;
+    Float trans_fat_100g;
+    Float magnesium_100g;
+    Float zinc_100g;
+    Float monounsaturated_fat_100g;
+    Float polyunsaturated_fat_100g;
+    Float omega_3_fat_100g;
     String sugars_unit;
     String sodium_unit;
     String fiber_unit;
@@ -48,7 +48,7 @@ public class FoodNutrients {
     String polyunsaturated_fat_unit;
     String omega_3_fat_unit;
 
-    public FoodNutrients(long id, String product_name, float fat_100g, float carbohydrates_100g, float proteins_100g, String fat_unit, String carbohydrates_unit, String proteins_unit, float energy_kcal_100g, float sugars_100g, float sodium_100g, float fiber_100g, float cholesterol_100g, float calcium_100g, float vitamin_c_100g, float vitamin_a_100g, float vitamin_d_100g, float vitamin_b6_100g, float potassium_100g, float vitamin_b12_100g, float saturated_fat_100g, float trans_fat_100g, float magnesium_100g, float zinc_100g, float monounsaturated_fat_100g, float polyunsaturated_fat_100g, float omega_3_fat_100g, String sugars_unit, String sodium_unit, String fiber_unit, String cholesterol_unit, String calcium_unit, String vitamin_c_unit, String vitamin_a_unit, String vitamin_d_unit, String vitamin_b6_unit, String potassium_unit, String vitamin_b12_unit, String saturated_fat_unit, String trans_fat_unit, String magnesium_unit, String zinc_unit, String monounsaturated_fat_unit, String polyunsaturated_fat_unit, String omega_3_fat_unit) {
+    public FoodNutrients(long id, String product_name, Float fat_100g, Float carbohydrates_100g, Float proteins_100g, String fat_unit, String carbohydrates_unit, String proteins_unit, Float energy_kcal_100g, Float sugars_100g, Float sodium_100g, Float fiber_100g, Float cholesterol_100g, Float calcium_100g, Float vitamin_c_100g, Float vitamin_a_100g, Float vitamin_d_100g, Float vitamin_b6_100g, Float potassium_100g, Float vitamin_b12_100g, Float saturated_fat_100g, Float trans_fat_100g, Float magnesium_100g, Float zinc_100g, Float monounsaturated_fat_100g, Float polyunsaturated_fat_100g, Float omega_3_fat_100g, String sugars_unit, String sodium_unit, String fiber_unit, String cholesterol_unit, String calcium_unit, String vitamin_c_unit, String vitamin_a_unit, String vitamin_d_unit, String vitamin_b6_unit, String potassium_unit, String vitamin_b12_unit, String saturated_fat_unit, String trans_fat_unit, String magnesium_unit, String zinc_unit, String monounsaturated_fat_unit, String polyunsaturated_fat_unit, String omega_3_fat_unit) {
         this.id = id;
         this.product_name = product_name;
         this.fat_100g = fat_100g;
@@ -163,27 +163,27 @@ public class FoodNutrients {
         this.product_name = product_name;
     }
 
-    public float getFat_100g() {
+    public Float getFat_100g() {
         return fat_100g;
     }
 
-    public void setFat_100g(float fat_100g) {
+    public void setFat_100g(Float fat_100g) {
         this.fat_100g = fat_100g;
     }
 
-    public float getCarbohydrates_100g() {
+    public Float getCarbohydrates_100g() {
         return carbohydrates_100g;
     }
 
-    public void setCarbohydrates_100g(float carbohydrates_100g) {
+    public void setCarbohydrates_100g(Float carbohydrates_100g) {
         this.carbohydrates_100g = carbohydrates_100g;
     }
 
-    public float getProteins_100g() {
+    public Float getProteins_100g() {
         return proteins_100g;
     }
 
-    public void setProteins_100g(float proteins_100g) {
+    public void setProteins_100g(Float proteins_100g) {
         this.proteins_100g = proteins_100g;
     }
 
@@ -211,155 +211,155 @@ public class FoodNutrients {
         this.proteins_unit = proteins_unit;
     }
 
-    public float getEnergy_kcal_100g() {
+    public Float getEnergy_kcal_100g() {
         return energy_kcal_100g;
     }
 
-    public void setEnergy_kcal_100g(float energy_kcal_100g) {
+    public void setEnergy_kcal_100g(Float energy_kcal_100g) {
         this.energy_kcal_100g = energy_kcal_100g;
     }
 
-    public float getSugars_100g() {
+    public Float getSugars_100g() {
         return sugars_100g;
     }
 
-    public void setSugars_100g(float sugars_100g) {
+    public void setSugars_100g(Float sugars_100g) {
         this.sugars_100g = sugars_100g;
     }
 
-    public float getSodium_100g() {
+    public Float getSodium_100g() {
         return sodium_100g;
     }
 
-    public void setSodium_100g(float sodium_100g) {
+    public void setSodium_100g(Float sodium_100g) {
         this.sodium_100g = sodium_100g;
     }
 
-    public float getFiber_100g() {
+    public Float getFiber_100g() {
         return fiber_100g;
     }
 
-    public void setFiber_100g(float fiber_100g) {
+    public void setFiber_100g(Float fiber_100g) {
         this.fiber_100g = fiber_100g;
     }
 
-    public float getCholesterol_100g() {
+    public Float getCholesterol_100g() {
         return cholesterol_100g;
     }
 
-    public void setCholesterol_100g(float cholesterol_100g) {
+    public void setCholesterol_100g(Float cholesterol_100g) {
         this.cholesterol_100g = cholesterol_100g;
     }
 
-    public float getCalcium_100g() {
+    public Float getCalcium_100g() {
         return calcium_100g;
     }
 
-    public void setCalcium_100g(float calcium_100g) {
+    public void setCalcium_100g(Float calcium_100g) {
         this.calcium_100g = calcium_100g;
     }
 
-    public float getVitamin_c_100g() {
+    public Float getVitamin_c_100g() {
         return vitamin_c_100g;
     }
 
-    public void setVitamin_c_100g(float vitamin_c_100g) {
+    public void setVitamin_c_100g(Float vitamin_c_100g) {
         this.vitamin_c_100g = vitamin_c_100g;
     }
 
-    public float getVitamin_a_100g() {
+    public Float getVitamin_a_100g() {
         return vitamin_a_100g;
     }
 
-    public void setVitamin_a_100g(float vitamin_a_100g) {
+    public void setVitamin_a_100g(Float vitamin_a_100g) {
         this.vitamin_a_100g = vitamin_a_100g;
     }
 
-    public float getVitamin_d_100g() {
+    public Float getVitamin_d_100g() {
         return vitamin_d_100g;
     }
 
-    public void setVitamin_d_100g(float vitamin_d_100g) {
+    public void setVitamin_d_100g(Float vitamin_d_100g) {
         this.vitamin_d_100g = vitamin_d_100g;
     }
 
-    public float getVitamin_b6_100g() {
+    public Float getVitamin_b6_100g() {
         return vitamin_b6_100g;
     }
 
-    public void setVitamin_b6_100g(float vitamin_b6_100g) {
+    public void setVitamin_b6_100g(Float vitamin_b6_100g) {
         this.vitamin_b6_100g = vitamin_b6_100g;
     }
 
-    public float getPotassium_100g() {
+    public Float getPotassium_100g() {
         return potassium_100g;
     }
 
-    public void setPotassium_100g(float potassium_100g) {
+    public void setPotassium_100g(Float potassium_100g) {
         this.potassium_100g = potassium_100g;
     }
 
-    public float getVitamin_b12_100g() {
+    public Float getVitamin_b12_100g() {
         return vitamin_b12_100g;
     }
 
-    public void setVitamin_b12_100g(float vitamin_b12_100g) {
+    public void setVitamin_b12_100g(Float vitamin_b12_100g) {
         this.vitamin_b12_100g = vitamin_b12_100g;
     }
 
-    public float getSaturated_fat_100g() {
+    public Float getSaturated_fat_100g() {
         return saturated_fat_100g;
     }
 
-    public void setSaturated_fat_100g(float saturated_fat_100g) {
+    public void setSaturated_fat_100g(Float saturated_fat_100g) {
         this.saturated_fat_100g = saturated_fat_100g;
     }
 
-    public float getTrans_fat_100g() {
+    public Float getTrans_fat_100g() {
         return trans_fat_100g;
     }
 
-    public void setTrans_fat_100g(float trans_fat_100g) {
+    public void setTrans_fat_100g(Float trans_fat_100g) {
         this.trans_fat_100g = trans_fat_100g;
     }
 
-    public float getMagnesium_100g() {
+    public Float getMagnesium_100g() {
         return magnesium_100g;
     }
 
-    public void setMagnesium_100g(float magnesium_100g) {
+    public void setMagnesium_100g(Float magnesium_100g) {
         this.magnesium_100g = magnesium_100g;
     }
 
-    public float getZinc_100g() {
+    public Float getZinc_100g() {
         return zinc_100g;
     }
 
-    public void setZinc_100g(float zinc_100g) {
+    public void setZinc_100g(Float zinc_100g) {
         this.zinc_100g = zinc_100g;
     }
 
-    public float getMonounsaturated_fat_100g() {
+    public Float getMonounsaturated_fat_100g() {
         return monounsaturated_fat_100g;
     }
 
-    public void setMonounsaturated_fat_100g(float monounsaturated_fat_100g) {
+    public void setMonounsaturated_fat_100g(Float monounsaturated_fat_100g) {
         this.monounsaturated_fat_100g = monounsaturated_fat_100g;
     }
 
-    public float getPolyunsaturated_fat_100g() {
+    public Float getPolyunsaturated_fat_100g() {
         return polyunsaturated_fat_100g;
     }
 
-    public void setPolyunsaturated_fat_100g(float polyunsaturated_fat_100g) {
+    public void setPolyunsaturated_fat_100g(Float polyunsaturated_fat_100g) {
         this.polyunsaturated_fat_100g = polyunsaturated_fat_100g;
     }
 
-    public float getOmega_3_fat_100g() {
+    public Float getOmega_3_fat_100g() {
         return omega_3_fat_100g;
     }
 
-    public void setOmega_3_fat_100g(float omega_3_fat_100g) {
+    public void setOmega_3_fat_100g(Float omega_3_fat_100g) {
         this.omega_3_fat_100g = omega_3_fat_100g;
     }
 
