@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,6 +30,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,6 +39,8 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ActivityResultLauncher ARL;
+
+    GoogleSignInClient mGoogleSignInClient;
 
     //elements
     Toolbar toolbar;
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                 .requestEmail()
                                 .build();
-                        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+                         mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
                         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
                         if (account != null && !account.isExpired()) {
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                 .requestEmail()
                                 .build();
-                        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+                        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
                         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
                         if (account != null && !account.isExpired()) {
@@ -267,6 +272,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
+        if(id == R.id.nav_sign_in){
+            if(!isSignedIn()) {
+                FragmentSignIn fragment = new FragmentSignIn();
+                transaction.replace(R.id.fragmentHolder, fragment);
+            }
+        }
+
+        if(id == R.id.nav_sign_out){
+            signOut();
+        }
+
         //Ask Android to remember which menu options the user has chosen
         transaction.addToBackStack(null);
 
@@ -300,6 +316,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return GoogleSignIn.getLastSignedInAccount(this) != null;
     }
 
+    private void signOut(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                TextView login = findViewById(R.id.toolbar_login);
+                login.setText("sign in");
+
+                MeTabLayoutFragment frag = new MeTabLayoutFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentHolder, frag);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+    }
 //    // Register the permissions callback, which handles the user's response to the
 //// system permissions dialog. Save the return value, an instance of
 //// ActivityResultLauncher, as an instance variable.
