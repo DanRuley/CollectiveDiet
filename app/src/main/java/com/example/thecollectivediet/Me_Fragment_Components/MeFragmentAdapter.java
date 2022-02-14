@@ -12,6 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
     in a tab layout which can be navigated via the tabs or by swiping left or right.
 
  */
+
 public class MeFragmentAdapter extends FragmentStateAdapter {
     public MeFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);

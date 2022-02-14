@@ -26,6 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.thecollectivediet.Me_Fragment_Components.MeFragmentAdapter;
+import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
+import com.example.thecollectivediet.Me_Fragment_Components.TodayFragment;
 import com.example.thecollectivediet.R;
 
 import java.io.File;
@@ -276,11 +279,18 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             }
 
             case R.id.iv_backbutton:{
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                ProfileFragment frag = new ProfileFragment();
+//                transaction.replace(R.id.fragmentHolder, frag);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfileFragment frag = new ProfileFragment();
+                MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);
                 transaction.commit();
+
 
                 break;
             }
