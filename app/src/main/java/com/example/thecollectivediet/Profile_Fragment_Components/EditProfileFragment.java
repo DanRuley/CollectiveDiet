@@ -3,23 +3,18 @@ package com.example.thecollectivediet.Profile_Fragment_Components;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -29,11 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.thecollectivediet.R;
 
@@ -83,9 +74,9 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     Context context;
 
     //buttons
-    TextView editPhoto;
-    TextView saveChanges;
-    ImageView back_button;
+    AppCompatButton editPhoto;
+    AppCompatButton saveChanges;
+    AppCompatButton back_button;
 
     //editViews
     EditText mFirstName;
@@ -118,7 +109,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         editor = prefs.edit();
 
         //hook elements
-        editPhoto = v.findViewById(R.id.tv_editphoto);
+        editPhoto = v.findViewById(R.id.ac_button_editphoto);
         editPhoto.setOnClickListener(this);
 
 
@@ -140,7 +131,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         mCountry = v.findViewById(R.id.ev_country);
         mCountry.setHint("country: " + prefs.getString("profile_country", ""));
 
-        saveChanges = v.findViewById(R.id.tv_savechanges);
+        saveChanges = v.findViewById(R.id.ac_button_savechanges);
         saveChanges.setOnClickListener(this);
 
         photo = v.findViewById(R.id.profile_image);
@@ -258,7 +249,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.tv_editphoto: {
+            case R.id.ac_button_editphoto: {
 
                 //Open camera
 
@@ -268,7 +259,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 break;
             }
 
-            case R.id.tv_savechanges: {
+            case R.id.ac_button_savechanges: {
 
                 if (isExternalStorageWritable()) {
                     saveProfileImage(bitmap);

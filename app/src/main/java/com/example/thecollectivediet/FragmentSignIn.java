@@ -75,8 +75,6 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
                     }
 
                 });
-
-
         return v;
     }
 
@@ -87,7 +85,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
 
                 Intent signInIntent =  mGoogleSignInClient.getSignInIntent();
 
-                signInActivityResultLauncher.launch(signInIntent);/////////////////
+                signInActivityResultLauncher.launch(signInIntent);
                 break;
             }
         }

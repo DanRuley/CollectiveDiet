@@ -11,14 +11,16 @@
         tools:context=".EditProfileFragment">
 
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/iv_backbutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginVertical="10dp"
-            android:src="@drawable/ic_action_back">
+            android:drawableLeft="@drawable/ic_action_back"
+            style="@style/white_button"
+            >
 
-        </ImageView>
+        </androidx.appcompat.widget.AppCompatButton>
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,19 +32,21 @@
 
         </TextView>
 
-        <TextView
-            android:id="@+id/tv_savechanges"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ac_button_savechanges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:padding="15dp"
+            android:padding="10dp"
+            android:layout_marginVertical="10dp"
             android:text="save changes"
             android:textColor="@color/teal_700"
-            android:textSize="20sp"
-            android:background="@drawable/rounded_button_white">
+            android:textSize="15sp"
 
-        </TextView>
+            style="@style/white_button">
+
+        </androidx.appcompat.widget.AppCompatButton>
 
         <View
             android:id="@+id/divider"
@@ -64,24 +68,24 @@
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
 
-        <TextView
-            android:id="@+id/tv_editphoto"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ac_button_editphoto"
+            style="@style/white_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile_image"
             android:layout_centerHorizontal="true"
             android:text="Edit Photo"
             android:textColor="@color/teal_700"
-            android:textSize="20sp"
-            android:background="@drawable/rounded_button_white">
+            android:textSize="20sp">
 
-        </TextView>
+        </androidx.appcompat.widget.AppCompatButton>
 
         <EditText
             android:id="@+id/ev_firstname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_editphoto"
+            android:layout_below="@id/ac_button_editphoto"
             android:layout_margin="10dp"
             android:hint="First Name"
             android:inputType="text"

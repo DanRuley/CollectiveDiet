@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -26,7 +27,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     Context context;
 
     //UI elements
-    TextView mEdit;
+    AppCompatButton mEdit;
     ImageView mProfilePic;
     TextView mFirstName;
     TextView mLastName;
@@ -48,7 +49,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         editor = prefs.edit();
 
         //hook elements in view
-        mEdit = v.findViewById(R.id.textview_profile_edit);
+        mEdit = v.findViewById(R.id.ac_button_profile_edit);
         mEdit.setOnClickListener(this);
         mProfilePic = v.findViewById(R.id.profile_image);
 
@@ -85,7 +86,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()){
 
-            case R.id.textview_profile_edit:{
+            case R.id.ac_button_profile_edit:{
                 EditProfileFragment frag = new EditProfileFragment();
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);
