@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.thecollectivediet.Intro.Intro_ViewPagerAdapter;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -37,7 +38,7 @@ public class IntroActivity extends AppCompatActivity {
     //create slider view in activity view
     private ViewPager viewPager;
     private Intro_ViewPagerAdapter viewPagerAdapter;
-    //used to show progress in intro walkthrough
+    //used to show progress in intro walk through
     private DotsIndicator dotsIndicator;
     private GoogleSignInClient mGoogleSignInClient;
     private Activity ctx;
@@ -65,7 +66,10 @@ public class IntroActivity extends AppCompatActivity {
         skip_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                //finish();
+                Intent intent = new Intent(ctx, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -182,6 +186,8 @@ public class IntroActivity extends AppCompatActivity {
 
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         this.setResult(RESULT_OK);
-        finish();
+        //finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

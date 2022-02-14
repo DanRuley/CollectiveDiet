@@ -98,4 +98,7 @@ dependencies {
 
     //rating bars
     implementation 'com.github.sujithkanna:smileyrating:2.0.0'
+
+    //google sign in
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
 }

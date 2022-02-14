@@ -50,15 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
         editor = prefs.edit();
-//        String firstTime = prefs.getString("firstTime", "null");
-//
-//        if(firstTime.equals("null")) {
-//            editor.putString("firstTime", "true");
-//            editor.commit();
-//
-//            Intent intent = new Intent(this, Activity_Intro.class);
-//            startActivity(intent);
-//        }
 
         TextView login = findViewById(R.id.toolbar_login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +83,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
-        Intent intent = new Intent(this, IntroActivity.class);
-        someActivityResultLauncher.launch(intent);
-        //startActivity(intent);
+        //If this is user's first time on app
+        String firstTime = prefs.getString("firstTime", "null");
+
+        if(firstTime.equals("null")) {
+            editor.putString("firstTime", "false");
+            editor.commit();
+
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+        }
+//        else {
+//            Intent intent = new Intent(this, IntroActivity.class);
+//            someActivityResultLauncher.launch(intent);
+//        }
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestEmail()
+                                .build();
+                        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+
+                        if (account != null && !account.isExpired()) {
+
+                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                            MeTabLayoutFragment fragment = new MeTabLayoutFragment();
+                            transaction.replace(R.id.fragmentHolder, fragment);
+
+                            //Ask Android to remember which menu options the user has chosen
+                            transaction.addToBackStack(null);
+
+                            //Implement the change
+                            transaction.commit();
+
+                            TextView login1 = findViewById(R.id.toolbar_login);
+                            String username = prefs.getString("user", "null");
+                            login1.setText(username);
+                            //todo
+                            //get user metrics
+
+                        }
+                        else{
+                            FragmentSignIn frag = new FragmentSignIn();
+                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragmentHolder, frag);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
 
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
@@ -157,15 +192,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //For now, the app will open straight to the food fragment.
         //This will be the first screen the user will see
         //Create a transaction
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                 MeTabLayoutFragment fragment = new MeTabLayoutFragment();
-            transaction.replace(R.id.fragmentHolder, fragment);
-
-        //Ask Android to remember which menu options the user has chosen
-        transaction.addToBackStack(null);
-
-        //Implement the change
-        transaction.commit();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                 MeTabLayoutFragment fragment = new MeTabLayoutFragment();
+//            transaction.replace(R.id.fragmentHolder, fragment);
+//
+//        //Ask Android to remember which menu options the user has chosen
+//        transaction.addToBackStack(null);
+//
+//        //Implement the change
+//        transaction.commit();
 
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
