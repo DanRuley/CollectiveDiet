@@ -279,18 +279,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             }
 
             case R.id.iv_backbutton:{
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                ProfileFragment frag = new ProfileFragment();
-//                transaction.replace(R.id.fragmentHolder, frag);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);
                 transaction.commit();
-
 
                 break;
             }

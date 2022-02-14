@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,7 +18,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.thecollectivediet.FragmentSignIn;
+import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
+import com.example.thecollectivediet.Me_Fragment_Components.TodayFragment;
 import com.example.thecollectivediet.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -26,8 +35,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     SharedPreferences.Editor editor;
     Context context;
 
+    private GoogleSignInClient mGoogleSignInClient;
+
     //UI elements
     AppCompatButton mEdit;
+    AppCompatButton mLogout;
+    AppCompatButton mLogIn;
     ImageView mProfilePic;
     TextView mFirstName;
     TextView mLastName;
@@ -70,6 +83,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mCountry = v.findViewById(R.id.textview_profile_country);
         mCountry.setText("Country: " + prefs.getString("profile_country", ""));
 
+       if(isSignedIn()) {
+           mLogout = v.findViewById(R.id.ac_button_logout);
+           mLogout.setOnClickListener(this);
+           mLogout.setVisibility(View.VISIBLE);
+           mLogout.setClickable(true);
+       }
+       else{
+           mLogIn = v.findViewById(R.id.ac_button_login);
+           mLogIn.setOnClickListener(this);
+           mLogIn.setVisibility(View.VISIBLE);
+           mLogIn.setClickable(true);
+       }
+
         profilePicPath = prefs.getString("profile_pic", null);
         Bitmap thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
         if(thumbnailPic != null){
@@ -91,9 +117,48 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);
                 transaction.commit();
+                break;
+            }
+
+            case R.id.ac_button_logout:{
+                signOut();
+                break;
+            }
+
+            case R.id.ac_button_login:{
+                FragmentSignIn frag = new FragmentSignIn();
+                transaction.replace(R.id.fragmentHolder, frag);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
             }
         }
 
 
+    }
+
+    private boolean isSignedIn() {
+        return GoogleSignIn.getLastSignedInAccount(context) != null;
+    }
+
+    private void signOut(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(),gso);
+        mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+            TextView login = getActivity().findViewById(R.id.toolbar_login);
+            login.setText("sign in");
+
+                MeTabLayoutFragment frag = new MeTabLayoutFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentHolder, frag);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
     }
 }

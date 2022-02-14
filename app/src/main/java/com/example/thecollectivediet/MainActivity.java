@@ -35,10 +35,13 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    ActivityResultLauncher ARL;
+
+    //elements
     Toolbar toolbar;
     DrawerLayout drawer;
 
-    ActivityResultLauncher ARL;
+
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
@@ -55,7 +58,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            if(!isSignedIn()){
+                FragmentSignIn frag = new FragmentSignIn();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentHolder, frag);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
             }
         });
 
@@ -285,6 +294,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private boolean isSignedIn() {
+        return GoogleSignIn.getLastSignedInAccount(this) != null;
     }
 
 //    // Register the permissions callback, which handles the user's response to the

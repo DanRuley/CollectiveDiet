@@ -134,14 +134,30 @@
     </TextView>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ac_button_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textview_profile_weight"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         style="@style/white_button"
+        android:text="LOG OUT"
+        android:visibility="invisible"
+        android:clickable="false">
 
-        android:text="LOG OUT">
+    </androidx.appcompat.widget.AppCompatButton>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ac_button_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textview_profile_weight"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        style="@style/white_button"
+        android:text="LOG IN"
+        android:visibility="invisible"
+        android:clickable="false">
 
     </androidx.appcompat.widget.AppCompatButton>
 </androidx.constraintlayout.widget.ConstraintLayout>
