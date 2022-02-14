@@ -153,7 +153,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             TextView login = getActivity().findViewById(R.id.toolbar_login);
             login.setText("sign in");
 
-                MeTabLayoutFragment frag = new MeTabLayoutFragment();
+                FragmentSignIn frag = new FragmentSignIn();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);

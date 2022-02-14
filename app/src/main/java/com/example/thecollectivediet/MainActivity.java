@@ -281,6 +281,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(id == R.id.nav_sign_out){
             signOut();
+            FragmentSignIn frag = new FragmentSignIn();
+            transaction.replace(R.id.fragmentHolder, frag);
+
+            TextView login = findViewById(R.id.toolbar_login);
+            login.setText("sign in");
         }
 
         //Ask Android to remember which menu options the user has chosen
@@ -325,14 +330,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-                TextView login = findViewById(R.id.toolbar_login);
-                login.setText("sign in");
 
-                MeTabLayoutFragment frag = new MeTabLayoutFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
             }
         });
     }
