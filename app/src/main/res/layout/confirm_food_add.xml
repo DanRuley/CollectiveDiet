@@ -9,6 +9,28 @@
     android:layout_marginHorizontal="12dp"
     >
 
+    <TextView
+        android:id="@+id/confirmText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Add to Food Log?"
+        android:textSize="24sp"
+
+        app:layout_constraintBottom_toTopOf="@id/foodNameTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/confirmImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/confirmImage"
+        android:layout_width="111dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmText"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <Button
         android:id="@+id/foodConfirmBtn"
         android:layout_width="wrap_content"
@@ -18,15 +40,6 @@
         app:layout_constraintEnd_toStartOf="@+id/cancelBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodProteinTxt" />
-
-    <Button
-        android:id="@+id/cancelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/foodConfirmBtn"
-        app:layout_constraintTop_toTopOf="@+id/foodConfirmBtn" />
 
     <TextView
         android:id="@+id/foodNameTxt"
@@ -39,6 +52,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/confirmImage"
         app:layout_constraintTop_toBottomOf="@+id/confirmText" />
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/foodConfirmBtn"
+        app:layout_constraintTop_toTopOf="@+id/foodConfirmBtn" />
+
+
 
     <TextView
         android:id="@+id/foodCalTxt"
@@ -73,26 +97,8 @@
         app:layout_constraintStart_toStartOf="@+id/foodFatTxt"
         app:layout_constraintTop_toBottomOf="@+id/foodFatTxt" />
 
-    <ImageView
-        android:id="@+id/confirmImage"
-        android:layout_width="111dp"
-        android:layout_height="103dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmText"
-        tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/confirmText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Add to Food Log?"
-        android:textSize="24sp"
 
-        app:layout_constraintBottom_toTopOf="@id/foodNameTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/confirmImage"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

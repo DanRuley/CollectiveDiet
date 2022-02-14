@@ -7,6 +7,7 @@ public class User {
     String user_name;
     String user_dob;
     String user_gender;
+    String user_country;
     Float start_wgt;
     Float current_wgt;
     Float goal_wgt;
@@ -19,6 +20,14 @@ public class User {
         user_email = email;
         user_name = name;
         signup_dts = dts;
+    }
+
+    public String getUser_country() {
+        return user_country;
+    }
+
+    public void setUser_country(String user_country) {
+        this.user_country = user_country;
     }
 
     public String getUser_id() {

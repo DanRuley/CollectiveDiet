@@ -5,26 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
-
 import com.example.thecollectivediet.R;
 
-public class FoodLogFragment extends Fragment {
+public class FoodLogFragment extends Fragment implements View.OnClickListener {
 
-    Button addFoodBtn;
-    RecyclerView recyclerView;
-    RecyclerView.Adapter mAdapter;
-    RecyclerView.LayoutManager layoutManager;
     Context ctx;
-    TextView res;
     FoodSearchController controller;
 
     @Override
@@ -41,23 +31,40 @@ public class FoodLogFragment extends Fragment {
     private void initializeComponents(View v) {
         ctx = this.getActivity();
 
-        addFoodBtn = v.findViewById(R.id.addFoodBtn);
-
-        recyclerView = v.findViewById(R.id.addFoodRecycler);
-        recyclerView.setHasFixedSize(true);
-
-        layoutManager = new LinearLayoutManager(ctx);
-        recyclerView.setLayoutManager(layoutManager);
-
-        res = v.findViewById(R.id.res);
-
-        addFoodBtn.setOnClickListener(v1 -> {
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
+        v.findViewById(R.id.breakfast_add_btn).setOnClickListener(this);
+        v.findViewById(R.id.lunch_add_btn).setOnClickListener(this);
+        v.findViewById(R.id.dinner_add_btn).setOnClickListener(this);
+        v.findViewById(R.id.snack_add_btn).setOnClickListener(this);
 
         controller = new FoodSearchController(ctx);
     }
+
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+        String mealType = "";
+
+        if (id == R.id.breakfast_add_btn)
+            mealType = "breakfast";
+        else if (id == R.id.lunch_add_btn)
+            mealType = "lunch";
+        else if (id == R.id.dinner_add_btn)
+            mealType = "dinner";
+        else if (id == R.id.snack_add_btn)
+            mealType = "snack";
+
+        inflateFoodSearchFrag(mealType);
+    }
+
+    private void inflateFoodSearchFrag(String mealType) {
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Fragment f = new ManualFoodSearch();
+        Bundle args = new Bundle();
+        args.putString("mealType", mealType);
+        transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }

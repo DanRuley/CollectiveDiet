@@ -35,12 +35,14 @@ import java.util.List;
 public class ManualFoodSearch extends Fragment {
 
     static String savedText;
+    String mealType;
+    boolean mealTypePrompt;
     EditText foodInput;
     Button searchBtn;
     Context ctx;
     FoodSearchController controller;
     RecyclerView recyclerView;
-    RecyclerView.Adapter mAdapter;
+    FoodSearchRecyclerViewAdapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
 
     SharedPreferences prefs;
@@ -51,6 +53,14 @@ public class ManualFoodSearch extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_food_search, container, false);
+
+        Bundle args = getArguments();
+
+        if (args != null) {
+            mealType = args.getString("mealType");
+            mealTypePrompt = false;     //meal type was provided by the button the user clicked - no need to prompt for meal type.
+        } else
+            mealTypePrompt = true;      //If search is called from Camera, we need to ask user for meal type
 
         initializeComponents(v);
 
@@ -112,7 +122,8 @@ public class ManualFoodSearch extends Fragment {
             controller.getNutrients(String.valueOf(foodItem.getId()), new VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients response) {
-                    setupLogAddDialog(response, foodItem.getImage_url());
+                    LogDialogTest();
+                    //setupLogAddDialog(response, foodItem.getImage_url());
                 }
 
                 @Override
@@ -122,6 +133,16 @@ public class ManualFoodSearch extends Fragment {
             });
         });
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void LogDialogTest() {
+        Dialog dialog = new Dialog(ctx);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialog.setContentView(R.layout.confirm_food_add_v2);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+        dialog.show();
     }
 
     private void setupLogAddDialog(FoodNutrients response, String photoURL) {

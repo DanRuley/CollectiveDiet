@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.ManualFoodSearch;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogFragment;
 import com.example.thecollectivediet.R;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
@@ -124,7 +123,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
             case R.id.meal:
             {
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
+                transaction.replace(R.id.fragmentHolder, new FoodLogFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
