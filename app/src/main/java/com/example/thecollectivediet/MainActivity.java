@@ -179,8 +179,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 if(id == R.id.bottom_nav_profile){
-                    ProfileFragment fragment = new ProfileFragment();
-                    transaction.replace(R.id.fragmentHolder, fragment);
+
+                    MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
+                    transaction.replace(R.id.fragmentHolder, frag);
+
                 }
 
                 if(id == R.id.bottom_nav_us){
