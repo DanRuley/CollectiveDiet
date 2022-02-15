@@ -98,4 +98,7 @@ dependencies {
 
     //rating bars
     implementation 'com.github.sujithkanna:smileyrating:2.0.0'
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'de.codecrafters.tableview:tableview:2.8.0'
 }

@@ -506,4 +506,5 @@ public class FoodNutrients {
     public void setOmega_3_fat_unit(String omega_3_fat_unit) {
         this.omega_3_fat_unit = omega_3_fat_unit;
     }
+
 }

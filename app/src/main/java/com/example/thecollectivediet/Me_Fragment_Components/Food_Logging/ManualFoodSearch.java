@@ -1,32 +1,23 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
-import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
@@ -82,7 +73,6 @@ public class ManualFoodSearch extends Fragment {
         return v;
     }
 
-
     private void initializeComponents(View v) {
         ctx = this.getActivity();
         controller = new FoodSearchController(ctx);
@@ -121,9 +111,9 @@ public class ManualFoodSearch extends Fragment {
 
             controller.getNutrients(String.valueOf(foodItem.getId()), new VolleyResponseListener<FoodNutrients>() {
                 @Override
-                public void onResponse(FoodNutrients response) {
-                    LogDialogTest();
-                    //setupLogAddDialog(response, foodItem.getImage_url());
+                public void onResponse(FoodNutrients nutrients) {
+                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem);
+                    dialog.show();
                 }
 
                 @Override
@@ -133,50 +123,5 @@ public class ManualFoodSearch extends Fragment {
             });
         });
         recyclerView.setAdapter(mAdapter);
-    }
-
-    private void LogDialogTest() {
-        Dialog dialog = new Dialog(ctx);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        dialog.setContentView(R.layout.confirm_food_add_v2);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-        dialog.show();
-    }
-
-    private void setupLogAddDialog(FoodNutrients response, String photoURL) {
-
-        Dialog dialog = new Dialog(ctx);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        dialog.setContentView(R.layout.confirm_food_add);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-        ((TextView) dialog.findViewById(R.id.foodNameTxt)).setText(String.format("%s, Serving Size: %s %s", response.getProduct_name(), "100", "grams"));
-        ((TextView) dialog.findViewById(R.id.foodCalTxt)).setText(String.format("%d Calories", Math.round(response.getEnergy_kcal_100g())));
-        ((TextView) dialog.findViewById(R.id.foodFatTxt)).setText(String.format("Fat:                       %.2f g", response.getFat_100g()));
-        ((TextView) dialog.findViewById(R.id.foodCarbTxt)).setText(String.format("Carbohydrates:    %.2f g", response.getCarbohydrates_100g()));
-        ((TextView) dialog.findViewById(R.id.foodProteinTxt)).setText(String.format("Protein:                %.2f g", response.getProteins_100g()));
-
-        // create a ProgressDrawable object which we will show as placeholder
-        CircularProgressDrawable drawable = new CircularProgressDrawable(ctx);
-        drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);
-        drawable.setCenterRadius(30f);
-        drawable.setStrokeWidth(5f);
-        // set all other properties as you would see fit and start it
-        drawable.start();
-
-        ImageView img = dialog.findViewById(R.id.confirmImage);
-        Glide.with(ctx).load(photoURL == null ? "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png" : photoURL).placeholder(drawable).into(img);
-
-        dialog.findViewById(R.id.foodConfirmBtn).setOnClickListener(v -> {
-            JSONSerializer.addFoodToList(response.getProduct_name(), "100 grams", ctx);
-            Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").placeholder(drawable).into(img);
-        });
-
-        dialog.findViewById(R.id.cancelBtn).setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
     }
 }
