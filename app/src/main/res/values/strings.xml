@@ -7,10 +7,9 @@
     <string name="server_client_id">706133075330-grs8gr92h2gn6gnm6rfq2uhgvmpgdkts.apps.googleusercontent.com</string>
     <color name="blue">#0000FF</color>
     <string-array name="serving_qty_array">
-        <item>g.</item>
+        <item>g</item>
         <item>cups</item>
-        <item>oz.</item>
-        <item>ml.</item>
+        <item>oz</item>
     </string-array>
 
 </resources>

@@ -1,13 +1,18 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,19 +25,27 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.R;
 
+import java.util.HashMap;
+
+@SuppressLint("DefaultLocale")
 public class FoodConfirmDialog extends Dialog {
     Context ctx;
     FoodNutrients nutrients;
     FoodResult food;
 
     ImageView image;
+    TextView foodName;
     TextView calorieVal;
+    double calorieValNum;
     TextView proteinVal;
+    double proteinValNum;
     TextView fatVal;
+    double fatValNum;
     TextView carbVal;
+    double carbValNum;
 
     Spinner servingUnit;
-    TextView servingQtyVal;
+    EditText servingQtyVal;
 
     public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food) {
         super(ctx);
@@ -55,9 +68,27 @@ public class FoodConfirmDialog extends Dialog {
         proteinVal = findViewById(R.id.protein_val);
         fatVal = findViewById(R.id.fat_val);
         carbVal = findViewById(R.id.carb_val);
-        servingQtyVal = findViewById(R.id.serving_sz_txt);
+        servingQtyVal = findViewById(R.id.serving_qty_val);
+        foodName = findViewById(R.id.foodNameTxt);
+
+        foodName.setText(food.getProduct_name());
+        servingQtyVal.setText(String.valueOf(100));
+
+        calorieValNum = nutrients.getEnergy_kcal_100g();
+        proteinValNum = nutrients.getProteins_100g();
+        carbValNum = nutrients.getCarbohydrates_100g();
+        fatValNum = nutrients.getFat_100g();
+
+        calorieVal.setText(String.format("%.1f", nutrients.getEnergy_kcal_100g()));
+        proteinVal.setText(String.format("%s %s", nutrients.getProteins_100g(), nutrients.getProteins_unit()));
+        carbVal.setText(String.format("%s %s", nutrients.getCarbohydrates_100g(), nutrients.getCarbohydrates_unit()));
+        fatVal.setText(String.format("%s %s", nutrients.getFat_100g(), nutrients.getFat_unit()));
 
         setupServingSpinner();
+        ServingCalculator servingCalculator = new ServingCalculator(nutrients, servingUnit, this);
+        servingUnit.setOnItemSelectedListener(servingCalculator);
+        servingQtyVal.addTextChangedListener(servingCalculator);
+
         setupFoodImage();
 
         this.findViewById(R.id.add_food_btn).setOnClickListener(v -> {
@@ -84,16 +115,87 @@ public class FoodConfirmDialog extends Dialog {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servingUnit.setAdapter(adapter);
 
-        servingUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                parent.getItemAtPosition(position);
-            }
+        servingUnit.setOnItemSelectedListener(new ServingCalculator(nutrients, servingUnit, this));
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                parent.getItemAtPosition(0);
-            }
-        });
+    private void updateServing(Double multiplier) {
+        double serving = Double.parseDouble(servingQtyVal.getText().toString());
+        serving *= multiplier;
+        servingQtyVal.setText(String.format("%.2f", serving));
+    }
+
+    private void updateFields(Double multiplier) {
+
+    }
+
+
+    static class ServingCalculator implements TextWatcher, AdapterView.OnItemSelectedListener {
+
+        //1 cup == 128 g == 4.5oz
+        //1 oz. == 28.35 g == 0.2215 cup
+        //1 g. == 0.03527 oz == 0.00781 cup
+        double caloriesPerGram;
+        double proteinPerGram;
+        double carbPerGram;
+        double fatPerGram;
+        String prevUnit;
+        double oldServing;
+        HashMap<String, Double> multipliers;
+        FoodConfirmDialog view;
+
+        public ServingCalculator(FoodNutrients nutrients, AdapterView<?> parent, FoodConfirmDialog view) {
+            this.view = view;
+            caloriesPerGram = nutrients.getEnergy_kcal_100g() / 100;
+            proteinPerGram = nutrients.getProteins_100g() / 100;
+            carbPerGram = nutrients.getCarbohydrates_100g() / 100;
+            fatPerGram = nutrients.getFat_100g() / 100;
+            prevUnit = parent.getItemAtPosition(0).toString();
+
+            multipliers = new HashMap<>();
+            multipliers.put("g_to_oz", 0.03527396195);
+            multipliers.put("g_to_cups", 0.0078125);
+            multipliers.put("oz_to_g", 28.34952);
+            multipliers.put("oz_to_cups", 0.221483942414);
+            multipliers.put("cups_to_g", 128.0);
+            multipliers.put("cups_to_oz", 4.515);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            Log.d("", "");
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //recalculate
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            parent.getItemAtPosition(position);
+            String newUnit = parent.getItemAtPosition(position).toString();
+            if (!newUnit.equals(prevUnit))
+                recalculateServing(newUnit);
+            prevUnit = newUnit;
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            parent.getItemAtPosition(0);
+        }
+
+        private void recalculateFields(Double currentVal) {
+
+        }
+
+        private void recalculateServing(String currentUnit) {
+            Double multiplier = multipliers.get(prevUnit + "_to_" + currentUnit);
+            view.updateServing(multiplier);
+        }
     }
 }

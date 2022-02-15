@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint_layout"
-    android:background="#DAE8FC"
-
     android:layout_width="match_parent"
+
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="#DAE8FC">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,13 +71,10 @@
                 android:textColor="#616161" />
 
             <EditText
-                android:id="@+id/serving_txt"
+                android:id="@+id/serving_qty_val"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:autofillHints="100"
-                android:hint="100"
-                android:hintTextColor="#616161"
                 android:inputType="numberDecimal"
                 android:minWidth="48dp" />
 
@@ -117,8 +114,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/protein_label"
