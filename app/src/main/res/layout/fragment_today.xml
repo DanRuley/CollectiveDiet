@@ -20,7 +20,7 @@
         app:layout_constraintRight_toLeftOf="@id/cv_profile_pic"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:layout_constraintVertical_weight=".5">
+        app:layout_constraintVertical_weight=".2">
 
     </TextView>
 
@@ -254,13 +254,14 @@
             android:layout_alignParentTop="true"
             android:fontFamily="@font/quintessential_regular"
             android:text="Mood"
-            android:textSize="30sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"
             app:layout_constraintHorizontal_weight="3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/mood_image"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="1">
+            app:layout_constraintVertical_weight="1"
+            android:gravity="center_vertical">
 
         </TextView>
 
@@ -298,13 +299,14 @@
             android:layout_height="0dp"
             android:fontFamily="@font/quintessential_regular"
             android:text="Energy"
-            android:textSize="30sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"
             app:layout_constraintHorizontal_weight="3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/energy_image"
             app:layout_constraintTop_toBottomOf="@id/divider"
-            app:layout_constraintVertical_weight="1">
+            app:layout_constraintVertical_weight="1"
+            android:gravity="center_vertical">
 
         </TextView>
 
@@ -345,13 +347,14 @@
             android:layout_height="0dp"
             android:fontFamily="@font/quintessential_regular"
             android:text="Hunger"
-            android:textSize="30sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"
             app:layout_constraintHorizontal_weight="3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/hunger_image"
             app:layout_constraintTop_toBottomOf="@id/divider2"
-            app:layout_constraintVertical_weight="1">
+            app:layout_constraintVertical_weight="1"
+            android:gravity="center_vertical">
 
         </TextView>
 
@@ -395,13 +398,14 @@
             android:layout_height="0dp"
             android:fontFamily="@font/quintessential_regular"
             android:text="Focus"
-            android:textSize="30sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"
             app:layout_constraintHorizontal_weight="3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/focus_image"
             app:layout_constraintTop_toBottomOf="@id/divider3"
-            app:layout_constraintVertical_weight="1">
+            app:layout_constraintVertical_weight="1"
+            android:gravity="center_vertical">
 
         </TextView>
 
