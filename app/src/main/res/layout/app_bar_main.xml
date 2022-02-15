@@ -36,7 +36,7 @@
                 android:layout_marginRight="16dp"
                 android:text="Login"
                 android:textSize="20dp"
-                android:clickable="true"/>
+                />
         </androidx.appcompat.widget.Toolbar>
 
         <include layout="@layout/content_main">

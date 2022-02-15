@@ -270,7 +270,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 saveStats();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                ProfileFragment frag = new ProfileFragment();
+                MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -326,14 +326,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private void saveProfileImage(Bitmap finalBitmap) {
 
         if(photoChanged) {
-//            File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//            //File root = Environment.getExternalStorageDirectory();
-//
-//            String m = Environment.getExternalStorageState();
-//            File myDir = new File(root, "/temp_saved_images");
-//
-//            String fname = "Thumbnail_profile.jpg";
-            //File root = Environment.getExternalStorageDirectory();
+
 
             File rt = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);

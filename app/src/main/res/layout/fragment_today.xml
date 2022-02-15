@@ -1,149 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-    <TableLayout
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:fillViewport="true">-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="1">
+        android:background="@drawable/gradient_animation_profile">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_pink"
-    android:visibility="visible"
-    tools:visibility="visible">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/feel_layout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toTopOf="@id/survey_stats_layout"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1">
-
-        <ImageView
-            android:id="@+id/how_do_you_feel"
+        <TextView
+            android:id="@+id/tv_welcome"
             android:layout_width="0dp"
-
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight=".5"
-            android:src="@drawable/how_do_you_feel_today"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/meal"
-            app:layout_constraintHorizontal_weight=".5"
+            android:layout_margin="10dp"
+            android:text="Hi, "
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/cl_survey"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cv_profile_pic"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.522">
 
+            app:layout_constraintVertical_weight=".5">
 
-        </ImageView>
+        </TextView>
 
-        <ImageView
-            android:id="@+id/meal"
+        <!--start vertical cards-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cv_profile_pic"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight=".5"
-            android:clickable="true"
-            android:src="@drawable/meal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight=".5"
-            app:layout_constraintLeft_toRightOf="@id/how_do_you_feel"
+            app:layout_constraintLeft_toRightOf="@id/tv_welcome"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cv_life_style"
+            android:layout_margin="10dp"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_weight="1"
+            android:src="@drawable/ic_menu_camera">
 
-        </ImageView>
+        </de.hdodenhof.circleimageview.CircleImageView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/survey_stats_layout"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="10dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/cv_life_style"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_profile_pic"
+            app:layout_constraintBottom_toTopOf="@id/cv_other"
+            app:layout_constraintLeft_toRightOf="@id/cl_survey"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_weight="1"
+            android:layout_margin="10dp">
 
-        app:layout_constraintTop_toBottomOf="@id/feel_layout"
-        app:layout_constraintVertical_weight="8">
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/cv_other"
+            app:layout_constraintTop_toBottomOf="@id/cv_life_style"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/spacer"
+            app:layout_constraintLeft_toRightOf="@id/cl_survey"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_margin="10dp">
+
+        </androidx.cardview.widget.CardView>
+
+        <!--End vertical cards-->
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/survey_layout"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/cl_survey"
+            app:layout_constraintTop_toBottomOf="@id/tv_welcome"
+            app:layout_constraintBottom_toTopOf="@id/spacer"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/survey_layout_bg">
+            app:layout_constraintRight_toLeftOf="@id/cv_life_style"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_weight="1">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mood_layout"
-                android:layout_width="match_parent"
+
+
+            <TextView
+                android:id="@+id/mood_text"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-
-                app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/quintessential_regular"
+                android:text="Mood"
+                android:textSize="30sp"
+              app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@id/survey_layout"
-                app:layout_constraintVertical_weight="1">
+                app:layout_constraintRight_toLeftOf="@id/mood_image"
+                app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"
+                app:layout_constraintVertical_weight="1"
+                app:layout_constraintHorizontal_weight="3">
 
-                <TextView
-                    android:id="@+id/mood_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:fontFamily="@font/quintessential_regular"
-                    android:text="Mood"
-                    android:textSize="30sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintVertical_weight=".5"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/mood_image"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </TextView>
-
-                <ImageView
-                    android:id="@+id/mood_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ex_mark"
-                    app:layout_constraintBottom_toBottomOf="@id/mood_layout"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintVertical_weight=".5"
-                    app:layout_constraintLeft_toRightOf="@id/mood_text"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </ImageView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </TextView>
 
             <RatingBar
                 android:id="@+id/mood_ratingbar"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:numStars="4"
                 android:rating="3"
                 android:stepSize="1"
-                app:layout_constraintRight_toRightOf="@id/survey_layout"
+                app:layout_constraintTop_toBottomOf="@id/mood_text"
                 app:layout_constraintBottom_toTopOf="@id/divider"
-                app:layout_constraintLeft_toLeftOf="@id/survey_layout"
-                app:layout_constraintTop_toBottomOf="@id/mood_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintVertical_weight="1">
 
             </RatingBar>
@@ -155,220 +131,204 @@
                 android:background="?android:attr/listDivider"
                 android:backgroundTint="@color/material_on_background_disabled"
                 android:backgroundTintMode="src_over"
-                app:layout_constraintBottom_toTopOf="@id/energy_layout"
+                app:layout_constraintBottom_toTopOf="@id/energy_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mood_ratingbar" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/energy_layout"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/energy_text"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:fontFamily="@font/quintessential_regular"
+                android:text="Energy"
+                android:textSize="30sp"
                 app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"
-                app:layout_constraintLeft_toLeftOf="@id/survey_layout"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/energy_image"
                 app:layout_constraintTop_toBottomOf="@id/divider"
-                app:layout_constraintVertical_weight="1">
+                app:layout_constraintVertical_weight="1"
+                >
 
+            </TextView>
 
-                <TextView
-                    android:id="@+id/energy_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:fontFamily="@font/quintessential_regular"
-                    android:text="Energy"
-                    android:textSize="30sp"
-                    app:layout_constraintBottom_toBottomOf="@id/energy_layout"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintLeft_toLeftOf="@id/energy_layout"
-                    app:layout_constraintRight_toLeftOf="@id/energy_image"
-                    app:layout_constraintTop_toTopOf="@id/energy_layout">
-
-                </TextView>
-
-
-                <ImageView
-                    android:id="@+id/energy_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ex_mark"
-                    app:layout_constraintBottom_toBottomOf="@id/energy_layout"
-                    app:layout_constraintHorizontal_weight="1"
-
-                    app:layout_constraintLeft_toRightOf="@id/energy_text"
-                    app:layout_constraintRight_toRightOf="@id/energy_layout"
-                    app:layout_constraintTop_toTopOf="@id/energy_layout">
-
-                </ImageView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RatingBar
                 android:id="@+id/energy_ratingbar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:numStars="4"
-                android:rating="3"
-                android:stepSize="1"
-                app:layout_constraintBottom_toTopOf="@id/divider2"
-                app:layout_constraintLeft_toLeftOf="@id/survey_layout"
-                app:layout_constraintRight_toRightOf="@id/survey_layout"
-                app:layout_constraintTop_toBottomOf="@id/energy_layout"
-                app:layout_constraintVertical_weight="1">
-
-            </RatingBar>
-
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="wrap_content"
-                android:layout_height="3dp"
-                android:layout_marginTop="8dp"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="@color/material_on_background_disabled"
-                android:backgroundTintMode="src_over"
-                app:layout_constraintBottom_toTopOf="@id/hunger_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/energy_ratingbar" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/hunger_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"
-                app:layout_constraintLeft_toLeftOf="@id/survey_layout"
-                app:layout_constraintTop_toBottomOf="@id/divider2"
-                app:layout_constraintVertical_weight="1">
-
-                <TextView
-                    android:id="@+id/hunger_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:fontFamily="@font/quintessential_regular"
-                    android:text="Hunger"
-                    android:textSize="30sp"
-                    app:layout_constraintBottom_toBottomOf="@id/hunger_layout"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintLeft_toLeftOf="@id/hunger_layout"
-                    app:layout_constraintRight_toLeftOf="@id/hunger_image"
-                    app:layout_constraintTop_toTopOf="@id/hunger_layout">
-
-                </TextView>
-
-                <ImageView
-                    android:id="@+id/hunger_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ex_mark"
-                    app:layout_constraintBottom_toBottomOf="@id/hunger_layout"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintLeft_toRightOf="@id/hunger_text"
-                    app:layout_constraintRight_toRightOf="@id/hunger_layout"
-                    app:layout_constraintTop_toTopOf="@id/hunger_layout">
-
-                </ImageView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <RatingBar
-                android:id="@+id/hunger_ratingbar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:numStars="4"
-                android:rating="3"
-                android:stepSize="1"
-                app:layout_constraintBottom_toTopOf="@id/divider3"
-                app:layout_constraintLeft_toLeftOf="@id/survey_layout"
-                app:layout_constraintRight_toRightOf="@id/survey_layout"
-                app:layout_constraintTop_toBottomOf="@id/hunger_layout"
-                app:layout_constraintVertical_weight="1">
-
-            </RatingBar>
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="wrap_content"
-                android:layout_height="3dp"
-
-                android:layout_marginTop="8dp"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="@color/material_on_background_disabled"
-                android:backgroundTintMode="src_over"
-                app:layout_constraintBottom_toTopOf="@id/focus_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hunger_ratingbar" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/focus_layout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"
-                app:layout_constraintLeft_toLeftOf="@id/survey_layout"
-                app:layout_constraintRight_toRightOf="@id/survey_layout"
-                app:layout_constraintTop_toBottomOf="@id/divider3"
-                app:layout_constraintVertical_weight="1">
-
-
-                <TextView
-                    android:id="@+id/focus_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:fontFamily="@font/quintessential_regular"
-                    android:text="Focus"
-                    android:textSize="30sp"
-                    app:layout_constraintBottom_toBottomOf="@id/focus_layout"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintLeft_toLeftOf="@id/focus_layout"
-                    app:layout_constraintRight_toLeftOf="@id/focus_image"
-                    app:layout_constraintTop_toTopOf="@id/focus_layout">
-
-                </TextView>
-
-                <ImageView
-                    android:id="@+id/focus_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ex_mark"
-                    app:layout_constraintBottom_toBottomOf="@id/focus_layout"
-                    app:layout_constraintLeft_toRightOf="@id/focus_text"
-                    app:layout_constraintRight_toRightOf="@id/focus_layout"
-                    app:layout_constraintTop_toTopOf="@id/focus_layout"
-                    app:layout_constraintHorizontal_weight="1"
-                    >
-
-                </ImageView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <RatingBar
-                android:id="@+id/focus_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="4"
                 android:rating="3"
                 android:stepSize="1"
-                app:layout_constraintBottom_toBottomOf="@id/survey_layout"
-                app:layout_constraintLeft_toLeftOf="@id/survey_layout"
-                app:layout_constraintRight_toRightOf="@id/survey_layout"
-                app:layout_constraintTop_toBottomOf="@id/focus_layout"
+                app:layout_constraintTop_toBottomOf="@id/energy_text"
+                app:layout_constraintBottom_toTopOf="@id/divider2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintVertical_weight="1">
 
             </RatingBar>
 
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="wrap_content"
+            android:layout_height="3dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/material_on_background_disabled"
+            android:backgroundTintMode="src_over"
+            app:layout_constraintBottom_toTopOf="@id/hunger_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/energy_ratingbar" />
+
+            <TextView
+                android:id="@+id/hunger_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="@font/quintessential_regular"
+                android:text="Hunger"
+                android:textSize="30sp"
+                app:layout_constraintTop_toBottomOf="@id/divider2"
+                app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hunger_image"
+                app:layout_constraintVertical_weight="1"
+                app:layout_constraintHorizontal_weight="3">
+
+            </TextView>
+
+
+
+
+            <RatingBar
+                android:id="@+id/hunger_ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="4"
+                android:rating="3"
+                android:stepSize="1"
+                app:layout_constraintTop_toBottomOf="@id/hunger_text"
+                app:layout_constraintBottom_toTopOf="@id/divider3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintVertical_weight="1">
+
+            </RatingBar>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="wrap_content"
+            android:layout_height="3dp"
+
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/material_on_background_disabled"
+            android:backgroundTintMode="src_over"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hunger_ratingbar"
+            app:layout_constraintBottom_toTopOf="@id/focus_text"
+            app:layout_constraintVertical_weight="1"/>
+
+
+            <TextView
+                android:id="@+id/focus_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="@font/quintessential_regular"
+                android:text="Focus"
+                android:textSize="30sp"
+                app:layout_constraintTop_toBottomOf="@id/divider3"
+                app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/focus_image"
+                app:layout_constraintVertical_weight="1"
+                app:layout_constraintHorizontal_weight="3">
+
+            </TextView>
+
+
+        <RatingBar
+            android:id="@+id/focus_ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="4"
+            android:rating="3"
+            android:stepSize="1"
+            app:layout_constraintTop_toBottomOf="@id/focus_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_weight="1">
+
+        </RatingBar>
+
+            <!--images-->
+            <ImageView
+                android:id="@+id/mood_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ex_mark"
+               app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"
+                app:layout_constraintLeft_toRightOf="@id/mood_text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_weight="1">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/energy_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ex_mark"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"
+                app:layout_constraintLeft_toRightOf="@id/energy_text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_weight="1">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/hunger_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ex_mark"
+                app:layout_constraintTop_toBottomOf="@id/divider2"
+                app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"
+                app:layout_constraintLeft_toRightOf="@id/hunger_text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_weight="1">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/focus_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ex_mark"
+                app:layout_constraintTop_toBottomOf="@id/divider3"
+                app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"
+                app:layout_constraintLeft_toRightOf="@id/focus_text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_weight="1">
+
+            </ImageView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--used as spacer-->
 <TextView
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    app:layout_constraintTop_toBottomOf="@id/survey_stats_layout"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="56dp"
+    android:id="@+id/spacer"
+    app:layout_constraintTop_toBottomOf="@id/cl_survey"
+    app:layout_constraintBottom_toBottomOf="parent"
+    >
 
-
-    </TableLayout>
-</ScrollView>
+</TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--</ScrollView>-->
