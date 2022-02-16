@@ -9,6 +9,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -18,17 +25,10 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
-import com.example.thecollectivediet.Me_Fragment_Components.MeFragmentAdapter;
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
-import com.example.thecollectivediet.Me_Fragment_Components.TodayFragment;
 import com.example.thecollectivediet.R;
 
 import java.io.File;
@@ -54,7 +54,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private ActivityResultLauncher<String[]> multiplePermissionActivityResultLauncher;
 
     final String[] PERMISSIONS = {
-           // Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+            // Manifest.permission.MANAGE_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
@@ -85,7 +85,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     EditText mFirstName;
     EditText mLastName;
     EditText mAge;
-    EditText mSex;
+    EditText mGender;
     EditText mWeight;
     EditText mHeight;
     EditText mCity;
@@ -123,8 +123,8 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         mLastName.setHint("last name: " + prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.ev_age);
         mAge.setHint("age: " + prefs.getString("profile_age", ""));
-        mSex = v.findViewById(R.id.ev_sex);
-        mSex.setHint("sex: " + prefs.getString("profile_sex", ""));
+        mGender = v.findViewById(R.id.ev_gender);
+        mGender.setHint("sex: " + prefs.getString("profile_sex", ""));
         mWeight = v.findViewById(R.id.ev_weight);
         mWeight.setHint("weight: " + prefs.getString("profile_weight", ""));
         mHeight = v.findViewById(R.id.ev_height);
@@ -140,7 +140,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         photo = v.findViewById(R.id.profile_image);
         profilePicPath = prefs.getString("profile_pic", null);
         Bitmap thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
-        if(thumbnailPic != null){
+        if (thumbnailPic != null) {
             photo.setImageBitmap(thumbnailPic);
         }
 
@@ -257,7 +257,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 //Open camera
 
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraActivityResultLauncher.launch(cameraIntent);/////////////////
+                cameraActivityResultLauncher.launch(cameraIntent);/////////////////
 
                 break;
             }
@@ -267,7 +267,8 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 if (isExternalStorageWritable()) {
                     saveProfileImage(bitmap);
                 }
-                saveStats();
+
+                saveProfileChanges();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
@@ -278,7 +279,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 break;
             }
 
-            case R.id.iv_backbutton:{
+            case R.id.iv_backbutton: {
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
@@ -325,7 +326,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     //method used to save profile picture
     private void saveProfileImage(Bitmap finalBitmap) {
 
-        if(photoChanged) {
+        if (photoChanged) {
 
 
             File rt = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -348,8 +349,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 out.close();
 
 
-
-
                 // You can use the API that requires the permission.
                 editor.putString("profile_pic", file.getAbsolutePath());
                 editor.commit();
@@ -361,39 +360,62 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void saveStats(){
-        if(!isEditTextEmpty(mFirstName))
+    private void saveProfileChanges() {
+
+        User currentUser = MainActivity.getCurrentUser();
+
+        if (!isEditTextEmpty(mFirstName)) {
+            currentUser.setUser_name(mFirstName.getText().toString());
             editor.putString("profile_first", mFirstName.getText().toString());
+        }
 
-        if(!isEditTextEmpty(mLastName))
+        if (!isEditTextEmpty(mLastName)) {
             editor.putString("profile_last", mLastName.getText().toString());
+        }
 
-        if(!isEditTextEmpty(mAge))
+        //TODO: change to dob
+        if (!isEditTextEmpty(mAge)) {
             editor.putString("profile_age", mAge.getText().toString());
+            currentUser.setUser_dob(mAge.getText().toString());
+        }
 
-        if(!isEditTextEmpty(mSex))
-            editor.putString("profile_sex", mSex.getText().toString());
+        if (!isEditTextEmpty(mGender)) {
+            editor.putString("profile_sex", mGender.getText().toString());
+            currentUser.setUser_gender(mGender.getText().toString());
+        }
 
-        if(!isEditTextEmpty(mWeight))
+        if (!isEditTextEmpty(mWeight)) {
             editor.putString("profile_weight", mWeight.getText().toString());
+            currentUser.setCurrent_wgt(Float.parseFloat(mWeight.getText().toString()));
+        }
 
-        if(!isEditTextEmpty(mHeight))
+        if (!isEditTextEmpty(mHeight)) {
             editor.putString("profile_height", mHeight.getText().toString());
+            currentUser.setUser_hgt(Float.parseFloat(mHeight.getText().toString()));
+        }
 
-        if(!isEditTextEmpty(mCity))
+        if (!isEditTextEmpty(mCity)) {
             editor.putString("profile_city", mCity.getText().toString());
+            currentUser.setUser_city(mCity.getText().toString());
+        }
 
-        if(!isEditTextEmpty(mCountry))
+        if (!isEditTextEmpty(mCountry)) {
             editor.putString("profile_country", mCountry.getText().toString());
+            currentUser.setUser_country(mCountry.getText().toString());
+        }
+
+        User_API_Controller.updateUserProfile(currentUser, context);
+
         editor.commit();
     }
 
-    private boolean isEditTextEmpty(EditText et){
-        if(et.getText().toString().matches("")){
+    private boolean isEditTextEmpty(EditText et) {
+        if (et.getText().toString().matches("")) {
             return true;
         }
         return false;
     }
+
     private boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {

@@ -2,6 +2,7 @@ package com.example.thecollectivediet.API_Utilities;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -71,4 +72,26 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    public static void updateUserProfile(User currentUser, Context ctx) {
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUser";
+        JSONObject usrJSON = null;
+
+        try {
+            usrJSON = new JSONObject(new Gson().toJson(currentUser, User.class));
+        } catch (JSONException e) {
+            Log.d("user json parse", e.getMessage());
+        }
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, usrJSON,
+                response -> Toast.makeText(ctx, "User profile updated!", Toast.LENGTH_SHORT).show(), error -> Log.d("update user lambda", error.getMessage())) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
+
+    }
 }

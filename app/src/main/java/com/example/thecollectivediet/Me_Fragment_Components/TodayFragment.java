@@ -17,8 +17,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogFragment;
 import com.example.thecollectivediet.R;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
     int choice;
@@ -35,9 +33,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     //List of images for rating bars
     int[] moodList = new int[]{R.drawable.mood_rank1, R.drawable.mood_rank2, R.drawable.mood_rank3, R.drawable.mood_rank4};
-    int[] energyList = new int[]{R.drawable.energy_rank1, R.drawable.energy_rank2, R.drawable.energy_rank3,R.drawable.energy_rank4};
-    int[] hungerList = new int[]{R.drawable.hunger_rank1, R.drawable.hunger_rank2, R.drawable.hunger_rank3,R.drawable.hunger_rank4};
-    int[] focusList = new int[]{R.drawable.focus_rank1,R.drawable.focus_rank2, R.drawable.focus_rank3,R.drawable.focus_rank4};
+    int[] energyList = new int[]{R.drawable.energy_rank1, R.drawable.energy_rank2, R.drawable.energy_rank3, R.drawable.energy_rank4};
+    int[] hungerList = new int[]{R.drawable.hunger_rank1, R.drawable.hunger_rank2, R.drawable.hunger_rank3, R.drawable.hunger_rank4};
+    int[] focusList = new int[]{R.drawable.focus_rank1, R.drawable.focus_rank2, R.drawable.focus_rank3, R.drawable.focus_rank4};
 
     //hooks for images
     ImageView mProfilePic;
@@ -63,22 +61,24 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         focusImage = v.findViewById(R.id.focus_image);
         mProfilePic = v.findViewById(R.id.cv_profile_pic);
 
+        mProfilePic.setOnClickListener(this);
+
         //display pic
         profilePicPath = prefs.getString("profile_pic", null);
         Bitmap thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
-        if(thumbnailPic != null){
+        if (thumbnailPic != null) {
             mProfilePic.setImageBitmap(thumbnailPic);
         }
 
         //Rating bar for mood
-        moodRatingBar = (RatingBar)v.findViewById(R.id.mood_ratingbar);
+        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
         moodRatingBar.setRating(0);
 
         moodRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                choice = (int)moodRatingBar.getRating();
+                choice = (int) moodRatingBar.getRating();
                 moodImage.setImageResource(moodList[choice - 1]);
                 /*
                 todo with sergio
@@ -87,14 +87,14 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         });
 
         //Rating bar for energy
-        energyRatingBar = (RatingBar)v.findViewById(R.id.energy_ratingbar);
+        energyRatingBar = (RatingBar) v.findViewById(R.id.energy_ratingbar);
         energyRatingBar.setRating(0);
 
         energyRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                choice = (int)energyRatingBar.getRating();
+                choice = (int) energyRatingBar.getRating();
                 energyImage.setImageResource(energyList[choice - 1]);
                  /*
                 todo with sergio
@@ -109,7 +109,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         hungerRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                choice = (int)hungerRatingBar.getRating();
+                choice = (int) hungerRatingBar.getRating();
                 hungerImage.setImageResource(hungerList[choice - 1]);
                  /*
                 todo with sergio
@@ -124,7 +124,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         focusRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                choice = (int)focusRatingBar.getRating();
+                choice = (int) focusRatingBar.getRating();
                 focusImage.setImageResource(focusList[choice - 1]);
                  /*
                 todo with sergio
@@ -138,10 +138,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        switch (v.getId())
-        {
-            case R.id.meal:
-            {
+        switch (v.getId()) {
+            case R.id.cv_profile_pic: {
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentHolder, new FoodLogFragment());
                 transaction.addToBackStack(null);

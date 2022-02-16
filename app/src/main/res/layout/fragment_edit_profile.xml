@@ -148,12 +148,12 @@
         </View>
 
         <EditText
-            android:id="@+id/ev_sex"
+            android:id="@+id/ev_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/divider4"
             android:layout_margin="10dp"
-            android:hint="sex"
+            android:hint="gender"
             android:inputType="text"
             android:textSize="20sp">
 
@@ -163,7 +163,7 @@
             android:id="@+id/divider5"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_below="@id/ev_sex"
+            android:layout_below="@id/ev_gender"
             android:background="?android:attr/listDivider">
 
         </View>

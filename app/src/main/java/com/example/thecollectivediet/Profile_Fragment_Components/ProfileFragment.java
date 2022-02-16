@@ -6,21 +6,19 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.thecollectivediet.FragmentSignIn;
-import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
-import com.example.thecollectivediet.Me_Fragment_Components.TodayFragment;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -53,7 +51,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     String profilePicPath;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -83,22 +81,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mCountry = v.findViewById(R.id.textview_profile_country);
         mCountry.setText("Country: " + prefs.getString("profile_country", ""));
 
-       if(isSignedIn()) {
-           mLogout = v.findViewById(R.id.ac_button_logout);
-           mLogout.setOnClickListener(this);
-           mLogout.setVisibility(View.VISIBLE);
-           mLogout.setClickable(true);
-       }
-       else{
-           mLogIn = v.findViewById(R.id.ac_button_login);
-           mLogIn.setOnClickListener(this);
-           mLogIn.setVisibility(View.VISIBLE);
-           mLogIn.setClickable(true);
-       }
+        if (isSignedIn()) {
+            mLogout = v.findViewById(R.id.ac_button_logout);
+            mLogout.setOnClickListener(this);
+            mLogout.setVisibility(View.VISIBLE);
+            mLogout.setClickable(true);
+        } else {
+            mLogIn = v.findViewById(R.id.ac_button_login);
+            mLogIn.setOnClickListener(this);
+            mLogIn.setVisibility(View.VISIBLE);
+            mLogIn.setClickable(true);
+        }
 
         profilePicPath = prefs.getString("profile_pic", null);
         Bitmap thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
-        if(thumbnailPic != null){
+        if (thumbnailPic != null) {
             mProfilePic.setImageBitmap(thumbnailPic);
         }
 
@@ -110,9 +107,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
-            case R.id.ac_button_profile_edit:{
+            case R.id.ac_button_profile_edit: {
                 EditProfileFragment frag = new EditProfileFragment();
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);
@@ -120,12 +117,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             }
 
-            case R.id.ac_button_logout:{
+            case R.id.ac_button_logout: {
                 signOut();
                 break;
             }
 
-            case R.id.ac_button_login:{
+            case R.id.ac_button_login: {
                 FragmentSignIn frag = new FragmentSignIn();
                 transaction.replace(R.id.fragmentHolder, frag);
                 transaction.addToBackStack(null);
@@ -141,17 +138,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return GoogleSignIn.getLastSignedInAccount(context) != null;
     }
 
-    private void signOut(){
+    private void signOut() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(),gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
         mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-            TextView login = getActivity().findViewById(R.id.toolbar_login);
-            login.setText("sign in");
+                TextView login = getActivity().findViewById(R.id.toolbar_login);
+                MainActivity.setCurrentUser(null);
+                login.setText("sign in");
 
                 FragmentSignIn frag = new FragmentSignIn();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

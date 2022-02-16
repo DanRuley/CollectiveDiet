@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -22,8 +21,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.thecollectivediet.API_Utilities.User_API_Controller;
-import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
@@ -50,15 +47,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     DrawerLayout drawer;
 
-
-
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    static User currentUser;
+    public static User currentUser;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -69,13 +65,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(!isSignedIn()){
-                FragmentSignIn frag = new FragmentSignIn();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+                if (!isSignedIn()) {
+                    FragmentSignIn frag = new FragmentSignIn();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentHolder, frag);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
             }
         });
 
@@ -92,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                 .requestEmail()
                                 .build();
-                         mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+                        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
                         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
                         if (account != null && !account.isExpired()) {
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //If this is user's first time on app
         String firstTime = prefs.getString("firstTime", "null");
 
-        if(firstTime.equals("null")) {
+        if (firstTime.equals("null")) {
             editor.putString("firstTime", "false");
             editor.commit();
 
@@ -119,37 +115,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestEmail()
-                                .build();
-                        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
-                        if (account != null && !account.isExpired()) {
+        if (account != null && !account.isExpired()) {
 
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            MeTabLayoutFragment fragment = new MeTabLayoutFragment();
-                            transaction.replace(R.id.fragmentHolder, fragment);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            MeTabLayoutFragment fragment = new MeTabLayoutFragment();
+            transaction.replace(R.id.fragmentHolder, fragment);
 
-                            //Ask Android to remember which menu options the user has chosen
-                            transaction.addToBackStack(null);
+            //Ask Android to remember which menu options the user has chosen
+            transaction.addToBackStack(null);
 
-                            //Implement the change
-                            transaction.commit();
+            //Implement the change
+            transaction.commit();
 
-                            TextView login1 = findViewById(R.id.toolbar_login);
-                            String username = prefs.getString("user", "null");
-                            login1.setText(username);
-                            //todo
-                            //get user metrics
+            TextView login1 = findViewById(R.id.toolbar_login);
+            String username = prefs.getString("user", "null");
+            login1.setText(username);
+            //todo
+            //get user metrics
 
-                        }
-                        else{
-                            FragmentSignIn frag = new FragmentSignIn();
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragmentHolder, frag);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                        }
+        } else {
+            FragmentSignIn frag = new FragmentSignIn();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentHolder, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
 
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
@@ -169,34 +164,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Bottom navigation tool bar on the bottom of the app screen will be used for
         //navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_toolbar);
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
 
             //When icon in bottom app is selected, switch to appropriate fragment
             @Override
-            public boolean onNavigationItemSelected(MenuItem item){
+            public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
                 //Create a transaction
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                if(id == R.id.bottom_nav_camera){
+                if (id == R.id.bottom_nav_camera) {
                     //Create a new fragment of the appropriate type
                     CameraFragment fragment = new CameraFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if(id == R.id.bottom_nav_profile){
+                if (id == R.id.bottom_nav_profile) {
 
                     MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
                     transaction.replace(R.id.fragmentHolder, frag);
 
                 }
 
-                if(id == R.id.bottom_nav_us){
+                if (id == R.id.bottom_nav_us) {
                     UsFragment fragment = new UsFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
 
-                if(id == R.id.bottom_nav_me){
+                if (id == R.id.bottom_nav_me) {
                     MeTabLayoutFragment fragment = new MeTabLayoutFragment();
                     transaction.replace(R.id.fragmentHolder, fragment);
                 }
@@ -210,35 +205,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
-        //For now, the app will open straight to the food fragment.
-        //This will be the first screen the user will see
-        //Create a transaction
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                 MeTabLayoutFragment fragment = new MeTabLayoutFragment();
-//            transaction.replace(R.id.fragmentHolder, fragment);
-//
-//        //Ask Android to remember which menu options the user has chosen
-//        transaction.addToBackStack(null);
-//
-//        //Implement the change
-//        transaction.commit();
-
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
 
-
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         //If the drawer is open, close it
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
         //else, if the drawer is closed, rely on super class default behavior
-        else{
+        else {
             //super.onBackPressed();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             MeTabLayoutFragment fragment = new MeTabLayoutFragment();
@@ -251,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Navigation via the drawer
     //Handle navigation view item clicks here
     @Override
-    public boolean onNavigationItemSelected( MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
 
         //Create a transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -259,35 +239,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Create a new fragment of the appropriate type depending
         //on click item
-        if(id == R.id.nav_food){
+        if (id == R.id.nav_food) {
             //Create a new fragment of the appropriate type
             CameraFragment fragment = new CameraFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_profile){
+        if (id == R.id.nav_profile) {
             ProfileFragment fragment = new ProfileFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_us){
+        if (id == R.id.nav_us) {
             UsFragment fragment = new UsFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_me){
+        if (id == R.id.nav_me) {
             MeTabLayoutFragment fragment = new MeTabLayoutFragment();
             transaction.replace(R.id.fragmentHolder, fragment);
         }
 
-        if(id == R.id.nav_sign_in){
-            if(!isSignedIn()) {
+        if (id == R.id.nav_sign_in) {
+            if (!isSignedIn()) {
                 FragmentSignIn fragment = new FragmentSignIn();
                 transaction.replace(R.id.fragmentHolder, fragment);
             }
         }
 
-        if(id == R.id.nav_sign_out){
+        if (id == R.id.nav_sign_out) {
             signOut();
             FragmentSignIn frag = new FragmentSignIn();
             transaction.replace(R.id.fragmentHolder, frag);
@@ -327,40 +307,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private boolean isSignedIn() {
-        return GoogleSignIn.getLastSignedInAccount(this) != null;
+        return GoogleSignIn.getLastSignedInAccount(this) != null && !GoogleSignIn.getLastSignedInAccount(this).isExpired();
     }
 
-    private void signOut(){
+    private void signOut() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
-
+                currentUser = null;
             }
         });
     }
-//    // Register the permissions callback, which handles the user's response to the
-//// system permissions dialog. Save the return value, an instance of
-//// ActivityResultLauncher, as an instance variable.
-//    private ActivityResultLauncher requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                if (isGranted) {
-//                    // Permission is granted. Continue the action or workflow in your
-//                    // app.
-//                } else {
-//                    // Explain to the user that the feature is unavailable because the
-//                    // features requires a permission that the user has denied. At the
-//                    // same time, respect the user's decision. Don't link to system
-//                    // settings in an effort to convince the user to change their
-//                    // decision.
-//                }
-//            });
-//
-//
-//    private ActivityResultLauncher registerForActivityResult(ActivityResultLauncher requestPermissionLauncher) {
-//    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
 }

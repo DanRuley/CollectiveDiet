@@ -13,7 +13,8 @@ public class User {
     Float goal_wgt;
     String signup_dts;
     String user_lifestyle;
-    Integer user_hgt;
+    Float user_hgt;
+    String user_city;
 
     public User(String id, String name, String email, String dts) {
         user_id = id;
@@ -110,11 +111,20 @@ public class User {
         this.user_lifestyle = user_lifestyle;
     }
 
-    public int getUser_hgt() {
+    public Float getUser_hgt() {
         return user_hgt;
     }
 
-    public void setUser_hgt(int user_hgt) {
+    public void setUser_hgt(float user_hgt) {
         this.user_hgt = user_hgt;
     }
+
+    public void setUser_city(String city) {
+        this.user_city = city;
+    }
+
+    public String getUser_city() {
+        return user_city;
+    }
+
 }

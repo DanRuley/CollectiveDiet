@@ -6,8 +6,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -16,15 +20,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.provider.MediaStore;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
+import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
-import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,7 +33,7 @@ import com.google.android.gms.tasks.Task;
 
 public class FragmentSignIn extends Fragment implements View.OnClickListener {
 
-    private ActivityResultLauncher<Intent>  signInActivityResultLauncher;
+    private ActivityResultLauncher<Intent> signInActivityResultLauncher;
     private GoogleSignInClient mGoogleSignInClient;
 
     //buttons
@@ -80,10 +79,10 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.sign_in_button:{
+        switch (v.getId()) {
+            case R.id.sign_in_button: {
 
-                Intent signInIntent =  mGoogleSignInClient.getSignInIntent();
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
 
                 signInActivityResultLauncher.launch(signInIntent);
                 break;
@@ -91,10 +90,22 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
         }
     }
 
-
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         String msg = "Hello, " + task.getResult().getDisplayName();
         GoogleSignInAccount account = task.getResult();
+
+        User_API_Controller.handleNewSignIn(account, getActivity(), new VolleyResponseListener<User>() {
+            @Override
+            public void onResponse(User user) {
+                MainActivity.setCurrentUser(user);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         String name = account.getDisplayName();
         String email = account.getEmail();
         String id = account.getId();
