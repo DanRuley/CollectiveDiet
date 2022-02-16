@@ -17,7 +17,9 @@
         android:backgroundTint="@color/light_blue"
         app:tabSelectedTextColor="@color/black"
         app:tabTextAppearance="@style/tab_text"
-        >
+        app:tabRippleColor="@color/blue"
+        app:tabIndicatorColor="@color/blue"
+        android:theme="@style/Theme.TheCollectiveDiet">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -56,7 +58,9 @@
         android:layout_below="@id/tab_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

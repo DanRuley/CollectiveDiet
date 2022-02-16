@@ -11,6 +11,7 @@
     <color name="mint_green_500">#3EB489</color>
     <color name="mint_green_700">#3EC4A9</color>
     <color name="peach">#FFE5B4</color>
-    <color name="pink">#F1C8F2</color>
+    <color name="pink">#fadadd</color>
     <color name="light_pink">#F0E6F0</color>
+    <color name="gold">#FFD700</color>
 </resources>

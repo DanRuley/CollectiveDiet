@@ -199,6 +199,10 @@ public class CameraFragment extends Fragment {
             public void onClick(View v) {
 
                 imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback(){
+                    int x = 5;
+
+
+
                     @Override
                     public void onCaptureSuccess(ImageProxy imageProxy){
                         //Change imageProxy to bitmap to be used with imageView
@@ -228,6 +232,8 @@ public class CameraFragment extends Fragment {
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
+
+
                     @Override
                     public void onError(ImageCaptureException e){
                         super.onError(e);

@@ -1,5 +1,9 @@
 package com.example.thecollectivediet.Me_Fragment_Components;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +17,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogFragment;
 import com.example.thecollectivediet.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
     int choice;
+    String profilePicPath;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    Context context;
 
     //Rating bars
     RatingBar moodRatingBar;
@@ -30,6 +40,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     int[] focusList = new int[]{R.drawable.focus_rank1,R.drawable.focus_rank2, R.drawable.focus_rank3,R.drawable.focus_rank4};
 
     //hooks for images
+    ImageView mProfilePic;
     ImageView moodImage;
     ImageView energyImage;
     ImageView hungerImage;
@@ -42,13 +53,22 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
+        context = this.getActivity();
+        prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
+        editor = prefs.edit();
+
         moodImage = v.findViewById(R.id.mood_image);
         energyImage = v.findViewById(R.id.energy_image);
         hungerImage = v.findViewById(R.id.hunger_image);
         focusImage = v.findViewById(R.id.focus_image);
+        mProfilePic = v.findViewById(R.id.cv_profile_pic);
 
-        mealImage = v.findViewById(R.id.meal);
-        mealImage.setOnClickListener(this);
+        //display pic
+        profilePicPath = prefs.getString("profile_pic", null);
+        Bitmap thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
+        if(thumbnailPic != null){
+            mProfilePic.setImageBitmap(thumbnailPic);
+        }
 
         //Rating bar for mood
         moodRatingBar = (RatingBar)v.findViewById(R.id.mood_ratingbar);
