@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -36,13 +35,9 @@ public class FoodConfirmDialog extends Dialog {
     ImageView image;
     TextView foodName;
     TextView calorieVal;
-    double calorieValNum;
     TextView proteinVal;
-    double proteinValNum;
     TextView fatVal;
-    double fatValNum;
     TextView carbVal;
-    double carbValNum;
 
     Spinner servingUnit;
     EditText servingQtyVal;
@@ -74,15 +69,10 @@ public class FoodConfirmDialog extends Dialog {
         foodName.setText(food.getProduct_name());
         servingQtyVal.setText(String.valueOf(100));
 
-        calorieValNum = nutrients.getEnergy_kcal_100g();
-        proteinValNum = nutrients.getProteins_100g();
-        carbValNum = nutrients.getCarbohydrates_100g();
-        fatValNum = nutrients.getFat_100g();
-
         calorieVal.setText(String.format("%.1f", nutrients.getEnergy_kcal_100g()));
-        proteinVal.setText(String.format("%s %s", nutrients.getProteins_100g(), nutrients.getProteins_unit()));
-        carbVal.setText(String.format("%s %s", nutrients.getCarbohydrates_100g(), nutrients.getCarbohydrates_unit()));
-        fatVal.setText(String.format("%s %s", nutrients.getFat_100g(), nutrients.getFat_unit()));
+        proteinVal.setText(String.format("%.1f %s", nutrients.getProteins_100g(), nutrients.getProteins_unit()));
+        carbVal.setText(String.format("%.1f %s", nutrients.getCarbohydrates_100g(), nutrients.getCarbohydrates_unit()));
+        fatVal.setText(String.format("%.1f %s", nutrients.getFat_100g(), nutrients.getFat_unit()));
 
         setupServingSpinner();
         ServingCalculator servingCalculator = new ServingCalculator(nutrients, servingUnit, this);
@@ -119,13 +109,18 @@ public class FoodConfirmDialog extends Dialog {
     }
 
     private void updateServing(Double multiplier) {
-        double serving = Double.parseDouble(servingQtyVal.getText().toString());
+        String servTxt = servingQtyVal.getText().toString();
+
+        double serving = servTxt.length() > 0 ? Double.parseDouble(servTxt) : 0;
         serving *= multiplier;
         servingQtyVal.setText(String.format("%.2f", serving));
     }
 
-    private void updateFields(Double multiplier) {
-
+    private void updateFields(double newCals, double newFat, double newCarb, double newProtein) {
+        calorieVal.setText(String.format("%.1f", newCals));
+        fatVal.setText(String.format("%.1f %s", newFat, nutrients.getFat_unit()));
+        carbVal.setText(String.format("%.1f %s", newCarb, nutrients.getCarbohydrates_unit()));
+        proteinVal.setText(String.format("%.1f %s", newProtein, nutrients.getProteins_unit()));
     }
 
 
@@ -138,18 +133,21 @@ public class FoodConfirmDialog extends Dialog {
         double proteinPerGram;
         double carbPerGram;
         double fatPerGram;
-        String prevUnit;
-        double oldServing;
+        boolean unitChange;
+        String currentUnit;
         HashMap<String, Double> multipliers;
         FoodConfirmDialog view;
 
         public ServingCalculator(FoodNutrients nutrients, AdapterView<?> parent, FoodConfirmDialog view) {
             this.view = view;
+
+            //helps us not recalculate fields during a unit change
+            unitChange = false;
             caloriesPerGram = nutrients.getEnergy_kcal_100g() / 100;
             proteinPerGram = nutrients.getProteins_100g() / 100;
             carbPerGram = nutrients.getCarbohydrates_100g() / 100;
             fatPerGram = nutrients.getFat_100g() / 100;
-            prevUnit = parent.getItemAtPosition(0).toString();
+            currentUnit = parent.getItemAtPosition(0).toString();
 
             multipliers = new HashMap<>();
             multipliers.put("g_to_oz", 0.03527396195);
@@ -162,26 +160,31 @@ public class FoodConfirmDialog extends Dialog {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            Log.d("", "");
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            //recalculate
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-
+            if (unitChange)
+                return;
+            else if (s.toString().length() == 0)
+                recalculateFields(0.0);
+            else
+                recalculateFields(Double.parseDouble(s.toString()));
         }
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            unitChange = true;
             parent.getItemAtPosition(position);
             String newUnit = parent.getItemAtPosition(position).toString();
-            if (!newUnit.equals(prevUnit))
+            if (!newUnit.equals(currentUnit))
                 recalculateServing(newUnit);
-            prevUnit = newUnit;
+            currentUnit = newUnit;
+            unitChange = false;
         }
 
         @Override
@@ -189,12 +192,22 @@ public class FoodConfirmDialog extends Dialog {
             parent.getItemAtPosition(0);
         }
 
-        private void recalculateFields(Double currentVal) {
+        private void recalculateFields(Double currentServing) throws IllegalArgumentException {
+            Double multiplier = currentUnit.equals("g") ? (Double) 1.0 : multipliers.get(currentUnit + "_to_g");
+            assert (multiplier != null);
 
+            multiplier *= currentServing;
+
+            double calories = caloriesPerGram * multiplier;
+            double fat = fatPerGram * multiplier;
+            double carb = carbPerGram * multiplier;
+            double protein = proteinPerGram * multiplier;
+
+            view.updateFields(calories, fat, carb, protein);
         }
 
-        private void recalculateServing(String currentUnit) {
-            Double multiplier = multipliers.get(prevUnit + "_to_" + currentUnit);
+        private void recalculateServing(String newUnit) {
+            Double multiplier = multipliers.get(currentUnit + "_to_" + newUnit);
             view.updateServing(multiplier);
         }
     }
