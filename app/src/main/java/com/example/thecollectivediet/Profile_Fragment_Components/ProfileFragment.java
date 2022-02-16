@@ -94,7 +94,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
 
         profilePicPath = prefs.getString("profile_pic", null);
-        Bitmap thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
+        Bitmap thumbnailPic = null;
+        if (profilePicPath != null)
+            thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
         if (thumbnailPic != null) {
             mProfilePic.setImageBitmap(thumbnailPic);
         }

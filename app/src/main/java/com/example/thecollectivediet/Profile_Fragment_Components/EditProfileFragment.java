@@ -46,8 +46,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private ActivityResultLauncher<String> cameraRequestPermissionLauncher;
     private ActivityResultLauncher<String> readRequestPermissionLauncher;
 
-    private String profilePicPath;
-
     private boolean photoChanged;
 
     private ActivityResultContracts.RequestMultiplePermissions requestMultiplePermissionsContract;
@@ -138,8 +136,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         saveChanges.setOnClickListener(this);
 
         photo = v.findViewById(R.id.profile_image);
-        profilePicPath = prefs.getString("profile_pic", null);
-        Bitmap thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
+        String profilePicPath = prefs.getString("profile_pic", null);
+        Bitmap thumbnailPic = null;
+        if (profilePicPath != null)
+            thumbnailPic = BitmapFactory.decodeFile(profilePicPath);
         if (thumbnailPic != null) {
             photo.setImageBitmap(thumbnailPic);
         }

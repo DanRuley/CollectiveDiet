@@ -35,8 +35,6 @@ public class FoodSearchController {
     }
 
 
-
-
     public void getNutrients(String foodID, VolleyResponseListener<FoodNutrients> listener) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/FoodIdSearch?food_id=" + foodID;
 

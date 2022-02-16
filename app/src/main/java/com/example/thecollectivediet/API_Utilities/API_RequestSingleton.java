@@ -1,11 +1,13 @@
 package com.example.thecollectivediet.API_Utilities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+@SuppressLint("StaticFieldLeak")
 public class API_RequestSingleton {
 
     private static API_RequestSingleton instance;

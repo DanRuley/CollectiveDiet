@@ -92,6 +92,5 @@ public class User_API_Controller {
             }
         };
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
-
     }
 }
