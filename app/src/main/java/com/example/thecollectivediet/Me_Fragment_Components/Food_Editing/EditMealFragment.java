@@ -38,12 +38,12 @@ public class EditMealFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
-        View v = inflater.inflate(R.layout.recycler_vertical_item, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit_meal, container, false);
 
         arrayListVertical = new ArrayList<>();
 
 
-        mBreakfast = v.findViewById(R.id.rv_breakfast);
+        mBreakfast = v.findViewById(R.id.rv_doh);
         mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         //mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

@@ -1,6 +1,8 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,9 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
     Context context;
     ArrayList<VerticalModel> arrayList;
 
+    /////////////
+    int mExpandedPosition = -1;
+
     public RecyclerEditFoodAdapter1(Context context, ArrayList<VerticalModel> arrayList){
         this.arrayList = arrayList;
         this.context = context;
@@ -37,7 +42,7 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VerticalRVViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VerticalRVViewHolder holder, @SuppressLint("RecyclerView") int position) {
         VerticalModel verticalModel = arrayList.get(position);
         String title = verticalModel.getTitle();
         ArrayList<HorizontalModel> singleItem = verticalModel.getArrayList();
@@ -46,7 +51,7 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
         HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter = new HorizontalRecyclerViewAdapter(context, singleItem);
 
         holder.recyclerView.setHasFixedSize(true);
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
         holder.recyclerView.setAdapter(horizontalRecyclerViewAdapter);
 
@@ -54,6 +59,20 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, verticalModel.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /////////////////////////////
+
+        final boolean isExpanded = position == mExpandedPosition;
+        holder.recyclerView.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+        holder.recyclerView.setActivated(isExpanded);
+        holder.mTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mExpandedPosition = isExpanded ? -1 : position;
+                TransitionManager.beginDelayedTransition(holder.recyclerView);
+                notifyDataSetChanged();;
             }
         });
     }
