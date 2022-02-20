@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,6 +22,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
+import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
@@ -36,10 +39,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    ActivityResultLauncher ARL;
 
     GoogleSignInClient mGoogleSignInClient;
 
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Map<String, String> env = System.getenv();
         setContentView(R.layout.activity_main);
 
         prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
@@ -92,9 +97,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
                         if (account != null && !account.isExpired()) {
-                            TextView login1 = findViewById(R.id.toolbar_login);
                             String username = prefs.getString("user", "null");
-                            login1.setText(username);
+                            login.setText(username);
                         }
                     }
                 });
@@ -135,6 +139,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             TextView login1 = findViewById(R.id.toolbar_login);
             String username = prefs.getString("user", "null");
             login1.setText(username);
+
+            User_API_Controller.handleNewSignIn(account, MainActivity.this, new VolleyResponseListener<User>() {
+                @Override
+                public void onResponse(User user) {
+                    MainActivity.setCurrentUser(user);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            });
             //todo
             //get user metrics
 
