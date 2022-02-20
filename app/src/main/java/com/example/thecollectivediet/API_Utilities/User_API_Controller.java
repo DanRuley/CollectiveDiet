@@ -16,13 +16,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class User_API_Controller {
 
     public static void handleNewSignIn(GoogleSignInAccount account, Context ctx, VolleyResponseListener<User> listener) {
 
-        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getUser?uid=" + 421;
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getUser?uid=" + account.getId();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
@@ -31,7 +32,7 @@ public class User_API_Controller {
 
                         if (response.equals("null")) {
                             java.util.Date dts = new java.util.Date();
-                            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
                             signedInUser = new User(account.getId(), account.getDisplayName(), account.getEmail(), sdf.format(dts));
                             addNewUser(signedInUser, ctx);
                         } else {
@@ -61,7 +62,6 @@ public class User_API_Controller {
         }
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, usrJSON,
                 response -> Log.d("ret", response.toString()), error -> Log.d("add user lambda", error.getMessage())) {
-
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -73,7 +73,7 @@ public class User_API_Controller {
     }
 
     public static void updateUserProfile(User currentUser, Context ctx) {
-        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUser";
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/updateUserInfo";
         JSONObject usrJSON = null;
 
         try {
