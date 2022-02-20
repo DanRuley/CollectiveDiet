@@ -1,134 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginHorizontal="40dp">
+        android:id="@+id/rv_doh">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_breakfast"
-                android:text="Breakfast"
-                android:textSize="25sp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/rv_breakfast">
-
-            </TextView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rv_breakfast"
-                app:layout_constraintTop_toBottomOf="@id/tv_breakfast"
-                app:layout_constraintBottom_toTopOf="@id/tv_lunch"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>
 
 
-            </androidx.recyclerview.widget.RecyclerView>
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_lunch"
-                android:text="Lunch"
-                android:textSize="25sp"
-                app:layout_constraintTop_toBottomOf="@id/rv_breakfast"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/rv_lunch"
-                android:layout_marginTop="70dp">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        android:layout_marginHorizontal="40dp">-->
 
-            </TextView>
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rv_lunch"
-                app:layout_constraintTop_toBottomOf="@id/tv_lunch"
-                app:layout_constraintBottom_toTopOf="@id/tv_dinner"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/tv_breakfast"-->
+<!--                android:text="Breakfast"-->
+<!--                android:textSize="25sp"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/rv_breakfast">-->
 
+<!--            </TextView>-->
 
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_dinner"
-                android:text="Dinner"
-                android:textSize="25sp"
-                app:layout_constraintTop_toBottomOf="@id/rv_lunch"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/rv_lunch"
-                android:layout_marginTop="70dp">
-
-            </TextView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rv_dinner"
-                app:layout_constraintTop_toBottomOf="@id/tv_dinner"
-                app:layout_constraintBottom_toTopOf="@id/tv_snacks"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:id="@+id/rv_breakfast"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tv_breakfast"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/tv_lunch"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent">-->
 
 
-            </androidx.recyclerview.widget.RecyclerView>
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/tv_lunch"-->
+<!--                android:text="Lunch"-->
+<!--                android:textSize="25sp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/rv_breakfast"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/rv_lunch"-->
+<!--                android:layout_marginTop="70dp">-->
+
+<!--            </TextView>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:id="@+id/rv_lunch"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tv_lunch"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/tv_dinner"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent">-->
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_snacks"
-                android:text="Snacks"
-                android:textSize="25sp"
-                app:layout_constraintTop_toBottomOf="@id/rv_dinner"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/rv_snacks"
-                android:layout_marginTop="70dp">
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
 
-            </TextView>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/tv_dinner"-->
+<!--                android:text="Dinner"-->
+<!--                android:textSize="25sp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/rv_lunch"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/rv_lunch"-->
+<!--                android:layout_marginTop="70dp">-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rv_snacks"
-                app:layout_constraintTop_toBottomOf="@id/tv_snacks"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+<!--            </TextView>-->
 
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:id="@+id/rv_dinner"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tv_dinner"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/tv_snacks"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent">-->
 
 
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
 
 
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/tv_snacks"-->
+<!--                android:text="Snacks"-->
+<!--                android:textSize="25sp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/rv_dinner"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/rv_snacks"-->
+<!--                android:layout_marginTop="70dp">-->
+
+<!--            </TextView>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:id="@+id/rv_snacks"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tv_snacks"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent">-->
+
+
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--    </ScrollView>-->
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
 <!--    xmlns:tools="http://schemas.android.com/tools"-->
