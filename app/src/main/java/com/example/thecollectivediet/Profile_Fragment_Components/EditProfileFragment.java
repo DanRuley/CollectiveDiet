@@ -77,6 +77,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     //buttons
     AppCompatButton editPhoto;
     AppCompatButton saveChanges;
+    AppCompatButton saveChangesBottom;
     AppCompatButton back_button;
 
     //editViews
@@ -134,6 +135,9 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
         saveChanges = v.findViewById(R.id.ac_button_savechanges);
         saveChanges.setOnClickListener(this);
+
+        saveChangesBottom = v.findViewById(R.id.bottom_save_button);
+        saveChangesBottom.setOnClickListener(this);
 
         photo = v.findViewById(R.id.profile_image);
         String profilePicPath = prefs.getString("profile_pic", null);
@@ -251,47 +255,43 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case R.id.ac_button_editphoto: {
+        int viewID = v.getId();
+        if (viewID == R.id.ac_button_editphoto) {
 
-                //Open camera
+            //Open camera
 
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraActivityResultLauncher.launch(cameraIntent);/////////////////
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraActivityResultLauncher.launch(cameraIntent);/////////////////
 
-                break;
+        }
+
+        if (viewID == R.id.bottom_save_button || viewID == R.id.ac_button_savechanges) {
+
+            if (isExternalStorageWritable()) {
+                saveProfileImage(bitmap);
             }
 
-            case R.id.ac_button_savechanges: {
+            saveProfileChanges();
 
-                if (isExternalStorageWritable()) {
-                    saveProfileImage(bitmap);
-                }
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
+            transaction.replace(R.id.fragmentHolder, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
 
-                saveProfileChanges();
+        }
 
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
+        if (viewID == R.id.iv_backbutton) {
 
-                break;
-            }
-
-            case R.id.iv_backbutton: {
-
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                break;
-            }
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
+            transaction.replace(R.id.fragmentHolder, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
 
         }
     }
+
 
     //Method used to save many images to storage
     //Not used in this app at this time.

@@ -22,8 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheCollectiveDiet"
-        tools:replace="android:label"
-        >
+        tools:replace="android:label">
 
         <activity
             android:name=".Intro.IntroActivity"
@@ -33,7 +32,7 @@
             android:exported="true"
             android:label="The Collective Diet"
             android:theme="@style/Theme.TheCollectiveDiet.NoActionBar"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
