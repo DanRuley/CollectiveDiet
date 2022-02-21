@@ -2,8 +2,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="56dp"
     android:background="@drawable/gradient_animation_profile">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,12 +15,12 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/iv_backbutton"
+            style="@style/white_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginVertical="10dp"
             android:drawableLeft="@drawable/ic_action_back"
-            style="@style/white_button"
-            >
+            tools:ignore="SpeakableTextPresentCheck">
 
         </androidx.appcompat.widget.AppCompatButton>
 
@@ -34,17 +36,17 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ac_button_savechanges"
+            style="@style/white_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:padding="10dp"
             android:layout_marginVertical="10dp"
+            android:padding="10dp"
             android:text="save changes"
-            android:textColor="@color/teal_700"
-            android:textSize="15sp"
+            android:textColor="#00695C"
 
-            style="@style/white_button">
+            android:textSize="15sp">
 
         </androidx.appcompat.widget.AppCompatButton>
 
@@ -89,6 +91,7 @@
             android:layout_margin="10dp"
             android:hint="First Name"
             android:inputType="text"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -107,9 +110,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ev_firstname"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:hint="Last Name"
             android:inputType="text"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -134,6 +141,8 @@
             android:layout_marginBottom="10dp"
             android:hint="age"
             android:inputType="number"
+            android:minWidth="48dp"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -155,6 +164,7 @@
             android:layout_margin="10dp"
             android:hint="gender"
             android:inputType="text"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -176,6 +186,7 @@
             android:layout_margin="10dp"
             android:hint="weight"
             android:inputType="number"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -197,6 +208,7 @@
             android:layout_margin="10dp"
             android:hint="height"
             android:inputType="number"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -218,6 +230,7 @@
             android:layout_margin="10dp"
             android:hint="Country"
             android:inputType="text"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -239,6 +252,7 @@
             android:layout_margin="10dp"
             android:hint="City"
             android:inputType="text"
+            android:textColorHint="#607D8B"
             android:textSize="20sp">
 
         </EditText>
@@ -248,9 +262,22 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_below="@id/ev_city"
-            android:background="?android:attr/listDivider">
+            android:background="?android:attr/listDivider" />
 
-        </View>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bottom_save_button"
+            style="@style/white_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:padding="10dp"
+            android:text="save changes"
+            android:textColor="#00695C"
+            android:layout_below="@id/divider9"
+            android:layout_centerHorizontal="true"
+            android:textSize="15sp">
+
+        </androidx.appcompat.widget.AppCompatButton>
 
 
     </RelativeLayout>
