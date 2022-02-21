@@ -24,7 +24,6 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
     Context context;
     ArrayList<VerticalModel> arrayList;
 
-    /////////////
     int mExpandedPosition = -1;
 
     public RecyclerEditFoodAdapter1(Context context, ArrayList<VerticalModel> arrayList){
@@ -61,8 +60,6 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
                 Toast.makeText(context, verticalModel.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        /////////////////////////////
 
         final boolean isExpanded = position == mExpandedPosition;
         holder.recyclerView.setVisibility(isExpanded?View.VISIBLE:View.GONE);
