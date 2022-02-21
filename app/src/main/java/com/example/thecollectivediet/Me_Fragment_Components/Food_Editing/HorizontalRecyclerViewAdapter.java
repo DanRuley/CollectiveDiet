@@ -35,13 +35,13 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     @Override
     public void onBindViewHolder(@NonNull HorizontalRVViewHolder holder, int position) {
         HorizontalModel horizontalModel = arrayList.get(position);
-        holder.mTitle.setText(horizontalModel.getName());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, horizontalModel.getName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.mTitle.setText(horizontalModel.getName());
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, horizontalModel.getName(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
@@ -55,8 +55,8 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
         ImageView mImage;
         public HorizontalRVViewHolder(View itemView){
             super(itemView);
-            mTitle = itemView.findViewById(R.id.tv_title_horizontal);
-            mImage = itemView.findViewById(R.id.iv_recycler_horizontal_image);
+            //mTitle = itemView.findViewById(R.id.tv_title_horizontal);
+            //mImage = itemView.findViewById(R.id.iv_recycler_horizontal_image);
         }
     }
 }

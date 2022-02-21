@@ -54,12 +54,12 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
 
         holder.recyclerView.setAdapter(horizontalRecyclerViewAdapter);
 
-        holder.mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, verticalModel.getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.mButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, verticalModel.getTitle(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         final boolean isExpanded = position == mExpandedPosition;
         holder.recyclerView.setVisibility(isExpanded?View.VISIBLE:View.GONE);
@@ -88,7 +88,7 @@ public class RecyclerEditFoodAdapter1 extends RecyclerView.Adapter<RecyclerEditF
             super(itemView);
             recyclerView = itemView.findViewById(R.id.rv_breakfast);
             mTitle = itemView.findViewById(R.id.tv_title);
-            mButton = itemView.findViewById(R.id.btn_more);
+//            mButton = itemView.findViewById(R.id.btn_more);
 
         }
     }
