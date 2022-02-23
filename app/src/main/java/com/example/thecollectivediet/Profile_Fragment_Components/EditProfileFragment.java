@@ -15,7 +15,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -39,7 +43,7 @@ import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class EditProfileFragment extends Fragment implements View.OnClickListener {
+public class EditProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private ActivityResultLauncher<Intent> cameraActivityResultLauncher;
     private ActivityResultLauncher<String> requestPermissionLauncher;
@@ -81,12 +85,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     AppCompatButton back_button;
 
     //editViews
-    EditText mFirstName;
-    EditText mLastName;
-    EditText mAge;
+    //EditText mFirstName;
+    EditText mNickName;
+    TextView mAge;
     EditText mGender;
     EditText mWeight;
-    EditText mHeight;
+    TextView mHeight;
     EditText mCity;
     EditText mCountry;
 
@@ -95,6 +99,19 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
     //bitmap that holds profile pic
     Bitmap bitmap;
+
+    //age spinner
+    Spinner ageSpinner;
+    Integer[] ageArray;
+    int ageTemp = -1;
+
+    //spinners for height
+    Spinner feetSpinner;
+    Spinner inchSpinner;
+    Integer[] feetArray;
+    Integer[] inchArray;
+    int feetTemp;
+    int inchTemp;
 
 
     @Override
@@ -116,12 +133,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
 
         //fill out fields if available
-        mFirstName = v.findViewById(R.id.ev_firstname);
-        mFirstName.setHint("first name: " + prefs.getString("profile_first", ""));
-        mLastName = v.findViewById(R.id.ev_lastname);
-        mLastName.setHint("last name: " + prefs.getString("profile_last", ""));
-        mAge = v.findViewById(R.id.ev_age);
-        mAge.setHint("age: " + prefs.getString("profile_age", ""));
+//        mFirstName = v.findViewById(R.id.ev_firstname);
+//        mFirstName.setHint("first name: " + prefs.getString("profile_first", ""));
+        mNickName = v.findViewById(R.id.ev_nick_name);
+        mNickName.setHint("Nick name: " + prefs.getString("profile_last", ""));
+        mAge = v.findViewById(R.id.tv_age);
+//        mAge.setHint("age: " + prefs.getInt("profile_age", 0));
         mGender = v.findViewById(R.id.ev_gender);
         mGender.setHint("sex: " + prefs.getString("profile_sex", ""));
         mWeight = v.findViewById(R.id.ev_weight);
@@ -132,6 +149,65 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         mCity.setHint("city: " + prefs.getString("profile_city", ""));
         mCountry = v.findViewById(R.id.ev_country);
         mCountry.setHint("country: " + prefs.getString("profile_country", ""));
+
+        //spinner for age
+        ageArray = new Integer[100];
+        for(int i = 0; i < 100; i++)
+        {
+            ageArray[i] = i + 1;
+        }
+        ageSpinner =v.findViewById(R.id.spin_age);
+        ArrayAdapter<Integer> ageSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, ageArray);
+        ageSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ageSpinner.setAdapter(ageSpinAdapter);
+        ageSpinner.setOnItemSelectedListener(this);
+
+        int ageSpinSaved = prefs.getInt("profile_age", 0);
+        if(ageSpinSaved != 0)
+        {
+            int ageSpinPos = ageSpinAdapter.getPosition(ageSpinSaved);
+            ageSpinner.setSelection(ageSpinPos);
+        }
+
+        //spinners for height
+        //spinners for height
+        feetArray = new Integer[10];
+        for(int i = 0; i <= 9; i++)
+        {
+            feetArray[i] = i;
+        }
+
+        inchArray = new Integer[13];
+        for(int i = 0; i <= 12; i++)
+        {
+            inchArray[i] = i;
+        }
+
+        feetSpinner = v.findViewById(R.id.spin_feet);
+        ArrayAdapter<Integer> feetSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, feetArray);
+        feetSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        feetSpinner.setAdapter(feetSpinAdapter);
+        feetSpinner.setOnItemSelectedListener(this);
+
+        int feetSpinSaved = prefs.getInt("profile_feet", 0);
+        if(feetSpinSaved != 0)
+        {
+            int feetSpinPos = feetSpinAdapter.getPosition(feetSpinSaved);
+            feetSpinner.setSelection(feetSpinPos);
+        }
+
+        inchSpinner = v.findViewById(R.id.spin_inches);
+        ArrayAdapter<Integer> inchSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, inchArray);
+        inchSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        inchSpinner.setAdapter(inchSpinAdapter);
+        inchSpinner.setOnItemSelectedListener(this);
+
+        int inchSpinSaved = prefs.getInt("profile_feet", 0);
+        if(inchSpinSaved != 0)
+        {
+            int inchSpinPos = inchSpinAdapter.getPosition(inchSpinSaved);
+            inchSpinner.setSelection(inchSpinPos);
+        }
 
         saveChanges = v.findViewById(R.id.ac_button_savechanges);
         saveChanges.setOnClickListener(this);
@@ -364,19 +440,23 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
         User currentUser = MainActivity.getCurrentUser();
 
-        if (!isEditTextEmpty(mFirstName)) {
-            currentUser.setUser_name(mFirstName.getText().toString());
-            editor.putString("profile_first", mFirstName.getText().toString());
-        }
+//        if (!isEditTextEmpty(mFirstName)) {
+//            currentUser.setUser_name(mFirstName.getText().toString());
+//            editor.putString("profile_first", mFirstName.getText().toString());
+//        }
 
-        if (!isEditTextEmpty(mLastName)) {
-            editor.putString("profile_last", mLastName.getText().toString());
+        if (!isEditTextEmpty(mNickName)) {
+            editor.putString("profile_last", mNickName.getText().toString());
         }
 
         //TODO: change to dob
-        if (!isEditTextEmpty(mAge)) {
-            editor.putString("profile_age", mAge.getText().toString());
-            currentUser.setUser_dob(mAge.getText().toString());
+//        if (!isEditTextEmpty(mAge)) {
+//            editor.putString("profile_age", mAge.getText().toString());
+//            currentUser.setUser_dob(mAge.getText().toString());
+//        }
+        if(ageTemp > -1)
+        {
+            editor.putInt("profile_age", Integer.valueOf(ageTemp));
         }
 
         if (!isEditTextEmpty(mGender)) {
@@ -388,11 +468,16 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             editor.putString("profile_weight", mWeight.getText().toString());
             currentUser.setCurrent_wgt(Float.parseFloat(mWeight.getText().toString()));
         }
+        if(feetTemp > -1)
+            editor.putInt("profile_feet", feetTemp);
 
-        if (!isEditTextEmpty(mHeight)) {
-            editor.putString("profile_height", mHeight.getText().toString());
-            currentUser.setUser_hgt(Float.parseFloat(mHeight.getText().toString()));
-        }
+        if(inchTemp > -1)
+            editor.putInt("profile_inches", inchTemp);
+
+//        if (!isEditTextEmpty(mHeight)) {
+//            editor.putString("profile_height", mHeight.getText().toString());
+//            currentUser.setUser_hgt(Float.parseFloat(mHeight.getText().toString()));
+//        }
 
         if (!isEditTextEmpty(mCity)) {
             editor.putString("profile_city", mCity.getText().toString());
@@ -424,4 +509,31 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         return false;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+
+        switch (parent.getId()){
+
+            case R.id.spin_age:{
+                ageTemp = Integer.valueOf(parent.getItemAtPosition(pos).toString());
+                break;
+            }
+            case R.id.spin_feet:{
+                feetTemp = (int)parent.getItemAtPosition(pos);
+                break;
+            }
+            case R.id.spin_inches:{
+                inchTemp = (int)parent.getItemAtPosition(pos);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
