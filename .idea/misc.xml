@@ -25,6 +25,7 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable/ic_earth_background.xml" value="0.1275" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable/ic_menu_camera.xml" value="0.2703125" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable/ic_menu_stats.xml" value="0.2703125" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable/rounded_button_white.xml" value="0.1275" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/drawable/side_nav_bar.xml" value="0.2703125" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/app_bar_main.xml" value="0.264" />
@@ -57,6 +58,10 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/activity_main_drawer.xml" value="0.2" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/main.xml" value="0.2" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/mipmap-anydpi-v26/ic_earth.xml" value="0.101" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/mipmap-anydpi-v26/ic_earth_round.xml" value="0.121" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.121" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.121" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14322916666666666" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile1.xml" value="0.26205128205128203" />
