@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,35 +20,40 @@ import android.widget.TextView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
 import java.util.HashMap;
 
 @SuppressLint("DefaultLocale")
 public class FoodConfirmDialog extends Dialog {
+    private FoodLogFragment.MealType mealType;
     Context ctx;
     FoodNutrients nutrients;
     FoodResult food;
 
     ImageView image;
     TextView foodName;
-    TextView calorieVal;
+    EditText calorieVal;
     TextView proteinVal;
     TextView fatVal;
     TextView carbVal;
 
-    Spinner servingUnit;
+    Spinner servingUnitSpinner;
+    Spinner mealTypeSpinner;
     EditText servingQtyVal;
 
-    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food) {
+    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, FoodLogFragment.MealType mealType) {
         super(ctx);
 
         this.ctx = ctx;
         this.nutrients = nutrients;
         this.food = food;
+        this.mealType = mealType;
 
         initializeComponents();
     }
@@ -60,6 +66,7 @@ public class FoodConfirmDialog extends Dialog {
 
         image = findViewById(R.id.confirm_add_img);
         calorieVal = findViewById(R.id.calories_txt_value);
+        calorieVal.setEnabled(false);
         proteinVal = findViewById(R.id.protein_val);
         fatVal = findViewById(R.id.fat_val);
         carbVal = findViewById(R.id.carb_val);
@@ -75,16 +82,37 @@ public class FoodConfirmDialog extends Dialog {
         fatVal.setText(String.format("%.1f %s", nutrients.getFat_100g(), nutrients.getFat_unit()));
 
         setupServingSpinner();
-        ServingCalculator servingCalculator = new ServingCalculator(nutrients, servingUnit, this);
-        servingUnit.setOnItemSelectedListener(servingCalculator);
+        setupMealTypeSpinner();
+
+        ServingCalculator servingCalculator = new ServingCalculator(nutrients, servingUnitSpinner, this);
+        servingUnitSpinner.setOnItemSelectedListener(servingCalculator);
         servingQtyVal.addTextChangedListener(servingCalculator);
 
         setupFoodImage();
 
         this.findViewById(R.id.add_food_btn).setOnClickListener(v -> {
+            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, MainActivity.getCurrentUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString());
             JSONSerializer.addFoodToList(food.getProduct_name(), "100 grams", ctx);
             Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").into(image);
+            new CountDownTimer(2000, 1000) {
+
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    onStop();
+                }
+            }.start();
         });
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        dismiss();
     }
 
     private void setupFoodImage() {
@@ -100,12 +128,40 @@ public class FoodConfirmDialog extends Dialog {
     }
 
     private void setupServingSpinner() {
-        servingUnit = this.findViewById(R.id.serving_unit_spinner);
+        servingUnitSpinner = this.findViewById(R.id.serving_unit_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx, R.array.serving_qty_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        servingUnit.setAdapter(adapter);
+        servingUnitSpinner.setAdapter(adapter);
 
-        servingUnit.setOnItemSelectedListener(new ServingCalculator(nutrients, servingUnit, this));
+        servingUnitSpinner.setOnItemSelectedListener(new ServingCalculator(nutrients, servingUnitSpinner, this));
+    }
+
+    private void setupMealTypeSpinner() {
+        mealTypeSpinner = this.findViewById(R.id.meal_type_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx, R.array.meal_option_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mealTypeSpinner.setAdapter(adapter);
+
+        mealTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            boolean firstTime = true;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (firstTime) {
+                    position = mealType == null ? 0 : mealType.ordinal();
+                    firstTime = false;
+                }
+
+                parent.setSelection(position);
+                mealType = FoodLogFragment.MealType.values()[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void updateServing(Double multiplier) {
@@ -124,6 +180,7 @@ public class FoodConfirmDialog extends Dialog {
     }
 
 
+    @SuppressWarnings("UnnecessaryReturnStatement")
     static class ServingCalculator implements TextWatcher, AdapterView.OnItemSelectedListener {
 
         //1 cup == 128 g == 4.5oz
@@ -210,5 +267,6 @@ public class FoodConfirmDialog extends Dialog {
             Double multiplier = multipliers.get(currentUnit + "_to_" + newUnit);
             view.updateServing(multiplier);
         }
+
     }
 }

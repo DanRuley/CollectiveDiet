@@ -5,17 +5,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
+import com.example.thecollectivediet.FragmentSignIn;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
+
+import java.util.Objects;
 
 public class FoodLogFragment extends Fragment implements View.OnClickListener {
 
     Context ctx;
     FoodSearchController controller;
+
+    public enum MealType {
+        Breakfast,
+        Lunch,
+        Dinner,
+        Snack
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,26 +55,38 @@ public class FoodLogFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         int id = v.getId();
-        String mealType = "";
+        MealType mealType;
+
+        if (MainActivity.getCurrentUser() == null) {
+            Toast.makeText(ctx, "Please sign in before logging meals", Toast.LENGTH_SHORT).show();
+            FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            FragmentSignIn frag = new FragmentSignIn();
+            transaction.replace(R.id.fragmentHolder, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+            return;
+        }
 
         if (id == R.id.breakfast_add_btn)
-            mealType = "breakfast";
+            mealType = MealType.Breakfast;
         else if (id == R.id.lunch_add_btn)
-            mealType = "lunch";
+            mealType = MealType.Lunch;
         else if (id == R.id.dinner_add_btn)
-            mealType = "dinner";
-        else if (id == R.id.snack_add_btn)
-            mealType = "snack";
+            mealType = MealType.Dinner;
+        else
+            mealType = MealType.Snack;
 
         inflateFoodSearchFrag(mealType);
     }
 
-    private void inflateFoodSearchFrag(String mealType) {
+    private void inflateFoodSearchFrag(MealType mealType) {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         Fragment f = new ManualFoodSearch();
         Bundle args = new Bundle();
-        args.putString("mealType", mealType);
-        transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
+        args.putInt("mealType", mealType.ordinal());
+        f.setArguments(args);
+        transaction.replace(R.id.fragmentHolder, f);
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -22,11 +22,12 @@ import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ManualFoodSearch extends Fragment {
 
     static String savedText;
-    String mealType;
+    FoodLogFragment.MealType mealType;
     boolean mealTypePrompt;
     EditText foodInput;
     Button searchBtn;
@@ -48,7 +49,7 @@ public class ManualFoodSearch extends Fragment {
         Bundle args = getArguments();
 
         if (args != null) {
-            mealType = args.getString("mealType");
+            mealType = FoodLogFragment.MealType.values()[args.getInt("mealType")];
             mealTypePrompt = false;     //meal type was provided by the button the user clicked - no need to prompt for meal type.
         } else
             mealTypePrompt = true;      //If search is called from Camera, we need to ask user for meal type
@@ -105,14 +106,14 @@ public class ManualFoodSearch extends Fragment {
 
 
     private void populateRecycler(List<FoodResult> response) {
-        MainActivity.hideKeyboard(getActivity());
+        MainActivity.hideKeyboard(Objects.requireNonNull(getActivity()));
 
         mAdapter = new FoodSearchRecyclerViewAdapter(response, ctx, foodItem -> {
 
             controller.getNutrients(String.valueOf(foodItem.getId()), new VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients nutrients) {
-                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem);
+                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem, mealType);
                     dialog.show();
                 }
 

@@ -5,13 +5,20 @@
     <string name="nav_header_subtitle">TheCollectiveDiet.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="server_client_id">706133075330-grs8gr92h2gn6gnm6rfq2uhgvmpgdkts.apps.googleusercontent.com</string>
+    <string name="confirm_dialog_prompt">Add to log for: </string>
+<!--    <string name="meal_category_prompt">Meal Category:</string>-->
     <color name="blue">#0000FF</color>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="serving_qty_array">
         <item>g</item>
         <item>cups</item>
         <item>oz</item>
+    </string-array>
+
+    <string-array name="meal_option_array">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack/Other</item>
     </string-array>
 
 </resources>
