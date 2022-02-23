@@ -7,7 +7,7 @@
 
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#DAE8FC">
+    android:background="#CFE7EA">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,13 +16,15 @@
         android:padding="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/img_confirm_constraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:background="#80FBC1AD">
 
             <ImageView
                 android:id="@+id/confirm_add_img"
@@ -85,6 +87,7 @@
             android:textSize="20sp" />
 
         <LinearLayout
+            android:background="#80F7EBC9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -144,6 +147,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:background="#80A3CEBD"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
