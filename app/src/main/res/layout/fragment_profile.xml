@@ -34,29 +34,29 @@
         app:layout_constraintTop_toBottomOf="@id/ac_button_profile_edit"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <TextView
-        android:id="@+id/textview_profile_firstname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="First Name"
-        android:textSize="25sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_image">
+<!--    <TextView-->
+<!--        android:id="@+id/textview_profile_firstname"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="15dp"-->
+<!--        android:text="Nick Name"-->
+<!--        android:textSize="25sp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/profile_image">-->
 
-    </TextView>
+<!--    </TextView>-->
 
     <TextView
         android:id="@+id/textview_profile_lastname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="Last Name"
+        android:text="Nick Name"
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_profile_firstname">
+        app:layout_constraintTop_toBottomOf="@id/profile_image">
 
     </TextView>
 

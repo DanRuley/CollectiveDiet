@@ -83,38 +83,38 @@
 
         </androidx.appcompat.widget.AppCompatButton>
 
+<!--        <EditText-->
+<!--            android:id="@+id/ev_firstname"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/ac_button_editphoto"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:hint="First Name"-->
+<!--            android:inputType="text"-->
+<!--            android:textColorHint="#607D8B"-->
+<!--            android:textSize="20sp">-->
+
+<!--        </EditText>-->
+
+<!--        <View-->
+<!--            android:id="@+id/divider2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="3dp"-->
+<!--            android:layout_below="@id/ev_firstname"-->
+<!--            android:background="?android:attr/listDivider">-->
+
+<!--        </View>-->
+
         <EditText
-            android:id="@+id/ev_firstname"
+            android:id="@+id/ev_nick_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ac_button_editphoto"
-            android:layout_margin="10dp"
-            android:hint="First Name"
-            android:inputType="text"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
-
-        </EditText>
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/ev_firstname"
-            android:background="?android:attr/listDivider">
-
-        </View>
-
-        <EditText
-            android:id="@+id/ev_lastname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ev_firstname"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:hint="Last Name"
+            android:hint="Nick Name"
             android:inputType="text"
             android:textColorHint="#607D8B"
             android:textSize="20sp">
@@ -125,13 +125,13 @@
             android:id="@+id/divider3"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_below="@id/ev_lastname"
+            android:layout_below="@id/ev_nick_name"
             android:background="?android:attr/listDivider">
 
         </View>
 
-        <EditText
-            android:id="@+id/ev_age"
+        <TextView
+            android:id="@+id/tv_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/divider3"
@@ -145,13 +145,23 @@
             android:textColorHint="#607D8B"
             android:textSize="20sp">
 
-        </EditText>
+        </TextView>
+
+        <Spinner
+            android:id="@+id/spin_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider3"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@id/tv_age">
+
+        </Spinner>
 
         <View
             android:id="@+id/divider4"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_below="@id/ev_age"
+            android:layout_below="@id/tv_age"
             android:background="?android:attr/listDivider">
 
         </View>
@@ -183,7 +193,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/divider5"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:hint="weight"
             android:inputType="number"
             android:textColorHint="#607D8B"
@@ -200,18 +213,79 @@
 
         </View>
 
-        <EditText
+        <TextView
             android:id="@+id/ev_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/divider6"
-            android:layout_margin="10dp"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:hint="height"
             android:inputType="number"
             android:textColorHint="#607D8B"
             android:textSize="20sp">
 
-        </EditText>
+        </TextView>
+
+        <Spinner
+            android:id="@+id/spin_feet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider6"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/ev_height"
+            >
+
+        </Spinner>
+
+        <TextView
+            android:id="@+id/tv_feet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider6"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/spin_feet"
+            android:text="'"
+            android:textSize="20sp">
+
+        </TextView>
+
+        <Spinner
+            android:id="@+id/spin_inches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider6"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/tv_feet">
+
+        </Spinner>
+
+        <TextView
+            android:id="@+id/tv_inches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider6"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/spin_inches"
+            android:text="' '"
+            android:textSize="20sp">
+
+        </TextView>
 
         <View
             android:id="@+id/divider7"

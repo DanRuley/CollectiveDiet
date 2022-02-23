@@ -40,11 +40,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     AppCompatButton mLogout;
     AppCompatButton mLogIn;
     ImageView mProfilePic;
-    TextView mFirstName;
-    TextView mLastName;
+    //TextView mFirstName;
+    TextView mNickName;
     TextView mAge;
     TextView mSex;
     TextView mHeight;
+    TextView mFeet;
+    TextView mInches;
     TextView mWeight;
     TextView mCity;
     TextView mCountry;
@@ -64,18 +66,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mEdit.setOnClickListener(this);
         mProfilePic = v.findViewById(R.id.profile_image);
 
-        mFirstName = v.findViewById(R.id.textview_profile_firstname);
-        mFirstName.setText(prefs.getString("profile_first", "").toString());
-        mLastName = v.findViewById(R.id.textview_profile_lastname);
-        mLastName.setText(prefs.getString("profile_last", ""));
+//        mFirstName = v.findViewById(R.id.textview_profile_firstname);
+//        mFirstName.setText(prefs.getString("profile_first", "").toString());
+        mNickName = v.findViewById(R.id.textview_profile_lastname);
+        mNickName.setText(prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.textview_profile_age);
-        mAge.setText("Age: " + prefs.getString("profile_age", ""));
+        mAge.setText("Age: " + prefs.getInt("profile_age", 0));
         mSex = v.findViewById(R.id.textview_profile_sex);
         mSex.setText("Sex: " + prefs.getString("profile_sex", ""));
         mWeight = v.findViewById(R.id.textview_profile_weight);
         mWeight.setText("Weight: " + prefs.getString("profile_weight", ""));
         mHeight = v.findViewById(R.id.textview_profile_height);
-        mHeight.setText("Height: " + prefs.getString("profile_height", ""));
+        mHeight.setText("Height: " + prefs.getInt("profile_feet", 0) + "'" + prefs.getInt("profile_inches", 0) + "' '");
+
         mCity = v.findViewById(R.id.textview_profile_city);
         mCity.setText("City: " + prefs.getString("profile_city", ""));
         mCountry = v.findViewById(R.id.textview_profile_country);
