@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorSpace;
 import android.graphics.Matrix;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -42,6 +45,7 @@ import org.tensorflow.lite.support.label.Category;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -66,6 +70,8 @@ public class CameraFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_camera, container, false);
+
+        Map<String, String> env = System.getenv();
 
         // Register the permissions callback, which handles the user's response to the
 // system permissions dialog. Save the return value, an instance of
@@ -177,6 +183,7 @@ public class CameraFragment extends Fragment {
                     int x = 5;
 
 
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onCaptureSuccess(ImageProxy imageProxy) {
                         //Change imageProxy to bitmap to be used with imageView
@@ -218,6 +225,7 @@ public class CameraFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Bitmap resizeBitmap(Bitmap bitmap, int newHeight, int newWidth) {
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();
@@ -226,6 +234,7 @@ public class CameraFragment extends Fragment {
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
         Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
+        ColorSpace srbg = ColorSpace.get(ColorSpace.Named.SRGB);
         return newBitmap;
     }
 
@@ -235,6 +244,7 @@ public class CameraFragment extends Fragment {
      * @param bitmap bitmap does not need resizing
      * @return String prediction
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private String classifyImage(Bitmap bitmap) {
         int newWidth = 240;
         int newHeight = 240;

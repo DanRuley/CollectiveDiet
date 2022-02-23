@@ -71,6 +71,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mNickName = v.findViewById(R.id.textview_profile_lastname);
         mNickName.setText(prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.textview_profile_age);
+
+        int x = prefs.getInt("profile_age", 0);
         mAge.setText("Age: " + prefs.getInt("profile_age", 0));
         mSex = v.findViewById(R.id.textview_profile_sex);
         mSex.setText("Sex: " + prefs.getString("profile_sex", ""));
