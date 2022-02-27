@@ -14,9 +14,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="10dp">
+
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/btn_add_food"
         android:text="Add food"
         android:textSize="20sp"
         android:background="@color/pink"
