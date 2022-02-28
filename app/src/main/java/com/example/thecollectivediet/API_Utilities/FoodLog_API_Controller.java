@@ -40,7 +40,7 @@ public class FoodLog_API_Controller {
         }
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, foodLogJSON,
-                response -> Log.d("success!", response.toString()), error -> Log.d("add food log lambda", error.getMessage())) {
+                response -> Log.d("success!", response.toString()), error -> Log.d("add food log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
