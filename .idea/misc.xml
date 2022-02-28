@@ -85,7 +85,7 @@
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/food_recycler_element.xml" value="0.3496376811594203" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_camera.xml" value="0.215625" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_edit_meal.xml" value="0.215625" />
-        <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1" />
+        <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_edit_profile.xml" value="0.22" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_food_log.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_food_search.xml" value="0.2" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_home.xml" value="0.2708333333333333" />
@@ -94,6 +94,7 @@
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_profile.xml" value="0.2786458333333333" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_slideshow.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_today.xml" value="0.2359375" />
+        <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/nav_header_main.xml" value="0.2557291666666667" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/success_popup.xml" value="0.25905797101449274" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/layout/test.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/mipmap-anydpi-v26/ic_earth.xml" value="0.271875" />

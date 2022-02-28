@@ -40,6 +40,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Map;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences.Editor editor;
 
     public static User currentUser;
+
 
 
     @Override
@@ -345,5 +347,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static void setCurrentUser(User user) {
         currentUser = user;
+    }
+
+    public void requireSignInPrompt(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        FragmentTransaction transaction = Objects.requireNonNull(this.getSupportFragmentManager().beginTransaction());
+        FragmentSignIn frag = new FragmentSignIn();
+        transaction.replace(R.id.fragmentHolder, frag);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

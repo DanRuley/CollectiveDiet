@@ -13,9 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogFragment;
 import com.example.thecollectivediet.R;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
@@ -147,13 +145,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.cv_profile_pic: {
-                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentHolder, new FoodLogFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-                break;
-            }
+
         }
     }
 

@@ -1,11 +1,10 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
@@ -15,14 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogDialog;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.ManualFoodSearch;
+import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogFragment;
-import com.example.thecollectivediet.R;
-
-import org.checkerframework.checker.units.qual.A;
 
 public class EditMealFragment extends Fragment implements View.OnClickListener {
 
@@ -37,6 +34,7 @@ public class EditMealFragment extends Fragment implements View.OnClickListener {
     ArrayList<VerticalModel> arrayListVertical;
 
     RecyclerEditFoodAdapter editFoodAdapter;
+    Dialog foodLogDialog;
 
     private JSONSerializer serializer;
     private List<EditFoodObject> list;
@@ -126,17 +124,22 @@ public class EditMealFragment extends Fragment implements View.OnClickListener {
         editFoodAdapter.notifyDataSetChanged();
     }
 
+    public void inflateFoodSearchFrag(FoodLogDialog.MealType mealType) {
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Fragment f = new ManualFoodSearch();
+        Bundle args = new Bundle();
+        args.putInt("mealType", mealType.ordinal());
+        f.setArguments(args);
+        transaction.replace(R.id.fragmentHolder, f);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     @Override
     public void onClick(View v) {
-
-        switch(v.getId()){
-            case R.id.btn_add_food: {
-                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentHolder, new FoodLogFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-                break;
-            }
+        if(v.getId() == R.id.btn_add_food) {
+            foodLogDialog = new FoodLogDialog(getActivity(), this);
+            foodLogDialog.show();
         }
     }
 }

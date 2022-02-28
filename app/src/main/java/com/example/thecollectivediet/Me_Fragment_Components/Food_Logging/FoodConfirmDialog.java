@@ -31,7 +31,7 @@ import java.util.HashMap;
 
 @SuppressLint("DefaultLocale")
 public class FoodConfirmDialog extends Dialog {
-    private FoodLogFragment.MealType mealType;
+    private FoodLogDialog.MealType mealType;
     Context ctx;
     FoodNutrients nutrients;
     FoodResult food;
@@ -47,7 +47,7 @@ public class FoodConfirmDialog extends Dialog {
     Spinner mealTypeSpinner;
     EditText servingQtyVal;
 
-    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, FoodLogFragment.MealType mealType) {
+    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, FoodLogDialog.MealType mealType) {
         super(ctx);
 
         this.ctx = ctx;
@@ -155,7 +155,7 @@ public class FoodConfirmDialog extends Dialog {
                 }
 
                 parent.setSelection(position);
-                mealType = FoodLogFragment.MealType.values()[position];
+                mealType = FoodLogDialog.MealType.values()[position];
             }
 
             @Override
