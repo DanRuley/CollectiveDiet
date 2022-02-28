@@ -225,7 +225,7 @@ public class FoodConfirmDialog extends Dialog {
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (unitChange)
+            if (unitChange || s.toString().equals("."))
                 return;
             else if (s.toString().length() == 0)
                 recalculateFields(0.0);

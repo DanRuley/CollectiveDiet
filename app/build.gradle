@@ -91,6 +91,9 @@ dependencies {
     // Testing Fragments in Isolation
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
+    //google date picker
+    implementation "com.google.android.material:material:1.6.0-alpha02"
+
     //com.example.thecollectivediet.Intro (on boarding) Activity
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.tbuonomo:dotsindicator:4.2'
