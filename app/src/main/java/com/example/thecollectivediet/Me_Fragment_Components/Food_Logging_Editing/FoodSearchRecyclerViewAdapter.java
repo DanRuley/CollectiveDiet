@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -34,7 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.ManualFoodSearch;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.ManualFoodSearch;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ml.LiteModelAiyVisionClassifierFoodV11;
 import com.google.common.util.concurrent.ListenableFuture;

@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,7 +27,7 @@ import java.util.Objects;
 public class ManualFoodSearch extends Fragment {
 
     static String savedText;
-    FoodLogDialog.MealType mealType;
+    MealSelectDialog.MealType mealType;
     boolean mealTypePrompt;
     EditText foodInput;
     Button searchBtn;
@@ -49,7 +49,7 @@ public class ManualFoodSearch extends Fragment {
         Bundle args = getArguments();
 
         if (args != null) {
-            mealType = FoodLogDialog.MealType.values()[args.getInt("mealType")];
+            mealType = MealSelectDialog.MealType.values()[args.getInt("mealType")];
             mealTypePrompt = false;     //meal type was provided by the button the user clicked - no need to prompt for meal type.
         } else
             mealTypePrompt = true;      //If search is called from Camera, we need to ask user for meal type

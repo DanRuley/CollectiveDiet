@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -31,7 +31,7 @@ import java.util.HashMap;
 
 @SuppressLint("DefaultLocale")
 public class FoodConfirmDialog extends Dialog {
-    private FoodLogDialog.MealType mealType;
+    private MealSelectDialog.MealType mealType;
     Context ctx;
     FoodNutrients nutrients;
     FoodResult food;
@@ -47,7 +47,7 @@ public class FoodConfirmDialog extends Dialog {
     Spinner mealTypeSpinner;
     EditText servingQtyVal;
 
-    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, FoodLogDialog.MealType mealType) {
+    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType) {
         super(ctx);
 
         this.ctx = ctx;
@@ -155,7 +155,7 @@ public class FoodConfirmDialog extends Dialog {
                 }
 
                 parent.setSelection(position);
-                mealType = FoodLogDialog.MealType.values()[position];
+                mealType = MealSelectDialog.MealType.values()[position];
             }
 
             @Override

@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,14 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogDialog;
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.ManualFoodSearch;
 import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditMealFragment extends Fragment implements View.OnClickListener {
+public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     AppCompatButton mAddFoodButton;
 
@@ -31,9 +29,9 @@ public class EditMealFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mSnacks;
 
     RecyclerView.Adapter breakfastAdapter;
-    ArrayList<VerticalModel> arrayListVertical;
+    ArrayList<OuterMealRecyclerItem> arrayListVertical;
 
-    RecyclerEditFoodAdapter editFoodAdapter;
+    OuterMealListRecycler editFoodAdapter;
     Dialog foodLogDialog;
 
     private JSONSerializer serializer;
@@ -56,7 +54,7 @@ public class EditMealFragment extends Fragment implements View.OnClickListener {
 
         //mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        editFoodAdapter = new RecyclerEditFoodAdapter(getActivity(), arrayListVertical);
+        editFoodAdapter = new OuterMealListRecycler(getActivity(), arrayListVertical);
 
         mBreakfast.setAdapter(editFoodAdapter);
 
@@ -70,32 +68,32 @@ public class EditMealFragment extends Fragment implements View.OnClickListener {
     private void setData() {
 
         //Vertical recycler views
-        VerticalModel verticalModelBreakfast = new VerticalModel();
-        verticalModelBreakfast.setTitle("Breakfast:");
-        ArrayList<HorizontalModel> arrayListHorizontal1 = new ArrayList<>();
-        verticalModelBreakfast.setArrayList(arrayListHorizontal1);
-        arrayListVertical.add(verticalModelBreakfast);
+        OuterMealRecyclerItem outerMealRecyclerItemBreakfast = new OuterMealRecyclerItem();
+        outerMealRecyclerItemBreakfast.setTitle("Breakfast:");
+        ArrayList<InnerFoodListItem> arrayListHorizontal1 = new ArrayList<>();
+        outerMealRecyclerItemBreakfast.setArrayList(arrayListHorizontal1);
+        arrayListVertical.add(outerMealRecyclerItemBreakfast);
 
         //lunch
-        VerticalModel verticalModelLunch = new VerticalModel();
-        verticalModelLunch.setTitle("Lunch:");
-        ArrayList<HorizontalModel> arrayListHorizontal2 = new ArrayList<>();
-        verticalModelLunch.setArrayList(arrayListHorizontal2);
-        arrayListVertical.add(verticalModelLunch);
+        OuterMealRecyclerItem outerMealRecyclerItemLunch = new OuterMealRecyclerItem();
+        outerMealRecyclerItemLunch.setTitle("Lunch:");
+        ArrayList<InnerFoodListItem> arrayListHorizontal2 = new ArrayList<>();
+        outerMealRecyclerItemLunch.setArrayList(arrayListHorizontal2);
+        arrayListVertical.add(outerMealRecyclerItemLunch);
 
         //Dinner
-        VerticalModel verticalModelDinner = new VerticalModel();
-        verticalModelDinner.setTitle("Dinner:");
-        ArrayList<HorizontalModel> arrayListHorizontal3 = new ArrayList<>();
-        verticalModelDinner.setArrayList(arrayListHorizontal3);
-        arrayListVertical.add(verticalModelDinner);
+        OuterMealRecyclerItem outerMealRecyclerItemDinner = new OuterMealRecyclerItem();
+        outerMealRecyclerItemDinner.setTitle("Dinner:");
+        ArrayList<InnerFoodListItem> arrayListHorizontal3 = new ArrayList<>();
+        outerMealRecyclerItemDinner.setArrayList(arrayListHorizontal3);
+        arrayListVertical.add(outerMealRecyclerItemDinner);
 
         //snacks
-        VerticalModel verticalModelSnacks = new VerticalModel();
-        verticalModelSnacks.setTitle("Snacks:");
-        ArrayList<HorizontalModel> arrayListHorizontal4 = new ArrayList<>();
-        verticalModelSnacks.setArrayList(arrayListHorizontal4);
-        arrayListVertical.add(verticalModelSnacks);
+        OuterMealRecyclerItem outerMealRecyclerItemSnacks = new OuterMealRecyclerItem();
+        outerMealRecyclerItemSnacks.setTitle("Snacks:");
+        ArrayList<InnerFoodListItem> arrayListHorizontal4 = new ArrayList<>();
+        outerMealRecyclerItemSnacks.setArrayList(arrayListHorizontal4);
+        arrayListVertical.add(outerMealRecyclerItemSnacks);
 
 //        HorizontalModel ho = new HorizontalModel();
 //        ho.setDescription("Des");
@@ -124,7 +122,7 @@ public class EditMealFragment extends Fragment implements View.OnClickListener {
         editFoodAdapter.notifyDataSetChanged();
     }
 
-    public void inflateFoodSearchFrag(FoodLogDialog.MealType mealType) {
+    public void inflateFoodSearchFrag(MealSelectDialog.MealType mealType) {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         Fragment f = new ManualFoodSearch();
         Bundle args = new Bundle();
@@ -138,7 +136,7 @@ public class EditMealFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.btn_add_food) {
-            foodLogDialog = new FoodLogDialog(getActivity(), this);
+            foodLogDialog = new MealSelectDialog(getActivity(), this);
             foodLogDialog.show();
         }
     }

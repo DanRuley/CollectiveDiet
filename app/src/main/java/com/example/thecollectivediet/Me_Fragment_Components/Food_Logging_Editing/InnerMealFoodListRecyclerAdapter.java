@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,13 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter.HorizontalRVViewHolder> {
+public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<InnerMealFoodListRecyclerAdapter.HorizontalRVViewHolder> {
 
     Context context;
-    ArrayList<HorizontalModel> arrayList;
-    public HorizontalRecyclerViewAdapter(Context context, ArrayList<HorizontalModel> arrayList){
+    ArrayList<InnerFoodListItem> arrayList;
+    public InnerMealFoodListRecyclerAdapter(Context context, ArrayList<InnerFoodListItem> arrayList){
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -34,7 +32,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalRVViewHolder holder, int position) {
-        HorizontalModel horizontalModel = arrayList.get(position);
+        InnerFoodListItem innerFoodListItem = arrayList.get(position);
 //        holder.mTitle.setText(horizontalModel.getName());
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override

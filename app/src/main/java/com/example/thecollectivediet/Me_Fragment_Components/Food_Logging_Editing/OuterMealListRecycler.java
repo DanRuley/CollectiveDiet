@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,14 +17,14 @@ import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
 
-public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFoodAdapter.VerticalRVViewHolder> {
+public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRecycler.VerticalRVViewHolder> {
 
     Context context;
-    ArrayList<VerticalModel> arrayList;
+    ArrayList<OuterMealRecyclerItem> arrayList;
 
     int mExpandedPosition = -1;
 
-    public RecyclerEditFoodAdapter(Context context, ArrayList<VerticalModel> arrayList){
+    public OuterMealListRecycler(Context context, ArrayList<OuterMealRecyclerItem> arrayList){
         this.arrayList = arrayList;
         this.context = context;
 
@@ -40,17 +40,17 @@ public class RecyclerEditFoodAdapter extends RecyclerView.Adapter<RecyclerEditFo
 
     @Override
     public void onBindViewHolder(@NonNull VerticalRVViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        VerticalModel verticalModel = arrayList.get(position);
-        String title = verticalModel.getTitle();
-        ArrayList<HorizontalModel> singleItem = verticalModel.getArrayList();
+        OuterMealRecyclerItem outerMealRecyclerItem = arrayList.get(position);
+        String title = outerMealRecyclerItem.getTitle();
+        ArrayList<InnerFoodListItem> singleItem = outerMealRecyclerItem.getArrayList();
 
         holder.mTitle.setText(title);
-        HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter = new HorizontalRecyclerViewAdapter(context, singleItem);
+        InnerMealFoodListRecyclerAdapter innerMealFoodListRecyclerAdapter = new InnerMealFoodListRecyclerAdapter(context, singleItem);
 
         holder.recyclerView.setHasFixedSize(true);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        holder.recyclerView.setAdapter(horizontalRecyclerViewAdapter);
+        holder.recyclerView.setAdapter(innerMealFoodListRecyclerAdapter);
 
 //        holder.mButton.setOnClickListener(new View.OnClickListener() {
 //            @Override

@@ -1,4 +1,4 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.app.Dialog;
 import android.os.CountDownTimer;
@@ -9,14 +9,13 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.Me_Fragment_Components.Food_Editing.EditMealFragment;
 import com.example.thecollectivediet.R;
 
-public class FoodLogDialog extends Dialog implements View.OnClickListener {
+public class MealSelectDialog extends Dialog implements View.OnClickListener {
 
     FragmentActivity ctx;
     FoodSearchController controller;
-    EditMealFragment parent;
+    FragmentFoodLog parent;
     MealType mealType;
 
     public enum MealType {
@@ -26,7 +25,7 @@ public class FoodLogDialog extends Dialog implements View.OnClickListener {
         Snack
     }
 
-    public FoodLogDialog(FragmentActivity ctx, EditMealFragment parent) {
+    public MealSelectDialog(FragmentActivity ctx, FragmentFoodLog parent) {
         super(ctx);
         this.ctx = ctx;
         this.parent = parent;

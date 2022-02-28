@@ -1,6 +1,6 @@
-package com.example.thecollectivediet.Me_Fragment_Components.Food_Editing;
+package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
-public class HorizontalModel {
+public class InnerFoodListItem {
     String name;
     String description;
 
