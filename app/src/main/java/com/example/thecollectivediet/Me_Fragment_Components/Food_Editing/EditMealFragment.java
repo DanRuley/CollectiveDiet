@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,9 +19,14 @@ import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging.FoodLogFragment;
 import com.example.thecollectivediet.R;
 
-public class EditMealFragment extends Fragment {
+import org.checkerframework.checker.units.qual.A;
+
+public class EditMealFragment extends Fragment implements View.OnClickListener {
+
+    AppCompatButton mAddFoodButton;
 
     private RecyclerView mBreakfast;
     private RecyclerView mLunch;
@@ -26,11 +35,8 @@ public class EditMealFragment extends Fragment {
 
     RecyclerView.Adapter breakfastAdapter;
     ArrayList<VerticalModel> arrayListVertical;
-//    RecyclerView.Adapter lunchAdapter;
-//    RecyclerView.Adapter dinnerAdapter;
-//    RecyclerView.Adapter snacksAdapter;
 
-    RecyclerEditFoodAdapter1 adapter1;
+    RecyclerEditFoodAdapter editFoodAdapter;
 
     private JSONSerializer serializer;
     private List<EditFoodObject> list;
@@ -42,115 +48,97 @@ public class EditMealFragment extends Fragment {
 
         arrayListVertical = new ArrayList<>();
 
+        //hook elements
+        mAddFoodButton = v.findViewById(R.id.btn_add_food);
+        mAddFoodButton.setOnClickListener(this);
 
+        //hook recycler views and adapters
         mBreakfast = v.findViewById(R.id.rv_doh);
         mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         //mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        adapter1 = new RecyclerEditFoodAdapter1(getActivity(), arrayListVertical);
+        editFoodAdapter = new RecyclerEditFoodAdapter(getActivity(), arrayListVertical);
 
-        mBreakfast.setAdapter(adapter1);
+        mBreakfast.setAdapter(editFoodAdapter);
 
+        //set data for recycler views
         setData();
-        //
+
 
         return v;
     }
 
     private void setData() {
 
+        //Vertical recycler views
+        VerticalModel verticalModelBreakfast = new VerticalModel();
+        verticalModelBreakfast.setTitle("Breakfast:");
+        ArrayList<HorizontalModel> arrayListHorizontal1 = new ArrayList<>();
+        verticalModelBreakfast.setArrayList(arrayListHorizontal1);
+        arrayListVertical.add(verticalModelBreakfast);
 
-        for(int i=1; i <= 5; i++){
-            VerticalModel verticalModel = new VerticalModel();
-            verticalModel.setTitle("Title: "+ i);
-            ArrayList<HorizontalModel> arrayListHorizontal = new ArrayList<>();
+        //lunch
+        VerticalModel verticalModelLunch = new VerticalModel();
+        verticalModelLunch.setTitle("Lunch:");
+        ArrayList<HorizontalModel> arrayListHorizontal2 = new ArrayList<>();
+        verticalModelLunch.setArrayList(arrayListHorizontal2);
+        arrayListVertical.add(verticalModelLunch);
 
-            for(int j = 0; j <= 5; j++){
-                HorizontalModel horizontalModel = new HorizontalModel();
-                horizontalModel.setDescription("Description: " + j);
-                horizontalModel.setName("Name: " + j);
+        //Dinner
+        VerticalModel verticalModelDinner = new VerticalModel();
+        verticalModelDinner.setTitle("Dinner:");
+        ArrayList<HorizontalModel> arrayListHorizontal3 = new ArrayList<>();
+        verticalModelDinner.setArrayList(arrayListHorizontal3);
+        arrayListVertical.add(verticalModelDinner);
 
-                arrayListHorizontal.add(horizontalModel);
+        //snacks
+        VerticalModel verticalModelSnacks = new VerticalModel();
+        verticalModelSnacks.setTitle("Snacks:");
+        ArrayList<HorizontalModel> arrayListHorizontal4 = new ArrayList<>();
+        verticalModelSnacks.setArrayList(arrayListHorizontal4);
+        arrayListVertical.add(verticalModelSnacks);
+
+//        HorizontalModel ho = new HorizontalModel();
+//        ho.setDescription("Des");
+//        ho.setName("ass");
+//        arrayListHorizontal1.add(ho);
+
+
+
+//        for(int i=1; i <= 5; i++){
+//            VerticalModel verticalModel = new VerticalModel();
+//            verticalModel.setTitle("Title: "+ i);
+//            ArrayList<HorizontalModel> arrayListHorizontal = new ArrayList<>();
+//
+//            for(int j = 0; j <= 5; j++){
+//                HorizontalModel horizontalModel = new HorizontalModel();
+//                horizontalModel.setDescription("Description: " + j);
+//                horizontalModel.setName("Name: " + j);
+//
+//                arrayListHorizontal.add(horizontalModel);
+//            }
+//
+//            verticalModel.setArrayList(arrayListHorizontal);
+//            arrayListVertical.add(verticalModel);
+//        }
+
+        editFoodAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch(v.getId()){
+            case R.id.btn_add_food: {
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentHolder, new FoodLogFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
             }
-
-            verticalModel.setArrayList(arrayListHorizontal);
-            arrayListVertical.add(verticalModel);
         }
-
-        adapter1.notifyDataSetChanged();
     }
 }
 
 
-//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance){
-//
-//    View v = inflater.inflate(R.layout.fragment_edit_meal, container, false);
-//
-//                serializer = new JSONSerializer("EditMealsList.json", getActivity());
-//
-//        try{
-//            list = serializer.load();
-//        } catch (Exception e){
-//            //list = new ArrayList<FoodResult>();
-//
-//        }
-//
-//    //hook elements
-//        mBreakfast = v.findViewById(R.id.rv_breakfast);
-//        mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//        breakfastAdapter = new RecyclerEditFoodAdapter(getActivity(), list);
-//        mBreakfast.setAdapter(breakfastAdapter);
-//
-////        mLunch = v.findViewById(R.id.rv_lunch);
-////        mLunch.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-////
-////        mDinner = v.findViewById(R.id.rv_dinner);
-////        mDinner.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-////
-////        mSnacks = v.findViewById(R.id.rv_snacks);
-////        mSnacks.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//
-//    return v;
-//    }
-//}
-//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-//
-//public class EditMealFragment extends Fragment {
-//
-//    private JSONSerializer serializer;
-//    private List<EditFoodObject> list;
-//
-//    RecyclerView recyclerView;
-//    RecyclerView.Adapter adapter;
-//
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-//
-//        View v = inflater.inflate(R.layout.fragment_edit_meal, container, false);
-//
-//        serializer = new JSONSerializer("EditMealsList.json", getActivity());
-//
-//        try{
-//            list = serializer.load();
-//        } catch (Exception e){
-//            //list = new ArrayList<FoodResult>();
-//
-//        }
-//
-//        recyclerView = v.findViewById(R.id.rv_breakfast);
-//        adapter = new RecyclerEditFoodAdapter(getActivity(), list);
-//
-//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-//
-//        //recyclerView.setLayoutManager(mLayoutManager);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());///////////??????????
-//
-//        recyclerView.setAdapter(adapter);
-//        return v;
-//    }
-//}

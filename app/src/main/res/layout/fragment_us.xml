@@ -17,8 +17,9 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="149dp"
-            tools:layout_editor_absoluteY="-60dp">
+            android:background="@color/black"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -29,6 +30,7 @@
                     android:layout_width="246dp"
                     android:layout_height="117dp"
                     android:layout_marginTop="205dp"
+                    android:background="@drawable/rounded_button_white"
                     android:text="us database"
                     android:textSize="34sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -39,40 +41,59 @@
                     android:layout_width="246dp"
                     android:layout_height="117dp"
                     android:layout_marginTop="205dp"
-                    android:text="us database"
+                    android:text="stuff"
                     android:textSize="34sp"
+                    android:layout_gravity="right"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/rounded_button_white"/>
 
                 <TextView
                     android:layout_width="246dp"
                     android:layout_height="117dp"
                     android:layout_marginTop="205dp"
-                    android:text="us database"
+                    android:text="more stuff"
                     android:textSize="34sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/rounded_button_white"/>
 
                 <TextView
                     android:layout_width="246dp"
                     android:layout_height="117dp"
                     android:layout_marginTop="205dp"
-                    android:text="us database"
+                    android:text="stuff again"
                     android:textSize="34sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_gravity="right"
+                    android:background="@drawable/rounded_button_white"/>
 
+                <!--Do not remove. Must be at bottom!-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="205dp"
+                    android:text=""
+                    android:textSize="34sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_gravity="right"
+                    />
+                <!--Do not remove. Must be at bottom!-->
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
 
         <ImageView
-            android:layout_width="302dp"
-            android:layout_height="318dp"
-            android:src="@drawable/earth"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:id="@+id/iv_earth"
+            android:src="@drawable/group_1"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
