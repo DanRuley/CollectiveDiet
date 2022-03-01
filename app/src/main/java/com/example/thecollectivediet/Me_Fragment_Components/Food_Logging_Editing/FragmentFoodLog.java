@@ -77,8 +77,8 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
         final MaterialDatePicker<Long> materialDatePicker = materialDateBuilder.build();
 
-        //Open calendar to choose date before looking at food log
-        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+//        //Open calendar to choose date before looking at food log
+//        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
 
         // handle select date button which opens the
         // material design date picker

@@ -59,10 +59,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         mBMI = v.findViewById(R.id.tv_bmi_result);
         setUserBMI();
-        moodImage = v.findViewById(R.id.mood_image);
-        energyImage = v.findViewById(R.id.energy_image);
-        hungerImage = v.findViewById(R.id.hunger_image);
-        focusImage = v.findViewById(R.id.focus_image);
+//        moodImage = v.findViewById(R.id.mood_image);
+//        energyImage = v.findViewById(R.id.energy_image);
+//        hungerImage = v.findViewById(R.id.hunger_image);
+//        focusImage = v.findViewById(R.id.focus_image);
         mProfilePic = v.findViewById(R.id.cv_profile_pic);
         mProfilePic.setOnClickListener(this);
 
@@ -77,67 +77,67 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
 
         //Rating bar for mood
-        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
-        moodRatingBar.setRating(0);
-
-        moodRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
-                choice = (int) moodRatingBar.getRating();
-                moodImage.setImageResource(moodList[choice - 1]);
-                /*
-                todo with sergio
-                 */
-            }
-        });
+//        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
+//        moodRatingBar.setRating(0);
+//
+//        moodRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//
+//                choice = (int) moodRatingBar.getRating();
+//                moodImage.setImageResource(moodList[choice - 1]);
+//                /*
+//                todo with sergio
+//                 */
+//            }
+//        });
 
         //Rating bar for energy
-        energyRatingBar = (RatingBar) v.findViewById(R.id.energy_ratingbar);
-        energyRatingBar.setRating(0);
-
-        energyRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
-                choice = (int) energyRatingBar.getRating();
-                energyImage.setImageResource(energyList[choice - 1]);
-                 /*
-                todo with sergio
-                 */
-            }
-        });
+//        energyRatingBar = (RatingBar) v.findViewById(R.id.energy_ratingbar);
+//        energyRatingBar.setRating(0);
+//
+//        energyRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//
+//                choice = (int) energyRatingBar.getRating();
+//                energyImage.setImageResource(energyList[choice - 1]);
+//                 /*
+//                todo with sergio
+//                 */
+//            }
+//        });
 
         //Rating bar for hunger
-        hungerRatingBar = (RatingBar) v.findViewById(R.id.hunger_ratingbar);
-        hungerRatingBar.setRating(0);
-
-        hungerRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                choice = (int) hungerRatingBar.getRating();
-                hungerImage.setImageResource(hungerList[choice - 1]);
-                 /*
-                todo with sergio
-                 */
-            }
-        });
+//        hungerRatingBar = (RatingBar) v.findViewById(R.id.hunger_ratingbar);
+//        hungerRatingBar.setRating(0);
+//
+//        hungerRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                choice = (int) hungerRatingBar.getRating();
+//                hungerImage.setImageResource(hungerList[choice - 1]);
+//                 /*
+//                todo with sergio
+//                 */
+//            }
+//        });
 
         //Rating bar for focus
-        focusRatingBar = (RatingBar) v.findViewById(R.id.focus_ratingbar);
-        focusRatingBar.setRating(0);
-
-        focusRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                choice = (int) focusRatingBar.getRating();
-                focusImage.setImageResource(focusList[choice - 1]);
-                 /*
-                todo with sergio
-                 */
-            }
-        });
-
+//        focusRatingBar = (RatingBar) v.findViewById(R.id.focus_ratingbar);
+//        focusRatingBar.setRating(0);
+//
+//        focusRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                choice = (int) focusRatingBar.getRating();
+//                focusImage.setImageResource(focusList[choice - 1]);
+//                 /*
+//                todo with sergio
+//                 */
+//            }
+//        });
+//
         return v;
     }
 

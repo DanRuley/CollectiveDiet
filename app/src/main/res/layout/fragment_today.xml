@@ -1,107 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_animation_today">
 
-    <TextView
-        android:id="@+id/tv_welcome"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Hello! How are you feeling today? "
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/cl_survey"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/cv_profile_pic"
-        app:layout_constraintTop_toTopOf="parent"
-
-        app:layout_constraintVertical_weight=".2">
-
-    </TextView>
-
-    <!--start vertical cards-->
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/cv_profile_pic"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_menu_camera"
-        app:layout_constraintBottom_toTopOf="@id/cv_calories"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/tv_welcome"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1">
-
-    </de.hdodenhof.circleimageview.CircleImageView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_calories"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="40dp"
-        app:layout_constraintBottom_toTopOf="@id/cv_bmi"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/cl_survey"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_profile_pic"
-        app:layout_constraintVertical_weight="1"
-        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="100dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="Calories"
-                android:textSize="14sp"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:paddingVertical="5dp">
+                android:id="@+id/tv_welcome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="3"
+                android:text="Hello! How are you feeling today? "
+                android:textSize="25sp">
 
             </TextView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="0"
-                android:textSize="14sp"
+            <!--start vertical cards-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/cv_profile_pic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:gravity="center_horizontal">
+                android:src="@drawable/ic_menu_camera">
 
-            </TextView>
+            </de.hdodenhof.circleimageview.CircleImageView>
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_bmi"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@id/cv_bmr"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/cl_survey"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_calories"
-        app:layout_constraintVertical_weight="1"
-        app:cardCornerRadius="40dp">>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_calories"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="40dp"
+          android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,385 +57,361 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:text="BMI"
-                    android:textSize="14sp"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:paddingVertical="5dp">
-
-                </TextView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:id="@+id/tv_bmi_result"
-                    android:text="0"
-                    android:textSize="14sp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal">
-
-                </TextView>
-            </LinearLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_bmr"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@id/cv_calorie_goal"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/cl_survey"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_bmi"
-        app:layout_constraintVertical_weight="1"
-        app:cardCornerRadius="40dp">>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:paddingVertical="5dp"
                     android:text="Calories"
-                    android:textSize="14sp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:paddingVertical="5dp">
+                    android:textSize="14sp">
 
                 </TextView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:text="0"
-                    android:textSize="14sp"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:text="0"
+                    android:textSize="14sp">
 
                 </TextView>
             </LinearLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_calorie_goal"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@id/spacer"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/cl_survey"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_bmr"
-        app:layout_constraintVertical_weight="1"
-        app:cardCornerRadius="40dp">>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_bmi"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="40dp"
+           android:layout_weight="1">>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:text="Calories"
-                    android:textSize="14sp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:paddingVertical="5dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:paddingVertical="5dp"
+                        android:text="BMI"
+                        android:textSize="14sp">
 
-                <TextView
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tv_bmi_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp">
+
+                    </TextView>
+                </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_bmr"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="40dp"
+            android:layout_weight="1">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:text="0"
-                    android:textSize="14sp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                </TextView>
-            </LinearLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:paddingVertical="5dp"
+                        android:text="Calories"
+                        android:textSize="14sp">
 
+                    </TextView>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp">
 
-    <!--End vertical cards-->
+                    </TextView>
+                </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_calorie_goal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="40dp"
+            android:layout_weight="1">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_survey"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/spacer"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/cv_calories"
-        app:layout_constraintTop_toBottomOf="@id/tv_welcome"
-        app:layout_constraintVertical_weight="1"
-        android:background="@drawable/gradient_animation_survey"
-        android:outlineAmbientShadowColor="@color/black"
-        android:outlineSpotShadowColor="@color/black"
-        android:layout_marginVertical="10dp">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/mood_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:fontFamily="@font/quintessential_regular"
-            android:text="Mood"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"
-            app:layout_constraintHorizontal_weight="3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/mood_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="1"
-            android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:paddingVertical="5dp"
+                        android:text="Calories"
+                        android:textSize="14sp">
 
-        </TextView>
+                    </TextView>
 
-        <RatingBar
-            android:id="@+id/mood_ratingbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="4"
-            android:rating="3"
-            android:stepSize="1"
-            app:layout_constraintBottom_toTopOf="@id/divider"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mood_text"
-            app:layout_constraintVertical_weight="1"
-            android:progressTint="@color/gold">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp">
 
-        </RatingBar>
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
-            android:background="?android:attr/listDivider"
-            android:backgroundTint="@color/material_on_background_disabled"
-            android:backgroundTintMode="src_over"
-            app:layout_constraintBottom_toTopOf="@id/energy_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mood_ratingbar" />
-
-        <TextView
-            android:id="@+id/energy_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fontFamily="@font/quintessential_regular"
-            android:text="Energy"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"
-            app:layout_constraintHorizontal_weight="3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/energy_image"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            app:layout_constraintVertical_weight="1"
-            android:gravity="center_vertical">
-
-        </TextView>
+                    </TextView>
+                </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
 
 
-        <RatingBar
-            android:id="@+id/energy_ratingbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="4"
-            android:rating="3"
-            android:stepSize="1"
-            app:layout_constraintBottom_toTopOf="@id/divider2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/energy_text"
-            app:layout_constraintVertical_weight="1"
-            android:progressTint="@color/gold">
-
-        </RatingBar>
 
 
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            android:backgroundTint="@color/material_on_background_disabled"
-            android:backgroundTintMode="src_over"
-            app:layout_constraintBottom_toTopOf="@id/hunger_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/energy_ratingbar" />
 
-        <TextView
-            android:id="@+id/hunger_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fontFamily="@font/quintessential_regular"
-            android:text="Hunger"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"
-            app:layout_constraintHorizontal_weight="3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/hunger_image"
-            app:layout_constraintTop_toBottomOf="@id/divider2"
-            app:layout_constraintVertical_weight="1"
-            android:gravity="center_vertical">
+<!--            <TextView-->
+<!--                android:id="@+id/mood_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:fontFamily="@font/quintessential_regular"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Mood"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_weight="1">-->
 
-        </TextView>
+<!--            </TextView>-->
 
+<!--            <RatingBar-->
+<!--                android:id="@+id/mood_ratingbar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:numStars="4"-->
+<!--                android:progressTint="@color/gold"-->
+<!--                android:rating="3"-->
+<!--                android:stepSize="1"-->
+<!--               android:layout_weight="1">-->
 
-        <RatingBar
-            android:id="@+id/hunger_ratingbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="4"
-            android:rating="3"
-            android:stepSize="1"
-            app:layout_constraintBottom_toTopOf="@id/divider3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/hunger_text"
-            app:layout_constraintVertical_weight="1"
-            android:progressTint="@color/gold">
+<!--            </RatingBar>-->
 
-        </RatingBar>
+<!--            <View-->
+<!--                android:id="@+id/divider"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="3dp"-->
+<!--                android:background="?android:attr/listDivider"-->
+<!--                android:backgroundTint="@color/material_on_background_disabled"-->
+<!--                android:backgroundTintMode="src_over"-->
+<!--                />-->
 
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
+<!--            <TextView-->
+<!--                android:id="@+id/energy_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:fontFamily="@font/quintessential_regular"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Energy"-->
+<!--                android:textSize="20sp"-->
+<!--               android:layout_weight="1">-->
 
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            android:backgroundTint="@color/material_on_background_disabled"
-            android:backgroundTintMode="src_over"
-
-            app:layout_constraintBottom_toTopOf="@id/focus_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/hunger_ratingbar"
-            app:layout_constraintVertical_weight="1" />
+<!--            </TextView>-->
 
 
-        <TextView
-            android:id="@+id/focus_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fontFamily="@font/quintessential_regular"
-            android:text="Focus"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"
-            app:layout_constraintHorizontal_weight="3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/focus_image"
-            app:layout_constraintTop_toBottomOf="@id/divider3"
-            app:layout_constraintVertical_weight="1"
-            android:gravity="center_vertical">
+<!--            <RatingBar-->
+<!--                android:id="@+id/energy_ratingbar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:numStars="4"-->
+<!--                android:progressTint="@color/gold"-->
+<!--                android:rating="3"-->
+<!--                android:stepSize="1"-->
+<!--               android:layout_weight="1">-->
 
-        </TextView>
+<!--            </RatingBar>-->
 
 
-        <RatingBar
-            android:id="@+id/focus_ratingbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="4"
-            android:rating="3"
-            android:stepSize="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/focus_text"
-            app:layout_constraintVertical_weight="1"
-            android:progressTint="@color/gold">
+<!--            <View-->
+<!--                android:id="@+id/divider2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="3dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="?android:attr/listDivider"-->
+<!--                android:backgroundTint="@color/material_on_background_disabled"-->
+<!--                android:backgroundTintMode="src_over"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/hunger_text"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/energy_ratingbar" />-->
 
-        </RatingBar>
+<!--            <TextView-->
+<!--                android:id="@+id/hunger_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:fontFamily="@font/quintessential_regular"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Hunger"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_weight="1">-->
 
-        <!--images-->
-        <ImageView
-            android:id="@+id/mood_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/ex_mark"
-            app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toRightOf="@id/mood_text"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--            </TextView>-->
 
-        </ImageView>
 
-        <ImageView
-            android:id="@+id/energy_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/ex_mark"
-            app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toRightOf="@id/energy_text"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider">
+<!--            <RatingBar-->
+<!--                android:id="@+id/hunger_ratingbar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:numStars="4"-->
+<!--                android:progressTint="@color/gold"-->
+<!--                android:rating="3"-->
+<!--                android:stepSize="1"-->
+<!--               android:layout_weight="1">-->
 
-        </ImageView>
+<!--            </RatingBar>-->
 
-        <ImageView
-            android:id="@+id/hunger_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/ex_mark"
-            app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toRightOf="@id/hunger_text"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider2">
+<!--            <View-->
+<!--                android:id="@+id/divider3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="3dp"-->
 
-        </ImageView>
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="?android:attr/listDivider"-->
+<!--                android:backgroundTint="@color/material_on_background_disabled"-->
+<!--                android:backgroundTintMode="src_over"-->
 
-        <ImageView
-            android:id="@+id/focus_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/ex_mark"
-            app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toRightOf="@id/focus_text"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider3">
+<!--                app:layout_constraintBottom_toTopOf="@id/focus_text"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/hunger_ratingbar"-->
+<!--                app:layout_constraintVertical_weight="1" />-->
 
-        </ImageView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/focus_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:fontFamily="@font/quintessential_regular"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Focus"-->
+<!--                android:textSize="20sp"-->
+<!--               android:layout_weight="1">-->
 
-    <TextView
-        android:id="@+id/spacer"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_survey">
+<!--            </TextView>-->
 
-    </TextView>
 
-</androidx.constraintlayout.widget.ConstraintLayout><!--</ScrollView>-->
+<!--            <RatingBar-->
+<!--                android:id="@+id/focus_ratingbar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:numStars="4"-->
+<!--                android:progressTint="@color/gold"-->
+<!--                android:rating="3"-->
+<!--                android:stepSize="1"-->
+<!--               android:layout_weight="1">-->
+
+<!--            </RatingBar>-->
+
+<!--            &lt;!&ndash;images&ndash;&gt;-->
+<!--            <ImageView-->
+<!--                android:id="@+id/mood_image"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:src="@drawable/ex_mark"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/mood_text"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            </ImageView>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/energy_image"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:src="@drawable/ex_mark"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/energy_text"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/divider">-->
+
+<!--            </ImageView>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/hunger_image"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:src="@drawable/ex_mark"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/hunger_text"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/divider2">-->
+
+<!--            </ImageView>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/focus_image"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:src="@drawable/ex_mark"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/focus_text"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/divider3">-->
+
+<!--            </ImageView>-->
+
+<!--      -->
+
+<!--        <TextView-->
+<!--            android:id="@+id/spacer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="56dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/cl_survey">-->
+
+<!--        </TextView>-->
+
+    </LinearLayout>
+</ScrollView><!--</ScrollView>-->
