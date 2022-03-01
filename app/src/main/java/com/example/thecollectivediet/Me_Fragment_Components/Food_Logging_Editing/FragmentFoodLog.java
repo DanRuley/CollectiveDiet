@@ -20,7 +20,6 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,7 +47,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
-        View v = inflater.inflate(R.layout.fragment_edit_meal, container, false);
+        View v = inflater.inflate(R.layout.fragment_food_log, container, false);
 
         arrayListVertical = new ArrayList<>();
 
@@ -95,58 +94,54 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    //set data for both ArrayLists used in the nested recycler views
     private void setData() {
 
         //Vertical recycler views
+
+        //breakfast
         OuterMealRecyclerItem outerMealRecyclerItemBreakfast = new OuterMealRecyclerItem();
         outerMealRecyclerItemBreakfast.setTitle("Breakfast:");
-        ArrayList<InnerFoodListItem> arrayListHorizontal1 = new ArrayList<>();
-        outerMealRecyclerItemBreakfast.setArrayList(arrayListHorizontal1);
+        ArrayList<InnerFoodListItem> innerBreakfastItems = new ArrayList<>();
+        outerMealRecyclerItemBreakfast.setArrayList(innerBreakfastItems);
         arrayListVertical.add(outerMealRecyclerItemBreakfast);
 
         //lunch
         OuterMealRecyclerItem outerMealRecyclerItemLunch = new OuterMealRecyclerItem();
         outerMealRecyclerItemLunch.setTitle("Lunch:");
-        ArrayList<InnerFoodListItem> arrayListHorizontal2 = new ArrayList<>();
-        outerMealRecyclerItemLunch.setArrayList(arrayListHorizontal2);
+        ArrayList<InnerFoodListItem> innerLunchItems = new ArrayList<>();
+        outerMealRecyclerItemLunch.setArrayList(innerLunchItems);
         arrayListVertical.add(outerMealRecyclerItemLunch);
 
         //Dinner
         OuterMealRecyclerItem outerMealRecyclerItemDinner = new OuterMealRecyclerItem();
         outerMealRecyclerItemDinner.setTitle("Dinner:");
-        ArrayList<InnerFoodListItem> arrayListHorizontal3 = new ArrayList<>();
-        outerMealRecyclerItemDinner.setArrayList(arrayListHorizontal3);
+        ArrayList<InnerFoodListItem> innerDinnerItems = new ArrayList<>();
+        outerMealRecyclerItemDinner.setArrayList(innerDinnerItems);
         arrayListVertical.add(outerMealRecyclerItemDinner);
 
         //snacks
         OuterMealRecyclerItem outerMealRecyclerItemSnacks = new OuterMealRecyclerItem();
         outerMealRecyclerItemSnacks.setTitle("Snacks:");
-        ArrayList<InnerFoodListItem> arrayListHorizontal4 = new ArrayList<>();
-        outerMealRecyclerItemSnacks.setArrayList(arrayListHorizontal4);
+        ArrayList<InnerFoodListItem> innerSnacksItems = new ArrayList<>();
+        outerMealRecyclerItemSnacks.setArrayList(innerSnacksItems);
         arrayListVertical.add(outerMealRecyclerItemSnacks);
 
-//        HorizontalModel ho = new HorizontalModel();
-//        ho.setDescription("Des");
-//        ho.setName("ass");
-//        arrayListHorizontal1.add(ho);
+
+        //initialize inner recycler items for breakfast, lunch, dinner, and snacks
+        InnerFoodListItem ho = new InnerFoodListItem();
+        ho.setName("ass");
+        innerBreakfastItems.add(ho);
+
+        InnerFoodListItem ho2 = new InnerFoodListItem();
+        ho.setName("ass");
+        innerBreakfastItems.add(ho);
+
+        InnerFoodListItem ho3 = new InnerFoodListItem();
+        ho.setName("ass");
+        innerBreakfastItems.add(ho);
 
 
-//        for(int i=1; i <= 5; i++){
-//            VerticalModel verticalModel = new VerticalModel();
-//            verticalModel.setTitle("Title: "+ i);
-//            ArrayList<HorizontalModel> arrayListHorizontal = new ArrayList<>();
-//
-//            for(int j = 0; j <= 5; j++){
-//                HorizontalModel horizontalModel = new HorizontalModel();
-//                horizontalModel.setDescription("Description: " + j);
-//                horizontalModel.setName("Name: " + j);
-//
-//                arrayListHorizontal.add(horizontalModel);
-//            }
-//
-//            verticalModel.setArrayList(arrayListHorizontal);
-//            arrayListVertical.add(verticalModel);
-//        }
 
         editFoodAdapter.notifyDataSetChanged();
     }

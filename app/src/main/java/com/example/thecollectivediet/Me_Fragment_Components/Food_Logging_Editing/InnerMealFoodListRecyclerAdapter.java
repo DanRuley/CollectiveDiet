@@ -26,20 +26,18 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
     @NonNull
     @Override
     public HorizontalRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_horizontal_item,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_inner_food,parent,false);
         return new HorizontalRVViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalRVViewHolder holder, int position) {
         InnerFoodListItem innerFoodListItem = arrayList.get(position);
-//        holder.mTitle.setText(horizontalModel.getName());
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, horizontalModel.getName(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+
+        holder.mTitle.setText(innerFoodListItem.getName());
+        holder.mServing.setText(String.valueOf(innerFoodListItem.getServing()));
+        holder.mCalories.setText(String.valueOf(innerFoodListItem.getCalories()));
     }
 
     @Override
@@ -51,10 +49,16 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
 
         TextView mTitle;
         ImageView mImage;
+        TextView mServing;
+        TextView mCalories;
+
         public HorizontalRVViewHolder(View itemView){
             super(itemView);
-            //mTitle = itemView.findViewById(R.id.tv_title_horizontal);
-            //mImage = itemView.findViewById(R.id.iv_recycler_horizontal_image);
+
+            mTitle = itemView.findViewById(R.id.tv_recycler_item_food_name);
+            mImage = itemView.findViewById(R.id.iv_recycler_item_image);
+            mServing = itemView.findViewById(R.id.tv_recycler_item_serving);
+            mCalories = itemView.findViewById(R.id.tv_recycler_item_calories);
         }
     }
 }

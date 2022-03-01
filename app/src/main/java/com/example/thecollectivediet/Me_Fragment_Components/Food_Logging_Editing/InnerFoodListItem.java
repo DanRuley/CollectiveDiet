@@ -2,7 +2,18 @@ package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editin
 
 public class InnerFoodListItem {
     String name;
-    String description;
+    Double serving;
+    int calories;
+
+    public  InnerFoodListItem(){
+
+    }
+
+    public InnerFoodListItem(String name, double serving, int calories){
+        this.name = name;
+        this.serving = serving;
+        this.calories = calories;
+    }
 
     public String getName() {
         return name;
@@ -12,11 +23,19 @@ public class InnerFoodListItem {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Double getServing() {
+        return serving;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setServing(Double serving) {
+        this.serving = serving;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 }
