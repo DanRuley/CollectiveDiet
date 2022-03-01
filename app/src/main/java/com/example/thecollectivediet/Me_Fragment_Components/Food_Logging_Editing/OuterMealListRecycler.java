@@ -33,7 +33,7 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
     @NonNull
     @Override
     public VerticalRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_vertical_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_outer_food, parent, false);
 
         return new VerticalRVViewHolder(v);
     }

@@ -72,15 +72,18 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
         //doesn't make sense to let them pick future dates
         CalendarConstraints dateConstraint = new CalendarConstraints.Builder().setValidator(DateValidatorPointBackward.now()).build();
-        MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(dateConstraint);
+        MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(dateConstraint).setSelection(MaterialDatePicker.todayInUtcMilliseconds());
         materialDateBuilder.setTitleText("Select Date to view food log");
 
         final MaterialDatePicker<Long> materialDatePicker = materialDateBuilder.build();
 
+        //Open calendar to choose date before looking at food log
+        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+
         // handle select date button which opens the
         // material design date picker
         mDatePickButton.setOnClickListener(
-                v1 -> materialDatePicker.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), "MATERIAL_DATE_PICKER"));
+                v1 -> materialDatePicker.show(requireActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER"));
 
         materialDatePicker.addOnPositiveButtonClickListener(
                 selection -> {
