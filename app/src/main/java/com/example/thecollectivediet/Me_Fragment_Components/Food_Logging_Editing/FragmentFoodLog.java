@@ -1,10 +1,12 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -16,19 +18,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.R;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointBackward;
-import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
 
 public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     AppCompatButton mAddFoodButton;
     AppCompatButton mDatePickButton;
     TextView showDateTxt;
+
+    int selectedYear;
+    int selectedMonth;
+    int selectedDay;
 
     private RecyclerView mBreakfast;
     private RecyclerView mLunch;
@@ -40,6 +44,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     OuterMealListRecycler editFoodAdapter;
     Dialog foodLogDialog;
+    DatePickerDialog datePickerDialog;
 
     private JSONSerializer serializer;
     private List<EditFoodObject> list;
@@ -64,37 +69,59 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         mBreakfast = v.findViewById(R.id.rv_doh);
         mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+        initializeDatePickerDialog();
+        String normal = formatDate(selectedYear, selectedMonth, selectedDay, false);
+        String sql = formatDate(selectedYear, selectedMonth, selectedDay, true);
+
         //mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         editFoodAdapter = new OuterMealListRecycler(getActivity(), arrayListVertical);
 
         mBreakfast.setAdapter(editFoodAdapter);
 
-        //doesn't make sense to let them pick future dates
-        CalendarConstraints dateConstraint = new CalendarConstraints.Builder().setValidator(DateValidatorPointBackward.now()).build();
-        MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(dateConstraint).setSelection(MaterialDatePicker.todayInUtcMilliseconds());
-        materialDateBuilder.setTitleText("Select Date to view food log");
-
-        final MaterialDatePicker<Long> materialDatePicker = materialDateBuilder.build();
-
-//        //Open calendar to choose date before looking at food log
-//        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
-
-        // handle select date button which opens the
-        // material design date picker
-        mDatePickButton.setOnClickListener(
-                v1 -> materialDatePicker.show(requireActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER"));
-
-        materialDatePicker.addOnPositiveButtonClickListener(
-                selection -> {
-                    showDateTxt.setText("Selected Date is: " + materialDatePicker.getHeaderText());
-                });
-
-        //set data for recycler views
         setData();
 
-
         return v;
+    }
+
+    private void initializeDatePickerDialog() {
+        final Calendar c = Calendar.getInstance();
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                setDate(year, month + 1, dayOfMonth);
+            }
+        }, year, month, day);
+
+        setDate(year, month + 1, day);
+    }
+
+
+    public void setDate(int year, int month, int day) {
+        selectedYear = year;
+        selectedMonth = month;
+        selectedDay = day;
+
+        onDateChanged();
+    }
+
+    private void onDateChanged() {
+        showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
+    }
+
+    private String formatDate(int year, int month, int day, boolean sqlFormat) {
+        String formatted;
+        if (sqlFormat)
+            formatted = String.format(Locale.US, "%d-%02d-%02d", year, month, day);
+        else
+            formatted = String.format(Locale.US, "Selected date: %02d/%02d/%d", month, day, year);
+
+        return formatted;
     }
 
     //set data for both ArrayLists used in the nested recycler views
@@ -145,7 +172,6 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         innerBreakfastItems.add(ho);
 
 
-
         editFoodAdapter.notifyDataSetChanged();
     }
 
@@ -165,8 +191,11 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.btn_add_food) {
             foodLogDialog = new MealSelectDialog(getActivity(), this);
             foodLogDialog.show();
+        } else if (v.getId() == R.id.btn_date_picker) {
+            datePickerDialog.show();
         }
     }
+
 }
 
 

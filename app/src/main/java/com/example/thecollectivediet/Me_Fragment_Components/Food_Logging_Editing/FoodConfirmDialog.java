@@ -110,7 +110,7 @@ public class FoodConfirmDialog extends Dialog {
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
         dismiss();
     }
