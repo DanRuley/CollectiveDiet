@@ -1,6 +1,6 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
-public class FoodLogItem {
+public class FoodLogUploadItem {
 
     Long entry_id;
     String user_id;
@@ -10,7 +10,7 @@ public class FoodLogItem {
     String portion_unit;
     String category;
 
-    public FoodLogItem(long entry_id, String user_id, long food_id, String log_dts, Float portion_size, String portion_unit, String category) {
+    public FoodLogUploadItem(long entry_id, String user_id, long food_id, String log_dts, Float portion_size, String portion_unit, String category) {
         this.entry_id = entry_id;
         this.user_id = user_id;
         this.food_id = food_id;
@@ -20,7 +20,7 @@ public class FoodLogItem {
         this.category = category;
     }
 
-    public FoodLogItem(String user_id, long food_id, String log_dts, Float portion_size, String portion_unit, String category) {
+    public FoodLogUploadItem(String user_id, long food_id, String log_dts, Float portion_size, String portion_unit, String category) {
         this.entry_id = entry_id;
         this.user_id = user_id;
         this.food_id = food_id;

@@ -3,11 +3,13 @@ package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editin
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
@@ -15,14 +17,20 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
+import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
@@ -112,6 +120,33 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     private void onDateChanged() {
         showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
+        FoodLog_API_Controller.getFoodLogEntries(getActivity(), MainActivity.getCurrentUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
+            @Override
+            public void onResponse(HashMap<String, List<FoodLogItemView>> response) {
+                populateRecyclerItems(response);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d("error", error);
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void populateRecyclerItems(HashMap<String, List<FoodLogItemView>> logItems) {
+        for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Breakfast"))) {
+            Log.d("item", item.toString());
+        }
+        for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Lunch"))) {
+            Log.d("item", item.toString());
+        }
+        for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Dinner"))) {
+            Log.d("item", item.toString());
+        }
+        for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Snack"))) {
+            Log.d("item", item.toString());
+        }
     }
 
     private String formatDate(int year, int month, int day, boolean sqlFormat) {
@@ -157,21 +192,6 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         outerMealRecyclerItemSnacks.setArrayList(innerSnacksItems);
         arrayListVertical.add(outerMealRecyclerItemSnacks);
 
-
-        //initialize inner recycler items for breakfast, lunch, dinner, and snacks
-        InnerFoodListItem ho = new InnerFoodListItem();
-        ho.setName("ass");
-        innerBreakfastItems.add(ho);
-
-        InnerFoodListItem ho2 = new InnerFoodListItem();
-        ho.setName("ass");
-        innerBreakfastItems.add(ho);
-
-        InnerFoodListItem ho3 = new InnerFoodListItem();
-        ho.setName("ass");
-        innerBreakfastItems.add(ho);
-
-
         editFoodAdapter.notifyDataSetChanged();
     }
 
@@ -195,7 +215,6 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
             datePickerDialog.show();
         }
     }
-
 }
 
 
