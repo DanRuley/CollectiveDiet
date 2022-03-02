@@ -168,6 +168,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         }
 
         //snacks
+        innerSnacksItems.clear();
         for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Snack"))) {
             Log.d("item", item.toString());
             innerSnacksItems.add(item);
