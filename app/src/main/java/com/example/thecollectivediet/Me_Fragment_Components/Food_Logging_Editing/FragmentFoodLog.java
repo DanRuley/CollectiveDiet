@@ -19,9 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
-import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
-import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
@@ -42,20 +40,11 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     int selectedMonth;
     int selectedDay;
 
-    private RecyclerView mBreakfast;
-    private RecyclerView mLunch;
-    private RecyclerView mDinner;
-    private RecyclerView mSnacks;
-
-    RecyclerView.Adapter breakfastAdapter;
     ArrayList<OuterMealRecyclerItem> arrayListVertical;
 
     OuterMealListRecycler editFoodAdapter;
     Dialog foodLogDialog;
     DatePickerDialog datePickerDialog;
-
-    private JSONSerializer serializer;
-    private List<EditFoodObject> list;
 
     ArrayList<FoodLogItemView> innerBreakfastItems;
     ArrayList<FoodLogItemView> innerLunchItems;
@@ -83,17 +72,14 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         showDateTxt = v.findViewById(R.id.show_selected_date);
 
         //hook recycler views and adapters
-        mBreakfast = v.findViewById(R.id.rv_doh);
+        RecyclerView mBreakfast = v.findViewById(R.id.rv_doh);
         mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
 
         setData();
 
         initializeDatePickerDialog();
         String normal = formatDate(selectedYear, selectedMonth, selectedDay, false);
         String sql = formatDate(selectedYear, selectedMonth, selectedDay, true);
-
-        //mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         editFoodAdapter = new OuterMealListRecycler(getActivity(), arrayListVertical);
 
@@ -243,5 +229,3 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         }
     }
 }
-
-

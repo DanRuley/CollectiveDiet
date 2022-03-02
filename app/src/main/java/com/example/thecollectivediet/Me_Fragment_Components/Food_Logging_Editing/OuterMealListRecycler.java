@@ -25,7 +25,7 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
 
     int mExpandedPosition = -1;
 
-    public OuterMealListRecycler(Context context, ArrayList<OuterMealRecyclerItem> arrayList){
+    public OuterMealListRecycler(Context context, ArrayList<OuterMealRecyclerItem> arrayList) {
         this.arrayList = arrayList;
         this.context = context;
 
@@ -53,22 +53,16 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
 
         holder.recyclerView.setAdapter(innerMealFoodListRecyclerAdapter);
 
-//        holder.mButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, verticalModel.getTitle(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         final boolean isExpanded = position == mExpandedPosition;
-        holder.recyclerView.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+        holder.recyclerView.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.recyclerView.setActivated(isExpanded);
         holder.mTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mExpandedPosition = isExpanded ? -1 : position;
                 TransitionManager.beginDelayedTransition(holder.recyclerView);
-                notifyDataSetChanged();;
+                notifyDataSetChanged();
+                ;
             }
         });
     }
@@ -78,11 +72,12 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
         return arrayList.size();
     }
 
-    public class VerticalRVViewHolder extends RecyclerView.ViewHolder{
+    public class VerticalRVViewHolder extends RecyclerView.ViewHolder {
 
         RecyclerView recyclerView;
         TextView mTitle;
         AppCompatButton mButton;
+
         public VerticalRVViewHolder(@NonNull View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.rv_breakfast);

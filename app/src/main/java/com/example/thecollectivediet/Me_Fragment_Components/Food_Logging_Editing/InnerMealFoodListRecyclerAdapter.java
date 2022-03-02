@@ -57,7 +57,6 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
             super(itemView);
 
             mTitle = itemView.findViewById(R.id.tv_recycler_item_food_name);
-            mImage = itemView.findViewById(R.id.iv_recycler_item_image);
             mServing = itemView.findViewById(R.id.tv_recycler_item_serving);
             mCalories = itemView.findViewById(R.id.tv_recycler_item_calories);
         }
