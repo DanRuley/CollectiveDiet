@@ -28,6 +28,7 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/food.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_camera.xml" value="0.264" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_food.xml" value="0.264" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_food_log.xml" value="0.1451388888888889" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_food_search.xml" value="0.1237785016286645" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_food_vision.xml" value="0.264" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_gallery.xml" value="0.264" />
@@ -37,9 +38,11 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_slideshow.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_stats.xml" value="0.536" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_tcd.xml" value="0.264" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_today.xml" value="0.1451388888888889" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/fragment_us.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/nav_header_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/recycler_item_inner_food.xml" value="0.125" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/recycler_item_outer_food.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/slider_intro.xml" value="0.1237785016286645" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/layout/us.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/activity_main_drawer.xml" value="0.2" />

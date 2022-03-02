@@ -142,9 +142,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+
                         android:gravity="center_horizontal"
                         android:paddingVertical="5dp"
-                        android:text="Calories"
+                        android:text="BMR"
                         android:textSize="14sp">
 
                     </TextView>
@@ -186,7 +187,7 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:paddingVertical="5dp"
-                        android:text="Calories"
+                        android:text="Goal"
                         android:textSize="14sp">
 
                     </TextView>
@@ -196,7 +197,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0"
+                        android:text="2000"
                         android:textSize="14sp">
 
                     </TextView>
