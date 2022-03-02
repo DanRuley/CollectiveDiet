@@ -1,11 +1,13 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
+
 import java.util.ArrayList;
 
 public class OuterMealRecyclerItem {
 
     String title;
-    ArrayList<InnerFoodListItem> arrayList;
+    ArrayList<FoodLogItemView> arrayList;
 
     public String getTitle() {
         return title;
@@ -15,11 +17,11 @@ public class OuterMealRecyclerItem {
         this.title = title;
     }
 
-    public ArrayList<InnerFoodListItem> getArrayList() {
+    public ArrayList<FoodLogItemView> getArrayList() {
         return arrayList;
     }
 
-    public void setArrayList(ArrayList<InnerFoodListItem> arrayList) {
+    public void setArrayList(ArrayList<FoodLogItemView> arrayList) {
         this.arrayList = arrayList;
     }
 }

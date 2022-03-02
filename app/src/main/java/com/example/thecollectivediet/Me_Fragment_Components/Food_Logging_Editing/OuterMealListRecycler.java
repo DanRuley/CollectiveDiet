@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
     public void onBindViewHolder(@NonNull VerticalRVViewHolder holder, @SuppressLint("RecyclerView") int position) {
         OuterMealRecyclerItem outerMealRecyclerItem = arrayList.get(position);
         String title = outerMealRecyclerItem.getTitle();
-        ArrayList<InnerFoodListItem> singleItem = outerMealRecyclerItem.getArrayList();
+        ArrayList<FoodLogItemView> singleItem = outerMealRecyclerItem.getArrayList();
 
         holder.mTitle.setText(title);
         InnerMealFoodListRecyclerAdapter innerMealFoodListRecyclerAdapter = new InnerMealFoodListRecyclerAdapter(context, singleItem);

@@ -57,12 +57,21 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     private JSONSerializer serializer;
     private List<EditFoodObject> list;
 
+    ArrayList<FoodLogItemView> innerBreakfastItems;
+    ArrayList<FoodLogItemView> innerLunchItems;
+    ArrayList<FoodLogItemView> innerDinnerItems;
+    ArrayList<FoodLogItemView> innerSnacksItems;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_food_log, container, false);
 
         arrayListVertical = new ArrayList<>();
+        innerBreakfastItems = new ArrayList<>();
+        innerLunchItems = new ArrayList<>();
+        innerDinnerItems = new ArrayList<>();
+        innerSnacksItems = new ArrayList<>();
 
         //hook elements
         mAddFoodButton = v.findViewById(R.id.btn_add_food);
@@ -77,6 +86,9 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         mBreakfast = v.findViewById(R.id.rv_doh);
         mBreakfast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+
+        setData();
+
         initializeDatePickerDialog();
         String normal = formatDate(selectedYear, selectedMonth, selectedDay, false);
         String sql = formatDate(selectedYear, selectedMonth, selectedDay, true);
@@ -86,8 +98,6 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         editFoodAdapter = new OuterMealListRecycler(getActivity(), arrayListVertical);
 
         mBreakfast.setAdapter(editFoodAdapter);
-
-        setData();
 
         return v;
     }
@@ -135,18 +145,35 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     }
 
     private void populateRecyclerItems(HashMap<String, List<FoodLogItemView>> logItems) {
+
+        //breakfast
+        innerBreakfastItems.clear();
         for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Breakfast"))) {
             Log.d("item", item.toString());
+            innerBreakfastItems.add(item);
         }
+
+        //lunch
+        innerLunchItems.clear();
         for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Lunch"))) {
             Log.d("item", item.toString());
+            innerLunchItems.add(item);
         }
+
+        //dinner
+        innerDinnerItems.clear();
         for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Dinner"))) {
             Log.d("item", item.toString());
+            innerDinnerItems.add(item);
         }
+
+        //snacks
         for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Snack"))) {
             Log.d("item", item.toString());
+            innerSnacksItems.add(item);
         }
+
+        editFoodAdapter.notifyDataSetChanged();
     }
 
     private String formatDate(int year, int month, int day, boolean sqlFormat) {
@@ -167,32 +194,32 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         //breakfast
         OuterMealRecyclerItem outerMealRecyclerItemBreakfast = new OuterMealRecyclerItem();
         outerMealRecyclerItemBreakfast.setTitle("Breakfast:");
-        ArrayList<InnerFoodListItem> innerBreakfastItems = new ArrayList<>();
+//        ArrayList<FoodLogItemView> innerBreakfastItems = new ArrayList<>();
         outerMealRecyclerItemBreakfast.setArrayList(innerBreakfastItems);
         arrayListVertical.add(outerMealRecyclerItemBreakfast);
 
         //lunch
         OuterMealRecyclerItem outerMealRecyclerItemLunch = new OuterMealRecyclerItem();
         outerMealRecyclerItemLunch.setTitle("Lunch:");
-        ArrayList<InnerFoodListItem> innerLunchItems = new ArrayList<>();
+//        ArrayList<FoodLogItemView> innerLunchItems = new ArrayList<>();
         outerMealRecyclerItemLunch.setArrayList(innerLunchItems);
         arrayListVertical.add(outerMealRecyclerItemLunch);
 
         //Dinner
         OuterMealRecyclerItem outerMealRecyclerItemDinner = new OuterMealRecyclerItem();
         outerMealRecyclerItemDinner.setTitle("Dinner:");
-        ArrayList<InnerFoodListItem> innerDinnerItems = new ArrayList<>();
+//        ArrayList<FoodLogItemView> innerDinnerItems = new ArrayList<>();
         outerMealRecyclerItemDinner.setArrayList(innerDinnerItems);
         arrayListVertical.add(outerMealRecyclerItemDinner);
 
         //snacks
         OuterMealRecyclerItem outerMealRecyclerItemSnacks = new OuterMealRecyclerItem();
         outerMealRecyclerItemSnacks.setTitle("Snacks:");
-        ArrayList<InnerFoodListItem> innerSnacksItems = new ArrayList<>();
+//        ArrayList<FoodLogItemView> innerSnacksItems = new ArrayList<>();
         outerMealRecyclerItemSnacks.setArrayList(innerSnacksItems);
         arrayListVertical.add(outerMealRecyclerItemSnacks);
 
-        editFoodAdapter.notifyDataSetChanged();
+        //editFoodAdapter.notifyDataSetChanged();
     }
 
     public void inflateFoodSearchFrag(MealSelectDialog.MealType mealType) {

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
 public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<InnerMealFoodListRecyclerAdapter.HorizontalRVViewHolder> {
 
     Context context;
-    ArrayList<InnerFoodListItem> arrayList;
-    public InnerMealFoodListRecyclerAdapter(Context context, ArrayList<InnerFoodListItem> arrayList){
+    ArrayList<FoodLogItemView> arrayList;
+    public InnerMealFoodListRecyclerAdapter(Context context, ArrayList<FoodLogItemView> arrayList){
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -32,12 +33,12 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalRVViewHolder holder, int position) {
-        InnerFoodListItem innerFoodListItem = arrayList.get(position);
+        FoodLogItemView innerFoodListItem = arrayList.get(position);
 
 
-        holder.mTitle.setText(innerFoodListItem.getName());
-        holder.mServing.setText(String.valueOf(innerFoodListItem.getServing()));
-        holder.mCalories.setText(String.valueOf(innerFoodListItem.getCalories()));
+        holder.mTitle.setText(innerFoodListItem.getProduct_name());
+        holder.mServing.setText(String.valueOf(innerFoodListItem.getPortion_size()));
+        holder.mCalories.setText(String.valueOf(innerFoodListItem.getEnergy_kcal_100g()));
     }
 
     @Override
