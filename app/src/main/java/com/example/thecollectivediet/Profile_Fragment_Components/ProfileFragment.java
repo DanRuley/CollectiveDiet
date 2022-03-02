@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thecollectivediet.FragmentSignIn;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -43,7 +44,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     //TextView mFirstName;
     TextView mNickName;
     TextView mAge;
-    TextView mSex;
+    TextView mGender;
     TextView mHeight;
     TextView mFeet;
     TextView mInches;
@@ -61,30 +62,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
-        //hook elements in view
+        User signedInUser = MainActivity.getCurrentUser();
+
         mEdit = v.findViewById(R.id.ac_button_profile_edit);
         mEdit.setOnClickListener(this);
         mProfilePic = v.findViewById(R.id.profile_image);
 
-//        mFirstName = v.findViewById(R.id.textview_profile_firstname);
-//        mFirstName.setText(prefs.getString("profile_first", "").toString());
         mNickName = v.findViewById(R.id.textview_profile_lastname);
         mNickName.setText(prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.textview_profile_age);
-
-        int x = prefs.getInt("profile_age", 0);
-        mAge.setText("Age: " + prefs.getInt("profile_age", 0));
-        mSex = v.findViewById(R.id.textview_profile_sex);
-        mSex.setText("Sex: " + prefs.getString("profile_sex", ""));
+        mNickName = v.findViewById(R.id.textview_profile_lastname);
+        mGender = v.findViewById(R.id.textview_profile_sex);
+        mAge = v.findViewById(R.id.textview_profile_age);
         mWeight = v.findViewById(R.id.textview_profile_weight);
-        mWeight.setText("Weight: " + prefs.getString("profile_weight", ""));
         mHeight = v.findViewById(R.id.textview_profile_height);
-        mHeight.setText("Height: " + prefs.getInt("profile_feet", 0) + "'" + prefs.getInt("profile_inches", 0) + "' '");
-
         mCity = v.findViewById(R.id.textview_profile_city);
-        mCity.setText("City: " + prefs.getString("profile_city", ""));
         mCountry = v.findViewById(R.id.textview_profile_country);
-        mCountry.setText("Country: " + prefs.getString("profile_country", ""));
+
 
         if (isSignedIn()) {
             mLogout = v.findViewById(R.id.ac_button_logout);

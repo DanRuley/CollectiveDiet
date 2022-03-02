@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class OuterMealRecyclerItem {
 
     String title;
+    String calorieString;
     ArrayList<FoodLogItemView> arrayList;
 
     public String getTitle() {
@@ -15,6 +16,14 @@ public class OuterMealRecyclerItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getCalories() {
+        return calorieString;
+    }
+
+    public void setCalorieString(String val) {
+        calorieString = val;
     }
 
     public ArrayList<FoodLogItemView> getArrayList() {

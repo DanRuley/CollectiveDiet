@@ -22,32 +22,33 @@
             android:orientation="horizontal">
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add_food"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:background="@color/pink"
-            android:padding="5dp"
-            android:text="Add food"
-            android:textSize="20sp"
-            android:layout_weight="1">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_add_food"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/pink"
+                android:padding="5dp"
+                android:text="Add food"
+                android:textSize="20sp">
 
-        </androidx.appcompat.widget.AppCompatButton>
+            </androidx.appcompat.widget.AppCompatButton>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_date_picker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:background="@color/pink"
-            android:text="Pick Date"
-            android:textSize="20sp"
-            android:layout_weight="1">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_date_picker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/pink"
+                android:text="Pick Date"
+                android:textSize="20sp">
 
-        </androidx.appcompat.widget.AppCompatButton>
+            </androidx.appcompat.widget.AppCompatButton>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <TextView
             android:id="@+id/show_selected_date"
             android:layout_width="wrap_content"
@@ -59,15 +60,15 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_doh"
+        android:id="@+id/rv_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/acb_add_food"
         app:layout_constraintBottom_toTopOf="@id/filler_do_not_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/acb_add_food"
         app:layout_constraintVertical_bias="1.0">
 
     </androidx.recyclerview.widget.RecyclerView>

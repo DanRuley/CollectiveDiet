@@ -85,7 +85,7 @@ public class FoodLog_API_Controller {
                                     Objects.requireNonNull(results.get("Dinner")).add(logItem);
                                     break;
                                 default:
-                                    Objects.requireNonNull(results.get("Snack")).add(logItem);
+                                    Objects.requireNonNull(results.get("Snacks")).add(logItem);
                                     break;
                             }
                         }
@@ -104,7 +104,7 @@ public class FoodLog_API_Controller {
         map.put("Breakfast", new ArrayList<>());
         map.put("Lunch", new ArrayList<>());
         map.put("Dinner", new ArrayList<>());
-        map.put("Snack", new ArrayList<>());
+        map.put("Snacks", new ArrayList<>());
 
         return map;
     }

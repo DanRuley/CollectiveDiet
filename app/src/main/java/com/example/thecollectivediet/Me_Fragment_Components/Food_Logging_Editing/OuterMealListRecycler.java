@@ -43,9 +43,11 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
     public void onBindViewHolder(@NonNull VerticalRVViewHolder holder, @SuppressLint("RecyclerView") int position) {
         OuterMealRecyclerItem outerMealRecyclerItem = arrayList.get(position);
         String title = outerMealRecyclerItem.getTitle();
+        String calories = outerMealRecyclerItem.getCalories();
         ArrayList<FoodLogItemView> singleItem = outerMealRecyclerItem.getArrayList();
 
         holder.mTitle.setText(title);
+        holder.mCal.setText(calories);
         InnerMealFoodListRecyclerAdapter innerMealFoodListRecyclerAdapter = new InnerMealFoodListRecyclerAdapter(context, singleItem);
 
         holder.recyclerView.setHasFixedSize(true);
@@ -62,7 +64,6 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
                 mExpandedPosition = isExpanded ? -1 : position;
                 TransitionManager.beginDelayedTransition(holder.recyclerView);
                 notifyDataSetChanged();
-                ;
             }
         });
     }
@@ -76,14 +77,14 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
 
         RecyclerView recyclerView;
         TextView mTitle;
+        TextView mCal;
         AppCompatButton mButton;
 
         public VerticalRVViewHolder(@NonNull View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.rv_breakfast);
             mTitle = itemView.findViewById(R.id.tv_title);
-//            mButton = itemView.findViewById(R.id.btn_more);
-
+            mCal = itemView.findViewById(R.id.total_cal);
         }
     }
 }

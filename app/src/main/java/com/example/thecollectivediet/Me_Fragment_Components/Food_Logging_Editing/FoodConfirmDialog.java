@@ -94,7 +94,7 @@ public class FoodConfirmDialog extends Dialog {
             FoodLog_API_Controller.pushFoodLogEntry(ctx, food, MainActivity.getCurrentUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString());
             JSONSerializer.addFoodToList(food.getProduct_name(), "100 grams", ctx);
             Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").into(image);
-            new CountDownTimer(2000, 1000) {
+            new CountDownTimer(500, 250) {
 
                 @Override
                 public void onTick(long millisUntilFinished) {
