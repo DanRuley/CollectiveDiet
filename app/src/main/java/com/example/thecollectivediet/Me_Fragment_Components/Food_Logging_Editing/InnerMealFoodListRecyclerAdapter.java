@@ -27,7 +27,7 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
     @NonNull
     @Override
     public HorizontalRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_inner_food,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_log_recycler_item,parent,false);
         return new HorizontalRVViewHolder(v);
     }
 

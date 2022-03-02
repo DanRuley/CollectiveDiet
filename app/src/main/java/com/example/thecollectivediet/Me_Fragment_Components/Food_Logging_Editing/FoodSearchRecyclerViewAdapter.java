@@ -74,7 +74,7 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
             // set all other properties as you would see fit and start it
             drawable.start();
 
-            this.foodName.setText(foodResults.get(position).getProduct_name());
+            this.foodName.setText(food.getProduct_name());
             this.foodServing.setText("One serving");
 
             String imgURL = food.getImage_url() == null ? "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png" : food.getImage_url();
@@ -82,8 +82,5 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
 
             itemView.setOnClickListener(v -> listener.onFoodItemClick(food));
         }
-
-
     }
-
 }

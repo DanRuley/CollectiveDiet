@@ -1,34 +1,41 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.bumptech.glide.Glide;
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.R;
 
-public class MealFoodListRecyclerAdapter extends RecyclerView.Adapter<MealFoodListRecyclerAdapter.FoodListHolder>{
+import java.util.List;
+import java.util.Locale;
+
+public class MealFoodListRecyclerAdapter extends RecyclerView.Adapter<MealFoodListRecyclerAdapter.FoodListHolder> {
+
+    List<FoodLogItemView> foodLogItems;
+    String title;
+
+    public MealFoodListRecyclerAdapter(List<FoodLogItemView> items, String title) {
+        this.title = title;
+        foodLogItems = items;
+    }
 
     @NonNull
     @Override
     public MealFoodListRecyclerAdapter.FoodListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         //inflater parameters: the layout you want to inflate, the parent, and attach to root T/F
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_recycler_element, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_log_recycler, parent, false);
         return new MealFoodListRecyclerAdapter.FoodListHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FoodListHolder holder, int position) {
-
+        holder.bind(foodLogItems.get(position));
     }
 
     @Override
@@ -38,21 +45,24 @@ public class MealFoodListRecyclerAdapter extends RecyclerView.Adapter<MealFoodLi
 
 
     public class FoodListHolder extends RecyclerView.ViewHolder {
-        ImageView foodPicture;
         TextView foodName;
-        TextView foodServing;
+        TextView serving;
+        TextView calories;
 
         public FoodListHolder(@NonNull View itemView) {
             super(itemView);
-            foodPicture = itemView.findViewById(R.id.foodRecImage);
-            foodName = itemView.findViewById(R.id.foodRecName);
-            foodServing = itemView.findViewById(R.id.foodRecServing);
+            foodName = itemView.findViewById(R.id.tv_recycler_item_food_name);
+            serving = itemView.findViewById(R.id.tv_recycler_item_serving);
+            calories = itemView.findViewById(R.id.tv_recycler_item_calories);
         }
 
-        public void bind(final FoodResult food, final FoodSearchRecyclerViewAdapter.OnFoodItemClickListener listener, final int position, Context ctx) {
+        public void bind(final FoodLogItemView food) {
+            String servingTxt = food.getPortion_size() + food.getPortion_unit();
+            String caloriesTxt = String.format(Locale.US, "%.2f Calories", food.getEnergy_kcal_100g());
 
+            foodName.setText(food.getProduct_name());
+            serving.setText(servingTxt);
+            calories.setText(caloriesTxt);
         }
-
-
     }
 }
