@@ -131,10 +131,6 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
         String username = prefs.getString("user", "null");
         login1.setText(username);
 
-        MeTabLayoutFragment frag = new MeTabLayoutFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentHolder, frag);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new MeTabLayoutFragment());
     }
 }

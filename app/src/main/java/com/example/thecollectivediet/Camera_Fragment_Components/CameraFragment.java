@@ -31,9 +31,9 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.ManualFoodSearch;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ml.LiteModelAiyVisionClassifierFoodV11;
@@ -208,12 +208,8 @@ public class CameraFragment extends Fragment {
                         imageProxy.close();
 
                         //Switch over to ManualFoodSearch frag
-                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new ManualFoodSearch());
                     }
-
 
                     @Override
                     public void onError(ImageCaptureException e) {

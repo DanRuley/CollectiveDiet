@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,6 +95,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
         datePickerDialog = new DatePickerDialog(getActivity(), (view, year1, month1, dayOfMonth) -> setDate(year1, month1 + 1, dayOfMonth), year, month, day);
 
+        datePickerDialog.getDatePicker().setSpinnersShown(true);
         setDate(year, month + 1, day);
     }
 
@@ -208,14 +208,11 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     }
 
     public void inflateFoodSearchFrag(MealSelectDialog.MealType mealType) {
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         Fragment f = new ManualFoodSearch();
         Bundle args = new Bundle();
         args.putInt("mealType", mealType.ordinal());
         f.setArguments(args);
-        transaction.replace(R.id.fragmentHolder, f);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, f);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mNickName.setText(prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.textview_profile_age);
         mNickName = v.findViewById(R.id.textview_profile_lastname);
-        mGender = v.findViewById(R.id.textview_profile_sex);
+        mGender = v.findViewById(R.id.textview_profile_gender);
         mAge = v.findViewById(R.id.textview_profile_age);
         mWeight = v.findViewById(R.id.textview_profile_weight);
         mHeight = v.findViewById(R.id.textview_profile_height);
@@ -111,10 +111,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.ac_button_profile_edit: {
-                EditProfileFragment frag = new EditProfileFragment();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new EditProfileFragment());
                 break;
             }
 
@@ -124,10 +121,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
 
             case R.id.ac_button_login: {
-                FragmentSignIn frag = new FragmentSignIn();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new FragmentSignIn());
                 break;
             }
         }
@@ -152,11 +146,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 MainActivity.setCurrentUser(null);
                 login.setText("sign in");
 
-                FragmentSignIn frag = new FragmentSignIn();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new FragmentSignIn());
             }
         });
     }
