@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.DrawableRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -56,14 +55,13 @@ public class MeTabLayoutFragment extends Fragment {
             //Set tab layout to ProfileFragment
             pager2.setCurrentItem(pos);
             //Set scroll bar to proper position
-            tabLayout.setScrollPosition(pos,0, true);
+            tabLayout.setScrollPosition(pos, 0, true);
         }
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 pager2.setCurrentItem(tab.getPosition());
-
             }
 
             @Override
