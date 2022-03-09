@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -21,7 +23,7 @@ import java.util.Map;
 
 public class User_API_Controller {
 
-    public static void handleNewSignIn(GoogleSignInAccount account, Context ctx, VolleyResponseListener<User> listener) {
+    public static void handleNewSignIn(@NonNull GoogleSignInAccount account, Context ctx, @NonNull VolleyResponseListener<User> listener) {
 
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getUser?uid=" + account.getId();
 
@@ -62,6 +64,7 @@ public class User_API_Controller {
         }
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, usrJSON,
                 response -> Log.d("ret", response.toString()), error -> Log.d("add user lambda", error.getMessage())) {
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -84,6 +87,7 @@ public class User_API_Controller {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, usrJSON,
                 response -> Toast.makeText(ctx, "User profile updated!", Toast.LENGTH_SHORT).show(), error -> Log.d("update user lambda", error.getMessage())) {
 
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();

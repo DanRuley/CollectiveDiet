@@ -87,7 +87,7 @@
             android:textSize="20sp" />
 
         <LinearLayout
-            android:background="#80F7EBC9"
+            android:background="#50F7EBC9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"

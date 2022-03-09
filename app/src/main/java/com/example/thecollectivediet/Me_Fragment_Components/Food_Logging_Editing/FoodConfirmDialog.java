@@ -3,8 +3,6 @@ package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editin
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
@@ -59,7 +58,6 @@ public class FoodConfirmDialog extends Dialog {
     }
 
     private void initializeComponents() {
-        this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         this.setContentView(R.layout.confirm_food_add);
         this.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -147,7 +145,7 @@ public class FoodConfirmDialog extends Dialog {
             boolean firstTime = true;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(@NonNull AdapterView<?> parent, View view, int position, long id) {
 
                 if (firstTime) {
                     position = mealType == null ? 0 : mealType.ordinal();
@@ -195,7 +193,7 @@ public class FoodConfirmDialog extends Dialog {
         HashMap<String, Double> multipliers;
         FoodConfirmDialog view;
 
-        public ServingCalculator(FoodNutrients nutrients, AdapterView<?> parent, FoodConfirmDialog view) {
+        public ServingCalculator(@NonNull FoodNutrients nutrients, @NonNull AdapterView<?> parent, FoodConfirmDialog view) {
             this.view = view;
 
             //helps us not recalculate fields during a unit change
@@ -224,7 +222,7 @@ public class FoodConfirmDialog extends Dialog {
         }
 
         @Override
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged(@NonNull Editable s) {
             if (unitChange || s.toString().equals("."))
                 return;
             else if (s.toString().length() == 0)
@@ -234,7 +232,7 @@ public class FoodConfirmDialog extends Dialog {
         }
 
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(@NonNull AdapterView<?> parent, View view, int position, long id) {
             unitChange = true;
             parent.getItemAtPosition(position);
             String newUnit = parent.getItemAtPosition(position).toString();
@@ -245,7 +243,7 @@ public class FoodConfirmDialog extends Dialog {
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+        public void onNothingSelected(@NonNull AdapterView<?> parent) {
             parent.getItemAtPosition(0);
         }
 

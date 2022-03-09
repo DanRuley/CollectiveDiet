@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
+    @Nullable
     public static User currentUser;
 
 
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             //When icon in bottom app is selected, switch to appropriate fragment
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
                 if (id == R.id.bottom_nav_me)
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Navigation via the drawer
     //Handle navigation view item clicks here
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         //Create a transaction
         int id = item.getItemId();
@@ -238,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.getSupportFragmentManager();
     }
 
-    public static void hideKeyboard(Activity activity) {
+    public static void hideKeyboard(@NonNull Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
@@ -266,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    @Nullable
     public static User getCurrentUser() {
         return currentUser;
     }
@@ -280,8 +283,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
     }
 
-    public static void commitFragmentTransaction(FragmentActivity activity,
-                                                 int fragmentHolderID, Fragment fragment) {
+    public static void commitFragmentTransaction(@NonNull FragmentActivity activity,
+                                                 int fragmentHolderID, @NonNull Fragment fragment) {
         FragmentTransaction transaction = Objects.requireNonNull(activity.getSupportFragmentManager().beginTransaction());
         transaction.replace(fragmentHolderID, fragment);
         transaction.addToBackStack(null);

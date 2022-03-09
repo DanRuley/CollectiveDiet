@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
@@ -48,7 +49,7 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
 
         int id = v.getId();
 

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,8 +42,11 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     ArrayList<OuterMealRecyclerItem> arrayListVertical;
 
+    @Nullable
     OuterMealListRecycler foodLogAdapter;
+    @Nullable
     Dialog foodLogDialog;
+    @Nullable
     DatePickerDialog datePickerDialog;
 
     ArrayList<FoodLogItemView> innerBreakfastItems;
@@ -50,7 +55,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     ArrayList<FoodLogItemView> innerSnacksItems;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_food_log, container, false);
 
@@ -112,7 +117,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
         FoodLog_API_Controller.getFoodLogEntries(getActivity(), MainActivity.getCurrentUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
             @Override
-            public void onResponse(HashMap<String, List<FoodLogItemView>> response) {
+            public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
                 populateRecyclerItems(response);
             }
 
@@ -124,7 +129,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void populateRecyclerItems(HashMap<String, List<FoodLogItemView>> logItems) {
+    private void populateRecyclerItems(@NonNull HashMap<String, List<FoodLogItemView>> logItems) {
 
         for (OuterMealRecyclerItem outerList : arrayListVertical) {
             Double totalCal = Converter.getTotalMealCalories(Objects.requireNonNull(logItems.get(outerList.getTitle())));
@@ -155,6 +160,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         }
 
         //snacks
+        innerSnacksItems.clear();
         for (FoodLogItemView item : Objects.requireNonNull(logItems.get("Snacks"))) {
             Log.d("item", item.toString());
             innerSnacksItems.add(item);
@@ -207,16 +213,16 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         //editFoodAdapter.notifyDataSetChanged();
     }
 
-    public void inflateFoodSearchFrag(MealSelectDialog.MealType mealType) {
+    public void inflateFoodSearchFrag(@NonNull MealSelectDialog.MealType mealType) {
         Fragment f = new ManualFoodSearch();
         Bundle args = new Bundle();
         args.putInt("mealType", mealType.ordinal());
         f.setArguments(args);
-        MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, f);
+        MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, f);
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         if (v.getId() == R.id.btn_add_food) {
             foodLogDialog = new MealSelectDialog(getActivity(), this);
             foodLogDialog.show();

@@ -1,6 +1,7 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
@@ -48,7 +49,7 @@ public class FoodLogItemView {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FoodLogItemView that = (FoodLogItemView) o;

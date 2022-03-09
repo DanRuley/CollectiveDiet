@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.thecollectivediet.R;
@@ -23,10 +24,13 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
 
     }
 
+    @Nullable
     LayoutInflater layoutInflater = null;
 
+    @NonNull
     int[] list = new int[]{R.drawable.ic_launcher_foreground, R.drawable.food_pic, R.drawable.googleg_color};
 
+    @NonNull
     String[] textHeader = new String[]{
             "WELCOME",
             "Start Logging!",
@@ -34,6 +38,7 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
     };
 
 
+    @NonNull
     String[] textBody = new String[]{
             "Our application lets you track your diet by logging your food to gain insights into how your diet affects your life.",
             "The Collective Diet app will allow you to log your meals manually or by camera using object" +

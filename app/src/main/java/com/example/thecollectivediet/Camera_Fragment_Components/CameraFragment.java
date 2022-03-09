@@ -68,7 +68,7 @@ public class CameraFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_camera, container, false);
 
         Map<String, String> env = System.getenv();
@@ -91,7 +91,7 @@ public class CameraFragment extends Fragment {
                             try {
                                 cameraProvider = cameraProviderFuture.get();
                                 bindPreview(cameraProvider, v);
-                            } catch (ExecutionException | InterruptedException e) {
+                            } catch (@NonNull ExecutionException | InterruptedException e) {
                                 // No errors need to be handled for this Future.
                                 // This should never be reached.
                             }
@@ -119,7 +119,7 @@ public class CameraFragment extends Fragment {
                 try {
                     cameraProvider = cameraProviderFuture.get();
                     bindPreview(cameraProvider, v);
-                } catch (ExecutionException | InterruptedException e) {
+                } catch (@NonNull ExecutionException | InterruptedException e) {
                     // No errors need to be handled for this Future.
                     // This should never be reached.
                 }
@@ -143,7 +143,7 @@ public class CameraFragment extends Fragment {
         return v;
     }
 
-    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, View view) {
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, @NonNull View view) {
 
         preview = new Preview.Builder()
                 .build();
@@ -159,10 +159,10 @@ public class CameraFragment extends Fragment {
                         .setTargetRotation(view.getDisplay().getRotation())
                         .build();
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageCapture, preview);
+        Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture, preview);
     }
 
-    private void initializeComponents(View view) {
+    private void initializeComponents(@NonNull View view) {
         //views
         previewView = view.findViewById(R.id.view_camera);
 
@@ -180,12 +180,12 @@ public class CameraFragment extends Fragment {
             public void onClick(View v) {
 
                 imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback() {
-                    int x = 5;
+                    final int x = 5;
 
 
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
-                    public void onCaptureSuccess(ImageProxy imageProxy) {
+                    public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
                         //Change imageProxy to bitmap to be used with imageView
                         Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
 
@@ -212,7 +212,7 @@ public class CameraFragment extends Fragment {
                     }
 
                     @Override
-                    public void onError(ImageCaptureException e) {
+                    public void onError(@NonNull ImageCaptureException e) {
                         super.onError(e);
                     }
                 });
@@ -222,7 +222,7 @@ public class CameraFragment extends Fragment {
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Bitmap resizeBitmap(Bitmap bitmap, int newHeight, int newWidth) {
+    public Bitmap resizeBitmap(@NonNull Bitmap bitmap, int newHeight, int newWidth) {
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();
         float scaleHeight = ((float) newHeight) / height;
@@ -274,7 +274,7 @@ public class CameraFragment extends Fragment {
     /*
     Converts ImageProxy to Bitmap
      */
-    private Bitmap convertImageProxyToBitmap(ImageProxy image) {
+    private Bitmap convertImageProxyToBitmap(@NonNull ImageProxy image) {
         ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
         byteBuffer.rewind();
         byte[] bytes = new byte[byteBuffer.capacity()];

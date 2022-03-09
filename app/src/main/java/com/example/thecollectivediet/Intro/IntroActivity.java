@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -85,7 +86,7 @@ public class IntroActivity extends AppCompatActivity {
 
         ActivityResultLauncher<Intent> signInResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
-            public void onActivityResult(ActivityResult result) {
+            public void onActivityResult(@NonNull ActivityResult result) {
                 Task<GoogleSignInAccount> task1 = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
 
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -112,7 +113,7 @@ public class IntroActivity extends AppCompatActivity {
         });
 
         //progress bar shown as dots
-        dotsIndicator = (DotsIndicator) findViewById(R.id.dots_indicator);
+        dotsIndicator = findViewById(R.id.dots_indicator);
 
         viewPager = findViewById(R.id.intro_viewpager);
         viewPagerAdapter = new Intro_ViewPagerAdapter(this);

@@ -52,7 +52,7 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
         TextView mServing;
         TextView mCalories;
 
-        public HorizontalRVViewHolder(View itemView) {
+        public HorizontalRVViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mTitle = itemView.findViewById(R.id.tv_recycler_item_food_name);

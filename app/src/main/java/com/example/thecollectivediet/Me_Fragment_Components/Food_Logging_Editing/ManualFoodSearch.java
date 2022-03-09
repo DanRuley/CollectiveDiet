@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,17 +33,21 @@ public class ManualFoodSearch extends Fragment {
     boolean mealTypePrompt;
     EditText foodInput;
     Button searchBtn;
+    @Nullable
     Context ctx;
+    @Nullable
     FoodSearchController controller;
     RecyclerView recyclerView;
+    @Nullable
     FoodSearchRecyclerViewAdapter mAdapter;
+    @Nullable
     RecyclerView.LayoutManager layoutManager;
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_food_search, container, false);
@@ -74,7 +80,7 @@ public class ManualFoodSearch extends Fragment {
         return v;
     }
 
-    private void initializeComponents(View v) {
+    private void initializeComponents(@NonNull View v) {
         ctx = this.getActivity();
         controller = new FoodSearchController(ctx);
 

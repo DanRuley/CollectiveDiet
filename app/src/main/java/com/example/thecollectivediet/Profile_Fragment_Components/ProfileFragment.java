@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,6 +33,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    @Nullable
     Context context;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -54,7 +56,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     String profilePicPath;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -104,7 +106,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
