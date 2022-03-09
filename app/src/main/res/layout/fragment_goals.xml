@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentGoals">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="My Goals"
+                android:textSize="35sp" />
+
+
+        </RelativeLayout>
+
+
+        <!--Weight goal-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:text="Your Current Weight:"
+            android:textSize="25sp">
+
+        </TextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter Weight"
+            android:padding="10dp"
+            android:layout_gravity="center">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:inputType="numberDecimal"
+                android:gravity="center">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--Weight goal-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Your Weight Goal:"
+            android:textSize="25sp">
+
+        </TextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter Weight Goal"
+            android:padding="10dp"
+            android:layout_gravity="center">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:inputType="numberDecimal"
+                android:gravity="center">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--Calorie goal-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Your Calorie Goal:"
+            android:textSize="25sp">
+
+        </TextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter Calorie Goal"
+            android:padding="10dp"
+            android:layout_gravity="center">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:inputType="numberDecimal"
+                android:gravity="center">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>
