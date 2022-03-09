@@ -111,7 +111,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.ac_button_profile_edit: {
-                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new EditProfileFragment());
+//                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new EditProfileFragment());
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new EditProfileFragment());
                 break;
             }
 

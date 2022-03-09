@@ -247,11 +247,13 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             }
 
             saveProfileChanges();
-            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
+//            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
+            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, new ProfileFragment());
         }
 
         if (viewID == R.id.edit_profile_back_btn) {
-            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
+            //MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
+            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, new ProfileFragment());
         }
     }
 

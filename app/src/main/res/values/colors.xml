@@ -19,4 +19,6 @@
     <color name="burgundy_shade">#BC5235</color>
     <color name="light_teal">#E2F7F7</color>
     <color name="light_green">#D7E59C</color>
+    <color name="metal">#B6B3AF</color>
+    <color name="light_purple">#DCC5F2</color>
 </resources>

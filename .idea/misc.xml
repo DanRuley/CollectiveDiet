@@ -44,6 +44,9 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/TheCollectiveDiet/app/src/main/res/menu/main.xml" value="0.2" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14322916666666666" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_goals1.xml" value="0.16" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_goals2.xml" value="0.16" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_goals3.xml" value="0.16" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile1.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_gradient_profile2.xml" value="0.26205128205128203" />
@@ -51,6 +54,9 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/bg_profile.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/dialog_bg.xml" value="0.11018518518518519" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_animation123.xml" value="0.11018518518518519" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_animation_food_search.xml" value="0.16" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_animation_goals.xml" value="0.16" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_animation_profile.xml" value="0.16" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_background_1.xml" value="0.11018518518518519" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_background_2.xml" value="0.11018518518518519" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/gradient_background_3.xml" value="0.11018518518518519" />
@@ -71,6 +77,7 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_food_log.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_food_search.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_food_vision.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_goals.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_me_tab_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_profile_parent.xml" value="0.25" />
@@ -79,6 +86,7 @@
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/fragment_weigh_in.xml" value="0.264" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/nav_header_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/layout/slider_intro.xml" value="0.4" />
+        <entry key="..\:/Users/czxs/AndroidStudioProjects/tcd-android/app/src/main/res/menu/activity_main_drawer.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/dialog_bg.xml" value="0.2234375" />
         <entry key="..\:/Users/drslc/AndroidStudioProjects/tcd-android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
