@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentGoals">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -11,24 +12,30 @@
         android:orientation="vertical"
         android:background="@drawable/gradient_animation_goals">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            >-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="My Goals"
-                android:textSize="35sp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:gravity="center"-->
+<!--                android:padding="10dp"-->
+<!--                android:text="My Goals"-->
+<!--                android:textSize="35sp" />-->
 
+<!--        </RelativeLayout>-->
 
-        </RelativeLayout>
+<!--        <View-->
 
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="?android:attr/listDivider"-->
+<!--            android:layout_marginBottom="40dp"/>-->
 
         <!--Weight goal-->
         <TextView
@@ -36,28 +43,50 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="15dp"
-            android:text="Your Current Weight:"
+            android:text="Today's Weigh In:"
             android:textSize="25sp">
 
         </TextView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="210dp"
+            style="@style/CustomOutlineBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter Weight"
             android:padding="10dp"
-            android:layout_gravity="center">
+            android:layout_gravity="left"
+            app:boxStrokeColor="@color/blue1"
+            app:boxBackgroundColor="@color/white"
+            android:layout_weight="1"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:inputType="numberDecimal"
-                android:gravity="center">
+                android:gravity="center"
+                >
 
             </com.google.android.material.textfield.TextInputEditText>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Be sure to weigh in every day!"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:layout_gravity="center">
+
+            </TextView>
+        </LinearLayout>
 
         <!--Weight goal-->
         <TextView
@@ -72,12 +101,21 @@
 
         </TextView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="210dp"
+            style="@style/CustomOutlineBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter Weight Goal"
             android:padding="10dp"
-            android:layout_gravity="center">
+            android:layout_gravity="left"
+            app:boxStrokeColor="@color/blue1"
+            app:boxBackgroundColor="@color/white"
+            android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -89,6 +127,16 @@
             </com.google.android.material.textfield.TextInputEditText>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Talk to your doctor about finding an Ideal body weight for you."
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+            </TextView>
+        </LinearLayout>
 
         <!--Calorie goal-->
         <TextView
@@ -103,12 +151,20 @@
 
         </TextView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="210dp"
+            style="@style/CustomOutlineBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter Calorie Goal"
             android:padding="10dp"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            app:boxStrokeColor="@color/blue1"
+            app:boxBackgroundColor="@color/white"
+            android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -119,16 +175,27 @@
 
             </com.google.android.material.textfield.TextInputEditText>
 
-
         </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Choose a reasonable calorie goal. Be sure to enter your information in your profile for a recommendation."
+                android:textSize="16sp"
+                android:layout_weight="1">
+
+            </TextView>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/spacer"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-
+            android:layout_marginTop="15dp"
             >
 
         </TextView>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>
