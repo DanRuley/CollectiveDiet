@@ -44,7 +44,8 @@
             android:layout_gravity="center"
             android:layout_margin="15dp"
             android:text="Today's Weigh In:"
-            android:textSize="25sp">
+            android:textSize="25sp"
+            android:textColor="@color/black">
 
         </TextView>
 
@@ -83,7 +84,8 @@
                 android:text="Be sure to weigh in every day!"
                 android:textSize="16sp"
                 android:layout_weight="1"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:textColor="@color/black">
 
             </TextView>
         </LinearLayout>
@@ -97,7 +99,8 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="15dp"
             android:text="Your Weight Goal:"
-            android:textSize="25sp">
+            android:textSize="25sp"
+            android:textColor="@color/black">
 
         </TextView>
 
@@ -133,7 +136,8 @@
                 android:layout_height="wrap_content"
                 android:text="Talk to your doctor about finding an Ideal body weight for you."
                 android:layout_gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:textColor="@color/black">
 
             </TextView>
         </LinearLayout>
@@ -147,7 +151,8 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="15dp"
             android:text="Your Calorie Goal:"
-            android:textSize="25sp">
+            android:textSize="25sp"
+            android:textColor="@color/black">
 
         </TextView>
 
@@ -182,7 +187,8 @@
                 android:layout_height="wrap_content"
                 android:text="Choose a reasonable calorie goal. Be sure to enter your information in your profile for a recommendation."
                 android:textSize="16sp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:textColor="@color/black">
 
             </TextView>
 

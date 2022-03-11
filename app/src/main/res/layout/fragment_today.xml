@@ -41,13 +41,23 @@
 
         </LinearLayout>
 
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/today_weight_graph"
+            android:layout_margin="10dp"
+            android:background="@drawable/gradient_animation_profile"
+            >
+
+        </com.jjoe64.graphview.GraphView>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_calories"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-          android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +70,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:paddingVertical="5dp"
-                    android:text="Calories"
+                    android:text="Today's Calories"
                     android:textSize="14sp">
 
                 </TextView>
@@ -82,8 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-           android:layout_weight="1">>
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -125,8 +135,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -168,8 +178,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -210,211 +220,220 @@
 
 
 
-
-<!--            <TextView-->
-<!--                android:id="@+id/mood_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Mood"-->
-<!--                android:textSize="20sp"-->
-<!--                android:layout_weight="1">-->
-
-<!--            </TextView>-->
-
-<!--            <RatingBar-->
-<!--                android:id="@+id/mood_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-<!--            <View-->
-<!--                android:id="@+id/divider"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="3dp"-->
-<!--                android:background="?android:attr/listDivider"-->
-<!--                android:backgroundTint="@color/material_on_background_disabled"-->
-<!--                android:backgroundTintMode="src_over"-->
-<!--                />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/energy_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Energy"-->
-<!--                android:textSize="20sp"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </TextView>-->
+                <TextView
+                    android:id="@+id/spacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp">
 
 
-<!--            <RatingBar-->
-<!--                android:id="@+id/energy_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-
-<!--            <View-->
-<!--                android:id="@+id/divider2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="3dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="?android:attr/listDivider"-->
-<!--                android:backgroundTint="@color/material_on_background_disabled"-->
-<!--                android:backgroundTintMode="src_over"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/hunger_text"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/energy_ratingbar" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/hunger_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Hunger"-->
-<!--                android:textSize="20sp"-->
-<!--                android:layout_weight="1">-->
-
-<!--            </TextView>-->
-
-
-<!--            <RatingBar-->
-<!--                android:id="@+id/hunger_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-<!--            <View-->
-<!--                android:id="@+id/divider3"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="3dp"-->
-
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="?android:attr/listDivider"-->
-<!--                android:backgroundTint="@color/material_on_background_disabled"-->
-<!--                android:backgroundTintMode="src_over"-->
-
-<!--                app:layout_constraintBottom_toTopOf="@id/focus_text"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/hunger_ratingbar"-->
-<!--                app:layout_constraintVertical_weight="1" />-->
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/focus_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Focus"-->
-<!--                android:textSize="20sp"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </TextView>-->
-
-
-<!--            <RatingBar-->
-<!--                android:id="@+id/focus_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-<!--            &lt;!&ndash;images&ndash;&gt;-->
-<!--            <ImageView-->
-<!--                android:id="@+id/mood_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/mood_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent">-->
-
-<!--            </ImageView>-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/energy_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/energy_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/divider">-->
-
-<!--            </ImageView>-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/hunger_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/hunger_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/divider2">-->
-
-<!--            </ImageView>-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/focus_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/focus_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/divider3">-->
-
-<!--            </ImageView>-->
-
-<!--      -->
-
-<!--        <TextView-->
-<!--            android:id="@+id/spacer"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="56dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/cl_survey">-->
-
-<!--        </TextView>-->
-
+                </TextView>
     </LinearLayout>
-</ScrollView><!--</ScrollView>-->
+    </ScrollView>
+
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/mood_text"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:layout_alignParentLeft="true"-->
+    <!--                android:layout_alignParentTop="true"-->
+    <!--                android:fontFamily="@font/quintessential_regular"-->
+    <!--                android:gravity="center_vertical"-->
+    <!--                android:text="Mood"-->
+    <!--                android:textSize="20sp"-->
+    <!--                android:layout_weight="1">-->
+
+    <!--            </TextView>-->
+
+    <!--            <RatingBar-->
+    <!--                android:id="@+id/mood_ratingbar"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:numStars="4"-->
+    <!--                android:progressTint="@color/gold"-->
+    <!--                android:rating="3"-->
+    <!--                android:stepSize="1"-->
+    <!--               android:layout_weight="1">-->
+
+    <!--            </RatingBar>-->
+
+    <!--            <View-->
+    <!--                android:id="@+id/divider"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="3dp"-->
+    <!--                android:background="?android:attr/listDivider"-->
+    <!--                android:backgroundTint="@color/material_on_background_disabled"-->
+    <!--                android:backgroundTintMode="src_over"-->
+    <!--                />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/energy_text"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:fontFamily="@font/quintessential_regular"-->
+    <!--                android:gravity="center_vertical"-->
+    <!--                android:text="Energy"-->
+    <!--                android:textSize="20sp"-->
+    <!--               android:layout_weight="1">-->
+
+    <!--            </TextView>-->
+
+
+    <!--            <RatingBar-->
+    <!--                android:id="@+id/energy_ratingbar"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:numStars="4"-->
+    <!--                android:progressTint="@color/gold"-->
+    <!--                android:rating="3"-->
+    <!--                android:stepSize="1"-->
+    <!--               android:layout_weight="1">-->
+
+    <!--            </RatingBar>-->
+
+
+    <!--            <View-->
+    <!--                android:id="@+id/divider2"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="3dp"-->
+    <!--                android:layout_marginTop="8dp"-->
+    <!--                android:background="?android:attr/listDivider"-->
+    <!--                android:backgroundTint="@color/material_on_background_disabled"-->
+    <!--                android:backgroundTintMode="src_over"-->
+    <!--                app:layout_constraintBottom_toTopOf="@id/hunger_text"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/energy_ratingbar" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/hunger_text"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:fontFamily="@font/quintessential_regular"-->
+    <!--                android:gravity="center_vertical"-->
+    <!--                android:text="Hunger"-->
+    <!--                android:textSize="20sp"-->
+    <!--                android:layout_weight="1">-->
+
+    <!--            </TextView>-->
+
+
+    <!--            <RatingBar-->
+    <!--                android:id="@+id/hunger_ratingbar"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:numStars="4"-->
+    <!--                android:progressTint="@color/gold"-->
+    <!--                android:rating="3"-->
+    <!--                android:stepSize="1"-->
+    <!--               android:layout_weight="1">-->
+
+    <!--            </RatingBar>-->
+
+    <!--            <View-->
+    <!--                android:id="@+id/divider3"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="3dp"-->
+
+    <!--                android:layout_marginTop="8dp"-->
+    <!--                android:background="?android:attr/listDivider"-->
+    <!--                android:backgroundTint="@color/material_on_background_disabled"-->
+    <!--                android:backgroundTintMode="src_over"-->
+
+    <!--                app:layout_constraintBottom_toTopOf="@id/focus_text"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/hunger_ratingbar"-->
+    <!--                app:layout_constraintVertical_weight="1" />-->
+
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/focus_text"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:fontFamily="@font/quintessential_regular"-->
+    <!--                android:gravity="center_vertical"-->
+    <!--                android:text="Focus"-->
+    <!--                android:textSize="20sp"-->
+    <!--               android:layout_weight="1">-->
+
+    <!--            </TextView>-->
+
+
+    <!--            <RatingBar-->
+    <!--                android:id="@+id/focus_ratingbar"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:numStars="4"-->
+    <!--                android:progressTint="@color/gold"-->
+    <!--                android:rating="3"-->
+    <!--                android:stepSize="1"-->
+    <!--               android:layout_weight="1">-->
+
+    <!--            </RatingBar>-->
+
+    <!--            &lt;!&ndash;images&ndash;&gt;-->
+    <!--            <ImageView-->
+    <!--                android:id="@+id/mood_image"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:src="@drawable/ex_mark"-->
+    <!--                app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"-->
+    <!--                app:layout_constraintHorizontal_weight="1"-->
+    <!--                app:layout_constraintLeft_toRightOf="@id/mood_text"-->
+    <!--                app:layout_constraintRight_toRightOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--            </ImageView>-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/energy_image"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:src="@drawable/ex_mark"-->
+    <!--                app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"-->
+    <!--                app:layout_constraintHorizontal_weight="1"-->
+    <!--                app:layout_constraintLeft_toRightOf="@id/energy_text"-->
+    <!--                app:layout_constraintRight_toRightOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/divider">-->
+
+    <!--            </ImageView>-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/hunger_image"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:src="@drawable/ex_mark"-->
+    <!--                app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"-->
+    <!--                app:layout_constraintHorizontal_weight="1"-->
+    <!--                app:layout_constraintLeft_toRightOf="@id/hunger_text"-->
+    <!--                app:layout_constraintRight_toRightOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/divider2">-->
+
+    <!--            </ImageView>-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/focus_image"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:src="@drawable/ex_mark"-->
+    <!--                app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"-->
+    <!--                app:layout_constraintHorizontal_weight="1"-->
+    <!--                app:layout_constraintLeft_toRightOf="@id/focus_text"-->
+    <!--                app:layout_constraintRight_toRightOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/divider3">-->
+
+    <!--            </ImageView>-->
+
+    <!--      -->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/spacer"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="56dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/cl_survey">-->
+
+    <!--        </TextView>-->
+
+    <!--</ScrollView>-->

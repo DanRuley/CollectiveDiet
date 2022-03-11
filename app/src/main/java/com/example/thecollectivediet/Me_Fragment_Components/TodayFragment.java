@@ -11,10 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.thecollectivediet.R;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
@@ -47,6 +54,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     //elements
     TextView mBMI;
 
+    //graph elements
+    GraphView mWeightGraph;
+    LineGraphSeries<DataPoint> weightSeries;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
@@ -66,6 +76,38 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         mProfilePic = v.findViewById(R.id.cv_profile_pic);
         mProfilePic.setOnClickListener(this);
 
+
+        mWeightGraph = v.findViewById(R.id.today_weight_graph);
+//        weightSeries = new LineGraphSeries<DataPoint>(new DataPoint[]{
+//
+//                new DataPoint(0,1),
+//                new DataPoint(1,5),
+//                new DataPoint(2,3),
+//                new DataPoint(3,2),
+//                new DataPoint(4,6)
+//        });
+        DataPoint[] arr = new DataPoint[1000];
+        for(int i = 0; i<1000; i++){
+            arr[i] = new DataPoint(i +1, i);
+        }
+        weightSeries = new LineGraphSeries<DataPoint>(arr);
+
+        mWeightGraph.addSeries(weightSeries);
+
+        weightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+                Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        weightSeries.setAnimated(true);
+        weightSeries.setBackgroundColor(getResources().getColor(R.color.pink));
+        weightSeries.setDrawBackground(true);
+        mWeightGraph.setTitle("My Weight Graph");
+        mWeightGraph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
+        mWeightGraph.getGridLabelRenderer().setVerticalAxisTitle("Weight");
+        mWeightGraph.getGridLabelRenderer().setPadding(50);
 
         //display pic
         profilePicPath = prefs.getString("profile_pic", null);
