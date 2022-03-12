@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FragmentGoals">
+    tools:context=".Goals_Fragment_Components.FragmentGoals">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -54,29 +54,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/CustomOutlineBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter Weight"
-            android:padding="10dp"
-            android:layout_gravity="left"
-            app:boxStrokeColor="@color/blue1"
-            app:boxBackgroundColor="@color/white"
-            android:layout_weight="1"
-            >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/acb_goals_enter_current_weight"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:inputType="numberDecimal"
+                android:text="Enter Weight"
+                android:textSize="16sp"
                 android:gravity="center"
+                android:layout_weight=".7"
+                android:background="@color/white"
+                android:layout_margin="10dp"
+                android:elevation="2dp"
                 >
 
-            </com.google.android.material.textfield.TextInputEditText>
+            </androidx.appcompat.widget.AppCompatButton>
 
-        </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="0dp"
@@ -109,27 +102,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/CustomOutlineBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter Weight Goal"
-            android:padding="10dp"
-            android:layout_gravity="left"
-            app:boxStrokeColor="@color/blue1"
-            app:boxBackgroundColor="@color/white"
-            android:layout_weight="1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/acb_goals_enter_weight_goal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:inputType="numberDecimal"
-                android:gravity="center">
+                android:text="Enter Goal"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_weight=".7"
+                android:background="@color/white"
+                android:layout_margin="10dp"
+                android:elevation="2dp">
 
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.AppCompatButton>
 
             <TextView
                 android:layout_width="0dp"
@@ -160,35 +145,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/CustomOutlineBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter Calorie Goal"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            app:boxStrokeColor="@color/blue1"
-            app:boxBackgroundColor="@color/white"
-            android:layout_weight="1">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/acb_goals_enter_calorie_goal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:inputType="numberDecimal"
-                android:gravity="center">
+                android:text="Enter Goal"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_weight=".7"
+                android:background="@color/white"
+                android:layout_margin="10dp"
+                android:elevation="2dp"
+                >
 
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.AppCompatButton>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Choose a reasonable calorie goal. Be sure to enter your information in your profile for a recommendation."
+                android:text="Choose a reasonable calorie goal."
                 android:textSize="16sp"
                 android:layout_weight="1"
-                android:textColor="@color/black">
+                android:textColor="@color/black"
+                >
 
             </TextView>
 
