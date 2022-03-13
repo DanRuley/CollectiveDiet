@@ -15,6 +15,8 @@ import com.example.thecollectivediet.R;
 public class FragmentGoals extends Fragment implements View.OnClickListener {
 
     AppCompatButton mEnterWeight;
+    AppCompatButton mEnterWeightGoal;
+    AppCompatButton mEnterCalorieGoal;
 
     public FragmentGoals() {
         // Required empty public constructor
@@ -29,7 +31,13 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
 
         mEnterWeight = v.findViewById(R.id.acb_goals_enter_current_weight);
         mEnterWeight.setOnClickListener(this);
-        // Inflate the layout for this fragment
+
+        mEnterWeightGoal = v.findViewById(R.id.acb_goals_enter_weight_goal);
+        mEnterWeightGoal.setOnClickListener(this);
+
+        mEnterCalorieGoal = v.findViewById(R.id.acb_goals_enter_calorie_goal);
+        mEnterCalorieGoal.setOnClickListener(this);
+
         return v;
     }
 
@@ -40,8 +48,22 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
         {
             case R.id.acb_goals_enter_current_weight:{
 
-                WeighInDialog dialog = new WeighInDialog(getContext());
+                GoalsDialog dialog = new GoalsDialog(getContext(), 1);
                 dialog.show();
+                break;
+            }
+
+            case R.id.acb_goals_enter_weight_goal:{
+
+                GoalsDialog dialog = new GoalsDialog(getContext(),2);
+                dialog.show();
+                break;
+            }
+
+            case R.id.acb_goals_enter_calorie_goal:{
+                GoalsDialog dialog = new GoalsDialog(getContext(), 3);
+                dialog.show();
+                break;
             }
         }
     }

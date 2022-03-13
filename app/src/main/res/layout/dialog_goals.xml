@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Goals_Fragment_Components.WeighInDialog"
+    tools:context=".Goals_Fragment_Components.GoalsDialog"
     android:background="@drawable/gradient_animation_goals">
 
     <TextView
+        android:id="@+id/tv_dialog_goals_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -29,15 +30,16 @@
         android:layout_weight="1">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_weigh_in_weight"
+            android:id="@+id/tiet_dialog_goals_user_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textCursorDrawable="@drawable/color_cursor"
             android:background="@color/white"
             android:hint="Enter Weight"
+            android:textSize="16sp"
             android:inputType="number"
-            android:maxLength="3">
+            >
 
 
         </com.google.android.material.textfield.TextInputEditText>
@@ -46,11 +48,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tv_dialog_goals_user_input_measurement_unit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="lbs."
-            android:textSize="25sp"
-            android:layout_weight=".3">
+            android:textSize="16sp"
+            android:layout_weight=".5">
 
         </TextView>
 
@@ -63,7 +66,7 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:id="@+id/iv_weigh_in_decrease_weight"
+                android:id="@+id/iv_dialog_goals_decrease"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_down"
@@ -74,7 +77,7 @@
             </ImageView>
 
             <ImageView
-                android:id="@+id/iv_weigh_in_increase_weight"
+                android:id="@+id/iv_dialog_goals_increase"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_up"
@@ -99,7 +102,7 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/iv_weigh_in_decline"
+                    android:id="@+id/iv_dialog_goals_decline"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
@@ -116,7 +119,7 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/iv_weigh_in_accept"
+                    android:id="@+id/iv_dialog_goals_accept"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
