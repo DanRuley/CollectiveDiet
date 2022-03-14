@@ -153,6 +153,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         weightInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_weight_input)).getEditText();
         Objects.requireNonNull(weightInput).setOnFocusChangeListener(clearInputListener);
         dobInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_dob_input)).getEditText();
+        dobInput.setKeyListener(null);
         genderInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_gender_input)).getEditText();
         Objects.requireNonNull(genderInput).setOnFocusChangeListener(clearInputListener);
         heightInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_height_input)).getEditText();
