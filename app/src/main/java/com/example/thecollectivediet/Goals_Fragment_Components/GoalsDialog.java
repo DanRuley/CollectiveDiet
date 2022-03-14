@@ -9,6 +9,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -111,42 +114,11 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.iv_dialog_goals_increase:{
-//                int num = 0;
-//                if(mInput.getEditableText().toString().matches(""))
-//                {
-//                    mInput.setText(String.valueOf(num));
-//                    break;
-//                }
-//
-//                num = Integer.valueOf(mInput.getEditableText().toString());
-//                num++;
-//
-//                if(num > 999)
-//                {
-//                    num = 999;
-//                }
-//                mInput.setText(String.valueOf(num));
                 arrowUp();
                 break;
             }
 
             case R.id.iv_dialog_goals_decrease:{
-//                int num = 0;
-//                if(mInput.getEditableText().toString().matches(""))
-//                {
-//                    mInput.setText(String.valueOf(num));
-//                    break;
-//                }
-//
-//                num = Integer.valueOf(mInput.getEditableText().toString());
-//                num--;
-//
-//                if(num < 0)
-//                {
-//                    num = 0;
-//                }
-//                mInput.setText(String.valueOf(num));
-//                break;
                 arrowDown();
                 break;
             }
@@ -157,9 +129,21 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
             }
 
             case R.id.iv_dialog_goals_accept:{
-                //todo
-            }
+                //todo need to determine best way to update user info. For now, no helper methods used here
+                User user = MainActivity.getCurrentUser();
 
+                if(dialogType == 1)
+                    user.setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+                else if(dialogType == 2)
+                    user.setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+                else if(dialogType == 3)
+
+
+                User_API_Controller.updateUserProfile(user, ctx);
+
+                onStop();
+                break;
+            }
 
         }
     }
