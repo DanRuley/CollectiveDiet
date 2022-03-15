@@ -136,7 +136,7 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
                     user.setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
                 else if(dialogType == 2)
                     user.setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
-                else if(dialogType == 3)
+               // else if(dialogType == 3)
 
 
                 User_API_Controller.updateUserProfile(user, ctx);
