@@ -40,11 +40,15 @@ public class ManualFoodSearch extends Fragment {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
+    ManualFoodSearch manualFoodSearch;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_food_search, container, false);
+
+        manualFoodSearch = this;
 
         Bundle args = getArguments();
 
@@ -113,7 +117,7 @@ public class ManualFoodSearch extends Fragment {
             controller.getNutrients(String.valueOf(foodItem.getId()), new VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients nutrients) {
-                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem, mealType);
+                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem, mealType, manualFoodSearch);
                     dialog.show();
                 }
 

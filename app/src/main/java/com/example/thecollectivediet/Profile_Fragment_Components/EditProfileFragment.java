@@ -24,10 +24,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
+import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 
 import java.io.File;
@@ -72,11 +74,16 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     //bitmap that holds profile pic
     Bitmap bitmap;
 
+    ModelViewUser modelViewUser;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
 
         //took new photo?
         photoChanged = false;
@@ -213,7 +220,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
-                    MainActivity.hideKeyboard(Objects.requireNonNull(getActivity()));
+                    MainActivity.hideKeyboard(requireActivity());
                     v.performClick();
                     return false;
                 }
@@ -248,12 +255,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
             saveProfileChanges();
 //            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
-            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, new ProfileFragment());
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
 
         if (viewID == R.id.edit_profile_back_btn) {
             //MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
-            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, new ProfileFragment());
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
     }
 
@@ -327,9 +334,9 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
     private void saveProfileChanges() {
 
-        User currentUser = MainActivity.getCurrentUser();
+       // User currentUser = MainActivity.getCurrentUser();
 
-        User_API_Controller.updateUserProfile(currentUser, context);
+        User_API_Controller.updateUserProfile(modelViewUser.getUser(), context);
 
         editor.commit();
     }

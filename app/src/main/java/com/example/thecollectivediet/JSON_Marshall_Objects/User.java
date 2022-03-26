@@ -1,6 +1,10 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
 public class User {
+
+
 
     String user_id;
     String user_email;
@@ -15,6 +19,10 @@ public class User {
     String user_lifestyle;
     Float user_hgt;
     String user_city;
+
+    public User(){
+
+    }
 
     public User(String id, String name, String email, String dts) {
         user_id = id;

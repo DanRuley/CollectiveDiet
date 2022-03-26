@@ -97,7 +97,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
         User_API_Controller.handleNewSignIn(account, getActivity(), new VolleyResponseListener<User>() {
             @Override
             public void onResponse(User user) {
-                MainActivity.setCurrentUser(user);
+               // MainActivity.setCurrentUser(user);
             }
 
             @Override

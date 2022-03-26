@@ -11,8 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
@@ -56,12 +55,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    public static User currentUser;
-
+    //public static User currentUser;
+    ModelViewUser modelViewUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
 
         Map<String, String> env = System.getenv();
         setContentView(R.layout.activity_main);
@@ -75,29 +77,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
         });
 
-        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
+//        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    if (result.getResultCode() == Activity.RESULT_OK) {
+//
+//                        String username = prefs.getString("user", "null");
+//                        login.setText(username);
+//
+//                    } else {
+//                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                                .requestEmail()
+//                                .build();
+//                        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+//                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+//
+//                        if (account != null && !account.isExpired()) {
+//                            String username = prefs.getString("user", "null");
+//                            login.setText(username);
+//                        }
+//                    }
+//                });
 
-                        String username = prefs.getString("user", "null");
-                        login.setText(username);
-
-                    } else {
-                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestEmail()
-                                .build();
-                        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-
-                        if (account != null && !account.isExpired()) {
-                            String username = prefs.getString("user", "null");
-                            login.setText(username);
-                        }
-                    }
-                });
-
-        //If this is user's first time on app
+        //If this is user's first time on the app, get string from shared preferences which
+        //should be null for first timers and change to false so that the intro does not
+        //show up again.
         String firstTime = prefs.getString("firstTime", "null");
 
         if (firstTime.equals("null")) {
@@ -107,23 +111,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-
-        if (account != null && !account.isExpired()) {
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+        if (modelViewUser.isSignedIn()) {
             commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
+            //todo login.setText(modelViewUser.get) and change above fragment to loading screen.
 
-            String username = prefs.getString("user", "null");
-            login.setText(username);
 
-            User_API_Controller.handleNewSignIn(account, MainActivity.this, new VolleyResponseListener<User>() {
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+//
+//        if (account != null && !account.isExpired()) {
+//
+//            commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
+//
+//            String username = prefs.getString("user", "null");
+//            login.setText(username);
+//
+            User_API_Controller.handleNewSignIn(modelViewUser.getAccount(), MainActivity.this, new VolleyResponseListener<User>() {
                 @Override
                 public void onResponse(User user) {
-                    MainActivity.setCurrentUser(user);
+                    modelViewUser.setUser(user);
+                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
                 }
 
                 @Override
@@ -131,12 +142,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             });
-            //todo
-            //get user metrics
+//            //todo
+//            //get user metrics
 
         } else
             commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -218,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_sign_in && !isSignedIn())
             fragment = new FragmentSignIn();
         else if (id == R.id.nav_sign_out) {
-            signOut();
+            //signOut();  todo finish sign out
             fragment = new FragmentSignIn();
 
             TextView login = findViewById(R.id.toolbar_login);
@@ -256,26 +268,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return GoogleSignIn.getLastSignedInAccount(this) != null && !GoogleSignIn.getLastSignedInAccount(this).isExpired();
     }
 
-    private void signOut() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                currentUser = null;
-            }
-        });
-    }
-
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    public static void setCurrentUser(User user) {
-        currentUser = user;
-    }
+//    private void signOut() {
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                currentUser = null;
+//            }
+//        });
+//    }
+//
+//    public static User getCurrentUser() {
+//        return currentUser;
+//    }
+//
+//    public static void setCurrentUser(User user) {
+//        currentUser = user;
+//    }
 
     public void requireSignInPrompt(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
