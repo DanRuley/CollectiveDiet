@@ -2,6 +2,8 @@ package com.example.thecollectivediet.API_Utilities;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -22,7 +24,7 @@ import java.util.Map;
 
 public class FoodSearchController {
 
-    private Context ctx;
+    private final Context ctx;
     private static HashMap<String, String> headers;
 
     public FoodSearchController(Context _ctx) {
@@ -35,7 +37,7 @@ public class FoodSearchController {
     }
 
 
-    public void getNutrients(String foodID, VolleyResponseListener<FoodNutrients> listener) {
+    public void getNutrients(String foodID, @NonNull VolleyResponseListener<FoodNutrients> listener) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/FoodIdSearch?food_id=" + foodID;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -58,7 +60,7 @@ public class FoodSearchController {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
-    public void searchFoodByName(String foodName, VolleyResponseListener<List<FoodResult>> listener) {
+    public void searchFoodByName(String foodName, @NonNull VolleyResponseListener<List<FoodResult>> listener) {
         List<FoodResult> foods = new ArrayList<>();
 
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/RelatedFoods?food=" + foodName;
@@ -71,7 +73,7 @@ public class FoodSearchController {
                             foods.add(gson.fromJson(food.toString(), FoodResult.class));
                         }
                         listener.onResponse(foods);
-                    } catch (JSONException | JsonSyntaxException e) {
+                    } catch (@NonNull JSONException | JsonSyntaxException e) {
                         e.printStackTrace();
                         listener.onError(e.getMessage());
                     }

@@ -1,5 +1,7 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
+import androidx.annotation.NonNull;
+
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 
 import java.util.List;
@@ -10,7 +12,7 @@ public class Converter {
     static final double ozToGrams = 28.34952;
     static final double cupsToGrams = 128;
 
-    public static double getTotalMealCalories(List<FoodLogItemView> items) {
+    public static double getTotalMealCalories(@NonNull List<FoodLogItemView> items) {
         double totalCal = 0;
 
         for (FoodLogItemView food : items)
@@ -19,7 +21,7 @@ public class Converter {
         return totalCal;
     }
 
-    public static double calculateCalories(Float energy100g, String servingUnit, Float servingSize) {
+    public static double calculateCalories(Float energy100g, @NonNull String servingUnit, Float servingSize) {
         double calories = 0;
         double calPerGram = energy100g / 100;
 
@@ -38,7 +40,8 @@ public class Converter {
         return calories;
     }
 
-    public static String getCalorieString(Float energy100g, String servingUnit, Float servingSize) {
+    @NonNull
+    public static String getCalorieString(Float energy100g, @NonNull String servingUnit, Float servingSize) {
 
         return String.format(Locale.US, "%.1f Calories", calculateCalories(energy100g, servingUnit, servingSize));
     }

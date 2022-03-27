@@ -13,6 +13,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.thecollectivediet.R;
@@ -29,6 +31,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     String profilePicPath;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    @Nullable
     Context context;
 
     //Rating bars
@@ -38,9 +41,13 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     RatingBar focusRatingBar;
 
     //List of images for rating bars
+    @NonNull
     int[] moodList = new int[]{R.drawable.mood_rank1, R.drawable.mood_rank2, R.drawable.mood_rank3, R.drawable.mood_rank4};
+    @NonNull
     int[] energyList = new int[]{R.drawable.energy_rank1, R.drawable.energy_rank2, R.drawable.energy_rank3, R.drawable.energy_rank4};
+    @NonNull
     int[] hungerList = new int[]{R.drawable.hunger_rank1, R.drawable.hunger_rank2, R.drawable.hunger_rank3, R.drawable.hunger_rank4};
+    @NonNull
     int[] focusList = new int[]{R.drawable.focus_rank1, R.drawable.focus_rank2, R.drawable.focus_rank3, R.drawable.focus_rank4};
 
     //elements for images
@@ -59,7 +66,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     LineGraphSeries<DataPoint> weightSeries;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
@@ -184,7 +191,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
 
         switch (v.getId()) {
 

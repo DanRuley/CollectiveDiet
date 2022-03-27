@@ -1,5 +1,7 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,9 +10,10 @@ import java.util.Date;
 
 public class EditFoodObject {
 
-    private String name;
-    private String info;
-    private String date;
+    private final String name;
+    private final String info;
+    @NonNull
+    private final String date;
     Date currentTime;
 
     //For serialization
@@ -25,7 +28,7 @@ public class EditFoodObject {
         this.date = currentTime.toString();
     }
 
-    public EditFoodObject(JSONObject jo) throws JSONException {
+    public EditFoodObject(@NonNull JSONObject jo) throws JSONException {
         this.name = jo.getString(JSON_NAME);
         this.info = jo.getString(JSON_SERVING_SIZE);
         this.date = jo.getString(JSON_DATE);
@@ -39,11 +42,13 @@ public class EditFoodObject {
         return info;
     }
 
+    @NonNull
     public String getDateText() {
         return date;
     }
 
     //Method to serialize FoodResult object
+    @NonNull
     public JSONObject convertToJSON() throws JSONException {
         JSONObject jo = new JSONObject();
 

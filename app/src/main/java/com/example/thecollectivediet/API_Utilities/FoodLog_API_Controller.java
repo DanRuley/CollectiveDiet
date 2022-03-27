@@ -3,6 +3,8 @@ package com.example.thecollectivediet.API_Utilities;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -26,13 +28,14 @@ import java.util.Objects;
 public class FoodLog_API_Controller {
 
 
+    @NonNull
     public static String getDateString() {
         java.util.Date dts = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         return sdf.format(dts);
     }
 
-    public static void pushFoodLogEntry(Context ctx, FoodResult food, User user, Float portionSize, String portionUnit, String mealCategory) {
+    public static void pushFoodLogEntry(Context ctx, @NonNull FoodResult food, @NonNull User user, Float portionSize, String portionUnit, String mealCategory) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_food_log_item";
 
         FoodLogUploadItem toAdd = new FoodLogUploadItem(user.getUser_id(), food.getId(), getDateString(), portionSize, portionUnit, mealCategory);
@@ -47,6 +50,7 @@ public class FoodLog_API_Controller {
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, foodLogJSON,
                 response -> Log.d("success!", response.toString()), error -> Log.d("add food log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -58,7 +62,7 @@ public class FoodLog_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
-    public static void getFoodLogEntries(Context ctx, User user, String dt, VolleyResponseListener<HashMap<String, List<FoodLogItemView>>> listener) {
+    public static void getFoodLogEntries(Context ctx, @NonNull User user, String dt, @NonNull VolleyResponseListener<HashMap<String, List<FoodLogItemView>>> listener) {
         String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/get_food_log_items?uid=%s&date=%s", user.getUser_id(), dt);
 
 
@@ -90,7 +94,7 @@ public class FoodLog_API_Controller {
                             }
                         }
                         listener.onResponse(results);
-                    } catch (JSONException | JsonSyntaxException e) {
+                    } catch (@NonNull JSONException | JsonSyntaxException e) {
                         listener.onError(e.getMessage());
                     }
                 },
@@ -99,6 +103,7 @@ public class FoodLog_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    @NonNull
     private static HashMap<String, List<FoodLogItemView>> getEmptyFoodItemMap() {
         HashMap<String, List<FoodLogItemView>> map = new HashMap<>();
         map.put("Breakfast", new ArrayList<>());

@@ -65,7 +65,7 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
             foodServing = itemView.findViewById(R.id.foodRecServing);
         }
 
-        public void bind(final FoodResult food, final OnFoodItemClickListener listener, final int position, Context ctx) {
+        public void bind(@NonNull final FoodResult food, @NonNull final OnFoodItemClickListener listener, final int position, @NonNull Context ctx) {
             // create a ProgressDrawable object which we will show as placeholder
             CircularProgressDrawable drawable = new CircularProgressDrawable(ctx);
             drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);

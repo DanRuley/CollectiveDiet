@@ -1,5 +1,7 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
+import androidx.annotation.NonNull;
+
 public class FoodResult {
 
 
@@ -59,6 +61,7 @@ public class FoodResult {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return "FoodResult{" +

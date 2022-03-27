@@ -1,6 +1,9 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import androidx.annotation.Nullable;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class User {
 
@@ -68,7 +71,10 @@ public class User {
     }
 
     public void setUser_dob(String user_dob) {
-        this.user_dob = user_dob;
+        Pattern p = Pattern.compile("(\\d{2})/(\\d{2})/(\\d{4})");
+        Matcher m = p.matcher(user_dob);
+        if (m.find())
+            this.user_dob = String.format("%s-%s-%s", m.group(3), m.group(1), m.group(2));
     }
 
     public String getUser_gender() {
@@ -79,27 +85,27 @@ public class User {
         this.user_gender = user_gender;
     }
 
-    public float getStart_wgt() {
+    public Float getStart_wgt() {
         return start_wgt;
     }
 
-    public void setStart_wgt(float start_wgt) {
+    public void setStart_wgt(Float start_wgt) {
         this.start_wgt = start_wgt;
     }
 
-    public float getCurrent_wgt() {
+    public Float getCurrent_wgt() {
         return current_wgt;
     }
 
-    public void setCurrent_wgt(float current_wgt) {
+    public void setCurrent_wgt(Float current_wgt) {
         this.current_wgt = current_wgt;
     }
 
-    public float getGoal_wgt() {
+    public Float getGoal_wgt() {
         return goal_wgt;
     }
 
-    public void setGoal_wgt(float goal_wgt) {
+    public void setGoal_wgt(Float goal_wgt) {
         this.goal_wgt = goal_wgt;
     }
 
@@ -123,7 +129,7 @@ public class User {
         return user_hgt;
     }
 
-    public void setUser_hgt(float user_hgt) {
+    public void setUser_hgt(Float user_hgt) {
         this.user_hgt = user_hgt;
     }
 
@@ -133,6 +139,18 @@ public class User {
 
     public String getUser_city() {
         return user_city;
+    }
+
+    @Nullable
+    public String getPrettyDob() {
+        if (user_dob == null)
+            return null;
+
+        Pattern p = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2})");
+        Matcher m = p.matcher(user_dob);
+        if (m.find())
+            return String.format("%s/%s/%s", m.group(2), m.group(3), m.group(1));
+        else return null;
     }
 
 }

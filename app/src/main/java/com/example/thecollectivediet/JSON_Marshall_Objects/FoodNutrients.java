@@ -1,5 +1,7 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
+import androidx.annotation.NonNull;
+
 public class FoodNutrients {
 
     long id;
@@ -96,6 +98,7 @@ public class FoodNutrients {
         this.omega_3_fat_unit = omega_3_fat_unit;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "FoodNutrients{" +

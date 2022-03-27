@@ -3,12 +3,12 @@ package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editin
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
@@ -65,7 +66,6 @@ public class FoodConfirmDialog extends Dialog {
     }
 
     private void initializeComponents() {
-        this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         this.setContentView(R.layout.confirm_food_add);
         this.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -90,7 +90,7 @@ public class FoodConfirmDialog extends Dialog {
         setupServingSpinner();
         setupMealTypeSpinner();
 
-        ServingCalculator servingCalculator = new ServingCalculator(nutrients, servingUnitSpinner, this);
+        ServingCalculator servingCalculator = new ServingCalculator(nutrients, servingUnitSpinner, this, servingUnitSpinner);
         servingUnitSpinner.setOnItemSelectedListener(servingCalculator);
         servingQtyVal.addTextChangedListener(servingCalculator);
 
@@ -135,11 +135,13 @@ public class FoodConfirmDialog extends Dialog {
 
     private void setupServingSpinner() {
         servingUnitSpinner = this.findViewById(R.id.serving_unit_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx, R.array.serving_qty_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        String[] items = ctx.getResources().getStringArray(R.array.serving_qty_array);
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, items);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx, R.array.serving_qty_array, android.R.layout.simple_spinner_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servingUnitSpinner.setAdapter(adapter);
 
-        servingUnitSpinner.setOnItemSelectedListener(new ServingCalculator(nutrients, servingUnitSpinner, this));
+        servingUnitSpinner.setOnItemSelectedListener(new ServingCalculator(nutrients, servingUnitSpinner, this, servingUnitSpinner));
     }
 
     private void setupMealTypeSpinner() {
@@ -153,7 +155,7 @@ public class FoodConfirmDialog extends Dialog {
             boolean firstTime = true;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(@NonNull AdapterView<?> parent, View view, int position, long id) {
 
                 if (firstTime) {
                     position = mealType == null ? 0 : mealType.ordinal();
@@ -185,9 +187,50 @@ public class FoodConfirmDialog extends Dialog {
         proteinVal.setText(String.format("%.1f %s", newProtein, nutrients.getProteins_unit()));
     }
 
+    public class CustomSpinnerAdapter extends ArrayAdapter<String> {
+        LayoutInflater inflater;
+        String[] spinnerItems;
+        int resource;
+        Context ctx;
+
+        public CustomSpinnerAdapter(Context applicationContext, int resource, String[] spinnerItems) {
+            super(applicationContext, resource, spinnerItems);
+            this.spinnerItems = spinnerItems;
+            this.resource = resource;
+            this.ctx = applicationContext;
+            inflater = (LayoutInflater.from(applicationContext));
+        }
+
+        @SuppressLint("InflateParams")
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (view == null) {
+                view = inflater.inflate(R.layout.custom_spinner_layout, null);
+                TextView type = (TextView) view.findViewById(R.id.spinner_item_text);
+                type.setText(spinnerItems[i]);
+            }
+            return view;
+        }
+
+//        @Override
+//        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+//            View row;
+//            row = inflater.inflate(resource, null);
+//            TextView textView = row.findViewById(R.id.spinner_item_text);
+//            textView.setText(spinnerItems[position]);
+//
+//            Display display = getWindow().getWindowManager().getDefaultDisplay();
+//            Point size = new Point();
+//            display.getSize(size);
+//            int width = size.x;
+//
+//            row.setMinimumWidth(width);
+//            return row;
+//        }
+    }
 
     @SuppressWarnings("UnnecessaryReturnStatement")
-    static class ServingCalculator implements TextWatcher, AdapterView.OnItemSelectedListener {
+    class ServingCalculator implements TextWatcher, AdapterView.OnItemSelectedListener {
 
         //1 cup == 128 g == 4.5oz
         //1 oz. == 28.35 g == 0.2215 cup
@@ -200,9 +243,11 @@ public class FoodConfirmDialog extends Dialog {
         String currentUnit;
         HashMap<String, Double> multipliers;
         FoodConfirmDialog view;
+        Spinner spinner;
 
-        public ServingCalculator(FoodNutrients nutrients, AdapterView<?> parent, FoodConfirmDialog view) {
+        public ServingCalculator(@NonNull FoodNutrients nutrients, @NonNull AdapterView<?> parent, FoodConfirmDialog view, Spinner spinner) {
             this.view = view;
+            this.spinner = spinner;
 
             //helps us not recalculate fields during a unit change
             unitChange = false;
@@ -230,7 +275,7 @@ public class FoodConfirmDialog extends Dialog {
         }
 
         @Override
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged(@NonNull Editable s) {
             if (unitChange || s.toString().equals("."))
                 return;
             else if (s.toString().length() == 0)
@@ -240,7 +285,7 @@ public class FoodConfirmDialog extends Dialog {
         }
 
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(@NonNull AdapterView<?> parent, View view, int position, long id) {
             unitChange = true;
             parent.getItemAtPosition(position);
             String newUnit = parent.getItemAtPosition(position).toString();
@@ -251,7 +296,7 @@ public class FoodConfirmDialog extends Dialog {
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+        public void onNothingSelected(@NonNull AdapterView<?> parent) {
             parent.getItemAtPosition(0);
         }
 
