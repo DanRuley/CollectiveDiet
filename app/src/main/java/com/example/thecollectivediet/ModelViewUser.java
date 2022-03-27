@@ -89,6 +89,10 @@ public class ModelViewUser extends AndroidViewModel {
 
     }
 
+    /**
+     * Pull user data from database
+     * @param mainActivity
+     */
     public void pullUserData(MainActivity mainActivity){
         User_API_Controller.handleNewSignIn(googleSignInAccount, mainActivity, new VolleyResponseListener<User>() {
             @Override
@@ -106,5 +110,9 @@ public class ModelViewUser extends AndroidViewModel {
 
     public GoogleSignInAccount getAccount() {
         return googleSignInAccount;
+    }
+
+    public void updateUserProfile(User currentUser, Context context) {
+        User_API_Controller.updateUserProfile(currentUser,context);
     }
 }
