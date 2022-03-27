@@ -1,13 +1,19 @@
 package com.example.thecollectivediet;
 
+import static com.example.thecollectivediet.MainActivity.commitFragmentTransaction;
+
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
+import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
+import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -51,6 +57,7 @@ public class ModelViewUser extends AndroidViewModel {
         //user =
     }
 
+
     public boolean isSignedIn() {
         return GoogleSignIn.getLastSignedInAccount(application) != null && !GoogleSignIn.getLastSignedInAccount(application).isExpired();
     }
@@ -74,11 +81,27 @@ public class ModelViewUser extends AndroidViewModel {
 
     /**
      * Sets the user in ModelViewUser.
-     * @param user
+     *
      */
     public void setUser(User user){
         this.user = user;
         userData.setValue(this.user);
+
+    }
+
+    public void pullUserData(MainActivity mainActivity){
+        User_API_Controller.handleNewSignIn(googleSignInAccount, mainActivity, new VolleyResponseListener<User>() {
+            @Override
+            public void onResponse(User user) {
+                setUser(user);
+               // commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ctx, error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public GoogleSignInAccount getAccount() {

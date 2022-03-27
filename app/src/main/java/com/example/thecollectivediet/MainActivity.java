@@ -21,10 +21,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.thecollectivediet.API_Utilities.User_API_Controller;
-import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
@@ -32,11 +31,7 @@ import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
 import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -113,8 +108,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 /////////////////////////////////////////////////////////////////////////////////////////////////
         if (modelViewUser.isSignedIn()) {
+            modelViewUser.pullUserData(MainActivity.this);
+            //login.setText(modelViewUser.get) and change above fragment to loading screen.
             commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
-            //todo login.setText(modelViewUser.get) and change above fragment to loading screen.
+
 
 
 //        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -130,23 +127,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            String username = prefs.getString("user", "null");
 //            login.setText(username);
 //
-            User_API_Controller.handleNewSignIn(modelViewUser.getAccount(), MainActivity.this, new VolleyResponseListener<User>() {
-                @Override
-                public void onResponse(User user) {
-                    modelViewUser.setUser(user);
-                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
-                }
 
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
-                }
-            });
+
+//            User_API_Controller.handleNewSignIn(modelViewUser.getAccount(), MainActivity.this, new VolleyResponseListener<User>() {
+//                @Override
+//                public void onResponse(User user) {
+//                    modelViewUser.setUser(user);
+//                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
+//                }
+//
+//                @Override
+//                public void onError(String error) {
+//                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+//                }
+//            });
+
+
 //            //todo
 //            //get user metrics
 
         } else
             commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
+
+
+        //set the observer to get info for user
+        modelViewUser.getUserData().observe(MainActivity.this, nameObserver);
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //Setup button, views, etc in the activity_main layout
@@ -191,6 +198,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
     }
 
+
+    //create an observer that watches the LiveData<User> object
+    final Observer<User> nameObserver = new Observer<User>() {
+        @Override
+        public void onChanged(User user) {
+            //Update the ui if this data variable changes
+            if(user != null){
+              TextView login = findViewById(R.id.toolbar_login);
+              login.setText(user.getUser_name());
+            }
+        }
+    };
 
     @Override
     public void onBackPressed() {
