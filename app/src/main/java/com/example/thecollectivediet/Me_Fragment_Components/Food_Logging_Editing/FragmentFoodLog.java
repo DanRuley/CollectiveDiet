@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
@@ -65,6 +66,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         innerDinnerItems = new ArrayList<>();
         innerSnacksItems = new ArrayList<>();
 
+        User u = MainActivity.getCurrentUser();
         //hook elements
         mAddFoodButton = v.findViewById(R.id.btn_add_food);
         mAddFoodButton.setOnClickListener(this);

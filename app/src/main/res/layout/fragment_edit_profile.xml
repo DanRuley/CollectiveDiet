@@ -134,12 +134,12 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_gender_input"
+                android:id="@+id/edit_profile_sex_input"
                 style="@style/CustomOutlineBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Gender"
+                android:hint="Sex"
                 android:padding="10dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"

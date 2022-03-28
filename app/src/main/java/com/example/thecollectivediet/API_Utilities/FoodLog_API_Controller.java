@@ -66,6 +66,7 @@ public class FoodLog_API_Controller {
         String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/get_food_log_items?uid=%s&date=%s", user.getUser_id(), dt);
 
 
+
         HashMap<String, List<FoodLogItemView>> results = getEmptyFoodItemMap();
 
 

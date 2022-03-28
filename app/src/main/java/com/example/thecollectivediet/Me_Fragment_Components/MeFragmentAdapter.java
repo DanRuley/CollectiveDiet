@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.thecollectivediet.Goals_Fragment_Components.FragmentGoals;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.FragmentFoodLog;
-import com.example.thecollectivediet.Profile_Fragment_Components.FragmentProfileParent;
 
 
 /*
@@ -32,7 +32,7 @@ public class MeFragmentAdapter extends FragmentStateAdapter {
                 return new FragmentFoodLog();
             }
             case 2: {
-                return new FragmentProfileParent();
+                return new FragmentGoals();
             }
         }
 

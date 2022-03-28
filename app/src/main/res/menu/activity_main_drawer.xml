@@ -19,6 +19,13 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Camera"
             android:iconTint="@color/white"/>
+
+        <item
+            android:id="@+id/nav_goals"
+            android:icon="@drawable/ic_menu_goals"
+            android:title="Goals"
+            android:iconTint="@color/white"/>
+
         <item
             android:id="@+id/nav_me"
             android:icon="@drawable/ic_menu_me"

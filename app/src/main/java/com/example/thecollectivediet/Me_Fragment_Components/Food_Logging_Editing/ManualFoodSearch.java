@@ -24,7 +24,6 @@ import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ManualFoodSearch extends Fragment {
 
@@ -112,7 +111,7 @@ public class ManualFoodSearch extends Fragment {
 
 
     private void populateRecycler(List<FoodResult> response) {
-        MainActivity.hideKeyboard(Objects.requireNonNull(getActivity()));
+        MainActivity.hideKeyboard(requireActivity());
 
         mAdapter = new FoodSearchRecyclerViewAdapter(response, ctx, foodItem -> {
 

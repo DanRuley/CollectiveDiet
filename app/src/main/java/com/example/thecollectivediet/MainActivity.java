@@ -31,6 +31,7 @@ import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
+import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
 import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -116,15 +117,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (account != null && !account.isExpired()) {
 
-            commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
-
+            commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new FragmentSplashScreen());
             String username = prefs.getString("user", "null");
             login.setText(username);
+
 
             User_API_Controller.handleNewSignIn(account, MainActivity.this, new VolleyResponseListener<User>() {
                 @Override
                 public void onResponse(User user) {
                     MainActivity.setCurrentUser(user);
+                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
                 }
 
                 @Override
@@ -132,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             });
+
+
             //todo
             //get user metrics
 
@@ -168,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else if (id == R.id.bottom_nav_camera)
                     commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new CameraFragment());
                 else if (id == R.id.bottom_nav_profile)
-                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment(2));
+                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new ProfileFragment());
                 else if (id == R.id.bottom_nav_us)
                     commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new UsFragment());
 
@@ -208,8 +212,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //on click item
         if (id == R.id.nav_food)
             fragment = new CameraFragment();
+        else if (id == R.id.nav_goals)
+            commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment(2));
         else if (id == R.id.nav_profile)
-            fragment = new MeTabLayoutFragment(2);
+            fragment = new ProfileFragment();
         else if (id == R.id.nav_us)
             fragment = new UsFragment();
         else if (id == R.id.nav_me)

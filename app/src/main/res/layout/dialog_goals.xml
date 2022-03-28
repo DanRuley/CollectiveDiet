@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".Goals_Fragment_Components.GoalsDialog"
+    android:background="@drawable/gradient_animation_goals">
+
+    <TextView
+        android:id="@+id/tv_dialog_goals_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Today's Weight"
+        android:textSize="35sp"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/CustomOutlineBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:padding="10dp"
+        android:layout_weight="1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_dialog_goals_user_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:background="@color/white"
+            android:hint="Enter Weight"
+            android:textSize="16sp"
+            android:inputType="number"
+            >
+
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_dialog_goals_user_input_measurement_unit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="lbs."
+            android:textSize="16sp"
+            android:layout_weight=".5">
+
+        </TextView>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/iv_dialog_goals_decrease"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_down"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_white"
+                android:layout_margin="10dp">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/iv_dialog_goals_increase"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_up"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_white"
+                android:layout_margin="10dp">
+
+            </ImageView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="70dp"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_dialog_goals_decline"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_button"
+                    android:src="@drawable/ic_decline">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_dialog_goals_accept"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_button"
+                    android:src="@drawable/ic_accept">
+
+                </ImageView>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+</LinearLayout>

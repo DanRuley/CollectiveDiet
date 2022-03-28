@@ -24,7 +24,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/blue"
+            android:background="@color/blueblue"
             app:popupTheme="@style/Theme.TheCollectiveDiet.PopupOverlay">
 
             <TextView
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="bottom"
-        android:background="@color/blue"
+        android:background="@color/blueblue"
         android:theme="@style/Theme.TheCollectiveDiet.AppBarOverlay"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"

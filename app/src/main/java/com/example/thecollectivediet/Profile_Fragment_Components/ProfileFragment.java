@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mNickName.setText(prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.textview_profile_age);
         mNickName = v.findViewById(R.id.textview_profile_lastname);
-        mGender = v.findViewById(R.id.textview_profile_gender);
+        mGender = v.findViewById(R.id.textview_profile_sex);
         mAge = v.findViewById(R.id.textview_profile_age);
         mWeight = v.findViewById(R.id.textview_profile_weight);
         mHeight = v.findViewById(R.id.textview_profile_height);
@@ -113,7 +113,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.ac_button_profile_edit: {
-                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new EditProfileFragment());
+//                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new EditProfileFragment());
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new EditProfileFragment());
                 break;
             }
 
