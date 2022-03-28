@@ -200,9 +200,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+       // getshit();
+        modelViewUser.getUser().setCurrent_wgt(111f);
+        int x = 9;
     }
 
-
+public void getshit(){
+        float x = modelViewUser.getUser().getCurrent_wgt();
+}
     //create an observer that watches the LiveData<User> object
     final Observer<User> nameObserver = new Observer<User>() {
         @Override

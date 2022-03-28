@@ -92,7 +92,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_name_input"
+
                 style="@style/CustomOutlineBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -101,13 +101,14 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_name_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/color_cursor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_dob_input"
+
                 style="@style/CustomOutlineBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -116,6 +117,7 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_dob_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/color_cursor" />
@@ -135,7 +137,7 @@
             >
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_sex_input"
+
                 style="@style/CustomOutlineBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -144,6 +146,7 @@
                 android:padding="10dp"
                 android:enabled="false">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_sex_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/color_cursor"
@@ -163,7 +166,7 @@
             </Spinner>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_weight_input"
+
                 style="@style/CustomOutlineBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -172,6 +175,7 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_weight_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"

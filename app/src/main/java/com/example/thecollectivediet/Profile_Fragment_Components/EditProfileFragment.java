@@ -42,7 +42,10 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -63,13 +66,13 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private ActivityResultLauncher<String> readRequestPermissionLauncher;
 
     //Edit text inputs
-    EditText nickNameInput;
-    EditText dobInput;
-    EditText genderInput;
+    TextInputEditText nickNameInput;
+    TextInputEditText dobInput;
+    EditText sexInput;
     EditText heightInput;
-    EditText countryInput;
-    EditText cityInput;
-    EditText weightInput;
+    TextInputEditText countryInput;
+    TextInputEditText cityInput;
+    TextInputEditText weightInput;
 
     DatePickerDialog dobPicker;
 
@@ -125,7 +128,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         View v = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        modelViewUser = new ViewModelProvider(requireActivity()).get(ModelViewUser.class);
 
         //took new photo?
         photoChanged = false;
@@ -212,6 +215,11 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 });
 
         multiplePermissionActivityResultLauncher.launch(PERMISSIONS);
+
+        nickNameInput = v.findViewById(R.id.edit_profile_name_input);
+        dobInput = v.findViewById(R.id.edit_profile_dob_input);
+        sexInput = v.findViewById(R.id.edit_profile_sex_input);
+        weightInput = v.findViewById(R.id.edit_profile_weight_input);
 
         //spinner for sex
         sexSpinner = v.findViewById(R.id.spin_sex1);
@@ -407,9 +415,16 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         modelViewUser.getUser().setUser_dob(getEditTextString(dobInput));
         modelViewUser.getUser().setUser_city(getEditTextString(cityInput));
         modelViewUser.getUser().setUser_country(getEditTextString(countryInput));
-        modelViewUser.getUser().setUser_gender(getEditTextString(genderInput));
-        modelViewUser.getUser().setUser_hgt(Float.parseFloat(getEditTextString(heightInput)));
-        modelViewUser.getUser().setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
+        modelViewUser.getUser().setUser_gender(getEditTextString(sexInput));
+
+        int feet = (Integer.valueOf( feetSpinner.getSelectedItem().toString()));
+        int inches = (Integer.valueOf(inchSpinner.getSelectedItem().toString()));
+
+        modelViewUser.getUser().setUser_hgt((float)(feet + inches));
+
+        if(!getEditTextString(weightInput).matches("")) {
+            modelViewUser.getUser().setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
+        }
 
         modelViewUser.updateUserProfile(modelViewUser.getUser(), context);
 
