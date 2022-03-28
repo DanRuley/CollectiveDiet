@@ -4,11 +4,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 
 
@@ -18,16 +20,19 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
     AppCompatButton mEnterWeightGoal;
     AppCompatButton mEnterCalorieGoal;
 
+    ModelViewUser modelViewUser;
+
     public FragmentGoals() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_goals, container, false);
+
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(getActivity()).get(ModelViewUser.class);
 
         mEnterWeight = v.findViewById(R.id.acb_goals_enter_current_weight);
         mEnterWeight.setOnClickListener(this);
@@ -48,20 +53,20 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
         {
             case R.id.acb_goals_enter_current_weight:{
 
-                GoalsDialog dialog = new GoalsDialog(getContext(), 1);
+                GoalsDialog dialog = new GoalsDialog(getContext(), 1, requireActivity());
                 dialog.show();
                 break;
             }
 
             case R.id.acb_goals_enter_weight_goal:{
 
-                GoalsDialog dialog = new GoalsDialog(getContext(),2);
+                GoalsDialog dialog = new GoalsDialog(getContext(),2, requireActivity());
                 dialog.show();
                 break;
             }
 
             case R.id.acb_goals_enter_calorie_goal:{
-                GoalsDialog dialog = new GoalsDialog(getContext(), 3);
+                GoalsDialog dialog = new GoalsDialog(getContext(), 3, requireActivity());
                 dialog.show();
                 break;
             }

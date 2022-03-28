@@ -69,12 +69,16 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     GraphView mWeightGraph;
     LineGraphSeries<DataPoint> weightSeries;
 
+    ModelViewUser modelViewUser;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
-        ModelViewUser m = new ViewModelProvider(requireActivity()).get(ModelViewUser.class);
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+
         context = this.getActivity();
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();
@@ -168,6 +172,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         if (thumbnailPic != null) {
             mProfilePic.setImageBitmap(thumbnailPic);
         }
+
+//        //set the observer to get info for user created in User repository
+//        sharedViewModelUser.getUser().observe(getViewLifecycleOwner(), nameObserver);
+//        modelViewUser.getUserData().observe(getViewLifecycleOwner(), nameObserver)
 
         //Rating bar for mood
 //        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
