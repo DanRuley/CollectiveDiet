@@ -138,7 +138,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         assert (MainActivity.getCurrentUser() != null);
 
 
-        dobPicker = new DatePickerDialog(Objects.requireNonNull(getActivity()), this);
+        dobPicker = new DatePickerDialog(requireActivity(), this);
 
         User currentUser = MainActivity.getCurrentUser();
 
@@ -154,7 +154,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         Objects.requireNonNull(weightInput).setOnFocusChangeListener(clearInputListener);
         dobInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_dob_input)).getEditText();
         dobInput.setKeyListener(null);
-        genderInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_gender_input)).getEditText();
+        genderInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_sex_input)).getEditText();
         Objects.requireNonNull(genderInput).setOnFocusChangeListener(clearInputListener);
         heightInput = ((TextInputLayout) v.findViewById(R.id.edit_profile_height_input)).getEditText();
         Objects.requireNonNull(heightInput).setOnFocusChangeListener(clearInputListener);
@@ -267,7 +267,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             view.setOnTouchListener((v, event) -> {
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    MainActivity.hideKeyboard(Objects.requireNonNull(getActivity()));
+                    MainActivity.hideKeyboard(requireActivity());
                     Log.i("touch event", v.toString());
                     v.performClick();
                 }
@@ -304,12 +304,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
             saveProfileChanges();
 //            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
-            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, new ProfileFragment());
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
 
         if (viewID == R.id.edit_profile_back_btn) {
             //MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
-            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentHolder, new ProfileFragment());
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
     }
 
@@ -347,7 +347,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private void saveProfileImage(@NonNull Bitmap finalBitmap) {
 
         if (photoChanged) {
-            File rt = Objects.requireNonNull(getActivity()).getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File rt = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             String fname = "Thumbnail_profile.jpg";
 
             File file = new File(rt, fname);
