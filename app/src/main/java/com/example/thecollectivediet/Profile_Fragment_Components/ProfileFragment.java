@@ -64,14 +64,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
-        User signedInUser = MainActivity.getCurrentUser();
+        //todo do something with this
+        //User signedInUser = MainActivity.getCurrentUser();
 
         mEdit = v.findViewById(R.id.ac_button_profile_edit);
         mEdit.setOnClickListener(this);
         mProfilePic = v.findViewById(R.id.profile_image);
 
         mNickName = v.findViewById(R.id.textview_profile_lastname);
-        mNickName.setText(prefs.getString("profile_last", ""));
+        //mNickName.setText(prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.textview_profile_age);
         mNickName = v.findViewById(R.id.textview_profile_lastname);
         mGender = v.findViewById(R.id.textview_profile_sex);
@@ -119,7 +120,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
 
             case R.id.ac_button_logout: {
-                signOut();
+               // signOut();
                 break;
             }
 
@@ -136,21 +137,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return GoogleSignIn.getLastSignedInAccount(context) != null;
     }
 
-    private void signOut() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-        mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-                TextView login = getActivity().findViewById(R.id.toolbar_login);
-                MainActivity.setCurrentUser(null);
-                login.setText("sign in");
-
-                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new FragmentSignIn());
-            }
-        });
-    }
+//    private void signOut() {
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+//        mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//
+//                TextView login = getActivity().findViewById(R.id.toolbar_login);
+//                MainActivity.setCurrentUser(null);
+//                login.setText("sign in");
+//
+//                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new FragmentSignIn());
+//            }
+//        });
+//    }
 }

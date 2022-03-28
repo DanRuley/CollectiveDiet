@@ -15,7 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -72,6 +74,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
+        ModelViewUser m = new ViewModelProvider(requireActivity()).get(ModelViewUser.class);
         context = this.getActivity();
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();

@@ -53,10 +53,11 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
 
         int id = v.getId();
 
-        if (MainActivity.getCurrentUser() == null) {
-            ((MainActivity)ctx).requireSignInPrompt("Please sign in before logging meals");
-            return;
-        }
+        //todo do something with this later
+//        if (MainActivity.getCurrentUser() == null) {
+//            ((MainActivity)ctx).requireSignInPrompt("Please sign in before logging meals");
+//            return;
+//        }
 
         if (id == R.id.breakfast_add_btn)
             mealType = MealType.Breakfast;

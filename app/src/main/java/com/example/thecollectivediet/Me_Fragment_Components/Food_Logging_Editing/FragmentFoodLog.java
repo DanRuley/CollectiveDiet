@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
+import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
@@ -55,10 +57,14 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     ArrayList<FoodLogItemView> innerDinnerItems;
     ArrayList<FoodLogItemView> innerSnacksItems;
 
+    ModelViewUser modelViewUser;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_food_log, container, false);
+
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
 
         arrayListVertical = new ArrayList<>();
         innerBreakfastItems = new ArrayList<>();
@@ -117,7 +123,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     private void onDateChanged() {
         showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
-        FoodLog_API_Controller.getFoodLogEntries(getActivity(), MainActivity.getCurrentUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
+        FoodLog_API_Controller.getFoodLogEntries(getActivity(), modelViewUser.getUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
             @Override
             public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
                 populateRecyclerItems(response);

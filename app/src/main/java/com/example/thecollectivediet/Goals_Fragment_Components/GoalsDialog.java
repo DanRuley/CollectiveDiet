@@ -130,16 +130,16 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
 
             case R.id.iv_dialog_goals_accept:{
                 //todo need to determine best way to update user info. For now, no helper methods used here
-                User user = MainActivity.getCurrentUser();
-
-                if(dialogType == 1)
-                    user.setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
-                else if(dialogType == 2)
-                    user.setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
-                else if(dialogType == 3)
-
-
-                User_API_Controller.updateUserProfile(user, ctx);
+//                User user = MainActivity.getCurrentUser();
+//
+//                if(dialogType == 1)
+//                    user.setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+//                else if(dialogType == 2)
+//                    user.setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+//               // else if(dialogType == 3)
+//
+//
+//                User_API_Controller.updateUserProfile(user, ctx);
 
                 onStop();
                 break;
