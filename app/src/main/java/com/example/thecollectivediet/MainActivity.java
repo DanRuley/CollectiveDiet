@@ -115,15 +115,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (account != null && !account.isExpired()) {
 
-            commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
-
+            commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new FragmentSplashScreen());
             String username = prefs.getString("user", "null");
             login.setText(username);
+
 
             User_API_Controller.handleNewSignIn(account, MainActivity.this, new VolleyResponseListener<User>() {
                 @Override
                 public void onResponse(User user) {
                     MainActivity.setCurrentUser(user);
+                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
                 }
 
                 @Override
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             });
+
+
             //todo
             //get user metrics
 
