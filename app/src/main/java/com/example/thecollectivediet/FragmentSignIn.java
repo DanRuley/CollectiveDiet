@@ -52,7 +52,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
-        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        modelViewUser = new ViewModelProvider(getActivity()).get(ModelViewUser.class);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.

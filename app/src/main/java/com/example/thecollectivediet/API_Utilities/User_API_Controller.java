@@ -9,7 +9,10 @@ import androidx.annotation.NonNull;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogUploadItem;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
+import com.example.thecollectivediet.JSON_Marshall_Objects.WeightUploadItem;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -95,6 +98,36 @@ public class User_API_Controller {
                 return headers;
             }
         };
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
+    }
+
+    public static void pushWeightLogEntry(@NonNull User user, Float weight,Context ctx) {
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_weight_log_item";
+
+        java.util.Date dts = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        WeightUploadItem toAdd = new WeightUploadItem(user.getUser_id(), weight, sdf.format(dts));
+
+        JSONObject weightLogJSON = null;
+
+        try {
+            weightLogJSON = new JSONObject(new Gson().toJson(toAdd, WeightUploadItem.class));
+        } catch (JSONException e) {
+            Log.d("weight log json parse", e.getMessage());
+        }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, weightLogJSON,
+                response -> Log.d("success!", response.toString()), error -> Log.d("add weight log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+            @NonNull
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 }

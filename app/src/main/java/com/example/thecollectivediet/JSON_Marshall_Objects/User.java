@@ -17,13 +17,14 @@ public class User {
     String user_country;
     Float start_wgt;
     Float current_wgt;
-    Float goal_wgt;
+    float goal_wgt;
     String signup_dts;
     String user_lifestyle;
     Float user_hgt;
 //    int user_feet;//used for height
 //    int user_inches;//used for height
     String user_city;
+    int goal_cals;
 
 //    public int getUser_feet() {
 //        return user_feet;
@@ -119,11 +120,11 @@ public class User {
         this.current_wgt = current_wgt;
     }
 
-    public Float getGoal_wgt() {
+    public float getGoal_wgt() {
         return goal_wgt;
     }
 
-    public void setGoal_wgt(Float goal_wgt) {
+    public void setGoal_wgt(float goal_wgt) {
         this.goal_wgt = goal_wgt;
     }
 
@@ -157,6 +158,14 @@ public class User {
 
     public String getUser_city() {
         return user_city;
+    }
+
+    public int getGoal_cals() {
+        return goal_cals;
+    }
+
+    public void setGoal_cals(int goal_cals) {
+        this.goal_cals = goal_cals;
     }
 
     @Nullable

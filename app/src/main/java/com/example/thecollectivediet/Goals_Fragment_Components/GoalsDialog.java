@@ -9,9 +9,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
-import com.example.thecollectivediet.JSON_Marshall_Objects.User;
-import com.example.thecollectivediet.MainActivity;
+import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -33,6 +35,8 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
     ImageView mAccept;
     ImageView mDecline;
 
+    ModelViewUser modelViewUser;
+
     /**
      * Creates dialog for entering user weigh in, weight goal, and calorie goal.
      * The dialog will display the appropriate text that is determined by the parameter dialogType.
@@ -42,10 +46,14 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
      * 3- calorie goal
      * @param ctx
      * @param dialogType passed in from FragmentGoals to determine the dialog type.
+     * @param fragmentActivity
      */
-    public GoalsDialog(Context ctx, int dialogType) {
+    public GoalsDialog(Context ctx, int dialogType, FragmentActivity fragmentActivity) {
         // Required empty public constructor
         super(ctx);
+
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(fragmentActivity).get(ModelViewUser.class);
 
         this.ctx = ctx;
         this.dialogType = dialogType;
@@ -130,16 +138,21 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
 
             case R.id.iv_dialog_goals_accept:{
                 //todo need to determine best way to update user info. For now, no helper methods used here
-//                User user = MainActivity.getCurrentUser();
-//
-//                if(dialogType == 1)
-//                    user.setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
-//                else if(dialogType == 2)
-//                    user.setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
-//               // else if(dialogType == 3)
-//
-//
-//                User_API_Controller.updateUserProfile(user, ctx);
+
+
+                if(dialogType == 1) {
+                    modelViewUser.getUser().setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+                    User_API_Controller.pushWeightLogEntry(modelViewUser.getUser(), modelViewUser.getUser().getCurrent_wgt(), ctx);
+                }
+                else if(dialogType == 2)
+                    modelViewUser.getUser().setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+                else if(dialogType == 3)
+                {
+                    modelViewUser.getUser().setGoal_cals(Integer.valueOf(mInput.getEditableText().toString()));
+                }
+
+
+                User_API_Controller.updateUserProfile(modelViewUser.getUser(), ctx);
 
                 onStop();
                 break;
