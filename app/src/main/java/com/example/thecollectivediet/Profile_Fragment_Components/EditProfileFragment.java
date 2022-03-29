@@ -415,12 +415,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         modelViewUser.getUser().setUser_dob(getEditTextString(dobInput));
         modelViewUser.getUser().setUser_city(getEditTextString(cityInput));
         modelViewUser.getUser().setUser_country(getEditTextString(countryInput));
-        modelViewUser.getUser().setUser_gender(getEditTextString(sexInput));
+        modelViewUser.getUser().setUser_gender(sexSpinner.getSelectedItem().toString());
 
         int feet = (Integer.valueOf( feetSpinner.getSelectedItem().toString()));
         int inches = (Integer.valueOf(inchSpinner.getSelectedItem().toString()));
 
-        modelViewUser.getUser().setUser_hgt((float)(feet + inches));
+        modelViewUser.getUser().setUser_hgt((float)(convertToInches(feet) + inches));
 
         if(!getEditTextString(weightInput).matches("")) {
             modelViewUser.getUser().setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
@@ -429,6 +429,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         modelViewUser.updateUserProfile(modelViewUser.getUser(), context);
 
         //editor.commit();
+    }
+
+    private int convertToInches(int feet) {
+        return feet * 12;
     }
 
     private boolean isExternalStorageWritable() {

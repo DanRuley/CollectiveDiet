@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.service.autofill.UserData;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 import com.jjoe64.graphview.GraphView;
@@ -62,6 +65,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     //elements
     TextView mBMI;
+    TextView mCalGoal;
+    TextView mBmi;
 
     //graph elements
     GraphView mWeightGraph;
@@ -75,14 +80,15 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        modelViewUser = new ViewModelProvider(getActivity()).get(ModelViewUser.class);
 
         context = this.getActivity();
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
         mBMI = v.findViewById(R.id.tv_bmi_result);
-        setUserBMI();
+//        setUserBMI();
+
 //        moodImage = v.findViewById(R.id.mood_image);
 //        energyImage = v.findViewById(R.id.energy_image);
 //        hungerImage = v.findViewById(R.id.hunger_image);
@@ -132,10 +138,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
             mProfilePic.setImageBitmap(thumbnailPic);
         }
 
-//        //set the observer to get info for user created in User repository
-//        sharedViewModelUser.getUser().observe(getViewLifecycleOwner(), nameObserver);
-//        modelViewUser.getUserData().observe(getViewLifecycleOwner(), nameObserver)
+        //set the observer to get info for user created in User repository
+       modelViewUser.getUserData().observe(getViewLifecycleOwner(), nameObserver);
 
+        mCalGoal = v.findViewById(R.id.tv_cal_goal);
         //Rating bar for mood
 //        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
 //        moodRatingBar.setRating(0);
@@ -201,6 +207,18 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    //create an observer that watches the LiveData<User> object
+    final Observer<User> nameObserver = new Observer<User>() {
+        @Override
+        public void onChanged(User user) {
+            //Update the ui if this data variable changes
+            if(user != null){
+              mCalGoal.setText(String.valueOf(user.getGoal_cals()));
+              setUserBMI();
+            }
+        }
+    };
+
     @Override
     public void onClick(@NonNull View v) {
 
@@ -211,22 +229,11 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     private void setUserBMI() {
 
-        int height;
-        int weight;
-        int feet;
-        int inches;
+        Float height = modelViewUser.getUser().getUser_hgt();
+        Float weight = modelViewUser.getUser().getCurrent_wgt();
         String bmi;
 
-        //user bmi
-        weight = Integer.valueOf(prefs.getString("profile_weight", "0"));
-        feet = prefs.getInt("profile_feet", 0);
-
-        inches = prefs.getInt("profile_inches", 0);
-
-        height = (feet * 12) + inches; //convert feet to inches then add
-
-
-        if (weight > 0 && height > 0) {
+        if (height > 0 && weight > 0) {
             double temp = weight ;
             temp = temp/(height*height);
             temp = temp * 703;

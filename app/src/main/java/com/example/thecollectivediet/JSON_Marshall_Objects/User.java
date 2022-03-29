@@ -17,7 +17,7 @@ public class User {
     String user_country;
     Float start_wgt;
     Float current_wgt;
-    float goal_wgt;
+    Float goal_wgt;
     String signup_dts;
     String user_lifestyle;
     Float user_hgt;
@@ -51,6 +51,11 @@ public class User {
         user_email = email;
         user_name = name;
         signup_dts = dts;
+
+        this.start_wgt = 0f;
+        this.current_wgt = 0f;
+        this.goal_cals = 0;
+
     }
 
     public String getUser_country() {
@@ -120,11 +125,11 @@ public class User {
         this.current_wgt = current_wgt;
     }
 
-    public float getGoal_wgt() {
+    public Float getGoal_wgt() {
         return goal_wgt;
     }
 
-    public void setGoal_wgt(float goal_wgt) {
+    public void setGoal_wgt(Float goal_wgt) {
         this.goal_wgt = goal_wgt;
     }
 

@@ -152,7 +152,8 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
                 }
 
 
-                User_API_Controller.updateUserProfile(modelViewUser.getUser(), ctx);
+                modelViewUser.updateUserProfile(modelViewUser.getUser(), ctx);
+               // modelViewUser.setUser(modelViewUser.getUser());
 
                 onStop();
                 break;

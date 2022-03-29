@@ -114,5 +114,6 @@ public class ModelViewUser extends AndroidViewModel {
 
     public void updateUserProfile(User currentUser, Context context) {
         User_API_Controller.updateUserProfile(currentUser,context);
+        setUser(currentUser);
     }
 }
