@@ -22,9 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
-import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.ModelViewMeals;
+import com.example.thecollectivediet.ViewModelMeals;
 import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 
@@ -60,7 +59,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     ArrayList<FoodLogItemView> innerSnacksItems;
 
     ModelViewUser modelViewUser;
-    ModelViewMeals modelViewMeals;
+    ViewModelMeals viewModelMeals;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
@@ -69,7 +68,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
         //Creates or gets existing view model to pass around the user data
         modelViewUser = new ViewModelProvider(requireActivity()).get(ModelViewUser.class);
-        modelViewMeals = new ViewModelProvider(requireActivity()).get(ModelViewMeals.class);
+        viewModelMeals = new ViewModelProvider(requireActivity()).get(ViewModelMeals.class);
 
         arrayListVertical = new ArrayList<>();
         innerBreakfastItems = new ArrayList<>();
@@ -101,7 +100,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         outerRec.setAdapter(foodLogAdapter);
 
         //set the observer to get info for user
-        modelViewMeals.getList().observe(requireActivity(), nameObserver);
+        viewModelMeals.getList().observe(requireActivity(), nameObserver);
 
         return v;
     }
@@ -145,7 +144,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
                // populateRecyclerItems(response);// erase later after viewmodel implementation
-                modelViewMeals.setList(response);
+                viewModelMeals.setList(response);
             }
 
             @Override

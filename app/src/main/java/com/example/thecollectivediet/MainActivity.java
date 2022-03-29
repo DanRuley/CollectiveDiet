@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //public static User currentUser;
     ModelViewUser modelViewUser;
-    ModelViewMeals modelViewMeals;
+    ViewModelMeals viewModelMeals;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Creates or gets existing view model to pass around the user data
         modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
-        modelViewMeals = new ViewModelProvider(this).get(ModelViewMeals.class);
+        viewModelMeals = new ViewModelProvider(this).get(ViewModelMeals.class);
 
         Map<String, String> env = System.getenv();
         setContentView(R.layout.activity_main);

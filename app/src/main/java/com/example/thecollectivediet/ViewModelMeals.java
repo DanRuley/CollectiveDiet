@@ -12,13 +12,13 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import java.util.HashMap;
 import java.util.List;
 
-public class ModelViewMeals extends AndroidViewModel {
+public class ViewModelMeals extends AndroidViewModel {
 
     Application application;
 
     MutableLiveData<HashMap<String,List<FoodLogItemView>>> list = new MutableLiveData<>();
 
-    public ModelViewMeals(@NonNull Application application) {
+    public ViewModelMeals(@NonNull Application application) {
         super(application);
 
         this.application = application;
