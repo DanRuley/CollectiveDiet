@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
+import com.example.thecollectivediet.ModelViewMeals;
 import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 
@@ -57,13 +60,16 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     ArrayList<FoodLogItemView> innerSnacksItems;
 
     ModelViewUser modelViewUser;
+    ModelViewMeals modelViewMeals;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_food_log, container, false);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        modelViewUser = new ViewModelProvider(requireActivity()).get(ModelViewUser.class);
+        modelViewMeals = new ViewModelProvider(requireActivity()).get(ModelViewMeals.class);
 
         arrayListVertical = new ArrayList<>();
         innerBreakfastItems = new ArrayList<>();
@@ -94,8 +100,22 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
         outerRec.setAdapter(foodLogAdapter);
 
+        //set the observer to get info for user
+        modelViewMeals.getList().observe(requireActivity(), nameObserver);
+
         return v;
     }
+
+    //create an observer that watches the LiveData<User> object
+    final Observer<HashMap<String,List<FoodLogItemView>>> nameObserver = new Observer<HashMap<String,List<FoodLogItemView>>>() {
+        @Override
+        public void onChanged(HashMap<String,List<FoodLogItemView>> list) {
+            //Update the ui if this data variable changes
+            if(list != null){
+               populateRecyclerItems(list);
+            }
+        }
+    };
 
     private void initializeDatePickerDialog() {
         final Calendar c = Calendar.getInstance();
@@ -124,7 +144,8 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         FoodLog_API_Controller.getFoodLogEntries(getActivity(), modelViewUser.getUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
             @Override
             public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
-                populateRecyclerItems(response);
+               // populateRecyclerItems(response);// erase later after viewmodel implementation
+                modelViewMeals.setList(response);
             }
 
             @Override

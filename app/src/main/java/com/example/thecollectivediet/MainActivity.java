@@ -56,13 +56,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //public static User currentUser;
     ModelViewUser modelViewUser;
-
+    ModelViewMeals modelViewMeals;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Creates or gets existing view model to pass around the user data
         modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        modelViewMeals = new ViewModelProvider(this).get(ModelViewMeals.class);
 
         Map<String, String> env = System.getenv();
         setContentView(R.layout.activity_main);
@@ -201,14 +202,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-       // getshit();
-        modelViewUser.getUser().setCurrent_wgt(111f);
-        int x = 9;
+
     }
 
-public void getshit(){
-        float x = modelViewUser.getUser().getCurrent_wgt();
-}
+
     //create an observer that watches the LiveData<User> object
     final Observer<User> nameObserver = new Observer<User>() {
         @Override

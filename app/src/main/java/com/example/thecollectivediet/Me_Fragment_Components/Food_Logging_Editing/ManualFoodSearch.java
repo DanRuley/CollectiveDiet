@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.MainActivity;
+import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
 
 import java.util.List;
@@ -48,11 +50,15 @@ public class ManualFoodSearch extends Fragment {
 
     ManualFoodSearch manualFoodSearch;
 
+    ModelViewUser modelViewUser;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_food_search, container, false);
+
+        modelViewUser = new ViewModelProvider(getActivity()).get(ModelViewUser.class);
 
         manualFoodSearch = this;
 
@@ -116,14 +122,14 @@ public class ManualFoodSearch extends Fragment {
 
 
     private void populateRecycler(List<FoodResult> response) {
-        MainActivity.hideKeyboard(Objects.requireNonNull(getActivity()));
+        MainActivity.hideKeyboard(requireActivity());
 
         mAdapter = new FoodSearchRecyclerViewAdapter(response, ctx, foodItem -> {
 
             controller.getNutrients(String.valueOf(foodItem.getId()), new VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients nutrients) {
-                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem, mealType, manualFoodSearch);
+                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem, mealType, requireActivity());
                     dialog.show();
                 }
 

@@ -1,6 +1,7 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.CountDownTimer;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
@@ -51,11 +53,11 @@ public class FoodConfirmDialog extends Dialog {
 
     ModelViewUser modelViewUser;
 
-    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType, ManualFoodSearch manualFoodSearch) {
+    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType, FragmentActivity activity) {
         super(ctx);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(manualFoodSearch).get(ModelViewUser.class);
+        modelViewUser = new ViewModelProvider(activity).get(ModelViewUser.class);
 
         this.ctx = ctx;
         this.nutrients = nutrients;
