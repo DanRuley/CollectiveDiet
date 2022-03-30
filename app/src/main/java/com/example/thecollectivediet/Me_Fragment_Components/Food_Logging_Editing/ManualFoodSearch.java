@@ -22,11 +22,10 @@ import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ManualFoodSearch extends Fragment {
 
@@ -50,7 +49,7 @@ public class ManualFoodSearch extends Fragment {
 
     ManualFoodSearch manualFoodSearch;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -58,7 +57,7 @@ public class ManualFoodSearch extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_food_search, container, false);
 
-        modelViewUser = new ViewModelProvider(getActivity()).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
 
         manualFoodSearch = this;
 

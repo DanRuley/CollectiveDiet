@@ -55,14 +55,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static User currentUser;
 
     //public static User currentUser;
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
     ViewModelMeals viewModelMeals;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(this).get(ViewModelUser.class);
         viewModelMeals = new ViewModelProvider(this).get(ViewModelMeals.class);
 
         Map<String, String> env = System.getenv();
@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
 /////////////////////////////////////////////////////////////////////////////////////////////////
-        if (modelViewUser.isSignedIn()) {
-            modelViewUser.pullUserData(MainActivity.this);
-            //login.setText(modelViewUser.get) and change above fragment to loading screen.
+        if (viewModelUser.isSignedIn()) {
+            viewModelUser.pullUserData(MainActivity.this);
+            //login.setText(viewModelUser.get) and change above fragment to loading screen.
             commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
 
 
@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //
 
 
-//            User_API_Controller.handleNewSignIn(modelViewUser.getAccount(), MainActivity.this, new VolleyResponseListener<User>() {
+//            User_API_Controller.handleNewSignIn(viewModelUser.getAccount(), MainActivity.this, new VolleyResponseListener<User>() {
 //                @Override
 //                public void onResponse(User user) {
-//                    modelViewUser.setUser(user);
+//                    viewModelUser.setUser(user);
 //                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
 //                }
 //
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         //set the observer to get info for user
-        modelViewUser.getUserData().observe(MainActivity.this, nameObserver);
+        viewModelUser.getUserData().observe(MainActivity.this, nameObserver);
 
 
 

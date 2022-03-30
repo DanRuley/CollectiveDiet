@@ -13,8 +13,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 import com.google.android.material.textfield.TextInputEditText;
 
 
@@ -35,7 +35,7 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
     ImageView mAccept;
     ImageView mDecline;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
     /**
      * Creates dialog for entering user weigh in, weight goal, and calorie goal.
@@ -53,7 +53,7 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         super(ctx);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(fragmentActivity).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(fragmentActivity).get(ViewModelUser.class);
 
         this.ctx = ctx;
         this.dialogType = dialogType;
@@ -141,19 +141,19 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
 
 
                 if(dialogType == 1) {
-                    modelViewUser.getUser().setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
-                    User_API_Controller.pushWeightLogEntry(modelViewUser.getUser(), modelViewUser.getUser().getCurrent_wgt(), ctx);
+                    viewModelUser.getUser().setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+                    User_API_Controller.pushWeightLogEntry(viewModelUser.getUser(), viewModelUser.getUser().getCurrent_wgt(), ctx);
                 }
                 else if(dialogType == 2)
-                    modelViewUser.getUser().setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+                    viewModelUser.getUser().setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
                 else if(dialogType == 3)
                 {
-                    modelViewUser.getUser().setGoal_cals(Integer.valueOf(mInput.getEditableText().toString()));
+                    viewModelUser.getUser().setGoal_cals(Integer.valueOf(mInput.getEditableText().toString()));
                 }
 
 
-                modelViewUser.updateUserProfile(modelViewUser.getUser(), ctx);
-               // modelViewUser.setUser(modelViewUser.getUser());
+                viewModelUser.updateUserProfile(viewModelUser.getUser(), ctx);
+               // viewModelUser.setUser(viewModelUser.getUser());
 
                 onStop();
                 break;

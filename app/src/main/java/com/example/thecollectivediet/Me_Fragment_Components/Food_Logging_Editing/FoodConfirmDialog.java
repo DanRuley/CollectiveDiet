@@ -1,7 +1,6 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.CountDownTimer;
@@ -28,8 +27,8 @@ import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.HashMap;
 
@@ -51,13 +50,13 @@ public class FoodConfirmDialog extends Dialog {
     Spinner mealTypeSpinner;
     EditText servingQtyVal;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
     public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType, FragmentActivity activity) {
         super(ctx);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(activity).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(activity).get(ViewModelUser.class);
 
         this.ctx = ctx;
         this.nutrients = nutrients;
@@ -99,7 +98,7 @@ public class FoodConfirmDialog extends Dialog {
         setupFoodImage();
 
         this.findViewById(R.id.add_food_btn).setOnClickListener(v -> {
-            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, modelViewUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString());
+            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, viewModelUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString());
             JSONSerializer.addFoodToList(food.getProduct_name(), "100 grams", ctx);
             Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").into(image);
             new CountDownTimer(500, 250) {

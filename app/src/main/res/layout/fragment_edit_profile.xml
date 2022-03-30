@@ -270,7 +270,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_city_input"
+
                 style="@style/CustomOutlineBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -279,13 +279,14 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_city_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/color_cursor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_country_input"
+
                 style="@style/CustomOutlineBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -294,6 +295,7 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_country_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/color_cursor" />

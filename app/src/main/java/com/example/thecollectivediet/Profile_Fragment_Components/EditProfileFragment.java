@@ -35,17 +35,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,7 +50,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -119,7 +115,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     //bitmap that holds profile pic
     Bitmap bitmap;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,7 +124,9 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         View v = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(requireActivity()).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
+        viewModelUser.getUserData().observe(getViewLifecycleOwner(), observer);
+
 
         //took new photo?
         photoChanged = false;
@@ -220,6 +218,8 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         dobInput = v.findViewById(R.id.edit_profile_dob_input);
         sexInput = v.findViewById(R.id.edit_profile_sex_input);
         weightInput = v.findViewById(R.id.edit_profile_weight_input);
+        cityInput = v.findViewById(R.id.edit_profile_city_input);
+        countryInput = v.findViewById(R.id.edit_profile_country_input);
 
         //spinner for sex
         sexSpinner = v.findViewById(R.id.spin_sex1);
@@ -254,6 +254,39 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         inchSpinner.setOnItemSelectedListener(this);
         return v;
     }
+
+    final Observer<User> observer = new Observer<User>() {
+        @Override
+        public void onChanged(User userData) {
+            if(userData != null)
+            {
+               if(userData.getUser_name() != null)
+               nickNameInput.setText(userData.getUser_name());
+
+               if(userData.getUser_dob() != null)
+               dobInput.setText(userData.getUser_dob());
+
+               if(userData.getUser_gender() != null)
+               sexSpinner.setSelection(sexSpinAdapter.getPosition(userData.getUser_gender()));
+
+               if(userData.getCurrent_wgt() != null)
+               weightInput.setText(String.valueOf((int) Math.floor(userData.getCurrent_wgt())));
+
+               if(userData.getUser_hgt() != null) {
+                   int feet = (int) Math.floor(userData.getUser_hgt() / 12);
+                   int inches = (int) Math.floor(userData.getUser_hgt() % 12);
+                   feetSpinner.setSelection(feetSpinAdapter.getPosition(feet));
+                   inchSpinner.setSelection(inchSpinAdapter.getPosition(inches));
+               }
+
+               if(userData.getUser_city() != null)
+               cityInput.setText(userData.getUser_city());
+
+               if(userData.getUser_country() != null)
+               countryInput.setText(userData.getUser_country());
+            }
+        }
+    };
 
     /**
      * Makes it so that clicking outside of text fields hides the keyboard
@@ -411,22 +444,21 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
     private void saveProfileChanges() {
 
-        modelViewUser.getUser().setUser_name(getEditTextString(nickNameInput));
-        modelViewUser.getUser().setUser_dob(getEditTextString(dobInput));
-        modelViewUser.getUser().setUser_city(getEditTextString(cityInput));
-        modelViewUser.getUser().setUser_country(getEditTextString(countryInput));
-        modelViewUser.getUser().setUser_gender(sexSpinner.getSelectedItem().toString());
+        viewModelUser.getUser().setUser_name(getEditTextString(nickNameInput));
+        viewModelUser.getUser().setUser_dob(getEditTextString(dobInput));
+        viewModelUser.getUser().setUser_city(getEditTextString(cityInput));
+        viewModelUser.getUser().setUser_country(getEditTextString(countryInput));
+        viewModelUser.getUser().setUser_gender(sexSpinner.getSelectedItem().toString());
 
         int feet = (Integer.valueOf( feetSpinner.getSelectedItem().toString()));
         int inches = (Integer.valueOf(inchSpinner.getSelectedItem().toString()));
-
-        modelViewUser.getUser().setUser_hgt((float)(convertToInches(feet) + inches));
+        viewModelUser.getUser().setUser_hgt((float)(convertToInches(feet) + inches));
 
         if(!getEditTextString(weightInput).matches("")) {
-            modelViewUser.getUser().setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
+            viewModelUser.getUser().setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
         }
 
-        modelViewUser.updateUserProfile(modelViewUser.getUser(), context);
+        viewModelUser.updateUserProfile(viewModelUser.getUser(), context);
 
         //editor.commit();
     }

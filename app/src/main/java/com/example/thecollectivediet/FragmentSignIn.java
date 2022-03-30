@@ -19,7 +19,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
@@ -38,7 +37,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
     private ActivityResultLauncher<Intent> signInActivityResultLauncher;
     private GoogleSignInClient mGoogleSignInClient;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
     //buttons
     SignInButton signInButton;
@@ -52,7 +51,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
-        modelViewUser = new ViewModelProvider(getActivity()).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -103,7 +102,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
         User_API_Controller.handleNewSignIn(account, getActivity(), new VolleyResponseListener<User>() {
             @Override
             public void onResponse(User user) {
-                modelViewUser.setUser(user);
+                viewModelUser.setUser(user);
                // MainActivity.setCurrentUser(user);
             }
 

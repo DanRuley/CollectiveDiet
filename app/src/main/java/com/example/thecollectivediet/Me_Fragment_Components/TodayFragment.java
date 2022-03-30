@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.service.autofill.UserData;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
@@ -72,7 +71,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     GraphView mWeightGraph;
     LineGraphSeries<DataPoint> weightSeries;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
@@ -80,7 +79,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(getActivity()).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
 
         context = this.getActivity();
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
@@ -139,7 +138,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
 
         //set the observer to get info for user created in User repository
-       modelViewUser.getUserData().observe(getViewLifecycleOwner(), nameObserver);
+       viewModelUser.getUserData().observe(getViewLifecycleOwner(), nameObserver);
 
         mCalGoal = v.findViewById(R.id.tv_cal_goal);
         //Rating bar for mood
@@ -229,8 +228,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     private void setUserBMI() {
 
-        Float height = modelViewUser.getUser().getUser_hgt();
-        Float weight = modelViewUser.getUser().getCurrent_wgt();
+        Float height = viewModelUser.getUser().getUser_hgt();
+        Float weight = viewModelUser.getUser().getCurrent_wgt();
         String bmi;
 
         if (height > 0 && weight > 0) {

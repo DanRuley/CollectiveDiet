@@ -19,7 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-public class ModelViewUser extends AndroidViewModel {
+public class ViewModelUser extends AndroidViewModel {
 
     private GoogleSignInOptions googleSignInOptions;
     private GoogleSignInClient googleSignInClient;
@@ -31,7 +31,7 @@ public class ModelViewUser extends AndroidViewModel {
 
     private Context ctx;
 
-    public ModelViewUser(@NonNull Application application) {
+    public ViewModelUser(@NonNull Application application) {
         super(application);
 
         this.application = application;
@@ -71,7 +71,7 @@ public class ModelViewUser extends AndroidViewModel {
     }
 
     /**
-     * Returns the user object of ModelViewUser. Likely to be used with
+     * Returns the user object of ViewModelUser. Likely to be used with
      * static API calls.
      * @return
      */
@@ -80,7 +80,7 @@ public class ModelViewUser extends AndroidViewModel {
     }
 
     /**
-     * Sets the user in ModelViewUser.
+     * Sets the user in ViewModelUser.
      *
      */
     public void setUser(User user){
