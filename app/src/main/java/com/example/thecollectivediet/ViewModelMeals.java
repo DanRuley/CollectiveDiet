@@ -7,21 +7,22 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
-import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ViewModelMeals extends AndroidViewModel {
 
     Application application;
-
     MutableLiveData<HashMap<String,List<FoodLogItemView>>> list = new MutableLiveData<>();
+    String chosenDate;
 
     public ViewModelMeals(@NonNull Application application) {
         super(application);
 
         this.application = application;
+        this.chosenDate = getTodayString();
     }
 
     /**
@@ -32,7 +33,30 @@ public class ViewModelMeals extends AndroidViewModel {
         return list;
     }
 
+    /**
+     * set the MutableLiveData to be passed around
+     * @param list
+     */
     public void setList(HashMap<String,List<FoodLogItemView>> list){
         this.list.setValue(list);
+    }
+
+    /**
+     * Get today's date in yyyy-MM-dd HH:mm:ss format
+     * @return sdf.format(dts)
+     */
+    @NonNull
+    public String getTodayString() {
+        java.util.Date dts = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        return sdf.format(dts);
+    }
+
+    public void setDate(String date){
+        this.chosenDate = date;
+    }
+
+    public String getDate(){
+        return chosenDate;
     }
 }

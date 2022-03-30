@@ -139,6 +139,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     }
 
     private void onDateChanged() {
+        viewModelMeals.setDate(formatDate(selectedYear, selectedMonth, selectedDay, true));
         showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
         FoodLog_API_Controller.getFoodLogEntries(getActivity(), viewModelUser.getUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
             @Override

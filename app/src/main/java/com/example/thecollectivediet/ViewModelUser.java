@@ -116,4 +116,9 @@ public class ViewModelUser extends AndroidViewModel {
         User_API_Controller.updateUserProfile(currentUser,context);
         setUser(currentUser);
     }
+
+    public void signOut(){
+        this.user = null;
+        userData.setValue(null);
+    }
 }

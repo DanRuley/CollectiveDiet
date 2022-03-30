@@ -27,6 +27,9 @@ import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -144,7 +147,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
 
             case R.id.ac_button_logout: {
-               // signOut();
+                signOut();
                 break;
             }
 
@@ -161,21 +164,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return GoogleSignIn.getLastSignedInAccount(context) != null;
     }
 
-//    private void signOut() {
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-//        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-//        mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//
-//                TextView login = getActivity().findViewById(R.id.toolbar_login);
-//                MainActivity.setCurrentUser(null);
-//                login.setText("sign in");
-//
-//                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new FragmentSignIn());
-//            }
-//        });
-//    }
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+        mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                TextView login = getActivity().findViewById(R.id.toolbar_login);
+                //MainActivity.setCurrentUser(null);
+                viewModelUser.signOut();
+                login.setText("sign in");
+
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new FragmentSignIn());
+            }
+        });
+    }
 }

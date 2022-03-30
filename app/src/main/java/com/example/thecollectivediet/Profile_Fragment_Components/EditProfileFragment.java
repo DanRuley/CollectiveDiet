@@ -459,8 +459,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         }
 
         viewModelUser.updateUserProfile(viewModelUser.getUser(), context);
-
-        //editor.commit();
     }
 
     private int convertToInches(int feet) {

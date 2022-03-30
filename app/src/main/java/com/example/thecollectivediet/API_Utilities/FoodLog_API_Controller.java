@@ -35,10 +35,10 @@ public class FoodLog_API_Controller {
         return sdf.format(dts);
     }
 
-    public static void pushFoodLogEntry(Context ctx, @NonNull FoodResult food, @NonNull User user, Float portionSize, String portionUnit, String mealCategory) {
+    public static void pushFoodLogEntry(Context ctx, @NonNull FoodResult food, @NonNull User user, Float portionSize, String portionUnit, String mealCategory, String date) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_food_log_item";
 
-        FoodLogUploadItem toAdd = new FoodLogUploadItem(user.getUser_id(), food.getId(), getDateString(), portionSize, portionUnit, mealCategory);
+        FoodLogUploadItem toAdd = new FoodLogUploadItem(user.getUser_id(), food.getId(), date, portionSize, portionUnit, mealCategory);
 
         JSONObject foodLogJSON = null;
 

@@ -28,6 +28,7 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelMeals;
 import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.HashMap;
@@ -51,12 +52,14 @@ public class FoodConfirmDialog extends Dialog {
     EditText servingQtyVal;
 
     ViewModelUser viewModelUser;
+    ViewModelMeals viewModelMeals;
 
     public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType, FragmentActivity activity) {
         super(ctx);
 
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(activity).get(ViewModelUser.class);
+        viewModelMeals = new ViewModelProvider(activity).get(ViewModelMeals.class);
 
         this.ctx = ctx;
         this.nutrients = nutrients;
@@ -98,7 +101,7 @@ public class FoodConfirmDialog extends Dialog {
         setupFoodImage();
 
         this.findViewById(R.id.add_food_btn).setOnClickListener(v -> {
-            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, viewModelUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString());
+            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, viewModelUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString(), viewModelMeals.getDate());
             JSONSerializer.addFoodToList(food.getProduct_name(), "100 grams", ctx);
             Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").into(image);
             new CountDownTimer(500, 250) {
