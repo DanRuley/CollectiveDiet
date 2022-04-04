@@ -139,6 +139,10 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
             case R.id.iv_dialog_goals_accept:{
                 //todo need to determine best way to update user info. For now, no helper methods used here
 
+                if(mInput.getEditableText().toString().matches("")){
+                    onStop();
+                    break;
+                }
 
                 if(dialogType == 1) {
                     viewModelUser.getUser().setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));

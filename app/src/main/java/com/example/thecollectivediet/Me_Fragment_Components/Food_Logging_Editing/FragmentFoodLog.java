@@ -100,7 +100,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         outerRec.setAdapter(foodLogAdapter);
 
         //set the observer to get info for user
-        viewModelMeals.getList().observe(requireActivity(), nameObserver);
+        viewModelUser.getList().observe(requireActivity(), nameObserver);
 
         return v;
     }
@@ -139,13 +139,13 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     }
 
     private void onDateChanged() {
-        viewModelMeals.setDate(formatDate(selectedYear, selectedMonth, selectedDay, true));
+        viewModelUser.setDate(formatDate(selectedYear, selectedMonth, selectedDay, true));
         showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
         FoodLog_API_Controller.getFoodLogEntries(getActivity(), viewModelUser.getUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
             @Override
             public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
                // populateRecyclerItems(response);// erase later after viewmodel implementation
-                viewModelMeals.setList(response);
+                viewModelUser.setList(response);
             }
 
             @Override
@@ -158,11 +158,15 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     private void populateRecyclerItems(@NonNull HashMap<String, List<FoodLogItemView>> logItems) {
 
+        int cals = 0;
+
         for (OuterMealRecyclerItem outerList : arrayListVertical) {
             Double totalCal = Converter.getTotalMealCalories(Objects.requireNonNull(logItems.get(outerList.getTitle())));
+            cals += totalCal;
             outerList.setCalorieString(String.format(Locale.US, "%.1f Calories", totalCal));
         }
 
+        viewModelUser.setCalories(cals);
         foodLogAdapter.notifyDataSetChanged();
 
         //breakfast
@@ -192,6 +196,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
             Log.d("item", item.toString());
             innerSnacksItems.add(item);
         }
+
     }
 
     private String formatDate(int year, int month, int day, boolean sqlFormat) {

@@ -2,16 +2,20 @@ package com.example.thecollectivediet;
 
 import static com.example.thecollectivediet.MainActivity.commitFragmentTransaction;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,8 +24,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.jjoe64.graphview.series.DataPoint;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class ViewModelUser extends AndroidViewModel {
 
@@ -30,10 +38,16 @@ public class ViewModelUser extends AndroidViewModel {
     private GoogleSignInAccount googleSignInAccount;
     private Application application;
 
+    MutableLiveData<HashMap<String,List<FoodLogItemView>>> list = new MutableLiveData<>();
+
+
     private final MutableLiveData<User> userData = new MutableLiveData<User>();
     private final MutableLiveData<DataPoint[]> weights = new MutableLiveData<>();
+    private final MutableLiveData<Float> calorieForToday = new MutableLiveData<Float>();
 
     private User user; //This user will have its data passed around the app via userData
+    private String chosenDate;
+
 
     private Context ctx;
 
@@ -49,6 +63,8 @@ public class ViewModelUser extends AndroidViewModel {
         googleSignInAccount = GoogleSignIn.getLastSignedInAccount(application);
 
         user = new User();
+        this.chosenDate = getTodayString();
+
 //        User_API_Controller.handleNewSignIn(googleSignInAccount, application, new VolleyResponseListener<User>() {
 //            @Override
 //            public void onResponse() {
@@ -123,6 +139,7 @@ public class ViewModelUser extends AndroidViewModel {
             public void onResponse(User user) {
                 setUser(user);
                 getWeighIns();
+                pullMealsData(mainActivity, user);
                // commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
             }
 
@@ -131,8 +148,31 @@ public class ViewModelUser extends AndroidViewModel {
                 Toast.makeText(ctx, error, Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
+    public void pullMealsData(MainActivity mainActivity, User user){
+        FoodLog_API_Controller.getFoodLogEntries(mainActivity, user, chosenDate, new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
+            @Override
+            public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
+
+//                for(HashMap.Entry<String, List<FoodLogItemView>> entry : response.entrySet()){
+//                    for(FoodLogItemView item : entry.getValue()){
+//
+//                    }
+//                }
+                // populateRecyclerItems(response);// erase later after viewmodel implementation
+                setList(response);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d("error", error);
+                Toast.makeText(mainActivity, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     public GoogleSignInAccount getAccount() {
         return googleSignInAccount;
     }
@@ -145,5 +185,60 @@ public class ViewModelUser extends AndroidViewModel {
     public void signOut(){
         this.user = null;
         userData.setValue(null);
+    }
+
+    //////////////////////////////////////////////////////////////
+    /**
+     * The MutableLiveData of the user will be passed to other classes/fragments
+     * @return userData
+     */
+    public MutableLiveData<HashMap<String, List<FoodLogItemView>>> getList(){
+        return list;
+    }
+
+    /**
+     * set the MutableLiveData to be passed around
+     * @param list
+     */
+    public void setList(HashMap<String,List<FoodLogItemView>> list){
+        //calorieForToday = 0;
+        int cals = 0;
+        this.list.setValue(list);
+
+        for(HashMap.Entry<String, List<FoodLogItemView>> entry : list.entrySet()){
+
+            for(FoodLogItemView foodLogItemView : entry.getValue()){
+                cals += foodLogItemView.getEnergy_kcal_100g();
+            }
+
+        }
+        setCalories(cals);
+    }
+
+    /**
+     * Get today's date in yyyy-MM-dd HH:mm:ss format
+     * @return sdf.format(dts)
+     */
+    @NonNull
+    public String getTodayString() {
+        java.util.Date dts = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        return sdf.format(dts);
+    }
+
+    public void setDate(String date){
+        this.chosenDate = date;
+    }
+
+    public String getDate(){
+        return chosenDate;
+    }
+
+    public void setCalories(float cals){
+        this.calorieForToday.setValue(cals);
+    }
+
+    public MutableLiveData<Float> getCals(){
+        return calorieForToday;
     }
 }

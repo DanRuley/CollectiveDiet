@@ -101,7 +101,7 @@ public class FoodConfirmDialog extends Dialog {
         setupFoodImage();
 
         this.findViewById(R.id.add_food_btn).setOnClickListener(v -> {
-            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, viewModelUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString(), viewModelMeals.getDate());
+            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, viewModelUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString(), viewModelUser.getDate());
             JSONSerializer.addFoodToList(food.getProduct_name(), "100 grams", ctx);
             Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").into(image);
             new CountDownTimer(500, 250) {

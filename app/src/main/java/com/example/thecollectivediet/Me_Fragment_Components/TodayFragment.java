@@ -73,6 +73,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     ImageView mealImage; //edit meal button
 
     //elements
+    TextView mTodaysCalories;
     TextView mBMI;
     TextView mCalGoal;
     TextView mBmi;
@@ -165,9 +166,12 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         //set the observer to get info for weights created in User repository
         viewModelUser.getWeights().observe(getViewLifecycleOwner(), weightsObserver);
 
+        //set the observer to get info for weights created in User repository
+        viewModelUser.getCals().observe(getViewLifecycleOwner(), todayObserver);
+
         //viewModelUser.getWeighIns();
 
-
+        mTodaysCalories = v.findViewById(R.id.tv_today_frag_calories);
         mCalGoal = v.findViewById(R.id.tv_cal_goal);
         //Rating bar for mood
 //        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
@@ -233,6 +237,17 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 //
         return v;
     }
+
+    final Observer<Float> todayObserver = new Observer<Float>() {
+        @Override
+        public void onChanged(Float t) {
+            //Update the ui if this data variable changes
+            if(t != null){
+               float x = t;
+               mTodaysCalories.setText(String.valueOf(t));
+            }
+        }
+    };
 
     //create an observer that watches the LiveData<User> object
     final Observer<User> nameObserver = new Observer<User>() {
