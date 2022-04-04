@@ -63,18 +63,20 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(stringRequest);
     }
 
+    /**
+     * Calls database to get the weights and dates of the user.
+     * @param ctx
+     * @param user
+     * @param listener
+     */
     public static void getWeighIns(Context ctx, @NonNull User user, @NonNull VolleyResponseListener<DataPoint[]> listener) {
         String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getWeighIns?uid=%s", user.getUser_id());
-
-
-
-
 
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
                         DataPoint[] results = new DataPoint[response.length()];
-                        Gson gson = new Gson();
+
                         for (int i = 0; i < response.length(); i++) {
                             String jsonString = response.get(i).toString();
 
@@ -85,15 +87,13 @@ public class User_API_Controller {
 
                             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-
-
                             Date date = formatter.parse(v3);
 
                             results[i] = new DataPoint(date, Integer.parseInt(values[1]));
 
-
-
                         }
+
+                        results = reverse(results);
                         listener.onResponse(results);
                     } catch (@NonNull JSONException | JsonSyntaxException | ParseException e) {
                         listener.onError(e.getMessage());
@@ -179,4 +179,24 @@ public class User_API_Controller {
 
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
+
+
+
+
+        //GeeksforGeeks.com algorithm
+        // function swaps the array's first element with last
+        // element, second element with last second element and
+        // so on
+        private static DataPoint[] reverse(DataPoint[] arr)
+        {
+            int i;
+            DataPoint t;
+            for (i = 0; i < arr.length / 2; i++) {
+                t = arr[i];
+                arr[i] = arr[arr.length - i - 1];
+                arr[arr.length - i - 1] = t;
+            }
+            return arr;
+        }
+
 }
