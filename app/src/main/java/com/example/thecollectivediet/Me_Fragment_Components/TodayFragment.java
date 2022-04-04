@@ -19,15 +19,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
+import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
@@ -73,6 +83,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     ViewModelUser viewModelUser;
 
+    DataPoint [] arr;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("MM:yy");
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
@@ -105,28 +119,36 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 //                new DataPoint(3,2),
 //                new DataPoint(4,6)
 //        });
-        DataPoint[] arr = new DataPoint[1000];
-        for(int i = 0; i<1000; i++){
-            arr[i] = new DataPoint(i +1, i);
-        }
-        weightSeries = new LineGraphSeries<DataPoint>(arr);
+       // DataPoint[] arr = new DataPoint[0];
+//        for(int i = 0; i<1000; i++){
+//            arr[i] = new DataPoint(i +1, i);
+//        }
+//
+        weightSeries = new LineGraphSeries<DataPoint>();
 
-        mWeightGraph.addSeries(weightSeries);
+//        weightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+//            @Override
+//            public void onTap(Series series, DataPointInterface dataPoint) {
+//                Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        mWeightGraph.addSeries(weightSeries);
+//
+//        weightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+//            @Override
+//            public void onTap(Series series, DataPointInterface dataPoint) {
+//                Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        weightSeries.setAnimated(true);
+//        weightSeries.setBackgroundColor(getResources().getColor(R.color.pink));
+//        weightSeries.setDrawBackground(true);
+//        mWeightGraph.setTitle("My Weight Graph");
+//        mWeightGraph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
+//        mWeightGraph.getGridLabelRenderer().setVerticalAxisTitle("Weight");
+//        mWeightGraph.getGridLabelRenderer().setPadding(50);
 
-        weightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
-            @Override
-            public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        weightSeries.setAnimated(true);
-        weightSeries.setBackgroundColor(getResources().getColor(R.color.pink));
-        weightSeries.setDrawBackground(true);
-        mWeightGraph.setTitle("My Weight Graph");
-        mWeightGraph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
-        mWeightGraph.getGridLabelRenderer().setVerticalAxisTitle("Weight");
-        mWeightGraph.getGridLabelRenderer().setPadding(50);
 
         //display pic
         profilePicPath = prefs.getString("profile_pic", null);
@@ -139,6 +161,12 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         //set the observer to get info for user created in User repository
        viewModelUser.getUserData().observe(getViewLifecycleOwner(), nameObserver);
+
+        //set the observer to get info for weights created in User repository
+        viewModelUser.getWeights().observe(getViewLifecycleOwner(), weightsObserver);
+
+        //viewModelUser.getWeighIns();
+
 
         mCalGoal = v.findViewById(R.id.tv_cal_goal);
         //Rating bar for mood
@@ -216,6 +244,76 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
               setUserBMI();
             }
         }
+    };
+
+    //create an observer that watches the LiveData<Hashmap<Integer, Date>> weights object
+    //this will keep the weight graph updated.
+    final Observer<DataPoint[]> weightsObserver = new Observer<DataPoint[]>() {
+        @Override
+        public void onChanged(DataPoint[] w) {
+            if(w != null){
+
+                weightSeries = null;
+                weightSeries = new LineGraphSeries<DataPoint>(w);
+                mWeightGraph.addSeries(weightSeries);
+
+
+
+
+//                weightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+//                    @Override
+//                    public void onTap(Series series, DataPointInterface dataPoint) {
+//                        Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+
+                weightSeries.setAnimated(true);
+                weightSeries.setBackgroundColor(getResources().getColor(R.color.pink));
+                weightSeries.setDrawBackground(true);
+                mWeightGraph.setTitle("My Weight Graph");
+                mWeightGraph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
+                mWeightGraph.getGridLabelRenderer().setVerticalAxisTitle("Weight");
+                mWeightGraph.getGridLabelRenderer().setPadding(50);
+
+                // set date label formatter
+                mWeightGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+                    @Override
+                    public String formatLabel(double value, boolean isValueX) {
+                        if(isValueX){
+                            return sdf.format(new Date((long) value));
+                        }else{
+                            return super.formatLabel(value, isValueX);
+                        }
+
+                    }
+                });
+                mWeightGraph.getGridLabelRenderer().setNumHorizontalLabels(4);
+                mWeightGraph.getGridLabelRenderer().setNumVerticalLabels(4);
+
+                // set manual x bounds to have nice steps
+                mWeightGraph.getViewport().setMinX(w[0].getX());
+                //mWeightGraph.getViewport().setMaxX();
+                mWeightGraph.getViewport().setMinY(0);
+                mWeightGraph.getViewport().setXAxisBoundsManual(false);
+                mWeightGraph.getViewport().setYAxisBoundsManual(true);
+                //mWeightGraph.getViewport().setScalable(true);
+                mWeightGraph.getViewport().setScrollable(true);
+
+
+                weightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+                    @Override
+                    public void onTap(Series series, DataPointInterface dataPoint) {
+                        Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                // as we use dates as labels, the human rounding to nice readable numbers
+                // is not nessecary
+                //mWeightGraph.getGridLabelRenderer().setHumanRounding(false);
+                }
+
+            }
+
     };
 
     @Override

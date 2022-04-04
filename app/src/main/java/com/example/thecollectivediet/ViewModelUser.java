@@ -18,6 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.jjoe64.graphview.series.DataPoint;
+
+import java.util.Date;
+import java.util.HashMap;
 
 public class ViewModelUser extends AndroidViewModel {
 
@@ -27,6 +31,8 @@ public class ViewModelUser extends AndroidViewModel {
     private Application application;
 
     private final MutableLiveData<User> userData = new MutableLiveData<User>();
+    private final MutableLiveData<DataPoint[]> weights = new MutableLiveData<>();
+
     private User user; //This user will have its data passed around the app via userData
 
     private Context ctx;
@@ -62,6 +68,24 @@ public class ViewModelUser extends AndroidViewModel {
         return GoogleSignIn.getLastSignedInAccount(application) != null && !GoogleSignIn.getLastSignedInAccount(application).isExpired();
     }
 
+    public void getWeighIns(){
+
+        User_API_Controller.getWeighIns(ctx, user, new VolleyResponseListener<DataPoint[]>() {
+            @Override
+            public void onResponse(DataPoint[] response) {
+                weights.setValue(response);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
+    public MutableLiveData<DataPoint[]> getWeights(){
+        return weights;
+    }
     /**
      * The MutableLiveData of the user will be passed to other classes/fragments
      * @return userData
@@ -98,6 +122,7 @@ public class ViewModelUser extends AndroidViewModel {
             @Override
             public void onResponse(User user) {
                 setUser(user);
+                getWeighIns();
                // commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
             }
 

@@ -7,8 +7,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.android.volley.Request;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogUploadItem;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
@@ -16,13 +18,19 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.WeightUploadItem;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.jjoe64.graphview.series.DataPoint;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class User_API_Controller {
 
@@ -53,6 +61,47 @@ public class User_API_Controller {
                     listener.onError(error.getMessage());
                 });
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(stringRequest);
+    }
+
+    public static void getWeighIns(Context ctx, @NonNull User user, @NonNull VolleyResponseListener<DataPoint[]> listener) {
+        String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getWeighIns?uid=%s", user.getUser_id());
+
+
+
+
+
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        DataPoint[] results = new DataPoint[response.length()];
+                        Gson gson = new Gson();
+                        for (int i = 0; i < response.length(); i++) {
+                            String jsonString = response.get(i).toString();
+
+                            String []values = jsonString.split(":|,");
+                            String v3 = values[3];
+                            v3 = v3.replaceAll("\"", "");
+                            v3 = v3.replace("}","");
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+
+
+                            Date date = formatter.parse(v3);
+
+                            results[i] = new DataPoint(date, Integer.parseInt(values[1]));
+
+
+
+                        }
+                        listener.onResponse(results);
+                    } catch (@NonNull JSONException | JsonSyntaxException | ParseException e) {
+                        listener.onError(e.getMessage());
+                    }
+                },
+                error -> listener.onError(error.toString())
+        );
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
     private static void addNewUser(User signedInUser, Context ctx) {

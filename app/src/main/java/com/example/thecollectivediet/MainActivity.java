@@ -151,8 +151,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            //todo
 //            //get user metrics
 
-        } else
+        } else {
             commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
+        }
 
 
         //set the observer to get info for user
