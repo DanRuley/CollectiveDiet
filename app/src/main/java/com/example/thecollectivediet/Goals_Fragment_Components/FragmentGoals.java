@@ -34,6 +34,7 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
 
+        //hook elements
         mEnterWeight = v.findViewById(R.id.acb_goals_enter_current_weight);
         mEnterWeight.setOnClickListener(this);
 

@@ -20,15 +20,15 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class GoalsDialog extends Dialog implements View.OnClickListener {
 
-  Context ctx;
-  int dialogType;
-  int userInputLength; //max length of input for user depending on dialog type
+    Context ctx;
+    int dialogType;
+    int userInputLength; //max length of input for user depending on dialog type
 
-  //TextViews
+    //TextViews
     TextView mHeader;
     TextView mUserInputUnit;
 
-  //Buttons
+    //Buttons
     TextInputEditText mInput;
     ImageView mIncreaseWeight;
     ImageView mDecreaseWeight;
@@ -44,8 +44,9 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
      * 1- weigh in
      * 2- weight goal
      * 3- calorie goal
+     *
      * @param ctx
-     * @param dialogType passed in from FragmentGoals to determine the dialog type.
+     * @param dialogType       passed in from FragmentGoals to determine the dialog type.
      * @param fragmentActivity
      */
     public GoalsDialog(Context ctx, int dialogType, FragmentActivity fragmentActivity) {
@@ -61,6 +62,7 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         this.setContentView(R.layout.dialog_goals);
         this.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
+        //hook elements
         mHeader = this.findViewById(R.id.tv_dialog_goals_header);
         mUserInputUnit = this.findViewById(R.id.tv_dialog_goals_user_input_measurement_unit);
 
@@ -80,22 +82,21 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         mDecline.setOnClickListener(this);
 
 
-
-        switch (dialogType){
+        switch (dialogType) {
             //User wants to weigh in for today
-            case 1:{
+            case 1: {
                 mHeader.setText("Today's Weight");
                 userInputLength = 3;
                 break;
             }
             //user wants to set weight goal
-            case 2:{
+            case 2: {
                 mHeader.setText("Weight Goal");
                 userInputLength = 3;
                 break;
             }
             //user wants to set calorie goal
-            case 3:{
+            case 3: {
                 mHeader.setText("Calorie Goal");
                 mUserInputUnit.setText("Calories");
                 mUserInputUnit.setHint("Enter Calories");
@@ -104,10 +105,10 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
             }
         }
 
-          //input filter for TextInputEditText
-                InputFilter[] filters = new InputFilter[1];
-                filters[0] = new InputFilter.LengthFilter(userInputLength);
-                mInput.setFilters(filters);
+        //input filter for TextInputEditText
+        InputFilter[] filters = new InputFilter[1];
+        filters[0] = new InputFilter.LengthFilter(userInputLength);
+        mInput.setFilters(filters);
     }
 
     @Override
@@ -119,45 +120,40 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        switch (v.getId())
-        {
-            case R.id.iv_dialog_goals_increase:{
+        switch (v.getId()) {
+            case R.id.iv_dialog_goals_increase: {
                 arrowUp();
                 break;
             }
 
-            case R.id.iv_dialog_goals_decrease:{
+            case R.id.iv_dialog_goals_decrease: {
                 arrowDown();
                 break;
             }
 
-            case R.id.iv_dialog_goals_decline:{
+            case R.id.iv_dialog_goals_decline: {
                 onStop();
                 break;
             }
 
-            case R.id.iv_dialog_goals_accept:{
+            case R.id.iv_dialog_goals_accept: {
                 //todo need to determine best way to update user info. For now, no helper methods used here
 
-                if(mInput.getEditableText().toString().matches("")){
+                if (mInput.getEditableText().toString().matches("")) {
                     onStop();
                     break;
                 }
 
-                if(dialogType == 1) {
+                if (dialogType == 1) {
                     viewModelUser.getUser().setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
                     User_API_Controller.pushWeightLogEntry(viewModelUser.getUser(), viewModelUser.getUser().getCurrent_wgt(), ctx);
-                }
-                else if(dialogType == 2)
+                } else if (dialogType == 2)
                     viewModelUser.getUser().setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
-                else if(dialogType == 3)
-                {
+                else if (dialogType == 3) {
                     viewModelUser.getUser().setGoal_cals(Integer.valueOf(mInput.getEditableText().toString()));
                 }
 
-
                 viewModelUser.updateUserProfile(viewModelUser.getUser(), ctx);
-               // viewModelUser.setUser(viewModelUser.getUser());
 
                 onStop();
                 break;
@@ -166,13 +162,11 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         }
     }
 
-    private void arrowUp(){
+    private void arrowUp() {
         int num = 0;
-        if(mInput.getEditableText().toString().matches(""))
-        {
+        if (mInput.getEditableText().toString().matches("")) {
             mInput.setText(String.valueOf(num));
-        }
-        else if(userInputLength == 5){
+        } else if (userInputLength == 5) {
             num = Integer.valueOf(mInput.getEditableText().toString());
             num++;
 
@@ -180,31 +174,28 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
                 num = 99999;
             }
             mInput.setText(String.valueOf(num));
-        }
-        else{
+        } else {
             num = Integer.valueOf(mInput.getEditableText().toString());
             num++;
 
-            if(num > 999){
+            if (num > 999) {
                 num = 999;
             }
             mInput.setText(String.valueOf(num));
         }
     }
 
-    private void arrowDown(){
+    private void arrowDown() {
 
         int num = 0;
-        if(mInput.getEditableText().toString().matches(""))
-        {
+        if (mInput.getEditableText().toString().matches("")) {
             mInput.setText(String.valueOf(num));
         }
 
         num = Integer.valueOf(mInput.getEditableText().toString());
         num--;
 
-        if(num < 0)
-        {
+        if (num < 0) {
             num = 0;
         }
         mInput.setText(String.valueOf(num));

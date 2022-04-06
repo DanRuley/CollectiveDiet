@@ -64,7 +64,9 @@ public class User_API_Controller {
     }
 
     /**
-     * Calls database to get the weights and dates of the user.
+     * Calls database to get the weights and dates of the user. The database will only send over
+     * a limited amount of the most current weigh ins so the received array of weigh ins will
+     * need to be reversed.
      * @param ctx
      * @param user
      * @param listener
@@ -80,6 +82,7 @@ public class User_API_Controller {
                         for (int i = 0; i < response.length(); i++) {
                             String jsonString = response.get(i).toString();
 
+                            //parse json response to get date
                             String []values = jsonString.split(":|,");
                             String v3 = values[3];
                             v3 = v3.replaceAll("\"", "");
@@ -92,8 +95,10 @@ public class User_API_Controller {
                             results[i] = new DataPoint(date, Integer.parseInt(values[1]));
 
                         }
-
+                        //The received array of weigh ins are the most current in descending order
+                        //so the array needs to be reversed.
                         results = reverse(results);
+
                         listener.onResponse(results);
                     } catch (@NonNull JSONException | JsonSyntaxException | ParseException e) {
                         listener.onError(e.getMessage());
@@ -150,6 +155,12 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Push today's weigh in of the user to the database.
+     * @param user
+     * @param weight
+     * @param ctx
+     */
     public static void pushWeightLogEntry(@NonNull User user, Float weight,Context ctx) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_weight_log_item";
 
@@ -181,13 +192,13 @@ public class User_API_Controller {
     }
 
 
-
-
-        //GeeksforGeeks.com algorithm
-        // function swaps the array's first element with last
-        // element, second element with last second element and
-        // so on
-        private static DataPoint[] reverse(DataPoint[] arr)
+    /**
+     * GeeksforGeeks.com algorithm function swaps the array's first element with last
+     * element, second element with last second element and so on.
+     * @param arr
+     * @return
+     */
+    private static DataPoint[] reverse(DataPoint[] arr)
         {
             int i;
             DataPoint t;
