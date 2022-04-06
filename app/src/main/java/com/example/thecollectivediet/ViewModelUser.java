@@ -47,7 +47,7 @@ public class ViewModelUser extends AndroidViewModel {
 
     private User user; //This user will have its data passed around the app via userData
     private String chosenDate;
-
+    private int updateFlag;
 
     private Context ctx;
 
@@ -64,6 +64,7 @@ public class ViewModelUser extends AndroidViewModel {
 
         user = new User();
         this.chosenDate = getTodayString();
+        updateFlag = 0;
 
 //        User_API_Controller.handleNewSignIn(googleSignInAccount, application, new VolleyResponseListener<User>() {
 //            @Override
@@ -240,5 +241,13 @@ public class ViewModelUser extends AndroidViewModel {
 
     public MutableLiveData<Float> getCals(){
         return calorieForToday;
+    }
+
+    public int getUpdateFlag() {
+        return updateFlag;
+    }
+
+    public void setUpdateFlag(int updateFlag) {
+        this.updateFlag = updateFlag;
     }
 }

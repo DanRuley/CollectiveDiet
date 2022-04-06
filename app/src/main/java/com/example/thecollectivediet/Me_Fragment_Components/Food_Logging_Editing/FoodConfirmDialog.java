@@ -116,6 +116,8 @@ public class FoodConfirmDialog extends Dialog {
                     onStop();
                 }
             }.start();
+
+            viewModelUser.setUpdateFlag(1);
         });
     }
 

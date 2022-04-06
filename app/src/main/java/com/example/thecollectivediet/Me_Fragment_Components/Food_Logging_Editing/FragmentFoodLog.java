@@ -117,11 +117,17 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     };
 
     private void initializeDatePickerDialog() {
-        final Calendar c = Calendar.getInstance();
+//        final Calendar c = Calendar.getInstance();
+//
+//        int year = c.get(Calendar.YEAR);
+//        int month = c.get(Calendar.MONTH);
+//        int day = c.get(Calendar.DAY_OF_MONTH);
 
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+        String[] date = viewModelUser.getDate().split("-");
+
+        int year = Integer.valueOf(date[0]);
+        int month = Integer.valueOf(date[1]) - 1;
+        int day = Integer.valueOf(date[2]);
 
         datePickerDialog = new DatePickerDialog(getActivity(), (view, year1, month1, dayOfMonth) -> setDate(year1, month1 + 1, dayOfMonth), year, month, day);
 

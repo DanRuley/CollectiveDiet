@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 import com.jjoe64.graphview.DefaultLabelFormatter;
@@ -88,13 +89,21 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     SimpleDateFormat sdf = new SimpleDateFormat("MM:yy");
 
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
+
+
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
+
+        if(viewModelUser != null) {
+            update();
+        }
 
         context = this.getActivity();
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
@@ -357,6 +366,13 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         } else {
             mBMI.setText("BMI: Need personal info");
 
+        }
+    }
+
+    private void update(){
+        if(viewModelUser.getUpdateFlag() == 1){
+            viewModelUser.setUpdateFlag(0);
+            viewModelUser.pullUserData((MainActivity) this.getActivity());
         }
     }
 }
