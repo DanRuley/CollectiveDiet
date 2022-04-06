@@ -28,7 +28,6 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.R;
-import com.example.thecollectivediet.ViewModelMeals;
 import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.HashMap;

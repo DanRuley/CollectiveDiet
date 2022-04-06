@@ -23,12 +23,10 @@ import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.ViewModelMeals;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;

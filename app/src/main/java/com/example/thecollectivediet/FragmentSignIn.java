@@ -111,30 +111,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
             }
         });
 
-        String name = account.getDisplayName();
-        String email = account.getEmail();
-        String id = account.getId();
 
-        SharedPreferences prefs;
-        SharedPreferences.Editor editor;
-
-        //Any class in this app can use this
-        prefs = getActivity().getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
-
-        editor = prefs.edit();
-
-        editor.putString("user", name);
-        editor.putString("id", id);
-        editor.putString("user_email", email);
-
-        editor.commit();
-
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        getActivity().setResult(RESULT_OK);
-
-        TextView login1 = getActivity().findViewById(R.id.toolbar_login);
-        String username = prefs.getString("user", "null");
-        login1.setText(username);
 
         MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new MeTabLayoutFragment());
     }
