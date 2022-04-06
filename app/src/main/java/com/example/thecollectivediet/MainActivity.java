@@ -51,10 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    @Nullable
-    public static User currentUser;
-
-    //public static User currentUser;
     ViewModelUser viewModelUser;
     ViewModelMeals viewModelMeals;
     @Override
@@ -77,28 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
         });
 
-//        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-//                new ActivityResultContracts.StartActivityForResult(),
-//                result -> {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//
-//                        String username = prefs.getString("user", "null");
-//                        login.setText(username);
-//
-//                    } else {
-//                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                                .requestEmail()
-//                                .build();
-//                        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-//                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-//
-//                        if (account != null && !account.isExpired()) {
-//                            String username = prefs.getString("user", "null");
-//                            login.setText(username);
-//                        }
-//                    }
-//                });
-
         //If this is user's first time on the app, get string from shared preferences which
         //should be null for first timers and change to false so that the intro does not
         //show up again.
@@ -111,45 +85,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
-/////////////////////////////////////////////////////////////////////////////////////////////////
+
         if (viewModelUser.isSignedIn()) {
             viewModelUser.pullUserData(MainActivity.this);
             //login.setText(viewModelUser.get) and change above fragment to loading screen.
             commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
-
-
-
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-//        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-//
-//        if (account != null && !account.isExpired()) {
-//
-//            commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
-//
-//            String username = prefs.getString("user", "null");
-//            login.setText(username);
-//
-
-
-//            User_API_Controller.handleNewSignIn(viewModelUser.getAccount(), MainActivity.this, new VolleyResponseListener<User>() {
-//                @Override
-//                public void onResponse(User user) {
-//                    viewModelUser.setUser(user);
-//                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
-//                }
-//
-//                @Override
-//                public void onError(String error) {
-//                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-
-//            //todo
-//            //get user metrics
 
         } else {
             commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
@@ -159,9 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //set the observer to get info for user
         viewModelUser.getUserData().observe(MainActivity.this, nameObserver);
 
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -175,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         //Bottom navigation tool bar on the bottom of the app screen will be used for
         //navigation
@@ -202,10 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-
-
     }
-
 
     //create an observer that watches the LiveData<User> object
     final Observer<User> nameObserver = new Observer<User>() {

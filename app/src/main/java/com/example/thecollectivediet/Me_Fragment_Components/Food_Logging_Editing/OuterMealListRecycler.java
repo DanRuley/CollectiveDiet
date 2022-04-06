@@ -28,7 +28,6 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
     public OuterMealListRecycler(Context context, ArrayList<OuterMealRecyclerItem> arrayList) {
         this.arrayList = arrayList;
         this.context = context;
-
     }
 
     @NonNull

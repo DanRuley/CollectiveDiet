@@ -127,7 +127,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
         viewModelUser.getUserData().observe(getViewLifecycleOwner(), observer);
 
-
         //took new photo?
         photoChanged = false;
 
@@ -153,7 +152,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         if (thumbnailPic != null) {
             photo.setImageBitmap(thumbnailPic);
         }
-
 
         back_button = v.findViewById(R.id.edit_profile_back_btn);
         back_button.setOnClickListener(this);
@@ -367,12 +365,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             }
 
             saveProfileChanges();
-//            MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
+
             MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
 
         if (viewID == R.id.edit_profile_back_btn) {
-            //MainActivity.commitFragmentTransaction(Objects.requireNonNull(getActivity()), R.id.fragmentContainerView, new ProfileFragment());
+
             MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
     }

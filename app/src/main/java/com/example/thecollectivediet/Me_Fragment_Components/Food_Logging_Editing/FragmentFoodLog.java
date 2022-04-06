@@ -59,7 +59,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     ArrayList<FoodLogItemView> innerSnacksItems;
 
     ViewModelUser viewModelUser;
-    ViewModelMeals viewModelMeals;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
@@ -68,7 +68,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
-        viewModelMeals = new ViewModelProvider(requireActivity()).get(ViewModelMeals.class);
+
 
         arrayListVertical = new ArrayList<>();
         innerBreakfastItems = new ArrayList<>();
@@ -89,8 +89,10 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         RecyclerView outerRec = v.findViewById(R.id.rv_main);
         outerRec.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+        //set data in recycler views
         setData();
 
+        //set up calendar widget
         initializeDatePickerDialog();
         String normal = formatDate(selectedYear, selectedMonth, selectedDay, false);
         String sql = formatDate(selectedYear, selectedMonth, selectedDay, true);
@@ -135,7 +137,6 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         setDate(year, month + 1, day);
     }
 
-
     public void setDate(int year, int month, int day) {
         selectedYear = year;
         selectedMonth = month;
@@ -150,8 +151,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         FoodLog_API_Controller.getFoodLogEntries(getActivity(), viewModelUser.getUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
             @Override
             public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
-               // populateRecyclerItems(response);// erase later after viewmodel implementation
-                viewModelUser.setList(response);
+               viewModelUser.setList(response);
             }
 
             @Override

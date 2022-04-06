@@ -40,26 +40,24 @@ public class FoodConfirmDialog extends Dialog {
     FoodNutrients nutrients;
     FoodResult food;
 
+    //elements
     ImageView image;
     TextView foodName;
     EditText calorieVal;
     TextView proteinVal;
     TextView fatVal;
     TextView carbVal;
-
     Spinner servingUnitSpinner;
     Spinner mealTypeSpinner;
     EditText servingQtyVal;
 
     ViewModelUser viewModelUser;
-    ViewModelMeals viewModelMeals;
 
     public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType, FragmentActivity activity) {
         super(ctx);
 
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(activity).get(ViewModelUser.class);
-        viewModelMeals = new ViewModelProvider(activity).get(ViewModelMeals.class);
 
         this.ctx = ctx;
         this.nutrients = nutrients;
@@ -74,6 +72,7 @@ public class FoodConfirmDialog extends Dialog {
         this.setContentView(R.layout.confirm_food_add);
         this.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
+        //hook elements
         image = findViewById(R.id.confirm_add_img);
         calorieVal = findViewById(R.id.calories_txt_value);
         calorieVal.setEnabled(false);
@@ -82,10 +81,8 @@ public class FoodConfirmDialog extends Dialog {
         carbVal = findViewById(R.id.carb_val);
         servingQtyVal = findViewById(R.id.serving_qty_val);
         foodName = findViewById(R.id.foodNameTxt);
-
         foodName.setText(food.getProduct_name());
         servingQtyVal.setText(String.valueOf(100));
-
         calorieVal.setText(String.format("%.1f", nutrients.getEnergy_kcal_100g()));
         proteinVal.setText(String.format("%.1f %s", nutrients.getProteins_100g(), nutrients.getProteins_unit()));
         carbVal.setText(String.format("%.1f %s", nutrients.getCarbohydrates_100g(), nutrients.getCarbohydrates_unit()));

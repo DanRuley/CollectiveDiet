@@ -66,18 +66,6 @@ public class ViewModelUser extends AndroidViewModel {
         this.chosenDate = getTodayString();
         updateFlag = 0;
 
-//        User_API_Controller.handleNewSignIn(googleSignInAccount, application, new VolleyResponseListener<User>() {
-//            @Override
-//            public void onResponse() {
-//                MainActivity.commitFragmentTransaction(application, R.id.fragmentHolder, new TodayFragment());
-//            }
-//
-//            @Override
-//            public void onError(String error) {
-//                Toast.makeText(application, error, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        //user =
     }
 
 
@@ -158,11 +146,6 @@ public class ViewModelUser extends AndroidViewModel {
             @Override
             public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
 
-//                for(HashMap.Entry<String, List<FoodLogItemView>> entry : response.entrySet()){
-//                    for(FoodLogItemView item : entry.getValue()){
-//
-//                    }
-//                }
                 // populateRecyclerItems(response);// erase later after viewmodel implementation
                 setList(response);
             }
@@ -188,7 +171,6 @@ public class ViewModelUser extends AndroidViewModel {
         userData.setValue(null);
     }
 
-    //////////////////////////////////////////////////////////////
     /**
      * The MutableLiveData of the user will be passed to other classes/fragments
      * @return userData
@@ -202,7 +184,7 @@ public class ViewModelUser extends AndroidViewModel {
      * @param list
      */
     public void setList(HashMap<String,List<FoodLogItemView>> list){
-        //calorieForToday = 0;
+
         int cals = 0;
         this.list.setValue(list);
 

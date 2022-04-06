@@ -70,12 +70,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         editor = prefs.edit();
 
         viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
-        //viewModelUser.getUserData().observe(requireActivity(), observer);
+
         //set the observer to get info for user created in User repository
         viewModelUser.getUserData().observe(getViewLifecycleOwner(), observer);
-
-        //todo do something with this
-        //User signedInUser = MainActivity.getCurrentUser();
 
         mEdit = v.findViewById(R.id.ac_button_profile_edit);
         mEdit.setOnClickListener(this);
@@ -156,8 +153,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             }
         }
-
-
     }
 
     private boolean isSignedIn() {
@@ -174,7 +169,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onComplete(@NonNull Task<Void> task) {
 
                 TextView login = getActivity().findViewById(R.id.toolbar_login);
-                //MainActivity.setCurrentUser(null);
+
                 viewModelUser.signOut();
                 login.setText("sign in");
 
