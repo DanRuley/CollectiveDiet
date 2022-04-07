@@ -32,6 +32,7 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         super(cxt, layoutResource, imgURLs);
         this.cxt = cxt;
         //this.inflater = inflater;
+        inflater = (LayoutInflater) cxt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.layoutResource = layoutResource;
         this.append = append;
         this.imgURLs = imgURLs;
@@ -55,7 +56,7 @@ public class GridImageAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(layoutResource, parent, false);
             holder = new ViewHolder();
             holder.progressBar = convertView.findViewById(R.id.pb_post_progressBar);
-            holder.image = convertView.findViewById(R.id.iv_post_image);
+            holder.image = convertView.findViewById(R.id.gv_gridImageView);
 
             //Tag will store the view holder in memory instead of in app page
             convertView.setTag(holder);
@@ -67,6 +68,7 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         String imgURL = getItem(position);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
+
 
         imageLoader.displayImage(append + imgURL , holder.image, new ImageLoadingListener() {
             @Override

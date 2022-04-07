@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import org.checkerframework.checker.units.qual.A;
 import org.w3c.dom.Text;
 
@@ -45,6 +48,8 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_user_post, container, false);
 
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getActivity()));
+
         //hook elements
         gridView = v.findViewById(R.id.gv_post_grid);
         postImage = v.findViewById(R.id.iv_post_image);
@@ -59,7 +64,9 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         directories = new ArrayList<>();
 
         checkForPhotos();
+        FilePaths filePaths = new FilePaths();
 
+        setupGridView(filePaths.Pictures);
 
         return v;
     }
