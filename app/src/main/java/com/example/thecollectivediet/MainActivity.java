@@ -181,7 +181,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_goals)
             commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment(2));
         else if (id == R.id.nav_profile)
-            fragment = new ProfileFragment();
+            //fragment = new ProfileFragment();
+            fragment = new UserPostFragment();
         else if (id == R.id.nav_us)
             fragment = new UsFragment();
         else if (id == R.id.nav_me)
