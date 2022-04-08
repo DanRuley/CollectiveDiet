@@ -36,6 +36,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
@@ -48,10 +52,11 @@
 
             <ProgressBar
                 android:id="@+id/pb_post_progressBar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
                 android:layout_centerInParent="true" />
+            </RelativeLayout>
 
             <EditText
                 android:layout_width="match_parent"
