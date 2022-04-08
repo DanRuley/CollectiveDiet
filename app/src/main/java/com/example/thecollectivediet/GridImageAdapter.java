@@ -55,8 +55,9 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         if(convertView == null){
             convertView = inflater.inflate(layoutResource, parent, false);
             holder = new ViewHolder();
-            holder.progressBar = convertView.findViewById(R.id.pb_post_progressBar);
+            holder.progressBar = convertView.findViewById(R.id.pb_grid_image_progress_bar);
             holder.image = convertView.findViewById(R.id.gv_gridImageView);
+
 
             //Tag will store the view holder in memory instead of in app page
             convertView.setTag(holder);
@@ -74,7 +75,7 @@ public class GridImageAdapter extends ArrayAdapter<String> {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 if(holder.progressBar != null){
-                    holder.progressBar.setVisibility(View.GONE);
+                    holder.progressBar.setVisibility(View.VISIBLE);
                 }
             }
 

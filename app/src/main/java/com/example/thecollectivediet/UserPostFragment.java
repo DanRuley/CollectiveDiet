@@ -94,14 +94,10 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         int imageWidth = gridWidth/NUM_GRID_COLS;
         gridView.setColumnWidth(imageWidth);
 
+
         //grid image adapter
         GridImageAdapter gridImageAdapter = new GridImageAdapter(getContext(), R.layout.layout_grid_imageview, append, imgURLs);
         gridView.setAdapter(gridImageAdapter);
     }
 
-    private void temp(){
-        ArrayList<String> imgs = new ArrayList<>();
-        imgs.add("https://www.google.com/imgres?imgurl=https%3A%2F%2Fstatic.wikia.nocookie.net%2Fmetroid%2Fimages%2Fe%2Fe6%2FZamus_art.png%2Frevision%2Flatest%3Fcb%3D20210829043054&imgrefurl=https%3A%2F%2Fmetroid.fandom.com%2Fwiki%2FZero_Suit_Samus&tbnid=I56pqnswK9_b2M&vet=12ahUKEwi9q8zA-ID3AhXhGDQIHeOfAg0QMygBegUIARDdAQ..i&docid=6UJ8rHkaAZjsbM&w=3337&h=4960&q=samus&ved=2ahUKEwi9q8zA-ID3AhXhGDQIHeOfAg0QMygBegUIARDdAQ");
-        //setupGridView(imgs);
-    }
 }
