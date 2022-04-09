@@ -1,0 +1,21 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-tcdandroid-dev-21842-authRole",
+      "UnauthRoleArn": "arn:aws:iam::786789374145:role/amplify-tcdandroid-dev-21842-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::786789374145:role/amplify-tcdandroid-dev-21842-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-tcdandroid-dev-21842-deployment",
+      "UnauthRoleName": "amplify-tcdandroid-dev-21842-unauthRole",
+      "StackName": "amplify-tcdandroid-dev-21842",
+      "StackId": "arn:aws:cloudformation:us-east-1:786789374145:stack/amplify-tcdandroid-dev-21842/825091f0-b714-11ec-b1d2-0e6bed256953",
+      "AmplifyAppId": "d2320rm24pgd7v"
+    },
+    "categories": {
+      "auth": {
+        "tcdandroida874cad8": {},
+        "true": {}
+      }
+    }
+  }
+}

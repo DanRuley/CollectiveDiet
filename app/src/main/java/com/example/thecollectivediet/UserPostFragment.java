@@ -2,7 +2,11 @@ package com.example.thecollectivediet;
 
 import static android.content.ContentValues.TAG;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -19,7 +23,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.content.Context;
 
+import com.amplifyframework.core.Amplify;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -28,6 +34,12 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import org.checkerframework.checker.units.qual.A;
 import org.w3c.dom.Text;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+//import java.io.InputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -46,6 +58,8 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
     //variables
     private ArrayList<String> directories;
     FilePaths filePaths;
+    String imageToPost;
+    ArrayList<String> imgURLs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +69,8 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_user_post, container, false);
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getActivity()));
+        imgURLs = new ArrayList<>();
+
 
         //hook elements
         gridView = v.findViewById(R.id.gv_post_grid);
@@ -75,6 +91,8 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
         //setupGridView(filePaths.Pictures);
 
+
+
         return v;
     }
 
@@ -84,7 +102,6 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.iv_post_image: {
                 setupGridView(filePaths.Pictures);
-
 
             }
         }
@@ -101,7 +118,7 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     private void setupGridView(String selectedDirectory) {
         Log.d(TAG, "setting up grid view");
-        final ArrayList<String> imgURLs = FileSearch.getFilePath(selectedDirectory);
+        imgURLs = FileSearch.getFilePath(selectedDirectory);
 
         //set the grid column width
         int gridWidth = getResources().getDisplayMetrics().widthPixels;
@@ -118,6 +135,9 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: selected an image: " + imgURLs.get(position));
                 setImage(imgURLs.get(position), postImage, append);
+                imageToPost = append + imgURLs.get(position);
+                uploadFile(position);
+                //uploadInputStream(imageToPost);
             }
         });
     }
@@ -149,5 +169,44 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+    private void uploadInputStream(String position) {
+        try {
+
+            InputStream exampleInputStream = getContext().getContentResolver().openInputStream(Uri.parse(position));
+
+            Amplify.Storage.uploadInputStream(
+                    "ExampleKey",
+                    exampleInputStream,
+                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+            );
+        }  catch (FileNotFoundException error) {
+            Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
+        }
+    }
+
+    private void uploadFile(int position) {
+        File exampleFile = new File(imgURLs.get(position));
+       // File exampleFile = File.
+//        try {
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
+//            writer.append("Example file contents");
+//            writer.close();
+//        } catch (Exception exception) {
+//            Log.e("MyAmplifyApp", "Upload failed", exception);
+//        }
+
+        String s = imgURLs.get(position).toString();
+        String [] ss = s.split("/");
+
+        Amplify.Storage.uploadFile(
+                //imgURLs.get(position).toString(),
+                ss[ss.length-1],
+                exampleFile,
+                result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+        );
     }
 }
