@@ -8,7 +8,6 @@
     tools:context=".UserPostFragment">
 
 
-
     <TextView
         android:id="@+id/tv_post_btn"
         android:layout_width="wrap_content"
@@ -25,7 +24,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_post_info"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         android:layout_margin="10dp"
         app:cardBackgroundColor="@color/black"
         app:cardCornerRadius="15dp"
@@ -34,50 +33,72 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:orientation="vertical">
+            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:orientation="vertical">-->
+
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
                 android:id="@+id/iv_post_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@color/light_green"
-                android:src="@drawable/add_to_meal">
+                android:src="@drawable/add_to_meal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/et_post_comment"
+                app:layout_constraintTop_toTopOf="parent">
 
             </ImageView>
 
-            <ProgressBar
-                android:id="@+id/pb_post_progressBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:layout_centerInParent="true" />
-            </RelativeLayout>
-
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
                 android:id="@+id/et_post_comment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:background="@color/light_green">
+                android:background="@color/light_green"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/iv_post_image"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_weight="2.5">
 
             </EditText>
+            <!--                <ProgressBar-->
+            <!--                    android:id="@+id/pb_post_progressBar"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+
+            <!--                    android:layout_centerInParent="true" />-->
+            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="150dp"-->
+            <!--                android:id="@+id/iv_post_image2"-->
+            <!--                android:layout_margin="10dp"-->
+            <!--                android:background="@color/light_green"-->
+            <!--                android:src="@drawable/add_to_meal">-->
+
+            <!--            </ImageView>-->
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <GridView
+        android:id="@+id/gv_post_grid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/gv_post_grid"
-        app:layout_constraintTop_toBottomOf="@id/cv_post_info"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="15dp"
-        android:numColumns="3"
         android:horizontalSpacing="1dp"
-        android:verticalSpacing="1dp">
-    </GridView>
+        android:maxWidth="300dp"
+        android:maxHeight="300in"
+        android:numColumns="3"
+        android:verticalSpacing="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_post_info"></GridView>
 </androidx.constraintlayout.widget.ConstraintLayout>

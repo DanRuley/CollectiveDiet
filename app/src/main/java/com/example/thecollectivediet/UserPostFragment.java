@@ -6,6 +6,8 @@ import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,8 +26,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.storage.options.StorageDownloadFileOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -39,6 +43,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 //import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -50,6 +55,10 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
     private ProgressBar progressBar;
     private TextView post;
     private ImageView postImage;
+
+    //temp
+    private ImageView postImage2;
+    String tempo;
 
     //constants
     private static final int NUM_GRID_COLS = 3;
@@ -77,8 +86,11 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         postImage = v.findViewById(R.id.iv_post_image);
         postImage.setOnClickListener(this);
 
-        progressBar = v.findViewById(R.id.pb_post_progressBar);
-        progressBar.setVisibility(View.GONE);
+        /////////////////////temp
+       // postImage2 = v.findViewById(R.id.iv_post_image2);
+
+//        progressBar = v.findViewById(R.id.pb_post_progressBar);
+//        progressBar.setVisibility(View.GONE);
 
         post = v.findViewById(R.id.tv_post_btn);
         post.setOnClickListener(this);
@@ -89,10 +101,6 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         checkForPhotos();
         filePaths = new FilePaths();
 
-        //setupGridView(filePaths.Pictures);
-
-
-
         return v;
     }
 
@@ -102,16 +110,17 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.iv_post_image: {
                 setupGridView(filePaths.Pictures);
-
+                break;
+            }
+            case R.id.tv_post_btn:{
+                downloadFIle();
+                break;
             }
         }
     }
 
     private void checkForPhotos() {
         FilePaths filePaths = new FilePaths();
-//        if(FileSearch.getDirectoryPaths(filePaths.Pictures) != null){
-//            directories = FileSearch.getDirectoryPaths(filePaths.Pictures);
-//        }
 
         directories.add(filePaths.Camera);
     }
@@ -150,17 +159,17 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         imageLoader.displayImage(append + imgURL, image, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                progressBar.setVisibility(View.VISIBLE);
+               // progressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                progressBar.setVisibility(View.INVISIBLE);
+               // progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                progressBar.setVisibility(View.INVISIBLE);
+               // progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -171,42 +180,83 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void uploadInputStream(String position) {
-        try {
-
-            InputStream exampleInputStream = getContext().getContentResolver().openInputStream(Uri.parse(position));
-
-            Amplify.Storage.uploadInputStream(
-                    "ExampleKey",
-                    exampleInputStream,
-                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
-                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
-            );
-        }  catch (FileNotFoundException error) {
-            Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
-        }
-    }
+//    private void uploadInputStream(String position) {
+//        try {
+//
+//            InputStream exampleInputStream = getContext().getContentResolver().openInputStream(Uri.parse(position));
+//
+//            Amplify.Storage.uploadInputStream(
+//                    "ExampleKey",
+//                    exampleInputStream,
+//                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+//                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+//            );
+//        }  catch (FileNotFoundException error) {
+//            Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
+//        }
+//    }
 
     private void uploadFile(int position) {
         File exampleFile = new File(imgURLs.get(position));
-       // File exampleFile = File.
-//        try {
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
-//            writer.append("Example file contents");
-//            writer.close();
-//        } catch (Exception exception) {
-//            Log.e("MyAmplifyApp", "Upload failed", exception);
-//        }
 
         String s = imgURLs.get(position).toString();
         String [] ss = s.split("/");
 
+        tempo = ss[ss.length-1];
+
         Amplify.Storage.uploadFile(
-                //imgURLs.get(position).toString(),
+
+
                 ss[ss.length-1],
                 exampleFile,
                 result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                //result -> downloadFIle()),
                 storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
         );
+    }
+
+    private void downloadFIle() {
+        Amplify.Storage.downloadFile(
+                tempo,
+                new File(getContext().getFilesDir() + "/download.txt"),
+                //result -> Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName()),
+                result -> setImage(result.getFile()),
+                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+        );
+
+    }
+
+    private void setImage(File file) {
+
+
+
+        String filePath = file.getPath();
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+       // postImage2.setImageBitmap(bitmap);
+
+//        ImageLoader imageLoader = ImageLoader.getInstance();
+//
+//        imageLoader.displayImage(new ImageLoadingListener() {
+//            @Override
+//            public void onLoadingStarted(String imageUri, View view) {
+//                progressBar.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                progressBar.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                progressBar.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingCancelled(String imageUri, View view) {
+//                progressBar.setVisibility(View.INVISIBLE);
+//            }
+//        });
+        //}
     }
 }
