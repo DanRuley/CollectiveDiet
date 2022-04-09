@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.storage.options.StorageDownloadFileOptions;
+import com.example.thecollectivediet.Share.SharedFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -113,7 +114,8 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.tv_post_btn:{
-                downloadFIle();
+                //downloadFIle();
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new SharedFragment());
                 break;
             }
         }
