@@ -2,64 +2,52 @@ package com.example.thecollectivediet;
 
 import static android.content.ContentValues.TAG;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+import static org.checkerframework.checker.units.UnitsTools.min;
 
-import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.content.Context;
-import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.storage.options.StorageDownloadFileOptions;
 import com.example.thecollectivediet.Share.SharedFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import org.checkerframework.checker.units.qual.A;
-import org.w3c.dom.Text;
-
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 //import java.io.InputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     //Elements
-    private GridView gridView;
+    private GridView gridView; //contains picutes of user on device
     private ProgressBar progressBar;
-    private TextView post;
-    private ImageView postImage;
+    private TextView post; //post comment and/or image
+    private ImageView postImage; //image to post
+    private EditText postComment; //comment to post
+    private AppCompatButton addImageToPostButton; //Lets user add image to post
 
     //temp
     private ImageView postImage2;
-    String tempo;
+
 
     //constants
     private static final int NUM_GRID_COLS = 3;
@@ -70,6 +58,8 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
     FilePaths filePaths;
     String imageToPost;
     ArrayList<String> imgURLs;
+    String imageToPostKey;
+    int imageFlag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,10 +75,13 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         //hook elements
         gridView = v.findViewById(R.id.gv_post_grid);
         postImage = v.findViewById(R.id.iv_post_image);
-        postImage.setOnClickListener(this);
+        postImage.setImageDrawable(null);
+        postComment = v.findViewById(R.id.et_post_comment);
+        addImageToPostButton = v.findViewById(R.id.btn_post_add_image);
+        addImageToPostButton.setOnClickListener(this);
 
         /////////////////////temp
-       // postImage2 = v.findViewById(R.id.iv_post_image2);
+        // postImage2 = v.findViewById(R.id.iv_post_image2);
 
 //        progressBar = v.findViewById(R.id.pb_post_progressBar);
 //        progressBar.setVisibility(View.GONE);
@@ -97,6 +90,7 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         post.setOnClickListener(this);
 
         //initialize variables
+        imageFlag = 0;
         directories = new ArrayList<>();
 
         checkForPhotos();
@@ -109,13 +103,15 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.iv_post_image: {
-                setupGridView(filePaths.Pictures);
+
+            case R.id.tv_post_btn: {
+                //downloadFIle();
+                uploadFile();
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new SharedFragment());
                 break;
             }
-            case R.id.tv_post_btn:{
-                //downloadFIle();
-                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new SharedFragment());
+            case R.id.btn_post_add_image: {
+                setupGridView(filePaths.Pictures);
                 break;
             }
         }
@@ -146,9 +142,14 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: selected an image: " + imgURLs.get(position));
                 setImage(imgURLs.get(position), postImage, append);
-                imageToPost = append + imgURLs.get(position);
-                uploadFile(position);
+                //imageToPost = append + imgURLs.get(position);
+
+                //set up image to upload
+                imageToPost = imgURLs.get(position);
+                //uploadFile(position);
+
                 //uploadInputStream(imageToPost);
+                imageFlag = 1;
             }
         });
     }
@@ -161,17 +162,17 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         imageLoader.displayImage(append + imgURL, image, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-               // progressBar.setVisibility(View.VISIBLE);
+                // progressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-               // progressBar.setVisibility(View.INVISIBLE);
+                // progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-               // progressBar.setVisibility(View.INVISIBLE);
+                // progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -182,48 +183,48 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     }
 
-//    private void uploadInputStream(String position) {
-//        try {
-//
-//            InputStream exampleInputStream = getContext().getContentResolver().openInputStream(Uri.parse(position));
-//
-//            Amplify.Storage.uploadInputStream(
-//                    "ExampleKey",
-//                    exampleInputStream,
-//                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
-//                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
-//            );
-//        }  catch (FileNotFoundException error) {
-//            Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
-//        }
-//    }
 
-    private void uploadFile(int position) {
-        File exampleFile = new File(imgURLs.get(position));
+    private void uploadFile() {
 
-        String s = imgURLs.get(position).toString();
-        String [] ss = s.split("/");
-
-        tempo = ss[ss.length-1];
-
-        Amplify.Storage.uploadFile(
+        String x = postComment.getText().toString();
+        if (!x.matches("") && imageFlag != 0) {
 
 
-                ss[ss.length-1],
-                exampleFile,
-                result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
-                //result -> downloadFIle()),
-                storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
-        );
+//        File exampleFile = new File(imgURLs.get(position));
+            File exampleFile = new File(imageToPost);
+
+//        String imagePath = imgURLs.get(position).toString();
+//        String[] imageName = imagePath.split("/");
+
+            String[] imageName = imageToPost.split("/");
+
+            // nextInt is normally exclusive of the top value,
+            // so add 1 to make it inclusive
+            int randomNum = ThreadLocalRandom.current().nextInt(min, 2000000000 + 1);
+            String ran = String.valueOf(randomNum);
+
+            imageToPostKey = ran + "_" + imageName[imageName.length - 1];
+
+            Amplify.Storage.uploadFile(
+
+
+                    imageToPostKey,
+                    exampleFile,
+                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                    //result -> downloadFIle()),
+                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+            );
+        }
+
     }
 
-    private void downloadFIle() {
+    private void downloadFile() {
         Amplify.Storage.downloadFile(
-                tempo,
+                imageToPostKey,
                 new File(getContext().getFilesDir() + "/download.txt"),
                 //result -> Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName()),
                 result -> setImage(result.getFile()),
-                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
         );
 
     }
@@ -231,10 +232,9 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
     private void setImage(File file) {
 
 
-
         String filePath = file.getPath();
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-       // postImage2.setImageBitmap(bitmap);
+        // postImage2.setImageBitmap(bitmap);
 
 //        ImageLoader imageLoader = ImageLoader.getInstance();
 //

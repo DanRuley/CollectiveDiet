@@ -47,7 +47,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@color/light_green"
-                android:src="@drawable/add_to_meal"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/et_post_comment"
@@ -89,6 +89,17 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_post_add_image"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/cv_post_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="10dp">
+
+    </androidx.appcompat.widget.AppCompatButton>
+
     <GridView
         android:id="@+id/gv_post_grid"
         android:layout_width="match_parent"
@@ -100,5 +111,7 @@
         android:numColumns="3"
         android:verticalSpacing="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_post_info"></GridView>
+        app:layout_constraintTop_toBottomOf="@id/btn_post_add_image">
+
+    </GridView>
 </androidx.constraintlayout.widget.ConstraintLayout>

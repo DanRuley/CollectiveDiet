@@ -191,6 +191,37 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    //todo
+    public static void pushUserPost(@NonNull User user, Float weight,Context ctx) {
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_weight_log_item";
+
+        java.util.Date dts = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        WeightUploadItem toAdd = new WeightUploadItem(user.getUser_id(), weight, sdf.format(dts));
+
+        JSONObject weightLogJSON = null;
+
+        try {
+            weightLogJSON = new JSONObject(new Gson().toJson(toAdd, WeightUploadItem.class));
+        } catch (JSONException e) {
+            Log.d("weight log json parse", e.getMessage());
+        }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, weightLogJSON,
+                response -> Log.d("success!", response.toString()), error -> Log.d("add weight log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+            @NonNull
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
+    }
+
 
     /**
      * GeeksforGeeks.com algorithm function swaps the array's first element with last
