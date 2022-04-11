@@ -14,9 +14,11 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogUploadItem;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
+import com.example.thecollectivediet.JSON_Marshall_Objects.UserPostUploadItem;
 import com.example.thecollectivediet.JSON_Marshall_Objects.WeightUploadItem;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.jjoe64.graphview.series.DataPoint;
 
@@ -25,6 +27,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -192,24 +195,26 @@ public class User_API_Controller {
     }
 
     //todo
-    public static void pushUserPost(@NonNull User user, Float weight,Context ctx) {
-        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_weight_log_item";
+    public static void pushUserPost(@NonNull String user_id, String imageKey, String comment, Context ctx) {
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUserPost";
 
         java.util.Date dts = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
-        WeightUploadItem toAdd = new WeightUploadItem(user.getUser_id(), weight, sdf.format(dts));
+        //WeightUploadItem toAdd = new WeightUploadItem(user.getUser_id(), weight, sdf.format(dts));
+        UserPostUploadItem userPostUploadItem = new UserPostUploadItem(user_id, imageKey, comment, sdf.format(dts));
 
-        JSONObject weightLogJSON = null;
+        JSONObject postJSON = null;
 
         try {
-            weightLogJSON = new JSONObject(new Gson().toJson(toAdd, WeightUploadItem.class));
+
+            postJSON = new JSONObject(new Gson().toJson(userPostUploadItem, UserPostUploadItem.class));
         } catch (JSONException e) {
-            Log.d("weight log json parse", e.getMessage());
+            Log.d("post json parse", e.getMessage());
         }
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, weightLogJSON,
-                response -> Log.d("success!", response.toString()), error -> Log.d("add weight log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postJSON,
+                response -> Log.d("success!", response.toString()), error -> Log.d("add post log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
             @NonNull
             @Override
             public Map<String, String> getHeaders() {
@@ -222,6 +227,29 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    public static void getPosts(Context ctx, @NonNull VolleyResponseListener<UserPostUploadItem[]> listener) {
+        String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getPosts");
+
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
+                response -> {
+                    UserPostUploadItem[] results = new UserPostUploadItem[response.length()];
+                    try {
+                        Gson gson = new Gson();
+                        for (int i = 0; i < response.length(); i++) {
+                            String jsonString = response.get(i).toString();
+                            UserPostUploadItem postItem = gson.fromJson(jsonString, UserPostUploadItem.class);
+                            results[i] = postItem;
+
+                        }
+                        listener.onResponse(results);
+                    } catch (@NonNull JSONException | JsonSyntaxException e) {
+                        listener.onError(e.getMessage());
+                    }
+                },
+                error -> listener.onError(error.toString())
+        );
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
+    }
 
     /**
      * GeeksforGeeks.com algorithm function swaps the array's first element with last

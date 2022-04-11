@@ -8,11 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thecollectivediet.JSON_Marshall_Objects.UserPostUploadItem;
 import com.example.thecollectivediet.R;
 
 public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdapter.ViewHolder> {
 
-    private String[] localDataSet;
+    private UserPostUploadItem[] localDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -30,7 +31,7 @@ public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdap
         }
     }
 
-    public ShareRecyclerAdapter(String[] dataSet) {
+    public ShareRecyclerAdapter(UserPostUploadItem[] dataSet) {
         localDataSet = dataSet;
     }
 
@@ -47,7 +48,9 @@ public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull ShareRecyclerAdapter.ViewHolder holder, int position) {
 
-        holder.getTextView().setText(localDataSet[position]);
+        //holder.getTextView().setText(localDataSet[position]);
+        if(localDataSet[position].getComment() != null)
+        holder.getTextView().setText(localDataSet[position].getComment());
     }
 
     @Override

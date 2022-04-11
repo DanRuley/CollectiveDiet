@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.amplifyframework.core.Amplify;
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.Share.SharedFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -40,7 +42,7 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
     //Elements
     private GridView gridView; //contains picutes of user on device
     private ProgressBar progressBar;
-    private TextView post; //post comment and/or image
+    private TextView post; //post button to post comment and/or image
     private ImageView postImage; //image to post
     private EditText postComment; //comment to post
     private AppCompatButton addImageToPostButton; //Lets user add image to post
@@ -52,6 +54,7 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
     //constants
     private static final int NUM_GRID_COLS = 3;
     private static final String append = "file:/";
+    private ViewModelUser viewModelUser;
 
     //variables
     private ArrayList<String> directories;
@@ -67,6 +70,8 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "onCreateView: started");
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_user_post, container, false);
+
+        viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getActivity()));
         imgURLs = new ArrayList<>();
@@ -186,34 +191,36 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     private void uploadFile() {
 
-        String x = postComment.getText().toString();
-        if (!x.matches("") && imageFlag != 0) {
+        String comment = postComment.getText().toString();
+        if (!comment.matches("") || imageFlag != 0) {
 
 
+            if(imageFlag != 0) {
 //        File exampleFile = new File(imgURLs.get(position));
-            File exampleFile = new File(imageToPost);
+                File exampleFile = new File(imageToPost);
 
 //        String imagePath = imgURLs.get(position).toString();
 //        String[] imageName = imagePath.split("/");
 
-            String[] imageName = imageToPost.split("/");
+                String[] imageName = imageToPost.split("/");
 
-            // nextInt is normally exclusive of the top value,
-            // so add 1 to make it inclusive
-            int randomNum = ThreadLocalRandom.current().nextInt(min, 2000000000 + 1);
-            String ran = String.valueOf(randomNum);
+                // nextInt is normally exclusive of the top value,
+                // so add 1 to make it inclusive
+                int randomNum = ThreadLocalRandom.current().nextInt(min, 2000000000 + 1);
+                String ran = String.valueOf(randomNum);
 
-            imageToPostKey = ran + "_" + imageName[imageName.length - 1];
+                imageToPostKey = ran + "_" + imageName[imageName.length - 1];
 
-            Amplify.Storage.uploadFile(
+                Amplify.Storage.uploadFile(
 
-
-                    imageToPostKey,
-                    exampleFile,
-                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
-                    //result -> downloadFIle()),
-                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
-            );
+                        imageToPostKey,
+                        exampleFile,
+                        result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                        //result -> downloadFIle()),
+                        storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+                );
+            }
+            User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext());
         }
 
     }
