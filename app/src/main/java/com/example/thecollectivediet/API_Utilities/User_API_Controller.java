@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.amplifyframework.core.Amplify;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -25,6 +26,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -194,6 +196,37 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    public static void pushUserPost(String user_id, String imageKey, String comment, Context ctx, String imageUrl) {
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUserPost";
+
+        java.util.Date dts = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        //WeightUploadItem toAdd = new WeightUploadItem(user.getUser_id(), weight, sdf.format(dts));
+        UserPostUploadItem userPostUploadItem = new UserPostUploadItem(user_id, imageKey, comment, sdf.format(dts), imageUrl);
+
+        JSONObject postJSON = null;
+
+        try {
+
+            postJSON = new JSONObject(new Gson().toJson(userPostUploadItem, UserPostUploadItem.class));
+        } catch (JSONException e) {
+            Log.d("post json parse", e.getMessage());
+        }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postJSON,
+                response -> Log.d("successxxxxxxxxxxxxxxx!", response.toString()), error -> Log.d("add post log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+            @NonNull
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
+    }
     //todo
     public static void pushUserPost(@NonNull String user_id, String imageKey, String comment, Context ctx) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUserPost";
@@ -238,6 +271,17 @@ public class User_API_Controller {
                         for (int i = 0; i < response.length(); i++) {
                             String jsonString = response.get(i).toString();
                             UserPostUploadItem postItem = gson.fromJson(jsonString, UserPostUploadItem.class);
+
+
+                            Amplify.Storage.getUrl(
+                                    postItem.getImage_key(),
+                                    result -> {
+
+                                        Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
+
+                                    },
+                                    error -> Log.e("MyAmplifyApp", "URL generation failure", error)
+                            );
                             results[i] = postItem;
 
                         }
@@ -268,5 +312,6 @@ public class User_API_Controller {
             }
             return arr;
         }
+
 
 }

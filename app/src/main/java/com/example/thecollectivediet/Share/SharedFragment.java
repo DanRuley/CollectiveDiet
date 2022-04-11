@@ -17,6 +17,7 @@ import com.amplifyframework.core.Amplify;
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.UserPostUploadItem;
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 
 import java.io.File;
@@ -30,6 +31,8 @@ public class SharedFragment extends Fragment {
 
     //variables
     UserPostUploadItem[] dataset;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +59,7 @@ public class SharedFragment extends Fragment {
                 recyclerView = v.findViewById(R.id.rv_shared_post);
                 linearLayoutManager = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(linearLayoutManager);
-                adapter = new ShareRecyclerAdapter(dataset);
+                adapter = new ShareRecyclerAdapter(dataset, getContext(), (MainActivity) requireActivity());
                 recyclerView.setAdapter(adapter);
             }
 

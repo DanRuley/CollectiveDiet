@@ -195,7 +195,7 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         if (!comment.matches("") || imageFlag != 0) {
 
 
-            if(imageFlag != 0) {
+            if (imageFlag != 0) {
 //        File exampleFile = new File(imgURLs.get(position));
                 File exampleFile = new File(imageToPost);
 
@@ -216,11 +216,22 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
                         imageToPostKey,
                         exampleFile,
                         result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
-                        //result -> downloadFIle()),
+
                         storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
                 );
+
+                Amplify.Storage.getUrl(
+                        imageToPostKey,
+                        result -> {
+                            Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
+                            User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext(), result.getUrl().toString());
+                        },
+                        error -> Log.e("MyAmplifyApp", "URL generation failure", error)
+                );
+            } else {
+
+                User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext());
             }
-            User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext());
         }
 
     }
