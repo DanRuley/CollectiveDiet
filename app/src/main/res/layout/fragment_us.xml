@@ -1,114 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Us_Fragment_Components.UsFragment"
+    android:layout_marginBottom="56dp"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/cl_us_upper"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/spacer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/query_section"
+        android:layout_alignParentTop="true" />
 
-        <ScrollView
+    <LinearLayout
+        android:id="@+id/query_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:padding="6dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activity_main_stockticker"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Look up item" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/activity_main_period_radiogroup">
+
+            <RadioButton
+                android:id="@+id/activity_main_period12m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12 Months" />
+
+            <Spinner
+                android:id="@+id/spinner_database"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:spinnerMode="dropdown"
+                android:layout_weight="1" />
 
-                <TextView
-                    android:layout_width="246dp"
-                    android:layout_height="117dp"
-                    android:layout_marginTop="205dp"
-                    android:background="@drawable/rounded_button_white"
-                    android:text="us database"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        </RadioGroup>
 
-                <TextView
-                    android:layout_width="246dp"
-                    android:layout_height="117dp"
-                    android:layout_marginTop="205dp"
-                    android:text="stuff"
-                    android:textSize="34sp"
-                    android:layout_gravity="right"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@drawable/rounded_button_white"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/activity_main_priceinterval">
 
-                <TextView
-                    android:layout_width="246dp"
-                    android:layout_height="117dp"
-                    android:layout_marginTop="205dp"
-                    android:text="more stuff"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@drawable/rounded_button_white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Radio 2 "
+                android:textSize="18sp"/>
 
-                <TextView
-                    android:layout_width="246dp"
-                    android:layout_height="117dp"
-                    android:layout_marginTop="205dp"
-                    android:text="stuff again"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_gravity="right"
-                    android:background="@drawable/rounded_button_white"/>
+            <RadioButton
+                android:id="@+id/activity_main_interval1d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daily" />
 
-                <!--Do not remove. Must be at bottom!-->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_marginTop="205dp"
-                    android:text=""
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_gravity="right"
-                    />
-                <!--Do not remove. Must be at bottom!-->
+            <RadioButton
+                android:id="@+id/activity_main_interval1w"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </ScrollView>
+            <RadioButton
+                android:id="@+id/activity_main_interval1m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monthly" />
+        </RadioGroup>
 
-        <ImageView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:id="@+id/iv_earth"
-            android:src="@drawable/group_1"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Radio 3"
+                android:textSize="18sp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_main_high"
+                android:text="High"/>
 
-    <TextView
-        android:id="@+id/spacer"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_us_upper"
-        >
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_main_low"
+                android:text="Low"/>
 
-    </TextView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_main_close"
+                android:text="Close"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/activity_main_getprices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search" />
+    </LinearLayout>
+
+
+</RelativeLayout>

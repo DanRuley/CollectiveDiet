@@ -103,4 +103,10 @@ dependencies {
 
     //google sign in
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
+
+    // Android Chart Creator
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // TextInputLayout and TextInputEditText
+    implementation 'com.google.android.material:material:1.0.0'
 }

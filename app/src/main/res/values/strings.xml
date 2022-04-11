@@ -21,4 +21,11 @@
         <item>Snack/Other</item>
     </string-array>
 
+    <string name="us_tab">dropDownMenu</string>
+    <string-array name="database_items">
+        <item>Weight</item>
+        <item>Happiness</item>
+        <item>Fullness</item>
+    </string-array>
+
 </resources>
