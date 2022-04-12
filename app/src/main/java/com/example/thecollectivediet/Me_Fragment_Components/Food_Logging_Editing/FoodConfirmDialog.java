@@ -211,22 +211,6 @@ public class FoodConfirmDialog extends Dialog {
             }
             return view;
         }
-
-//        @Override
-//        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-//            View row;
-//            row = inflater.inflate(resource, null);
-//            TextView textView = row.findViewById(R.id.spinner_item_text);
-//            textView.setText(spinnerItems[position]);
-//
-//            Display display = getWindow().getWindowManager().getDefaultDisplay();
-//            Point size = new Point();
-//            display.getSize(size);
-//            int width = size.x;
-//
-//            row.setMinimumWidth(width);
-//            return row;
-//        }
     }
 
     @SuppressWarnings("UnnecessaryReturnStatement")
