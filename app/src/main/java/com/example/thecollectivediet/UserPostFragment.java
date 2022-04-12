@@ -224,13 +224,13 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
                         imageToPostKey,
                         result -> {
                             Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
-                            User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext(), result.getUrl().toString());
+                            User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext(), result.getUrl().toString(), viewModelUser.getUser().getUser_name());
                         },
                         error -> Log.e("MyAmplifyApp", "URL generation failure", error)
                 );
             } else {
 
-                User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext());
+                User_API_Controller.pushUserPost(viewModelUser.getUser().getUser_id(), imageToPostKey, comment, getContext(), viewModelUser.getUser().getUser_name());
             }
         }
 

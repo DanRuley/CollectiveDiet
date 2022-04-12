@@ -11,10 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.amplifyframework.core.Amplify;
-import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.JSON_Marshall_Objects.UserPostUploadItem;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
@@ -33,20 +31,25 @@ public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView textView;
-        private final ImageView imageView;
+        //elements of holder element
+        private final TextView userName;
+        private final TextView comment;
+        private final ImageView image;
         private final View divider;
+        private final TextView date;
 
         public ViewHolder(View v) {
             super(v);
 
-            textView = v.findViewById(R.id.tv_shared_post);
+            userName = v.findViewById(R.id.tv_shared_post_user_name);
+            comment = v.findViewById(R.id.tv_shared_post_comment);
             divider = v.findViewById(R.id.divider);
-            imageView = v.findViewById(R.id.iv_shared_post);
+            image = v.findViewById(R.id.iv_shared_post_image);
+            date = v.findViewById(R.id.tv_shared_post_date);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getComment() {
+            return comment;
         }
     }
 
@@ -70,31 +73,22 @@ public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull ShareRecyclerAdapter.ViewHolder holder, int position) {
 
-        //holder.getTextView().setText(localDataSet[position]);
-        if (localDataSet[position].getComment() != null)
-            holder.getTextView().setText(localDataSet[position].getComment());
+        //set name of user
+        holder.userName.setText(localDataSet[position].getUser_name());
 
+        //set comment of element
+        if (localDataSet[position].getComment() != null) {
+            holder.getComment().setText(localDataSet[position].getComment());
+        }
+
+        //set image of element
         String imageToPull = localDataSet[position].getImage_key();
         if (localDataSet[position].getImage_key() != null) {
-
-//            String imgURL = localDataSet[position].getUrl() == null ? "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png" : localDataSet[position].getUrl();
-//            Glide.with(ctx).load(imgURL).into(holder.imageView);
 
             Amplify.Storage.getUrl(
                     imageToPull,
                     result -> {
-
-// create a ProgressDrawable object which we will show as placeholder
-//                        CircularProgressDrawable drawable = new CircularProgressDrawable(ctx);
-//                        drawable.setColorSchemeColors(R.color.design_default_color_primary, R.color.design_default_color_primary_dark, R.color.teal_700);
-//                        drawable.setCenterRadius(30f);
-//                        drawable.setStrokeWidth(5f);
-//                        // set all other properties as you would see fit and start it
-//                        drawable.start();
-
                         Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
-//                        String imgURL = localDataSet[position].getUrl() == null ? "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png" : localDataSet[position].getUrl();
-//                        Glide.with(ctx).load(imgURL).into(holder.imageView);
 
                         activity.runOnUiThread(new Runnable() {
                             @Override
@@ -103,7 +97,7 @@ public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdap
 
                                 ImageLoader imageLoader = ImageLoader.getInstance();
 
-                                imageLoader.displayImage(String.valueOf(result.getUrl()), holder.imageView, new ImageLoadingListener() {
+                                imageLoader.displayImage(String.valueOf(result.getUrl()), holder.image, new ImageLoadingListener() {
                                     @Override
                                     public void onLoadingStarted(String imageUri, View view) {
                                         // progressBar.setVisibility(View.VISIBLE);
@@ -131,6 +125,7 @@ public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdap
                     error -> Log.e("MyAmplifyApp", "URL generation failure", error)
             );
 
+            holder.date.setText(localDataSet[position].getDate());
 
         }
     }

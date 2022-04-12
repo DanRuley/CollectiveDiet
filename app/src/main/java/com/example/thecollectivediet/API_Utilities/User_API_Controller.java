@@ -196,14 +196,14 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
-    public static void pushUserPost(String user_id, String imageKey, String comment, Context ctx, String imageUrl) {
+    public static void pushUserPost(String user_id, String imageKey, String comment, Context ctx, String imageUrl, String user_name) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUserPost";
 
         java.util.Date dts = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         //WeightUploadItem toAdd = new WeightUploadItem(user.getUser_id(), weight, sdf.format(dts));
-        UserPostUploadItem userPostUploadItem = new UserPostUploadItem(user_id, imageKey, comment, sdf.format(dts), imageUrl);
+        UserPostUploadItem userPostUploadItem = new UserPostUploadItem(user_id, imageKey, comment, sdf.format(dts), imageUrl, user_name);
 
         JSONObject postJSON = null;
 
@@ -228,14 +228,14 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
     //todo
-    public static void pushUserPost(@NonNull String user_id, String imageKey, String comment, Context ctx) {
+    public static void pushUserPost(@NonNull String user_id, String imageKey, String comment, Context ctx, String user_name) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUserPost";
 
         java.util.Date dts = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         //WeightUploadItem toAdd = new WeightUploadItem(user.getUser_id(), weight, sdf.format(dts));
-        UserPostUploadItem userPostUploadItem = new UserPostUploadItem(user_id, imageKey, comment, sdf.format(dts));
+        UserPostUploadItem userPostUploadItem = new UserPostUploadItem(user_id, imageKey, comment, sdf.format(dts), user_name);
 
         JSONObject postJSON = null;
 
