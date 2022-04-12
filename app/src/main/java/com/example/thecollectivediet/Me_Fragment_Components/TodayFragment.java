@@ -344,11 +344,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
         else {
             //get age in years
-            String ageInYears = user.getPrettyDob();
-            String[] x = user.getUser_dob().split("-");
+            String[] age = user.getUser_dob().split("-");
 
             LocalDate today = LocalDate.now(); // Today's date is 10th Jan 2022
-            LocalDate birthday = LocalDate.of(Integer.valueOf(x[0]), Integer.valueOf(x[1]), Integer.valueOf(x[2])); // Birth date
+            LocalDate birthday = LocalDate.of(Integer.valueOf(age[0]), Integer.valueOf(age[1]), Integer.valueOf(age[2])); // Birth date
 
             Period p = Period.between(birthday, today);
 
