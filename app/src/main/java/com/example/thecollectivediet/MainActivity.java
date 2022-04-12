@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,7 +24,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.amplifyframework.core.Amplify;
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
@@ -33,7 +31,6 @@ import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
 import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,9 +39,6 @@ import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    GoogleSignInClient mGoogleSignInClient;
-
 
     //elements
     Toolbar toolbar;
@@ -229,27 +223,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isSignedIn() {
         return GoogleSignIn.getLastSignedInAccount(this) != null && !GoogleSignIn.getLastSignedInAccount(this).isExpired();
     }
-
-//    private void signOut() {
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-//        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                currentUser = null;
-//            }
-//        });
-//    }
-//
-//    public static User getCurrentUser() {
-//        return currentUser;
-//    }
-//
-//    public static void setCurrentUser(User user) {
-//        currentUser = user;
-//    }
 
     public void requireSignInPrompt(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

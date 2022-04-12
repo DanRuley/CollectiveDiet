@@ -30,8 +30,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -84,7 +84,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     //bitmap that holds profile pic
     Bitmap bitmap;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser modelViewUser;
 
 
     @Override
@@ -104,7 +104,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         photoChanged = false;
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(requireActivity()).get(ModelViewUser.class);
+        modelViewUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
 
         context = this.getActivity();
         assert context != null;
