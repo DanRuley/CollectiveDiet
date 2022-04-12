@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
@@ -26,8 +27,8 @@ import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.HashMap;
 
@@ -38,24 +39,24 @@ public class FoodConfirmDialog extends Dialog {
     FoodNutrients nutrients;
     FoodResult food;
 
+    //elements
     ImageView image;
     TextView foodName;
     EditText calorieVal;
     TextView proteinVal;
     TextView fatVal;
     TextView carbVal;
-
     Spinner servingUnitSpinner;
     Spinner mealTypeSpinner;
     EditText servingQtyVal;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
-    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType, ManualFoodSearch manualFoodSearch) {
+    public FoodConfirmDialog(Context ctx, FoodNutrients nutrients, FoodResult food, MealSelectDialog.MealType mealType, FragmentActivity activity) {
         super(ctx);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(manualFoodSearch).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(activity).get(ViewModelUser.class);
 
         this.ctx = ctx;
         this.nutrients = nutrients;
@@ -70,6 +71,7 @@ public class FoodConfirmDialog extends Dialog {
         this.setContentView(R.layout.confirm_food_add);
         this.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
+        //hook elements
         image = findViewById(R.id.confirm_add_img);
         calorieVal = findViewById(R.id.calories_txt_value);
         calorieVal.setEnabled(false);
@@ -78,10 +80,8 @@ public class FoodConfirmDialog extends Dialog {
         carbVal = findViewById(R.id.carb_val);
         servingQtyVal = findViewById(R.id.serving_qty_val);
         foodName = findViewById(R.id.foodNameTxt);
-
         foodName.setText(food.getProduct_name());
         servingQtyVal.setText(String.valueOf(100));
-
         calorieVal.setText(String.format("%.1f", nutrients.getEnergy_kcal_100g()));
         proteinVal.setText(String.format("%.1f %s", nutrients.getProteins_100g(), nutrients.getProteins_unit()));
         carbVal.setText(String.format("%.1f %s", nutrients.getCarbohydrates_100g(), nutrients.getCarbohydrates_unit()));
@@ -97,7 +97,7 @@ public class FoodConfirmDialog extends Dialog {
         setupFoodImage();
 
         this.findViewById(R.id.add_food_btn).setOnClickListener(v -> {
-            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, modelViewUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString());
+            FoodLog_API_Controller.pushFoodLogEntry(ctx, food, viewModelUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString(), viewModelUser.getDate());
             JSONSerializer.addFoodToList(food.getProduct_name(), "100 grams", ctx);
             Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").into(image);
             new CountDownTimer(500, 250) {
@@ -112,6 +112,8 @@ public class FoodConfirmDialog extends Dialog {
                     onStop();
                 }
             }.start();
+
+            viewModelUser.setUpdateFlag(1);
         });
     }
 

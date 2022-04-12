@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,11 +23,10 @@ import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.ModelViewUser;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -56,14 +56,17 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     ArrayList<FoodLogItemView> innerDinnerItems;
     ArrayList<FoodLogItemView> innerSnacksItems;
 
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_food_log, container, false);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
+
 
         arrayListVertical = new ArrayList<>();
         innerBreakfastItems = new ArrayList<>();
@@ -85,8 +88,10 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         RecyclerView outerRec = v.findViewById(R.id.rv_main);
         outerRec.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+        //set data in recycler views
         setData();
 
+        //set up calendar widget
         initializeDatePickerDialog();
         String normal = formatDate(selectedYear, selectedMonth, selectedDay, false);
         String sql = formatDate(selectedYear, selectedMonth, selectedDay, true);
@@ -95,22 +100,41 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
         outerRec.setAdapter(foodLogAdapter);
 
+        //set the observer to get info for user
+        viewModelUser.getList().observe(requireActivity(), nameObserver);
+
         return v;
     }
 
-    private void initializeDatePickerDialog() {
-        final Calendar c = Calendar.getInstance();
+    //create an observer that watches the LiveData<User> object
+    final Observer<HashMap<String,List<FoodLogItemView>>> nameObserver = new Observer<HashMap<String,List<FoodLogItemView>>>() {
+        @Override
+        public void onChanged(HashMap<String,List<FoodLogItemView>> list) {
+            //Update the ui if this data variable changes
+            if(list != null){
+               populateRecyclerItems(list);
+            }
+        }
+    };
 
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+    private void initializeDatePickerDialog() {
+//        final Calendar c = Calendar.getInstance();
+//
+//        int year = c.get(Calendar.YEAR);
+//        int month = c.get(Calendar.MONTH);
+//        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        String[] date = viewModelUser.getDate().split("-");
+
+        int year = Integer.valueOf(date[0]);
+        int month = Integer.valueOf(date[1]) - 1;
+        int day = Integer.valueOf(date[2]);
 
         datePickerDialog = new DatePickerDialog(getActivity(), (view, year1, month1, dayOfMonth) -> setDate(year1, month1 + 1, dayOfMonth), year, month, day);
 
         datePickerDialog.getDatePicker().setSpinnersShown(true);
         setDate(year, month + 1, day);
     }
-
 
     public void setDate(int year, int month, int day) {
         selectedYear = year;
@@ -121,11 +145,12 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
     }
 
     private void onDateChanged() {
+        viewModelUser.setDate(formatDate(selectedYear, selectedMonth, selectedDay, true));
         showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
-        FoodLog_API_Controller.getFoodLogEntries(getActivity(), modelViewUser.getUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
+        FoodLog_API_Controller.getFoodLogEntries(getActivity(), viewModelUser.getUser(), formatDate(selectedYear, selectedMonth, selectedDay, true), new VolleyResponseListener<HashMap<String, List<FoodLogItemView>>>() {
             @Override
             public void onResponse(@NonNull HashMap<String, List<FoodLogItemView>> response) {
-                populateRecyclerItems(response);
+               viewModelUser.setList(response);
             }
 
             @Override
@@ -138,11 +163,15 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     private void populateRecyclerItems(@NonNull HashMap<String, List<FoodLogItemView>> logItems) {
 
+        int cals = 0;
+
         for (OuterMealRecyclerItem outerList : arrayListVertical) {
             Double totalCal = Converter.getTotalMealCalories(Objects.requireNonNull(logItems.get(outerList.getTitle())));
+            cals += totalCal;
             outerList.setCalorieString(String.format(Locale.US, "%.1f Calories", totalCal));
         }
 
+        viewModelUser.setCalories(cals);
         foodLogAdapter.notifyDataSetChanged();
 
         //breakfast
@@ -172,6 +201,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
             Log.d("item", item.toString());
             innerSnacksItems.add(item);
         }
+
     }
 
     private String formatDate(int year, int month, int day, boolean sqlFormat) {

@@ -12,9 +12,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+        android:maxSdkVersion="31"
+        />
 
     <application
+        android:name=".tcdandroid"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="The Collective Diet"

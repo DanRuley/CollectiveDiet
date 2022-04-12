@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.amplifyframework.core.Amplify;
 import com.example.thecollectivediet.Camera_Fragment_Components.CameraFragment;
 import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     GoogleSignInClient mGoogleSignInClient;
 
+
     //elements
     Toolbar toolbar;
     DrawerLayout drawer;
@@ -51,18 +53,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    @Nullable
-    public static User currentUser;
-
-    //public static User currentUser;
-    ModelViewUser modelViewUser;
+    ViewModelUser viewModelUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Creates or gets existing view model to pass around the user data
-        modelViewUser = new ViewModelProvider(this).get(ModelViewUser.class);
+        viewModelUser = new ViewModelProvider(this).get(ViewModelUser.class);
 
         Map<String, String> env = System.getenv();
         setContentView(R.layout.activity_main);
@@ -76,28 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
         });
 
-//        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-//                new ActivityResultContracts.StartActivityForResult(),
-//                result -> {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//
-//                        String username = prefs.getString("user", "null");
-//                        login.setText(username);
-//
-//                    } else {
-//                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                                .requestEmail()
-//                                .build();
-//                        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-//                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-//
-//                        if (account != null && !account.isExpired()) {
-//                            String username = prefs.getString("user", "null");
-//                            login.setText(username);
-//                        }
-//                    }
-//                });
-
         //If this is user's first time on the app, get string from shared preferences which
         //should be null for first timers and change to false so that the intro does not
         //show up again.
@@ -110,56 +86,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
-/////////////////////////////////////////////////////////////////////////////////////////////////
-        if (modelViewUser.isSignedIn()) {
-            modelViewUser.pullUserData(MainActivity.this);
-            //login.setText(modelViewUser.get) and change above fragment to loading screen.
+
+        if (viewModelUser.isSignedIn()) {
+            viewModelUser.pullUserData(MainActivity.this);
+            //login.setText(viewModelUser.get) and change above fragment to loading screen.
             commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
 
-
-
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-//        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-//
-//        if (account != null && !account.isExpired()) {
-//
-//            commitFragmentTransaction(this, R.id.fragmentHolder, new MeTabLayoutFragment());
-//
-//            String username = prefs.getString("user", "null");
-//            login.setText(username);
-//
-
-
-//            User_API_Controller.handleNewSignIn(modelViewUser.getAccount(), MainActivity.this, new VolleyResponseListener<User>() {
-//                @Override
-//                public void onResponse(User user) {
-//                    modelViewUser.setUser(user);
-//                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
-//                }
-//
-//                @Override
-//                public void onError(String error) {
-//                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-
-//            //todo
-//            //get user metrics
-
-        } else
+        } else {
             commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
+        }
 
 
         //set the observer to get info for user
-        modelViewUser.getUserData().observe(MainActivity.this, nameObserver);
+        viewModelUser.getUserData().observe(MainActivity.this, nameObserver);
 
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
         //Setup button, views, etc in the activity_main layout
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -173,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         //Bottom navigation tool bar on the bottom of the app screen will be used for
         //navigation
@@ -200,15 +139,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-
-       // getshit();
-        modelViewUser.getUser().setCurrent_wgt(111f);
-        int x = 9;
     }
 
-public void getshit(){
-        float x = modelViewUser.getUser().getCurrent_wgt();
-}
     //create an observer that watches the LiveData<User> object
     final Observer<User> nameObserver = new Observer<User>() {
         @Override
@@ -251,7 +183,8 @@ public void getshit(){
         else if (id == R.id.nav_goals)
             commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment(2));
         else if (id == R.id.nav_profile)
-            fragment = new ProfileFragment();
+            //fragment = new ProfileFragment();
+            fragment = new UserPostFragment();
         else if (id == R.id.nav_us)
             fragment = new UsFragment();
         else if (id == R.id.nav_me)

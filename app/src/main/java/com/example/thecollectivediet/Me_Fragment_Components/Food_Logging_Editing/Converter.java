@@ -27,7 +27,7 @@ public class Converter {
 
         switch (servingUnit) {
             case "g":
-                calories = servingSize * energy100g;
+                calories = servingSize * calPerGram;
                 break;
             case "cups":
                 calories = servingSize * cupsToGrams * calPerGram;

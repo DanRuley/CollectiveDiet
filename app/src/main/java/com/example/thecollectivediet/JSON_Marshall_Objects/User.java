@@ -7,8 +7,6 @@ import java.util.regex.Pattern;
 
 public class User {
 
-
-
     String user_id;
     String user_email;
     String user_name;
@@ -17,30 +15,12 @@ public class User {
     String user_country;
     Float start_wgt;
     Float current_wgt;
-    float goal_wgt;
+    Float goal_wgt;
     String signup_dts;
     String user_lifestyle;
     Float user_hgt;
-//    int user_feet;//used for height
-//    int user_inches;//used for height
     String user_city;
     int goal_cals;
-
-//    public int getUser_feet() {
-//        return user_feet;
-//    }
-//
-//    public void setUser_feet(int user_feet) {
-//        this.user_feet = user_feet;
-//    }
-//
-//    public int getUser_inches() {
-//        return user_inches;
-//    }
-//
-//    public void setUser_inches(int user_inches) {
-//        this.user_inches = user_inches;
-//    }
 
     public User(){
 
@@ -51,6 +31,11 @@ public class User {
         user_email = email;
         user_name = name;
         signup_dts = dts;
+
+        this.start_wgt = 0f;
+        this.current_wgt = 0f;
+        this.goal_cals = 0;
+
     }
 
     public String getUser_country() {
@@ -120,11 +105,11 @@ public class User {
         this.current_wgt = current_wgt;
     }
 
-    public float getGoal_wgt() {
+    public Float getGoal_wgt() {
         return goal_wgt;
     }
 
-    public void setGoal_wgt(float goal_wgt) {
+    public void setGoal_wgt(Float goal_wgt) {
         this.goal_wgt = goal_wgt;
     }
 
@@ -179,5 +164,4 @@ public class User {
             return String.format("%s/%s/%s", m.group(2), m.group(3), m.group(1));
         else return null;
     }
-
 }
