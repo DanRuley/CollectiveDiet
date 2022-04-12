@@ -2,16 +2,25 @@ package com.example.thecollectivediet;
 
 import static android.content.ContentValues.TAG;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static org.checkerframework.checker.units.UnitsTools.min;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +49,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     //Elements
-    private GridView gridView; //contains picutes of user on device
+    private GridView gridView; //contains pictures of user on device
     private ProgressBar progressBar;
     private TextView post; //post button to post comment and/or image
     private ImageView postImage; //image to post
@@ -49,15 +58,16 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     //temp
     private ImageView postImage2;
-
+    private int imageCode = 1;
 
     //constants
     private static final int NUM_GRID_COLS = 3;
     private static final String append = "file:/";
     private ViewModelUser viewModelUser;
+    //ActivityResultLauncher<String> requestPermissionLauncher;
 
     //variables
-    private ArrayList<String> directories;
+    private String directories;
     FilePaths filePaths;
     String imageToPost;
     ArrayList<String> imgURLs;
@@ -96,14 +106,70 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
         //initialize variables
         imageFlag = 0;
-        directories = new ArrayList<>();
+        //directories = new ArrayList<>();
 
-        checkForPhotos();
+//        checkForPhotos();
         filePaths = new FilePaths();
+
+        // Register the permissions callback, which handles the user's response to the
+// system permissions dialog. Save the return value, an instance of
+// ActivityResultLauncher, as an instance variable.
+//        requestPermissionLauncher =
+//                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+//                    if (isGranted) {
+//                        // Permission is granted. Continue the action or workflow in your
+//                        // app.
+//                        checkForPhotos();
+//                        setupGridView(filePaths.Camera);
+//                    } else {
+//                        // Explain to the user that the feature is unavailable because the
+//                        // features requires a permission that the user has denied. At the
+//                        // same time, respect the user's decision. Don't link to system
+//                        // settings in an effort to convince the user to change their
+//                        // decision.
+//                    }
+//                });
+
+        if (ContextCompat.checkSelfPermission(
+                getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED) {
+            // You can use the API that requires the permission.
+            checkForPhotos();
+           // setupGridView(directories);
+        }
+//        else if (shouldShowRequestPermissionRationale(...)) {
+//            // In an educational UI, explain to the user why your app requires this
+//            // permission for a specific feature to behave as expected. In this UI,
+//            // include a "cancel" or "no thanks" button that allows the user to
+//            // continue using your app without granting the permission.
+//            showInContextUI(...);
+//        }
+        else {
+            // You can directly ask for the permission.
+            // The registered ActivityResultCallback gets the result of this request.
+            requestPermissionLauncher.launch(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+
 
         return v;
     }
 
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+    registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            // Permission is granted. Continue the action or workflow in your
+            // app.
+            checkForPhotos();
+            //setupGridView(directories);
+        } else {
+            // Explain to the user that the feature is unavailable because the
+            // features requires a permission that the user has denied. At the
+            // same time, respect the user's decision. Don't link to system
+            // settings in an effort to convince the user to change their
+            // decision.
+        }
+    });
     @Override
     public void onClick(View v) {
 
@@ -116,21 +182,72 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.btn_post_add_image: {
-                setupGridView(filePaths.Pictures);
+//                requestPermissionLauncher.launch(
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                String[] projection = new String[] {
+                        MediaStore.Images.Media.DATA
+                };
+
+                Cursor cursor = getContext().getContentResolver().query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        projection,
+                        null,
+                        null,
+                        null
+                );
+
+                while (cursor.moveToNext()) {
+
+                    String y = cursor.getString(0);
+                    imgURLs.add(y);
+                    setupGridView();
+                    // Use an ID column from the projection to get
+                    // a URI representing the media item itself.
+                }
+
+//                if (ContextCompat.checkSelfPermission(
+//                        getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+//                        PackageManager.PERMISSION_GRANTED) {
+//                    // You can use the API that requires the permission.
+//                    checkForPhotos();
+//                    setupGridView(filePaths.Camera);
+//                }
+////        else if (shouldShowRequestPermissionRationale(...)) {
+////            // In an educational UI, explain to the user why your app requires this
+////            // permission for a specific feature to behave as expected. In this UI,
+////            // include a "cancel" or "no thanks" button that allows the user to
+////            // continue using your app without granting the permission.
+////            showInContextUI(...);
+////        }
+//                else {
+//                    // You can directly ask for the permission.
+//                    // The registered ActivityResultCallback gets the result of this request.
+//                    requestPermissionLauncher.launch(
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//                }
+
                 break;
             }
         }
     }
 
     private void checkForPhotos() {
-        FilePaths filePaths = new FilePaths();
+      //  FilePaths filePaths = new FilePaths();
 
-        directories.add(filePaths.Camera);
+        //check for other folders inside "/storage/emulated/0/pictures"
+//        if(FileSearch.getDirectoryPaths(filePaths.Pictures) != null){
+//            directories = filePaths.Pictures;
+//        }
+//        else {
+//            directories = filePaths.Camera;
+//        }
+        directories = filePaths.Camera;
     }
 
-    private void setupGridView(String selectedDirectory) {
+    private void setupGridView() {
         Log.d(TAG, "setting up grid view");
-        imgURLs = FileSearch.getFilePath(selectedDirectory);
+        //imgURLs = FileSearch.getFilePath(selectedDirectory);
 
         //set the grid column width
         int gridWidth = getResources().getDisplayMetrics().widthPixels;
