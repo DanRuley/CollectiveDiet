@@ -74,6 +74,7 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         innerDinnerItems = new ArrayList<>();
         innerSnacksItems = new ArrayList<>();
 
+        //User u = MainActivity.getCurrentUser();
         //hook elements
         mAddFoodButton = v.findViewById(R.id.btn_add_food);
         mAddFoodButton.setOnClickListener(this);

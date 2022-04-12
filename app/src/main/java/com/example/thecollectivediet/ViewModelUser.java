@@ -1,8 +1,5 @@
 package com.example.thecollectivediet;
 
-import static com.example.thecollectivediet.MainActivity.commitFragmentTransaction;
-
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -17,19 +14,15 @@ import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
-import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.jjoe64.graphview.series.DataPoint;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class ViewModelUser extends AndroidViewModel {
 
@@ -39,7 +32,6 @@ public class ViewModelUser extends AndroidViewModel {
     private Application application;
 
     MutableLiveData<HashMap<String,List<FoodLogItemView>>> list = new MutableLiveData<>();
-
 
     private final MutableLiveData<User> userData = new MutableLiveData<User>();
     private final MutableLiveData<DataPoint[]> weights = new MutableLiveData<>();

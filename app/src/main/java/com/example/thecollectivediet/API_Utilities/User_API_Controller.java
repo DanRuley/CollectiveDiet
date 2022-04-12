@@ -1,6 +1,7 @@
 package com.example.thecollectivediet.API_Utilities;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ public class User_API_Controller {
     public static void handleNewSignIn(@NonNull GoogleSignInAccount account, Context ctx, @NonNull VolleyResponseListener<User> listener) {
 
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getUser?uid=" + account.getId();
+
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {

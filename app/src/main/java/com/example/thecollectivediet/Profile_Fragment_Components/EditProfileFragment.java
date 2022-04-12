@@ -4,16 +4,12 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -21,13 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -35,58 +25,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressLint("ClickableViewAccessibility")
-public class EditProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class EditProfileFragment extends Fragment implements View.OnClickListener {
 
     private ActivityResultLauncher<Intent> cameraActivityResultLauncher;
-    private ActivityResultLauncher<String> requestPermissionLauncher;
-    private ActivityResultLauncher<String> cameraRequestPermissionLauncher;
     private ActivityResultLauncher<String> readRequestPermissionLauncher;
 
-    //Edit text inputs
-    TextInputEditText nickNameInput;
-    TextInputEditText dobInput;
-    EditText sexInput;
+    EditText nickNameInput;
+    EditText dobInput;
+    EditText genderInput;
     EditText heightInput;
-    TextInputEditText countryInput;
-    TextInputEditText cityInput;
-    TextInputEditText weightInput;
+    EditText countryInput;
+    EditText cityInput;
+    EditText weightInput;
 
     DatePickerDialog dobPicker;
-
-    //spinner utilities
-    Integer[] ageArray;
-    Integer[] feetArray;
-    Integer[] inchArray;
-    ArrayAdapter<CharSequence> sexSpinAdapter;
-    ArrayAdapter<Integer> ageSpinAdapter;
-    ArrayAdapter<Integer> feetSpinAdapter;
-    ArrayAdapter<Integer> inchSpinAdapter;
-
-    //spinners
-    Spinner sexSpinner;
-    Spinner ageSpinner;
-    Spinner feetSpinner;
-    Spinner inchSpinner;
-
 
     private boolean photoChanged;
 
@@ -115,22 +84,30 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     //bitmap that holds profile pic
     Bitmap bitmap;
 
-    ViewModelUser viewModelUser;
+    ViewModelUser modelViewUser;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
-        //Creates or gets existing view model to pass around the user data
-        viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
-        viewModelUser.getUserData().observe(getViewLifecycleOwner(), observer);
+        initializeComponents(v);
 
+        return v;
+    }
+
+
+    private void initializeComponents(@NonNull View v) {
         //took new photo?
         photoChanged = false;
 
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
+
         context = this.getActivity();
+        assert context != null;
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
@@ -153,17 +130,102 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             photo.setImageBitmap(thumbnailPic);
         }
 
+        assert (modelViewUser.getUser() != null);
+
+
+        dobPicker = new DatePickerDialog(requireActivity(), this);
+
+        User currentUser = modelViewUser.getUser();
+
+        //This listener is added to all edittext fields, it just clears the existing text when the user focuses on it and replaces the text
+        //if the user makes no changes.
+        EditTextEventListener clearInputListener = new EditTextEventListener();
+
+        nickNameInput = v.findViewById(R.id.edit_profile_name_input);
+        Objects.requireNonNull(nickNameInput).setOnFocusChangeListener(clearInputListener);
+        cityInput = v.findViewById(R.id.edit_profile_city_input);
+        Objects.requireNonNull(cityInput).setOnFocusChangeListener(clearInputListener);
+        weightInput = v.findViewById(R.id.edit_profile_weight_input);
+        Objects.requireNonNull(weightInput).setOnFocusChangeListener(clearInputListener);
+
+        dobInput = v.findViewById(R.id.edit_profile_dob_input);
+        dobInput.setFocusable(false);
+        dobInput.setOnTouchListener((v1, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                dobPicker.show();
+            }
+            return false;
+        });
+
+        genderInput = v.findViewById(R.id.edit_profile_sex_input);
+        genderInput.setFocusable(false);
+        genderInput.setOnTouchListener((v1, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                GenderPickerDialog dialog = new GenderPickerDialog(requireActivity(), this, currentUser.getUser_gender());
+                dialog.show();
+            }
+            return false;
+        });
+
+        heightInput = v.findViewById(R.id.edit_profile_height_input);
+        heightInput.setFocusable(false);
+        heightInput.setOnTouchListener((v1, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                HeightPickerDialog dialog = new HeightPickerDialog(requireActivity(), this, currentUser.getUser_hgt());
+                dialog.show();
+            }
+            return false;
+        });
+
+        countryInput = v.findViewById(R.id.edit_profile_country_input);
+        Objects.requireNonNull(countryInput).setOnFocusChangeListener(clearInputListener);
+
+
+        if (currentUser.getUser_name() != null)
+            nickNameInput.setText(currentUser.getUser_name());
+
+
+        String dob = currentUser.getPrettyDob();
+        if (dob != null)
+            dobInput.setText(dob);
+
+
+        if (currentUser.getUser_gender() != null)
+            genderInput.setText(currentUser.getUser_gender());
+
+        if (currentUser.getUser_hgt() != null) {
+            Float hgt = currentUser.getUser_hgt();
+            int ft = Math.round(hgt) / 12;
+            float in = hgt - ft * 12.0f;
+            String hgtStr = "" + ft + "' " + in + "\"";
+            heightInput.setText(hgtStr);
+        }
+
+        if (currentUser.getUser_country() != null)
+            countryInput.setText(currentUser.getUser_country());
+
+        if (currentUser.getUser_city() != null)
+            cityInput.setText(currentUser.getUser_city());
+
+        if (currentUser.getCurrent_wgt() != null)
+            weightInput.setText(String.valueOf(currentUser.getCurrent_wgt()));
+
         back_button = v.findViewById(R.id.edit_profile_back_btn);
         back_button.setOnClickListener(this);
 
-////////////////////////////////////////////////////////////////////
+        setupCameraAndFilePermissions();
+        setupUI(v);
+    }
+
+    private void setupCameraAndFilePermissions() {
         ActivityResultContracts.RequestMultiplePermissions requestMultiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
         //multiplePermissionActivityResultLauncher.launch(PERMISSIONS);
         ActivityResultLauncher<String[]> multiplePermissionActivityResultLauncher = registerForActivityResult(requestMultiplePermissionsContract, isGranted -> {
             Log.d("PERMISSIONS", "Launcher result: " + isGranted.toString());
             if (isGranted.containsValue(false)) {
                 Log.d("PERMISSIONS", "At least one of the permissions was not granted, launching again...");
-                //multiplePermissionActivityResultLauncher.launch(PERMISSIONS);
             }
         });
 
@@ -184,23 +246,22 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                     }
                 });
 
-        requestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (isGranted) {
+        ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            if (isGranted) {
 
-                        readRequestPermissionLauncher.launch(
-                                Manifest.permission.READ_EXTERNAL_STORAGE);
-                    }
-                });
+                readRequestPermissionLauncher.launch(
+                        Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+        });
 
-        cameraRequestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (isGranted) {
-                        // Permission is granted. Continue to take picture
-                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        cameraActivityResultLauncher.launch(cameraIntent);
-                    }
-                });
+        // Permission is granted. Continue to take picture
+        ActivityResultLauncher<String> cameraRequestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            if (isGranted) {
+                // Permission is granted. Continue to take picture
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraActivityResultLauncher.launch(cameraIntent);
+            }
+        });
 
         readRequestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -211,80 +272,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 });
 
         multiplePermissionActivityResultLauncher.launch(PERMISSIONS);
-
-        nickNameInput = v.findViewById(R.id.edit_profile_name_input);
-        dobInput = v.findViewById(R.id.edit_profile_dob_input);
-        sexInput = v.findViewById(R.id.edit_profile_sex_input);
-        weightInput = v.findViewById(R.id.edit_profile_weight_input);
-        cityInput = v.findViewById(R.id.edit_profile_city_input);
-        countryInput = v.findViewById(R.id.edit_profile_country_input);
-
-        //spinner for sex
-        sexSpinner = v.findViewById(R.id.spin_sex1);
-        sexSpinAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.array_sex, android.R.layout.simple_spinner_item);
-        sexSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sexSpinner.setAdapter(sexSpinAdapter);
-        sexSpinner.setOnItemSelectedListener(this);
-
-        //spinners for height
-        feetArray = new Integer[10];
-        for(int i = 0; i <= 9; i++)
-        {
-            feetArray[i] = i;
-        }
-
-        inchArray = new Integer[13];
-        for(int i = 0; i <= 12; i++)
-        {
-            inchArray[i] = i;
-        }
-
-        feetSpinner = v.findViewById(R.id.spin_feet);
-        feetSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, feetArray);
-        feetSpinAdapter.setDropDownViewResource(R.layout.spinner);
-        feetSpinner.setAdapter(feetSpinAdapter);
-        feetSpinner.setOnItemSelectedListener(this);
-
-        inchSpinner = v.findViewById(R.id.spin_inches);
-        inchSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, inchArray);
-        inchSpinAdapter.setDropDownViewResource(R.layout.spinner);
-        inchSpinner.setAdapter(inchSpinAdapter);
-        inchSpinner.setOnItemSelectedListener(this);
-        return v;
     }
-
-    final Observer<User> observer = new Observer<User>() {
-        @Override
-        public void onChanged(User userData) {
-            if(userData != null)
-            {
-               if(userData.getUser_name() != null)
-               nickNameInput.setText(userData.getUser_name());
-
-               if(userData.getUser_dob() != null)
-               dobInput.setText(userData.getUser_dob());
-
-               if(userData.getUser_gender() != null)
-               sexSpinner.setSelection(sexSpinAdapter.getPosition(userData.getUser_gender()));
-
-               if(userData.getCurrent_wgt() != null)
-               weightInput.setText(String.valueOf((int) Math.floor(userData.getCurrent_wgt())));
-
-               if(userData.getUser_hgt() != null) {
-                   int feet = (int) Math.floor(userData.getUser_hgt() / 12);
-                   int inches = (int) Math.floor(userData.getUser_hgt() % 12);
-                   feetSpinner.setSelection(feetSpinAdapter.getPosition(feet));
-                   inchSpinner.setSelection(inchSpinAdapter.getPosition(inches));
-               }
-
-               if(userData.getUser_city() != null)
-               cityInput.setText(userData.getUser_city());
-
-               if(userData.getUser_country() != null)
-               countryInput.setText(userData.getUser_country());
-            }
-        }
-    };
 
     /**
      * Makes it so that clicking outside of text fields hides the keyboard
@@ -301,6 +289,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     MainActivity.hideKeyboard(requireActivity());
                     Log.i("touch event", v.toString());
+                    v.clearFocus();
                     v.performClick();
                 }
 
@@ -315,36 +304,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 setupUI(innerView);
             }
         }
-    }
-
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-
-        switch (parent.getId()){
-//            case R.id.spin_age1:{
-//                ageTemp = Integer.valueOf(parent.getItemAtPosition(pos).toString());
-//                break;
-//            }
-//            case R.id.spin_sex1:{
-//                sexTemp = parent.getItemAtPosition(pos).toString();
-//                break;
-//            }
-//            case R.id.spin_feet:{
-//                feetTemp = (int)parent.getItemAtPosition(pos);
-//                break;
-//            }
-//            case R.id.spin_inches:{
-//                inchTemp = (int)parent.getItemAtPosition(pos);
-//                break;
-//            }
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
@@ -365,12 +324,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             }
 
             saveProfileChanges();
-
             MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
 
         if (viewID == R.id.edit_profile_back_btn) {
-
             MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
     }
@@ -442,25 +399,17 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
     private void saveProfileChanges() {
 
-        viewModelUser.getUser().setUser_name(getEditTextString(nickNameInput));
-        viewModelUser.getUser().setUser_dob(getEditTextString(dobInput));
-        viewModelUser.getUser().setUser_city(getEditTextString(cityInput));
-        viewModelUser.getUser().setUser_country(getEditTextString(countryInput));
-        viewModelUser.getUser().setUser_gender(sexSpinner.getSelectedItem().toString());
+        User currentUser = modelViewUser.getUser();
+        assert currentUser != null;
 
-        int feet = (Integer.valueOf( feetSpinner.getSelectedItem().toString()));
-        int inches = (Integer.valueOf(inchSpinner.getSelectedItem().toString()));
-        viewModelUser.getUser().setUser_hgt((float)(convertToInches(feet) + inches));
+        currentUser.setUser_name(getEditTextString(nickNameInput));
+        currentUser.setUser_dob(getEditTextString(dobInput));
+        currentUser.setUser_city(getEditTextString(cityInput));
+        currentUser.setUser_country(getEditTextString(countryInput));
+        currentUser.setUser_gender(getEditTextString(genderInput));
+        currentUser.setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
 
-        if(!getEditTextString(weightInput).matches("")) {
-            viewModelUser.getUser().setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
-        }
-
-        viewModelUser.updateUserProfile(viewModelUser.getUser(), context);
-    }
-
-    private int convertToInches(int feet) {
-        return feet * 12;
+        User_API_Controller.updateUserProfile(currentUser, context);
     }
 
     private boolean isExternalStorageWritable() {
@@ -472,53 +421,15 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         dobInput.setText(dateString);
     }
 
-    static class DatePickerDialog extends Dialog {
+    public void heightChangeCallback(int ft, float in) {
+        modelViewUser.getUser().setUser_hgt((float) ft * 12 + in);
+        String heightTxt = "" + ft + "' " + in + "\"";
+        heightInput.setText(heightTxt);
+    }
 
-        DatePicker datePicker;
-        Button dobConfirmBtn;
-        EditProfileFragment parent;
-
-        public DatePickerDialog(@NonNull Context context, EditProfileFragment parent) {
-            super(context);
-            this.parent = parent;
-            initializeComponents();
-        }
-
-        private void initializeComponents() {
-            this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            this.setContentView(R.layout.date_picker_spinner_popup);
-            this.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-            datePicker = findViewById(R.id.date_picker_spinner);
-            dobConfirmBtn = findViewById(R.id.dob_confirm_btn);
-
-            Calendar c = Calendar.getInstance();
-            c.add(Calendar.YEAR, -13);
-
-            datePicker.setMaxDate(c.getTimeInMillis());
-
-            dobConfirmBtn.setOnClickListener(v -> {
-                parent.datePickerCallBack(String.format(Locale.US, "%02d/%02d/%d", datePicker.getMonth() + 1, datePicker.getDayOfMonth(), datePicker.getYear()));
-                onStop();
-            });
-        }
-
-        @Override
-        public void onStop() {
-            new CountDownTimer(500, 250) {
-
-                @Override
-                public void onTick(long millisUntilFinished) {
-                }
-
-                @Override
-                public void onFinish() {
-
-                }
-            }.start();
-            super.onStop();
-            dismiss();
-        }
+    public void genderChangeCallback(String gender) {
+        genderInput.setText(gender);
+        modelViewUser.getUser().setUser_gender(gender);
     }
 
     static class EditTextEventListener implements View.OnFocusChangeListener {
@@ -537,6 +448,5 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                     et.setText(oldTextVal);
             }
         }
-
     }
 }

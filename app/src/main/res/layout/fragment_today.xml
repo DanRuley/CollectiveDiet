@@ -2,7 +2,6 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_animation_today">
@@ -43,11 +42,11 @@
 
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="225dp"
+            android:background="@drawable/gradient_animation_profile"
             android:id="@+id/today_weight_graph"
             android:layout_margin="10dp"
-            android:background="@drawable/gradient_animation_profile"
-            >
+            android:paddingTop="25dp">
 
         </com.jjoe64.graphview.GraphView>
 
@@ -81,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="0"
+                    android:text="2035.6"
                     android:textSize="14sp">
 
                 </TextView>
@@ -166,7 +165,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0"
+                        android:text="2200"
                         android:textSize="14sp">
 
                     </TextView>
