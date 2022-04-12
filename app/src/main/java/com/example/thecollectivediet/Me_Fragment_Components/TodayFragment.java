@@ -35,6 +35,9 @@ import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,14 +59,14 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     RatingBar focusRatingBar;
 
     //List of images for rating bars
-    @NonNull
-    int[] moodList = new int[]{R.drawable.mood_rank1, R.drawable.mood_rank2, R.drawable.mood_rank3, R.drawable.mood_rank4};
-    @NonNull
-    int[] energyList = new int[]{R.drawable.energy_rank1, R.drawable.energy_rank2, R.drawable.energy_rank3, R.drawable.energy_rank4};
-    @NonNull
-    int[] hungerList = new int[]{R.drawable.hunger_rank1, R.drawable.hunger_rank2, R.drawable.hunger_rank3, R.drawable.hunger_rank4};
-    @NonNull
-    int[] focusList = new int[]{R.drawable.focus_rank1, R.drawable.focus_rank2, R.drawable.focus_rank3, R.drawable.focus_rank4};
+//    @NonNull
+//    int[] moodList = new int[]{R.drawable.mood_rank1, R.drawable.mood_rank2, R.drawable.mood_rank3, R.drawable.mood_rank4};
+//    @NonNull
+//    int[] energyList = new int[]{R.drawable.energy_rank1, R.drawable.energy_rank2, R.drawable.energy_rank3, R.drawable.energy_rank4};
+//    @NonNull
+//    int[] hungerList = new int[]{R.drawable.hunger_rank1, R.drawable.hunger_rank2, R.drawable.hunger_rank3, R.drawable.hunger_rank4};
+//    @NonNull
+//    int[] focusList = new int[]{R.drawable.focus_rank1, R.drawable.focus_rank2, R.drawable.focus_rank3, R.drawable.focus_rank4};
 
     //elements for images
     ImageView mProfilePic;
@@ -77,7 +80,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     TextView mTodaysCalories;
     TextView mBMI;
     TextView mCalGoal;
-    TextView mBmi;
+    TextView mBMR;
 
     //graph elements
     GraphView mWeightGraph;
@@ -95,8 +98,6 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_today, container, false);
-
-
 
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
@@ -143,10 +144,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         //set the observer to get info for weights created in User repository
         viewModelUser.getCals().observe(getViewLifecycleOwner(), todayObserver);
 
-        //viewModelUser.getWeighIns();
-
+        //hook elements
         mTodaysCalories = v.findViewById(R.id.tv_today_frag_calories);
         mCalGoal = v.findViewById(R.id.tv_cal_goal);
+        mBMR = v.findViewById(R.id.tv_bmr);
 
         //Rating bar for mood
 //        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
@@ -232,7 +233,13 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
             if(user != null){
               mCalGoal.setText(String.valueOf(user.getGoal_cals()));
               setUserBMI();
+
+            //update bmr
+            mBMR.setText(setBMR(user));
+
             }
+
+
         }
     };
 
@@ -328,5 +335,33 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
             viewModelUser.setUpdateFlag(0);
             viewModelUser.pullUserData((MainActivity) this.getActivity());
         }
+    }
+
+    private String setBMR(User user){
+
+        if(user.getUser_gender() == null || user.getCurrent_wgt() == null || user.getUser_hgt() == null || user.getUser_dob() == null){
+            return "Please complete profile";
+        }
+        else {
+            //get age in years
+            String ageInYears = user.getPrettyDob();
+            String[] x = user.getUser_dob().split("-");
+
+            LocalDate today = LocalDate.now(); // Today's date is 10th Jan 2022
+            LocalDate birthday = LocalDate.of(Integer.valueOf(x[0]), Integer.valueOf(x[1]), Integer.valueOf(x[2])); // Birth date
+
+            Period p = Period.between(birthday, today);
+
+            if (user.getUser_gender().matches("Male")) {
+                return String.valueOf((10f * user.getCurrent_wgt()) + (6.25 * user.getUser_hgt()) - (5 * p.getYears()) + 5);
+            }
+            else if(user.getUser_gender().matches("Female")){
+                return String.valueOf( (10 * user.getCurrent_wgt()) + (6.25 * user.getUser_hgt()) - (5 * p.getYears()) - 161);
+            }
+            else{
+                return "Unable to calculate for sex of \"Other\"";
+            }
+        }
+
     }
 }
