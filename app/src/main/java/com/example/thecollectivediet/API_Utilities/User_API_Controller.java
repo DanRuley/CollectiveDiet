@@ -1,7 +1,6 @@
 package com.example.thecollectivediet.API_Utilities;
 
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,39 +11,29 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogUploadItem;
-import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.JSON_Marshall_Objects.UserPostUploadItem;
 import com.example.thecollectivediet.JSON_Marshall_Objects.WeightUploadItem;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.jjoe64.graphview.series.DataPoint;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class User_API_Controller {
 
     public static void handleNewSignIn(@NonNull GoogleSignInAccount account, Context ctx, @NonNull VolleyResponseListener<User> listener) {
 
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getUser?uid=" + account.getId();
-
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
