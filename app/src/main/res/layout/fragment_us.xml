@@ -8,12 +8,26 @@
     android:layout_marginBottom="56dp"
     android:orientation="vertical">
 
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/query_section"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/spinner_database" />
+
+    <Spinner
+        android:id="@+id/spinner_database"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/query_section"
+        android:layout_alignParentLeft="true"
+        android:rotation="270"
+        android:spinnerMode="dialog"
+        android:tooltipText="click here" />
+
 
     <LinearLayout
         android:id="@+id/query_section"
@@ -48,10 +62,9 @@
                 android:text="12 Months" />
 
             <Spinner
-                android:id="@+id/spinner_database"
+                android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:spinnerMode="dropdown"
                 android:layout_weight="1" />
 
         </RadioGroup>

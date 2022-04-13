@@ -22,10 +22,43 @@
     </string-array>
 
     <string name="us_tab">dropDownMenu</string>
-    <string-array name="database_items">
-        <item>Weight</item>
-        <item>Happiness</item>
-        <item>Fullness</item>
-    </string-array>
+        <string-array name="database_items">
+            <item>Weight</item>
+            <item>Energy</item>
+            <item>Mood</item>
+            <item>Hunger</item>
+            <item>Focus</item>
+            <item>Calories</item>
+            <item>Fat</item>
+            <item>Carbohydrates</item>
+            <item>Sugar</item>
+            <item>Sodium</item>
+            <item>Fiber</item>
+            <item>Cholesterol</item>
+            <item>Calcium</item>
+            <item>Vitamin c</item>
+            <item>Vitamin a</item>
+            <item>Vitamin d</item>
+            <item>Vitamin b6</item>
+            <item>Vitamin b12</item>
+            <item>Potassium</item>
+            <item>Saturated Fat</item>
+            <item>Trans Fat</item>
+            <item>Magnesium</item>
+            <item>Zinc</item>
+        </string-array>
+
+        <string-array name="age_ranges">
+            <item>13–18</item>
+            <item>19–22</item>
+            <item>23–29</item>
+            <item>30–39</item>
+            <item>40–49</item>
+            <item>50–59</item>
+            <item>60–69</item>
+            <item>70–79</item>
+            <item>80+</item>
+        </string-array>
+
 
 </resources>

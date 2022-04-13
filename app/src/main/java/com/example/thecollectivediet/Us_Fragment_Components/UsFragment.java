@@ -39,14 +39,13 @@ public class UsFragment extends Fragment {
     private RadioGroup periodRadioGroup, intervalRadioGroup;
     private CheckBox highCheckBox, lowCheckBox, closeCheckBox;
     private Spinner spinnerDatabaseItems;
+    private Spinner xSpinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         View v = inflater.inflate(R.layout.fragment_us, container, false);
-
-        lineChart = v.findViewById(R.id.line_chart);
 
         stockTickerTextInputLayout = v.findViewById(R.id.activity_main_stockticker);
         periodRadioGroup = v.findViewById(R.id.activity_main_period_radiogroup);
@@ -56,10 +55,23 @@ public class UsFragment extends Fragment {
         lowCheckBox = v.findViewById(R.id.activity_main_low);
         closeCheckBox = v.findViewById(R.id.activity_main_close);
 
+        // Spinner Settings
         spinnerDatabaseItems = v.findViewById(R.id.spinner_database);
+        spinnerDatabaseItems.setPrompt("Y-Axis/Dependent Variable");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext() ,R.array.database_items, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinnerDatabaseItems.setAdapter(adapter);
+
+        // Spinner Settings
+        xSpinner = v.findViewById(R.id.spinner);
+        xSpinner.setPrompt("Y-Axis/Dependent Variable");
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext() ,R.array.database_items, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        xSpinner.setAdapter(adapter2);
+
+
+        // Line Graph Settings
+        lineChart = v.findViewById(R.id.line_chart);
 
         ArrayList<Entry> lineList = new ArrayList<>();
         lineList.add(new Entry(10f, 100f));
