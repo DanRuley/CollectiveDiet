@@ -1,25 +1,13 @@
 package com.example.thecollectivediet;
 
 import static android.content.ContentValues.TAG;
-
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static org.checkerframework.checker.units.UnitsTools.min;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,18 +20,25 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.amplifyframework.core.Amplify;
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.Share.SharedFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
-//import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+
+//import java.io.InputStream;
 
 
 public class UserPostFragment extends Fragment implements View.OnClickListener {
@@ -75,7 +70,6 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
         viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
 
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getActivity()));
         imgURLs = new ArrayList<>();
 
 

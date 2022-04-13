@@ -94,7 +94,6 @@ public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdap
                             @Override
                             public void run() {
 
-
                                 ImageLoader imageLoader = ImageLoader.getInstance();
 
                                 imageLoader.displayImage(String.valueOf(result.getUrl()), holder.image, new ImageLoadingListener() {
