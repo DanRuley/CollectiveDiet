@@ -42,12 +42,15 @@ public class ViewModelUser extends AndroidViewModel {
     private String chosenDate;
     private int updateFlag;
 
+    tcdandroid tcd;
+
     private Context ctx;
 
     public ViewModelUser(@NonNull Application application) {
         super(application);
 
         this.application = application;
+
 
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()

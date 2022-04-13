@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/blueblue"
-            app:popupTheme="@style/Theme.TheCollectiveDiet.PopupOverlay">
+            app:popupTheme="@style/Theme.TheCollectiveDiet.PopupOverlay"
+            android:backgroundTint="@color/pastel_pink">
 
             <TextView
                 android:id="@+id/toolbar_login"
@@ -36,7 +37,7 @@
                 android:layout_marginRight="16dp"
                 android:text="Login"
                 android:textSize="20dp"
-                />
+                android:textColor="@color/black"/>
         </androidx.appcompat.widget.Toolbar>
 
         <include layout="@layout/content_main">
