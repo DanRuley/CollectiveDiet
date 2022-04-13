@@ -5,13 +5,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,26 +19,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.thecollectivediet.API_Utilities.User_API_Controller;
-import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.OnDataPointTapListener;
-import com.jjoe64.graphview.series.Series;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
@@ -49,57 +37,30 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     @Nullable
     Context context;
 
-    //Rating bars
-    RatingBar moodRatingBar;
-    RatingBar energyRatingBar;
-    RatingBar hungerRatingBar;
-    RatingBar focusRatingBar;
-
-    //List of images for rating bars
-    @NonNull
-    int[] moodList = new int[]{R.drawable.mood_rank1, R.drawable.mood_rank2, R.drawable.mood_rank3, R.drawable.mood_rank4};
-    @NonNull
-    int[] energyList = new int[]{R.drawable.energy_rank1, R.drawable.energy_rank2, R.drawable.energy_rank3, R.drawable.energy_rank4};
-    @NonNull
-    int[] hungerList = new int[]{R.drawable.hunger_rank1, R.drawable.hunger_rank2, R.drawable.hunger_rank3, R.drawable.hunger_rank4};
-    @NonNull
-    int[] focusList = new int[]{R.drawable.focus_rank1, R.drawable.focus_rank2, R.drawable.focus_rank3, R.drawable.focus_rank4};
 
     //elements for images
     ImageView mProfilePic;
-    ImageView moodImage;
-    ImageView energyImage;
-    ImageView hungerImage;
-    ImageView focusImage;
     ImageView mealImage; //edit meal button
 
     //elements
     TextView mTodaysCalories;
     TextView mBMI;
     TextView mCalGoal;
-    TextView mBmi;
 
     //graph elements
-    GraphView mWeightGraph;
+    CustomGraphView gg;
+    LinearLayout graphContainer;
     LineGraphSeries<DataPoint> weightSeries;
 
     ViewModelUser viewModelUser;
-
-    DataPoint [] arr;
-
-    SimpleDateFormat sdf = new SimpleDateFormat("MM:yy");
-
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
         View v = inflater.inflate(R.layout.fragment_today, container, false);
 
-
-
         //Creates or gets existing view model to pass around the user data
-        viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
+        viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
 
         if(viewModelUser != null) {
             update();
@@ -110,20 +71,13 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         editor = prefs.edit();
 
         mBMI = v.findViewById(R.id.tv_bmi_result);
-//        setUserBMI();
 
-//        moodImage = v.findViewById(R.id.mood_image);
-//        energyImage = v.findViewById(R.id.energy_image);
-//        hungerImage = v.findViewById(R.id.hunger_image);
-//        focusImage = v.findViewById(R.id.focus_image);
         mProfilePic = v.findViewById(R.id.cv_profile_pic);
         mProfilePic.setOnClickListener(this);
 
-
-        mWeightGraph = v.findViewById(R.id.today_weight_graph);
+        graphContainer = v.findViewById(R.id.graph);
 
         weightSeries = new LineGraphSeries<DataPoint>();
-
 
         //display pic
         profilePicPath = prefs.getString("profile_pic", null);
@@ -143,73 +97,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         //set the observer to get info for weights created in User repository
         viewModelUser.getCals().observe(getViewLifecycleOwner(), todayObserver);
 
-        //viewModelUser.getWeighIns();
-
         mTodaysCalories = v.findViewById(R.id.tv_today_frag_calories);
         mCalGoal = v.findViewById(R.id.tv_cal_goal);
 
-        //Rating bar for mood
-//        moodRatingBar = (RatingBar) v.findViewById(R.id.mood_ratingbar);
-//        moodRatingBar.setRating(0);
-//
-//        moodRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//
-//                choice = (int) moodRatingBar.getRating();
-//                moodImage.setImageResource(moodList[choice - 1]);
-//                /*
-//                todo with sergio
-//                 */
-//            }
-//        });
-
-        //Rating bar for energy
-//        energyRatingBar = (RatingBar) v.findViewById(R.id.energy_ratingbar);
-//        energyRatingBar.setRating(0);
-//
-//        energyRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//
-//                choice = (int) energyRatingBar.getRating();
-//                energyImage.setImageResource(energyList[choice - 1]);
-//                 /*
-//                todo with sergio
-//                 */
-//            }
-//        });
-
-        //Rating bar for hunger
-//        hungerRatingBar = (RatingBar) v.findViewById(R.id.hunger_ratingbar);
-//        hungerRatingBar.setRating(0);
-//
-//        hungerRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                choice = (int) hungerRatingBar.getRating();
-//                hungerImage.setImageResource(hungerList[choice - 1]);
-//                 /*
-//                todo with sergio
-//                 */
-//            }
-//        });
-
-        //Rating bar for focus
-//        focusRatingBar = (RatingBar) v.findViewById(R.id.focus_ratingbar);
-//        focusRatingBar.setRating(0);
-//
-//        focusRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                choice = (int) focusRatingBar.getRating();
-//                focusImage.setImageResource(focusList[choice - 1]);
-//                 /*
-//                todo with sergio
-//                 */
-//            }
-//        });
-//
         return v;
     }
 
@@ -241,56 +131,27 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     final Observer<DataPoint[]> weightsObserver = new Observer<DataPoint[]>() {
         @Override
         public void onChanged(DataPoint[] w) {
-            if(w != null){
+            if (w != null) {
 
-                weightSeries = null;
-                weightSeries = new LineGraphSeries<DataPoint>(w);
-                mWeightGraph.addSeries(weightSeries);
-
-                weightSeries.setAnimated(true);
-                weightSeries.setBackgroundColor(getResources().getColor(R.color.pink));
-                weightSeries.setDrawBackground(true);
-                mWeightGraph.setTitle("My Weight Graph");
-                mWeightGraph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
-                mWeightGraph.getGridLabelRenderer().setVerticalAxisTitle("Weight");
-                mWeightGraph.getGridLabelRenderer().setPadding(50);
-
-                // set date label formatter
-                mWeightGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
-                    @Override
-                    public String formatLabel(double value, boolean isValueX) {
-                        if(isValueX){
-                            return sdf.format(new Date((long) value));
-                        }else{
-                            return super.formatLabel(value, isValueX);
-                        }
-
-                    }
-                });
-                mWeightGraph.getGridLabelRenderer().setNumHorizontalLabels(4);
-                mWeightGraph.getGridLabelRenderer().setNumVerticalLabels(4);
-
-                // set manual x bounds to have nice steps
-                mWeightGraph.getViewport().setMinX(w[0].getX());
-                //mWeightGraph.getViewport().setMaxX();
-                mWeightGraph.getViewport().setMinY(0);
-                mWeightGraph.getViewport().setXAxisBoundsManual(false);
-                mWeightGraph.getViewport().setYAxisBoundsManual(true);
-                //mWeightGraph.getViewport().setScalable(true);
-                mWeightGraph.getViewport().setScrollable(true);
-
-
-                weightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
-                    @Override
-                    public void onTap(Series series, DataPointInterface dataPoint) {
-                        Toast.makeText(getActivity(), "Series1: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                // as we use dates as labels, the human rounding to nice readable numbers
-                // is not nessecary
-                //mWeightGraph.getGridLabelRenderer().setHumanRounding(false);
+                double minWgt, maxWgt;
+                minWgt = maxWgt = w[0].getY();
+                for (DataPoint dp : w) {
+                    minWgt = Math.min(minWgt, dp.getY());
+                    maxWgt = Math.max(maxWgt, dp.getY());
                 }
 
+                weightSeries = new LineGraphSeries<>(w);
+                weightSeries.setAnimated(true);
+                weightSeries.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                weightSeries.setDrawBackground(true);
+
+
+                gg = new CustomGraphView(requireActivity());
+
+                gg.myInit(w[0].getX(), w[w.length - 1].getX(), minWgt, maxWgt);
+                gg.addSeries(weightSeries);
+                graphContainer.addView(gg);
+            }
             }
 
     };
@@ -323,10 +184,55 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void update(){
-        if(viewModelUser.getUpdateFlag() == 1){
+    private void update() {
+        if (viewModelUser.getUpdateFlag() == 1) {
             viewModelUser.setUpdateFlag(0);
             viewModelUser.pullUserData((MainActivity) this.getActivity());
+        }
+    }
+
+
+    class CustomGraphView extends GraphView {
+        public CustomGraphView(Context context) {
+            super(context);
+        }
+
+        public CustomGraphView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public CustomGraphView(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+        }
+
+        public void myInit(double minX, double maxX, double minY, double maxY) {
+            super.init();
+            setTitle("My Weight Graph");
+            getGridLabelRenderer().setHorizontalAxisTitle("Date");
+            getGridLabelRenderer().setVerticalAxisTitle("Weight");
+            getGridLabelRenderer().setPadding(50);
+
+            // set date label formatter
+            getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(requireActivity()));
+            getGridLabelRenderer().setNumHorizontalLabels(3);
+
+            getGridLabelRenderer().setNumVerticalLabels(5);
+
+            // set manual x bounds to have nice steps
+            getViewport().setMinX(minX);
+            getViewport().setMaxX(maxX);
+            getViewport().setXAxisBoundsManual(true);
+
+            getViewport().setMinY(Math.round(minY - 10));
+            getViewport().setMaxY(Math.round(maxY + 10));
+            getViewport().setYAxisBoundsManual(true);
+
+            getGridLabelRenderer().setHumanRounding(false);
+        }
+
+        public void init() {
+            super.init();
+            // set the custom style
         }
     }
 }

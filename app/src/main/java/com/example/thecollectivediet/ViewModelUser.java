@@ -107,7 +107,6 @@ public class ViewModelUser extends AndroidViewModel {
     public void setUser(User user){
         this.user = user;
         userData.setValue(this.user);
-
     }
 
     /**

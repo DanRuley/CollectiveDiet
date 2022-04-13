@@ -40,15 +40,15 @@
 
         </LinearLayout>
 
-        <com.jjoe64.graphview.GraphView
+        <LinearLayout
+            android:id="@+id/graph"
             android:layout_width="match_parent"
             android:layout_height="225dp"
-            android:background="@drawable/gradient_animation_profile"
-            android:id="@+id/today_weight_graph"
+            android:background="@drawable/gradient_background_today2"
+            android:orientation="vertical"
             android:layout_margin="10dp"
             android:paddingTop="25dp">
-
-        </com.jjoe64.graphview.GraphView>
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_calories"

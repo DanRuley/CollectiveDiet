@@ -77,21 +77,17 @@ public class User_API_Controller {
                         DataPoint[] results = new DataPoint[response.length()];
 
                         for (int i = 0; i < response.length(); i++) {
-                            String jsonString = response.get(i).toString();
 
                             //parse json response to get date
-                            String []values = jsonString.split(":|,");
-                            String v3 = values[3];
-                            v3 = v3.replaceAll("\"", "");
-                            v3 = v3.replace("}","");
+                            JSONObject wgtJson = (JSONObject) response.get(i);
 
                             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                            double wgt = wgtJson.getDouble("user_weight");
+                            Date dt = formatter.parse(wgtJson.getString("log_date"));
 
-                            Date date = formatter.parse(v3);
-
-                            results[i] = new DataPoint(date, Integer.parseInt(values[1]));
-
+                            results[i] = new DataPoint(dt, wgt);
                         }
+
                         //The received array of weigh ins are the most current in descending order
                         //so the array needs to be reversed.
                         results = reverse(results);
@@ -207,7 +203,7 @@ public class User_API_Controller {
         }
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postJSON,
-                response -> Log.d("successxxxxxxxxxxxxxxx!", response.toString()), error -> Log.d("add post log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+                response -> Log.d("success!", response.toString()), error -> Log.d("add post log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
             @NonNull
             @Override
             public Map<String, String> getHeaders() {
