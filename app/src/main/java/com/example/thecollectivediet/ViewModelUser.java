@@ -14,6 +14,7 @@ import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
+import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.Converter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -183,10 +184,12 @@ public class ViewModelUser extends AndroidViewModel {
         for(HashMap.Entry<String, List<FoodLogItemView>> entry : list.entrySet()){
 
             for(FoodLogItemView foodLogItemView : entry.getValue()){
-                cals += foodLogItemView.getEnergy_kcal_100g();
+                //cals += foodLogItemView.getEnergy_kcal_100g();
+                cals += Converter.calculateCalories(foodLogItemView.getEnergy_kcal_100g(), foodLogItemView.getPortion_unit(), foodLogItemView.getPortion_size());
             }
 
         }
+
         setCalories(cals);
     }
 
