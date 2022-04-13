@@ -25,12 +25,12 @@
         style="@style/CustomOutlineBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:id="@+id/txt_input_layout"
         android:padding="10dp"
         android:layout_weight="1">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_dialog_goals_user_input"
+            android:id="@+id/diet_dialog_goals_user_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

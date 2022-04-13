@@ -2,7 +2,6 @@ package com.example.thecollectivediet.Goals_Fragment_Components;
 
 import android.app.Dialog;
 import android.content.Context;
-
 import android.text.InputFilter;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,6 +15,7 @@ import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 
 public class GoalsDialog extends Dialog implements View.OnClickListener {
@@ -66,7 +66,7 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         mHeader = this.findViewById(R.id.tv_dialog_goals_header);
         mUserInputUnit = this.findViewById(R.id.tv_dialog_goals_user_input_measurement_unit);
 
-        mInput = this.findViewById(R.id.tiet_dialog_goals_user_input);
+        mInput = this.findViewById(R.id.diet_dialog_goals_user_input);
         mInput.setOnClickListener(this);
 
         mIncreaseWeight = this.findViewById(R.id.iv_dialog_goals_increase);
@@ -92,6 +92,7 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
             //user wants to set weight goal
             case 2: {
                 mHeader.setText("Weight Goal");
+                ((TextInputLayout) this.findViewById(R.id.txt_input_layout)).setHint("Enter Weight Goal");
                 userInputLength = 3;
                 break;
             }
@@ -99,7 +100,7 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
             case 3: {
                 mHeader.setText("Calorie Goal");
                 mUserInputUnit.setText("Calories");
-                mUserInputUnit.setHint("Enter Calories");
+                ((TextInputLayout) this.findViewById(R.id.txt_input_layout)).setHint("Enter Calorie Goal");
                 userInputLength = 5;
                 break;
             }
