@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/gradient_animation_goals">
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,7 +26,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
 
             <androidx.appcompat.widget.AppCompatButton
@@ -35,9 +36,11 @@
                 android:layout_height="wrap_content"
                 android:text="Enter Weight"
                 android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:layout_weight=".7"
-                android:background="@color/white"
+                android:background="@drawable/rounded_button_white"
                 android:layout_margin="10dp"
                 android:elevation="2dp"
                 >
@@ -74,7 +77,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/acb_goals_enter_weight_goal"
@@ -82,9 +86,11 @@
                 android:layout_height="wrap_content"
                 android:text="Enter Goal"
                 android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:layout_weight=".7"
-                android:background="@color/white"
+                android:background="@drawable/rounded_button_white"
                 android:layout_margin="10dp"
                 android:elevation="2dp">
 
@@ -118,7 +124,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/acb_goals_enter_calorie_goal"
@@ -126,9 +133,11 @@
                 android:layout_height="wrap_content"
                 android:text="Enter Goal"
                 android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_weight=".7"
-                android:background="@color/white"
+                android:background="@drawable/rounded_button_white"
                 android:layout_margin="10dp"
                 android:elevation="2dp"
                 >

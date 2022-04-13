@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_animation_profile">
+    >
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ac_button_profile_edit"
-        style="@style/white_button"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:text="Edit Profile"
-        android:textColor="@color/teal_700"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="20sp"
         app:layout_constraintRight_toRightOf="parent"
-
+        android:background="@drawable/rounded_button_white"
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.appcompat.widget.AppCompatButton>
@@ -53,6 +54,8 @@
         android:layout_margin="15dp"
         android:text="Nick Name"
         android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_image">
@@ -66,6 +69,8 @@
         android:layout_margin="15dp"
         android:text="Age:"
         android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
 
         app:layout_constraintTop_toBottomOf="@id/textview_profile_lastname">
@@ -80,6 +85,8 @@
         android:layout_margin="15dp"
         android:text="Sex:"
         android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_profile_lastname">
 
@@ -92,6 +99,8 @@
         android:layout_margin="15dp"
         android:text="Country:"
         android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_profile_age">
 
@@ -104,6 +113,8 @@
         android:layout_margin="15dp"
         android:text="City:"
         android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_profile_sex">
 
@@ -116,6 +127,8 @@
         android:layout_margin="15dp"
         android:text="Weight:"
         android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_profile_country">
 
@@ -128,6 +141,8 @@
         android:layout_margin="15dp"
         android:text="Height:"
         android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_profile_city">
 
@@ -140,16 +155,19 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:text="LOG OUT"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_profile_weight">
+        app:layout_constraintTop_toBottomOf="@id/textview_profile_weight"
+        android:background="@drawable/rounded_button_white">
 
     </androidx.appcompat.widget.AppCompatButton>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ac_button_login"
-        style="@style/white_button"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -157,7 +175,8 @@
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_profile_weight">
+        app:layout_constraintTop_toBottomOf="@id/textview_profile_weight"
+        android:background="@drawable/rounded_button_white">
 
     </androidx.appcompat.widget.AppCompatButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

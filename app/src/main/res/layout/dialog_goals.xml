@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".Goals_Fragment_Components.GoalsDialog"
-    android:background="@drawable/gradient_animation_goals">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_dialog_goals_header"
@@ -13,13 +13,15 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Today's Weight"
-        android:textSize="35sp"></TextView>
+        android:textSize="35sp"
+        android:background="@drawable/gradient_animation_today"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:background="@drawable/gradient_animation_today">
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/CustomOutlineBox"
@@ -99,7 +101,8 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_white">
 
                 <ImageView
                     android:id="@+id/iv_dialog_goals_decline"
@@ -116,7 +119,8 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_white">
 
                 <ImageView
                     android:id="@+id/iv_dialog_goals_accept"

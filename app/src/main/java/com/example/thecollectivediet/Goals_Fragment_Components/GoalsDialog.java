@@ -148,8 +148,9 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
                 if (dialogType == 1) {
                     viewModelUser.getUser().setCurrent_wgt(Float.parseFloat(mInput.getEditableText().toString()));
                     User_API_Controller.pushWeightLogEntry(viewModelUser.getUser(), viewModelUser.getUser().getCurrent_wgt(), ctx);
-                } else if (dialogType == 2)
+                } else if (dialogType == 2) {
                     viewModelUser.getUser().setGoal_wgt(Float.parseFloat(mInput.getEditableText().toString()));
+                }
                 else if (dialogType == 3) {
                     viewModelUser.getUser().setGoal_cals(Integer.valueOf(mInput.getEditableText().toString()));
                 }
