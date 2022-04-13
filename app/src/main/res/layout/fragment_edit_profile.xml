@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="56dp"
-    android:background="@drawable/gradient_animation_profile">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,10 +25,12 @@
                 style="@style/white_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
                 android:layout_marginVertical="10dp"
                 android:drawableLeft="@drawable/ic_action_back"
-                tools:ignore="SpeakableTextPresentCheck" />
+                tools:ignore="SpeakableTextPresentCheck"
+                android:background="@drawable/rounded_button_white"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +40,9 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Edit Profile"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/edit_profile_button_save_top"
@@ -49,8 +53,9 @@
                 android:layout_marginVertical="10dp"
                 android:padding="10dp"
                 android:text="Save Changes"
-                android:textColor="#00695C"
-                android:textSize="15sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_button_white"/>
         </LinearLayout>
 
         <View
@@ -76,8 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Edit Photo"
-            android:textColor="@color/teal_700"
-            android:textSize="20sp" />
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_button_white"/>
 
         <View
             android:id="@+id/divider1"
@@ -89,7 +95,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
             <com.google.android.material.textfield.TextInputLayout
 
@@ -98,7 +105,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Nick name"
-                android:padding="10dp">
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_name_input"
@@ -114,7 +122,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Date of birth"
-                android:padding="10dp">
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_dob_input"
@@ -134,7 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
+            android:background="@drawable/gradient_animation_today">
 
             <com.google.android.material.textfield.TextInputLayout
 
@@ -143,7 +152,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:hint="Gender"
-                android:padding="10dp">
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_sex_input"
@@ -160,7 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Weight"
-                android:padding="10dp">
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_weight_input"
@@ -177,7 +188,8 @@
                 android:layout_weight="1.5"
                 android:hint="Height"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_height_input"
@@ -197,7 +209,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/CustomOutlineBox"
@@ -205,7 +218,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="City"
-                android:padding="10dp">
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_city_input"
@@ -220,7 +234,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Country"
-                android:padding="10dp">
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_profile_country_input"
@@ -245,7 +260,8 @@
             android:layout_margin="20dp"
             android:padding="15dp"
             android:text="save changes"
-            android:textColor="#00695C"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:background="@drawable/rounded_button_white"/>
     </LinearLayout>
 </ScrollView>

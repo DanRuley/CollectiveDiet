@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    android:background="@color/light_teal"
+    android:background="@drawable/gradient_animation_today"
     android:elevation="2dp"
     android:orientation="vertical">
 
@@ -24,7 +24,9 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:text="food name"
-            android:textSize="16sp">
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold">
 
         </TextView>
 
@@ -35,7 +37,7 @@
         android:id="@+id/serving_cal_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_teal"
+        android:background="@drawable/gradient_animation_today"
         android:orientation="horizontal">
 
         <TextView
@@ -48,7 +50,9 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:text="Calories: "
-            android:textSize="16sp">
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold">
 
         </TextView>
 
@@ -59,7 +63,9 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
             android:text="serving: "
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
     </RelativeLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -102,7 +102,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/gradient_animation_today">
+                android:background="@drawable/rounded_button_white">
 
                 <ImageView
                     android:id="@+id/iv_dialog_goals_decline"
@@ -120,7 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/gradient_animation_today">
+                android:background="@drawable/rounded_button_white">
 
                 <ImageView
                     android:id="@+id/iv_dialog_goals_accept"

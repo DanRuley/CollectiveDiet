@@ -7,7 +7,7 @@
 
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#CFE7EA">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp"
-            android:background="#80FBC1AD">
+            android:background="@drawable/gradient_animation_today">
 
             <ImageView
                 android:id="@+id/confirm_add_img"
@@ -47,6 +47,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/confirm_dialog_prompt"
                 android:textSize="24sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/meal_type_spinner"
@@ -86,10 +88,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="It's some sort of food item"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20sp" />
 
         <LinearLayout
-            android:background="#50F7EBC9"
+            android:background="@drawable/gradient_animation_today"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -102,7 +106,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Serving\nSize: "
-                android:textColor="#616161" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/serving_qty_val"
@@ -146,11 +151,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="Calories"
-                android:textColor="#616161" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
-            android:background="#80A3CEBD"
+            android:background="@drawable/gradient_animation_today"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
@@ -162,7 +168,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="Protein:"
-                android:textColor="#616161" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/protein_val"
@@ -176,7 +183,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="Fat:"
-                android:textColor="#616161" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/fat_val"
@@ -190,7 +198,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="Carbs:"
-                android:textColor="#616161" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/carb_val"
@@ -207,7 +216,8 @@
             android:layout_marginTop="8dp"
             android:text="Add Food"
             app:icon="@android:drawable/ic_input_add"
-            app:iconGravity="end" />
+            app:iconGravity="end"
+            android:background="@drawable/rounded_button_white"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
