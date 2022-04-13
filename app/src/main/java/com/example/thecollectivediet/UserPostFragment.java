@@ -31,7 +31,6 @@ import com.amplifyframework.core.Amplify;
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.Share.SharedFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
@@ -71,7 +70,6 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
 
         viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
 
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getActivity()));
         imgURLs = new ArrayList<>();
 
 

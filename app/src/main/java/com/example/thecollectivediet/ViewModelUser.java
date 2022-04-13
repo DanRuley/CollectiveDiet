@@ -20,6 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.jjoe64.graphview.series.DataPoint;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +48,8 @@ public class ViewModelUser extends AndroidViewModel {
 
     public ViewModelUser(@NonNull Application application) {
         super(application);
+
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(application));
 
         this.application = application;
 

@@ -29,7 +29,7 @@ import com.example.thecollectivediet.Intro.IntroActivity;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.Profile_Fragment_Components.ProfileFragment;
-import com.example.thecollectivediet.Us_Fragment_Components.UsFragment;
+import com.example.thecollectivediet.Share.SharedFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        AWSMobileClient.getInstance().initialize()
         Map<String, String> env = System.getenv();
         setContentView(R.layout.activity_main);
+
+
 
         prefs = this.getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
         editor = prefs.edit();
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else if (id == R.id.bottom_nav_profile)
                     commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new ProfileFragment());
                 else if (id == R.id.bottom_nav_us)
-                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new UsFragment());
+                    commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new SharedFragment());
 
                 return true;
             }
@@ -178,10 +180,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_goals)
             commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment(2));
         else if (id == R.id.nav_profile)
-            //fragment = new ProfileFragment();
-            fragment = new UserPostFragment();
+            fragment = new ProfileFragment();
         else if (id == R.id.nav_us)
-            fragment = new UsFragment();
+            fragment = new SharedFragment();
         else if (id == R.id.nav_me)
             fragment = new MeTabLayoutFragment();
         else if (id == R.id.nav_sign_in && !isSignedIn())
