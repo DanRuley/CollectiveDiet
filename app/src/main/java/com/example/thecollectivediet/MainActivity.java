@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(this).get(ViewModelUser.class);
 
+//        AWSMobileClient.getInstance().initialize()
         Map<String, String> env = System.getenv();
         setContentView(R.layout.activity_main);
 

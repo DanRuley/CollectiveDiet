@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,9 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
@@ -46,6 +50,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     TextView mTodaysCalories;
     TextView mBMI;
     TextView mCalGoal;
+    TextView mBMR;
+    LinearLayout linearLayout;
 
     //graph elements
     CustomGraphView gg;
@@ -62,7 +68,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         //Creates or gets existing view model to pass around the user data
         viewModelUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
 
-        if(viewModelUser != null) {
+        if (viewModelUser != null) {
             update();
         }
 
@@ -89,7 +95,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
 
         //set the observer to get info for user created in User repository
-       viewModelUser.getUserData().observe(getViewLifecycleOwner(), nameObserver);
+        viewModelUser.getUserData().observe(getViewLifecycleOwner(), nameObserver);
 
         //set the observer to get info for weights created in User repository
         viewModelUser.getWeights().observe(getViewLifecycleOwner(), weightsObserver);
@@ -97,8 +103,11 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         //set the observer to get info for weights created in User repository
         viewModelUser.getCals().observe(getViewLifecycleOwner(), todayObserver);
 
+        //hook elements
         mTodaysCalories = v.findViewById(R.id.tv_today_frag_calories);
         mCalGoal = v.findViewById(R.id.tv_cal_goal);
+        mBMR = v.findViewById(R.id.tv_bmr);
+        linearLayout = v.findViewById(R.id.ll_todays_calories_holder);
 
         return v;
     }
@@ -107,9 +116,19 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onChanged(Float t) {
             //Update the ui if this data variable changes
-            if(t != null){
-               float x = t;
-               mTodaysCalories.setText(String.valueOf(t));
+            if (t != null) {
+
+                mTodaysCalories.setText(String.valueOf(t));
+
+                if (t <= viewModelUser.getUser().getGoal_cals()) {
+                    linearLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.pastel_yellow));
+                }
+                if (t < viewModelUser.getUser().getGoal_cals() * .7) {
+                    linearLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_green));
+                }
+                if(t > viewModelUser.getUser().getGoal_cals()){
+                    linearLayout.setBackgroundColor(ContextCompat.getColor( getContext(), R.color.red));
+                }
             }
         }
     };
@@ -119,10 +138,16 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onChanged(User user) {
             //Update the ui if this data variable changes
-            if(user != null){
-              mCalGoal.setText(String.valueOf(user.getGoal_cals()));
-              setUserBMI();
+            if (user != null) {
+                mCalGoal.setText(String.valueOf(user.getGoal_cals()));
+                setUserBMI();
+
+                //update bmr
+                mBMR.setText(setBMR(user));
+
             }
+
+
         }
     };
 
@@ -171,8 +196,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         String bmi;
 
         if (height > 0 && weight > 0) {
-            double temp = weight ;
-            temp = temp/(height*height);
+            double temp = weight;
+            temp = temp / (height * height);
             temp = temp * 703;
             int temp2 = (int) temp;
             bmi = String.valueOf(temp2);
@@ -189,6 +214,30 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
             viewModelUser.setUpdateFlag(0);
             viewModelUser.pullUserData((MainActivity) this.getActivity());
         }
+    }
+
+    private String setBMR(User user) {
+
+        if (user.getUser_gender() == null || user.getCurrent_wgt() == null || user.getUser_hgt() == null || user.getUser_dob() == null) {
+            return "Please complete profile";
+        } else {
+            //get age in years
+            String[] age = user.getUser_dob().split("-");
+
+            LocalDate today = LocalDate.now(); // Today's date is 10th Jan 2022
+            LocalDate birthday = LocalDate.of(Integer.valueOf(age[0]), Integer.valueOf(age[1]), Integer.valueOf(age[2])); // Birth date
+
+            Period p = Period.between(birthday, today);
+
+            if (user.getUser_gender().matches("Male")) {
+                return String.valueOf((10f * user.getCurrent_wgt()) + (6.25 * user.getUser_hgt()) - (5 * p.getYears()) + 5);
+            } else if (user.getUser_gender().matches("Female")) {
+                return String.valueOf((10 * user.getCurrent_wgt()) + (6.25 * user.getUser_hgt()) - (5 * p.getYears()) - 161);
+            } else {
+                return "Unable to calculate for sex of \"Other\"";
+            }
+        }
+
     }
 
 

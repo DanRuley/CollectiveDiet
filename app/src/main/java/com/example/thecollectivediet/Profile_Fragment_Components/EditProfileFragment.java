@@ -247,21 +247,18 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 });
 
         ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-            if (isGranted) {
-
-                readRequestPermissionLauncher.launch(
-                        Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (isGranted) {readRequestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         });
 
-        // Permission is granted. Continue to take picture
-        ActivityResultLauncher<String> cameraRequestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-            if (isGranted) {
-                // Permission is granted. Continue to take picture
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraActivityResultLauncher.launch(cameraIntent);
-            }
-        });
+//        // Permission is granted. Continue to take picture
+//        ActivityResultLauncher<String> cameraRequestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+//            if (isGranted) {
+//                // Permission is granted. Continue to take picture
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                cameraActivityResultLauncher.launch(cameraIntent);
+//            }
+//        });
 
         readRequestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -282,11 +279,15 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
      */
     public void setupUI(View view) {
 
+
         // Set up touch clearInputListener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener((v, event) -> {
 
-                if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(view.getId() == R.id.ac_button_editphoto){
+                    return false;
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP) {
                     MainActivity.hideKeyboard(requireActivity());
                     Log.i("touch event", v.toString());
                     v.clearFocus();
