@@ -10,12 +10,10 @@ import android.graphics.ColorSpace;
 import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -34,6 +32,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.ManualFoodSearch;
+import com.example.thecollectivediet.Me_Fragment_Components.TodayFragment;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ml.LiteModelAiyVisionClassifierFoodV11;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -44,7 +43,6 @@ import org.tensorflow.lite.support.label.Category;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -127,21 +125,24 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider, @NonNull View view) {
 
-        preview = new Preview.Builder()
-                .build();
+        try {
+            preview = new Preview.Builder()
+                    .build();
 
-        cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
+            cameraSelector = new CameraSelector.Builder()
+                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                    .build();
 
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+            preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-        imageCapture =
-                new ImageCapture.Builder()
-                        .setTargetRotation(view.getDisplay().getRotation())
-                        .build();
-
-        camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture, preview);
+            imageCapture =
+                    new ImageCapture.Builder()
+                            .setTargetRotation(view.getDisplay().getRotation())
+                            .build();
+            camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture, preview);
+        } catch (Exception e) {
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new TodayFragment());
+        }
     }
 
     private void initializeComponents(@NonNull View view) {
