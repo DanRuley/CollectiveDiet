@@ -45,7 +45,11 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-
+/**
+ * This class controls the view and camerax for the food vision fragment that allows
+ * users to take pictures of food items to have TFLite predict the food using
+ * object detection.
+ */
 public class CameraFragment extends Fragment implements View.OnClickListener {
 
     //Buttons and views
@@ -96,8 +100,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     }
 
     // Register the permissions callback, which handles the user's response to the
-// system permissions dialog. Save the return value, an instance of
-// ActivityResultLauncher, as an instance variable.
+    // system permissions dialog. Save the return value, an instance of
+    // ActivityResultLauncher, as an instance variable.
     private ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
@@ -123,6 +127,11 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
+    /**
+     * Bind camerax components together
+     * @param cameraProvider
+     * @param view
+     */
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider, @NonNull View view) {
 
         try {
@@ -145,63 +154,14 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void initializeComponents(@NonNull View view) {
-        //views
-        previewView = view.findViewById(R.id.view_camera);
 
-
-        //buttons
-        takePic = view.findViewById(R.id.take_pic);
-
-        /*
-        Listener for "take pic" button in camera view. This listener will take a pic,
-        place pic in an image view, and then be used for inference using Tensorflow lite.
-        A string will be returned to be used in the food search function.
-        */
-        takePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback() {
-
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
-                        //Change imageProxy to bitmap to be used with imageView
-                        Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
-
-                        // Get a prediction given the image taken from camera
-                        String prediction = classifyImage(bitmap);
-
-                        //Save string in SharedPreferences to use in ManualFoodSearch frag
-                        SharedPreferences prefs;
-                        SharedPreferences.Editor editor;
-
-                        //Any class in this app can use this
-                        prefs = getActivity().getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
-
-                        editor = prefs.edit();
-
-                        editor.putString("prediction", prediction);
-                        editor.commit();
-
-                        //Make sure to close the image buffer for next picture
-                        imageProxy.close();
-
-                        //Switch over to ManualFoodSearch frag
-                        MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new ManualFoodSearch());
-                    }
-
-                    @Override
-                    public void onError(@NonNull ImageCaptureException e) {
-                        super.onError(e);
-                    }
-                });
-            }
-        });
-    }
-
-
+    /**
+     * Resize bitmap to send to TFLite
+     * @param bitmap
+     * @param newHeight
+     * @param newWidth
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Bitmap resizeBitmap(@NonNull Bitmap bitmap, int newHeight, int newWidth) {
         int height = bitmap.getHeight();
@@ -268,9 +228,9 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
-            case R.id.take_pic:{
+            case R.id.take_pic: {
 
                 imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback() {
 

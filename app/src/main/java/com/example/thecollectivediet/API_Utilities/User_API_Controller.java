@@ -125,6 +125,12 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Calls the AWS database to update the user. This is needed to keep the app up to date to
+     * correctly display the weight history graph, name, etc.
+     * @param currentUser The current user
+     * @param ctx The context this method was called in.
+     */
     public static void updateUserProfile(User currentUser, Context ctx) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/updateUserInfo";
         JSONObject usrJSON = null;
@@ -149,10 +155,10 @@ public class User_API_Controller {
     }
 
     /**
-     * Push today's weigh in of the user to the database.
-     * @param user
-     * @param weight
-     * @param ctx
+     * Push today's weigh-in of the user to the database.
+     * @param user Current user
+     * @param weight The current weight of the user
+     * @param ctx The context this method was called in.
      */
     public static void pushWeightLogEntry(@NonNull User user, Float weight,Context ctx) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_weight_log_item";
@@ -184,6 +190,18 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * SOCIAL POST WITH AN IMAGE
+     * The user will be able to make very basic social posts such as those found on social apps.
+     * The AWS RDS will save user posts. Any images posted by the user will be Saved on AWS
+     * S3 with a key that will be saved on the AWS RDS.
+     * @param user_id Id used to identify user that posted
+     * @param imageKey Key used to find a specific image on AWS S3
+     * @param comment Comment from user post to be saved
+     * @param ctx Current context
+     * @param imageUrl URL of image.
+     * @param user_name User name
+     */
     public static void pushUserPost(String user_id, String imageKey, String comment, Context ctx, String imageUrl, String user_name) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUserPost";
 
@@ -215,7 +233,17 @@ public class User_API_Controller {
 
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
-    //todo
+
+    /**
+     * SOCIAL POST WITHOUT AN IMAGE
+     * The user will be able to make very basic social posts such as those found on social apps.
+     * The AWS RDS will save user posts.
+     * @param user_id Id used to identify user that posted
+     * @param imageKey Key used to find a specific image on AWS S3
+     * @param comment Comment from user post to be saved
+     * @param ctx Current context
+     * @param user_name User name
+     */
     public static void pushUserPost(@NonNull String user_id, String imageKey, String comment, Context ctx, String user_name) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUserPost";
 
@@ -248,6 +276,11 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Get posts made by users. If the imageKey is not null, it may be used to search for images on AWS RDS.
+     * @param ctx Current context
+     * @param listener Listener used to get results back to caller.
+     */
     public static void getPosts(Context ctx, @NonNull VolleyResponseListener<UserPostUploadItem[]> listener) {
         String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getPosts");
 
@@ -287,7 +320,7 @@ public class User_API_Controller {
      * GeeksforGeeks.com algorithm function swaps the array's first element with last
      * element, second element with last second element and so on.
      * @param arr
-     * @return
+     * @return reversed array.
      */
     private static DataPoint[] reverse(DataPoint[] arr)
         {

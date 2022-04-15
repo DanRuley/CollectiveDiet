@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 
-
+/**
+ * Controls the layout that displays goals which the user can set
+ */
 public class FragmentGoals extends Fragment implements View.OnClickListener {
 
     AppCompatButton mEnterWeight;
@@ -47,6 +49,13 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * Opens up a dialog which allows the user to enter in their goals. The dialog type parameters are:
+     * 1- Enter current weight
+     * 2- Enter weight goal
+     * 3- Enter calorie goal
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 
