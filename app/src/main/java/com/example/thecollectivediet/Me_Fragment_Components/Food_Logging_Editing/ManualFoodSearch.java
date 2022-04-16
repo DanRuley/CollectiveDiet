@@ -27,6 +27,9 @@ import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.List;
 
+/**
+ * shows user list of items from their meal history categorized by meal types.
+ */
 public class ManualFoodSearch extends Fragment {
 
     static String savedText;
@@ -119,7 +122,10 @@ public class ManualFoodSearch extends Fragment {
         }));
     }
 
-
+    /**
+     * Fills nested recycler list with meals from user history
+     * @param response
+     */
     private void populateRecycler(List<FoodResult> response) {
         MainActivity.hideKeyboard(requireActivity());
 

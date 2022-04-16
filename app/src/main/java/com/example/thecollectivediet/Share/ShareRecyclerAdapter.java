@@ -20,6 +20,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+/**
+ * This will control the recycler list found in the SharedFragment that lists all
+ * posts made by users.
+ */
 public class ShareRecyclerAdapter extends RecyclerView.Adapter<ShareRecyclerAdapter.ViewHolder> {
 
     private UserPostUploadItem[] localDataSet;

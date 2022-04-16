@@ -41,6 +41,9 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * This will control the layout that will allow users to edit their profile
+ */
 @SuppressLint("ClickableViewAccessibility")
 public class EditProfileFragment extends Fragment implements View.OnClickListener {
 
@@ -251,14 +254,6 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             }
         });
 
-//        // Permission is granted. Continue to take picture
-//        ActivityResultLauncher<String> cameraRequestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//            if (isGranted) {
-//                // Permission is granted. Continue to take picture
-//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                cameraActivityResultLauncher.launch(cameraIntent);
-//            }
-//        });
 
         readRequestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -333,8 +328,9 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    //Method used to save many images to storage
-    //Not used in this app at this time.
+    /**Method used to save many images to storage
+       Not used in this app at this time.
+     */
     @NonNull
     private String saveImage(@NonNull Bitmap finalBitmap) {
 
@@ -363,7 +359,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     }
 
 
-    //method used to save profile picture
+    /**method used to save profile picture
+     *
+     * @param finalBitmap
+     */
     private void saveProfileImage(@NonNull Bitmap finalBitmap) {
 
         if (photoChanged) {
@@ -398,6 +397,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             return "";
     }
 
+    /**
+     * Change the User members to the changes made by the user and
+     * push to AWS RDS
+     */
     private void saveProfileChanges() {
 
         User currentUser = modelViewUser.getUser();
@@ -413,6 +416,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         User_API_Controller.updateUserProfile(currentUser, context);
     }
 
+    /**
+     * Ensure that device has writable storage
+     * @return
+     */
     private boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
@@ -432,6 +439,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         genderInput.setText(gender);
         modelViewUser.getUser().setUser_gender(gender);
     }
+
 
     static class EditTextEventListener implements View.OnFocusChangeListener {
 

@@ -10,9 +10,9 @@ import com.example.thecollectivediet.Goals_Fragment_Components.FragmentGoals;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.FragmentFoodLog;
 
 
-/*
-    This class is used as the adapter in MeFragment. This allows users to view other fragments
-    in a tab layout which can be navigated via the tabs or by swiping left or right.
+/**
+ *  This class is used as the adapter in MeFragment. This allows users to view other fragments and
+ *  navigate by swiping left or right.
  */
 
 public class MeFragmentAdapter extends FragmentStateAdapter {

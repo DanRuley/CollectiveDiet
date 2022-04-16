@@ -12,6 +12,11 @@ public class Converter {
     static final double ozToGrams = 28.34952;
     static final double cupsToGrams = 128;
 
+    /**
+     * Gets calories of all meals
+     * @param items
+     * @return
+     */
     public static double getTotalMealCalories(@NonNull List<FoodLogItemView> items) {
         double totalCal = 0;
 
@@ -21,6 +26,13 @@ public class Converter {
         return totalCal;
     }
 
+    /**
+     * Calculates the calories of the food item
+     * @param energy100g calories
+     * @param servingUnit
+     * @param servingSize
+     * @return
+     */
     public static double calculateCalories(Float energy100g, @NonNull String servingUnit, Float servingSize) {
         double calories = 0;
         double calPerGram = energy100g / 100;

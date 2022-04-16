@@ -29,7 +29,9 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.Task;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
-
+/**
+ * Shows the User basic information on the app
+ */
 public class IntroActivity extends AppCompatActivity {
 
     static final int WELCOME = 0;

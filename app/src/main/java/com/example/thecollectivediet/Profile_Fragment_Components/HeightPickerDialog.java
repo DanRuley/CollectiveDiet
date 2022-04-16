@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 
 import com.example.thecollectivediet.R;
 
+/**
+ * Creates a dialog that helps user select weight
+ */
 public class HeightPickerDialog extends Dialog {
 
     EditProfileFragment parent;

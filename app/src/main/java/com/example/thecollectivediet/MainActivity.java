@@ -232,6 +232,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         commitFragmentTransaction(this, R.id.fragmentHolder, new FragmentSignIn());
     }
 
+    /**Used to allow the Main Activity to be in charge of making calls to switch
+     * fragments
+      * @param activity
+     * @param fragmentHolderID
+     * @param fragment the fragment to switch to
+     */
     public static void commitFragmentTransaction(@NonNull FragmentActivity activity,
                                                  int fragmentHolderID, @NonNull Fragment fragment) {
         FragmentTransaction transaction = Objects.requireNonNull(activity.getSupportFragmentManager().beginTransaction());

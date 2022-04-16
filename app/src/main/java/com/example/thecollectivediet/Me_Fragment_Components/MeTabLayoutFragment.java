@@ -14,7 +14,7 @@ import com.example.thecollectivediet.R;
 import com.google.android.material.tabs.TabLayout;
 
 
-/*
+/**
     This fragment will hold a tab layout for other fragments related to the "Me" part of the app.
     This class/fragment will use the class FragmentAdapter to allow users to navigate the tabs
     by swiping left or right.

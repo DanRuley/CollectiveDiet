@@ -20,6 +20,9 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Controls the grid in the SharedFragment class.
+ */
 public class GridImageAdapter extends ArrayAdapter<String> {
 
     private Context cxt;

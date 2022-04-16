@@ -14,6 +14,9 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.example.thecollectivediet.R;
 
 
+/**
+ * Used to configue IntroActivity swipe view
+ */
 public class Intro_ViewPagerAdapter extends PagerAdapter {
 
     Context ctx;
@@ -57,6 +60,12 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
+    /**
+     * Used to create the view page in the intro
+     * @param container
+     * @param position
+     * @return
+     */
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {

@@ -31,7 +31,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-
+/**
+ * Controls layout that show user information
+ */
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     SharedPreferences prefs;
@@ -110,6 +112,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * This observer will keep track of user changes and change
+     * views as needed.
+     */
     final Observer<User> observer = new Observer<User>() {
         @Override
         public void onChanged(User userData) {
