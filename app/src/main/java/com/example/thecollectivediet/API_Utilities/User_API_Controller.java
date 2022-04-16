@@ -196,7 +196,6 @@ public class User_API_Controller {
         JSONObject postJSON = null;
 
         try {
-
             postJSON = new JSONObject(new Gson().toJson(userPostUploadItem, UserPostUploadItem.class));
         } catch (JSONException e) {
             Log.d("post json parse", e.getMessage());
