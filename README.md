@@ -6,6 +6,11 @@ IDE - Android Studio
 This app was written in Java using Android SDK and Android Studio. This app will only work in the Android Studio emulator and in Android devices 
 with a minimum SKD of 21. 
 
+***Source Code***
+- The bulk of the source code (java classes) is located in: tcd-android\app\src\main\java\com\example\thecollectivediet
+
+- XML layout files defining the views are also integral to the app and can be located in: \tcd-android\app\src\main\res\layout
+
 ***Build/Install Instructions***
 
 (Note, this requires JDK 16+, gradle, and adb/avd if running on an android emulator)
@@ -25,6 +30,7 @@ Run:
 
 If you run into any problems please consult https://developer.android.com/studio/build/building-cmdline or feel free to reach out to any of us via Canvas or email.  Thanks!
 
+If you have android studio installed, it may be easier to open the project in android studio and compile / run the AVD using the builtin Android Studio flow.
 
 **MainActivity**
 
