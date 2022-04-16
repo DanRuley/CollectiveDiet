@@ -25,6 +25,9 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
     MealType mealType;
     ViewModelUser viewModelUser;
 
+    /**
+     * The possible meal types
+     */
     public enum MealType {
         Breakfast,
         Lunch,
@@ -32,6 +35,9 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
         Snack
     }
 
+    /**
+     * Construct the meal select dialog
+     */
     public MealSelectDialog(FragmentActivity ctx, FragmentFoodLog parent) {
         super(ctx);
         this.ctx = ctx;
@@ -40,9 +46,10 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
         viewModelUser = new ViewModelProvider(ctx).get(ViewModelUser.class);
     }
 
+    /**
+     * Initialize all meal selection components
+     */
     private void initializeComponents() {
-
-        //this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         this.setContentView(R.layout.food_log_dialog);
         this.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -55,6 +62,9 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
         controller = new FoodSearchController(ctx);
     }
 
+    /**
+     * Click listener - set meal type based on which btn was clicked.
+     */
     @Override
     public void onClick(@NonNull View v) {
 
@@ -87,6 +97,9 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
         }.start();
     }
 
+    /**
+     * Called when dialog is dismissed.
+     */
     @Override
     protected void onStop(){
 

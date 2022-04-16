@@ -32,6 +32,9 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.time.LocalDate;
 import java.time.Period;
 
+/**
+ * This class represents the TodayFragment view in the application.
+ */
 public class TodayFragment extends Fragment implements View.OnClickListener {
 
     int choice;
@@ -40,7 +43,6 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     SharedPreferences.Editor editor;
     @Nullable
     Context context;
-
 
     //elements for images
     ImageView mProfilePic;
@@ -257,7 +259,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * Sets up the graph view in the today fragment.
+     * Sets up the graph view in the today fragment.  Needs a custom class to display the axis labels properly.
      */
     class CustomGraphView extends GraphView {
         public CustomGraphView(Context context) {

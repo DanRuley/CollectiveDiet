@@ -4,6 +4,9 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 
 import java.util.ArrayList;
 
+/**
+ * Basic class for the outer meal recycler.
+ */
 public class OuterMealRecyclerItem {
 
     String title;

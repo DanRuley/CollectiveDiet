@@ -2,6 +2,10 @@ package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Simple class for serializing food log JSON data to provide to API.
+ * Note: comments are minimal because most methods are self-explanatory getters/setters.
+ */
 public class FoodLogUploadItem {
 
     Long entry_id;

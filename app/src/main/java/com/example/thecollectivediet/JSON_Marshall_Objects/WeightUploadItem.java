@@ -1,7 +1,10 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 import androidx.annotation.NonNull;
-
+/**
+ * Simple class for deserializing User Weigh In JSON data to provide to views.
+ * Note: comments are minimal because most methods are self-explanatory getters/setters.
+ */
 public class WeightUploadItem {
 
     String user_id;

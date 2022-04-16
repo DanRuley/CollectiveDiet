@@ -22,11 +22,17 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
     Context context;
     ArrayList<FoodLogItemView> arrayList;
 
+    /**
+     * Construct adapter given application context and food log list.
+     */
     public InnerMealFoodListRecyclerAdapter(Context context, ArrayList<FoodLogItemView> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
 
+    /**
+     * Inflate the view and return it
+     */
     @NonNull
     @Override
     public HorizontalRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,21 +40,29 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
         return new HorizontalRVViewHolder(v);
     }
 
+    /**
+     * Called after binding item to view holder - set various text fields.
+     */
     @Override
     public void onBindViewHolder(@NonNull HorizontalRVViewHolder holder, int position) {
         FoodLogItemView food = arrayList.get(position);
-
 
         holder.mTitle.setText(food.getProduct_name());
         holder.mServing.setText("Serving Size: " + food.getPortion_size() + food.getPortion_unit());
         holder.mCalories.setText(Converter.getCalorieString(food.getEnergy_kcal_100g(), food.getPortion_unit(), food.getPortion_size()));
     }
 
+    /**
+     * Return the item count.
+     */
     @Override
     public int getItemCount() {
         return arrayList.size();
     }
 
+    /**
+     * Inner item view holder class
+     */
     public class HorizontalRVViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTitle;

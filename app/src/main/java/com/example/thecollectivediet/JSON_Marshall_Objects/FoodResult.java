@@ -2,9 +2,11 @@ package com.example.thecollectivediet.JSON_Marshall_Objects;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Simple class for deserializing FoodResult JSON data to provide to views.
+ * Note: comments are minimal because most methods are self-explanatory getters/setters.
+ */
 public class FoodResult {
-
-
     private long id;
     private String product_name;
     private String nova_group;

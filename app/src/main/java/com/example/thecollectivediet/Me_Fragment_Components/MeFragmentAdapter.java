@@ -11,15 +11,20 @@ import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing
 
 
 /**
- *  This class is used as the adapter in MeFragment. This allows users to view other fragments and
- *  navigate by swiping left or right.
+ * This class is used as the adapter in MeFragment. This allows users to view other fragments and
+ * navigate by swiping left or right.
  */
-
 public class MeFragmentAdapter extends FragmentStateAdapter {
     public MeFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 
+    /**
+     * Create the correct fragment given the position in the tab list.
+     *
+     * @param position - which tab is selected?
+     * @return relevant fragment
+     */
     @NonNull
     @Override
     public Fragment createFragment(int position) {
@@ -39,6 +44,9 @@ public class MeFragmentAdapter extends FragmentStateAdapter {
         return new TodayFragment();
     }
 
+    /**
+     * How many tabs are there?
+     */
     @Override
     public int getItemCount() {
         return 3;

@@ -1,7 +1,9 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
-import java.net.URL;
-
+/**
+ * Simple class for serializing/deserializing UserPost JSON data to provide to views.
+ * Note: comments are minimal because most methods are self-explanatory getters/setters.
+ */
 public class UserPostUploadItem {
 
     String user_id;

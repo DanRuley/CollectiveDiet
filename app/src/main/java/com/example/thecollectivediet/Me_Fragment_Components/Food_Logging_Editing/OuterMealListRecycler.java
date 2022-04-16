@@ -18,6 +18,9 @@ import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
 
+/**
+ * The recycler for the outer meal list in the food log fragment.
+ */
 public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRecycler.VerticalRVViewHolder> {
 
     Context context;
@@ -25,11 +28,17 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
 
     int mExpandedPosition = -1;
 
+    /**
+     * Constructor for outer meal recycler.
+     */
     public OuterMealListRecycler(Context context, ArrayList<OuterMealRecyclerItem> arrayList) {
         this.arrayList = arrayList;
         this.context = context;
     }
 
+    /**
+     * Called on creation of the view holder.
+     */
     @NonNull
     @Override
     public VerticalRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,6 +47,9 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
         return new VerticalRVViewHolder(v);
     }
 
+    /**
+     * Bind outer meal items to their relevant position in the view holder.
+     */
     @Override
     public void onBindViewHolder(@NonNull VerticalRVViewHolder holder, @SuppressLint("RecyclerView") int position) {
         OuterMealRecyclerItem outerMealRecyclerItem = arrayList.get(position);
@@ -67,11 +79,17 @@ public class OuterMealListRecycler extends RecyclerView.Adapter<OuterMealListRec
         });
     }
 
+    /**
+     * Get the item count
+     */
     @Override
     public int getItemCount() {
         return arrayList.size();
     }
 
+    /**
+     * Sub View Holder for the outer recycler.
+     */
     public class VerticalRVViewHolder extends RecyclerView.ViewHolder {
 
         RecyclerView recyclerView;

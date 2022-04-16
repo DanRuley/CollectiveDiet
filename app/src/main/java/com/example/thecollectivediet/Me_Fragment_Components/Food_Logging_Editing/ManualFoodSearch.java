@@ -54,6 +54,9 @@ public class ManualFoodSearch extends Fragment {
 
     ViewModelUser viewModelUser;
 
+    /**
+     * Called when food search fragment is initialized.  Create the view and return it.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,6 +95,9 @@ public class ManualFoodSearch extends Fragment {
         return v;
     }
 
+    /**
+     * Initialize all components required for the food search fragment
+     */
     private void initializeComponents(@NonNull View v) {
         ctx = this.getActivity();
         controller = new FoodSearchController(ctx);
@@ -124,7 +130,6 @@ public class ManualFoodSearch extends Fragment {
 
     /**
      * Fills nested recycler list with meals from user history
-     * @param response
      */
     private void populateRecycler(List<FoodResult> response) {
         MainActivity.hideKeyboard(requireActivity());

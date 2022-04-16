@@ -17,6 +17,9 @@ import com.example.thecollectivediet.R;
 
 import java.util.List;
 
+/**
+ * Provide an adaptor for displaying the scrollable list of food search results.
+ */
 public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSearchRecyclerViewAdapter.FoodSearchHolder> {
 
     public interface OnFoodItemClickListener {
@@ -27,12 +30,22 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
     Context ctx;
     OnFoodItemClickListener listener;
 
+    /**
+     * Construct recycler adapter
+     *
+     * @param foodResults
+     * @param _ctx
+     * @param listener
+     */
     public FoodSearchRecyclerViewAdapter(List<FoodResult> foodResults, Context _ctx, OnFoodItemClickListener listener) {
         this.foodResults = foodResults;
         this.ctx = _ctx;
         this.listener = listener;
     }
 
+    /**
+     * Create the view holder and inflate the layout
+     */
     @NonNull
     @Override
     public FoodSearchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,22 +55,35 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
         return new FoodSearchHolder(v);
     }
 
+    /**
+     * Bind the given item to the view holder
+     */
     @Override
     public void onBindViewHolder(@NonNull FoodSearchHolder holder, int position) {
         holder.bind(foodResults.get(position), listener, position, ctx);
     }
 
+    /**
+     * Return count of food items
+     */
     @Override
     public int getItemCount() {
         return foodResults.size();
     }
 
-
+    /**
+     * View holder for the recycler adapter
+     */
     public class FoodSearchHolder extends RecyclerView.ViewHolder {
         ImageView foodPicture;
         TextView foodName;
         TextView foodServing;
 
+        /**
+         * Holds one food search item
+         *
+         * @param itemView
+         */
         public FoodSearchHolder(@NonNull View itemView) {
             super(itemView);
             foodPicture = itemView.findViewById(R.id.foodRecImage);
@@ -65,6 +91,9 @@ public class FoodSearchRecyclerViewAdapter extends RecyclerView.Adapter<FoodSear
             foodServing = itemView.findViewById(R.id.foodRecServing);
         }
 
+        /**
+         * Bind a food item into the view holder
+         */
         public void bind(@NonNull final FoodResult food, @NonNull final OnFoodItemClickListener listener, final int position, @NonNull Context ctx) {
             // create a ProgressDrawable object which we will show as placeholder
             CircularProgressDrawable drawable = new CircularProgressDrawable(ctx);

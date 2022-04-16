@@ -5,6 +5,10 @@ import androidx.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Simple class which represents the User in our system.
+ * Note: comments are minimal because most methods are self-explanatory getters/setters.
+ */
 public class User {
 
     String user_id;
@@ -153,6 +157,11 @@ public class User {
         this.goal_cals = goal_cals;
     }
 
+    /**
+     * Tranform MySQL date format DOB to human readable/preferred date format
+     *
+     * @return formatted DOB string
+     */
     @Nullable
     public String getPrettyDob() {
         if (user_dob == null)

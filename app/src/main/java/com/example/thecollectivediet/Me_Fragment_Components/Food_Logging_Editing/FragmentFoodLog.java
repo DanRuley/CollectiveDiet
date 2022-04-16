@@ -32,6 +32,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * This is the main food log fragment.  It displays user food log data and lets users select a date and log new items.
+ */
 public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     AppCompatButton mAddFoodButton;
@@ -58,7 +61,9 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     ViewModelUser viewModelUser;
 
-
+    /**
+     * Inflate the view and return it
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {
 
@@ -117,13 +122,10 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         }
     };
 
+    /**
+     * Initialize the date picker so users can select which date they wish to view.
+     */
     private void initializeDatePickerDialog() {
-//        final Calendar c = Calendar.getInstance();
-//
-//        int year = c.get(Calendar.YEAR);
-//        int month = c.get(Calendar.MONTH);
-//        int day = c.get(Calendar.DAY_OF_MONTH);
-
         String[] date = viewModelUser.getDate().split("-");
 
         int year = Integer.valueOf(date[0]);
@@ -136,6 +138,9 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         setDate(year, month + 1, day);
     }
 
+    /**
+     * Set the date given a year/month/day
+     */
     public void setDate(int year, int month, int day) {
         selectedYear = year;
         selectedMonth = month;
@@ -144,6 +149,9 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         onDateChanged();
     }
 
+    /**
+     * Callback for the date picker - changes the selected date.
+     */
     private void onDateChanged() {
         viewModelUser.setDate(formatDate(selectedYear, selectedMonth, selectedDay, true));
         showDateTxt.setText(formatDate(selectedYear, selectedMonth, selectedDay, false));
@@ -161,6 +169,9 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * Populate the food log recycler with the food items for the given meal types.
+     */
     private void populateRecyclerItems(@NonNull HashMap<String, List<FoodLogItemView>> logItems) {
 
         int cals = 0;
@@ -204,6 +215,9 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
 
     }
 
+    /**
+     * Beautify the date string from SQL format to human readable format.
+     */
     private String formatDate(int year, int month, int day, boolean sqlFormat) {
         String formatted;
         if (sqlFormat)
@@ -250,6 +264,10 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         //editFoodAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Store the meal type and inflate the food search fragment
+     * @param mealType meal type chosen
+     */
     public void inflateFoodSearchFrag(@NonNull MealSelectDialog.MealType mealType) {
         Fragment f = new ManualFoodSearch();
         Bundle args = new Bundle();
@@ -258,6 +276,9 @@ public class FragmentFoodLog extends Fragment implements View.OnClickListener {
         MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, f);
     }
 
+    /**
+     * Click listener for date picker and add food btns.
+     */
     @Override
     public void onClick(@NonNull View v) {
         if (v.getId() == R.id.btn_add_food) {

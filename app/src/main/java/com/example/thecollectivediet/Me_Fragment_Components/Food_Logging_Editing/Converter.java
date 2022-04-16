@@ -7,6 +7,9 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This class provides some useful methods for converting between various units e.g. grams/oz/cups
+ */
 public class Converter {
 
     static final double ozToGrams = 28.34952;
@@ -52,6 +55,9 @@ public class Converter {
         return calories;
     }
 
+    /**
+     * Calculate the in a giving serving unit/size and return it in a formatted string.
+     */
     @NonNull
     public static String getCalorieString(Float energy100g, @NonNull String servingUnit, Float servingSize) {
 

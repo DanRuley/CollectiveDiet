@@ -5,6 +5,10 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
+/**
+ * Simple class for serializing food log JSON data to provide to views.
+ * Note: comments are minimal because most methods are self-explanatory getters/setters.
+ */
 public class FoodLogItemView {
     Long food_id;
     String log_date;
@@ -48,6 +52,9 @@ public class FoodLogItemView {
         this.saturated_fat_unit = saturated_fat_unit;
     }
 
+    /**
+     * Override equals to use these objects in HashMaps
+     */
     @Override
     public boolean equals(@Nullable Object o) {
         if (this == o) return true;
@@ -56,6 +63,10 @@ public class FoodLogItemView {
         return food_id.equals(that.food_id) && log_date.equals(that.log_date) && portion_size.equals(that.portion_size) && portion_unit.equals(that.portion_unit) && category.equals(that.category);
     }
 
+    /**
+     * Override hashcode to use these objects in HashMaps
+     * @return
+     */
     @Override
     public int hashCode() {
         return Objects.hash(food_id, log_date, portion_size, portion_unit, category);

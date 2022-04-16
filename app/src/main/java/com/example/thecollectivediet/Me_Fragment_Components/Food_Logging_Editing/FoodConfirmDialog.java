@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
-import com.example.thecollectivediet.JSON_Utilities.JSONSerializer;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 
@@ -98,7 +97,6 @@ public class FoodConfirmDialog extends Dialog {
 
         this.findViewById(R.id.add_food_btn).setOnClickListener(v -> {
             FoodLog_API_Controller.pushFoodLogEntry(ctx, food, viewModelUser.getUser(), Float.parseFloat(servingQtyVal.getText().toString()), servingUnitSpinner.getSelectedItem().toString(), mealType.toString(), viewModelUser.getDate());
-            JSONSerializer.addFoodToList(food.getProduct_name(), "100 grams", ctx);
             Glide.with(ctx).load("https://i2.wp.com/www.safetysuppliesunlimited.net/wp-content/uploads/2020/06/ISO473AP.jpg?fit=288%2C288&ssl=1").into(image);
             new CountDownTimer(500, 250) {
 
@@ -139,8 +137,6 @@ public class FoodConfirmDialog extends Dialog {
         servingUnitSpinner = this.findViewById(R.id.serving_unit_spinner);
         String[] items = ctx.getResources().getStringArray(R.array.serving_qty_array);
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, items);
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx, R.array.serving_qty_array, android.R.layout.simple_spinner_item);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servingUnitSpinner.setAdapter(adapter);
 
         servingUnitSpinner.setOnItemSelectedListener(new ServingCalculator(nutrients, servingUnitSpinner, this, servingUnitSpinner));

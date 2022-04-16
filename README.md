@@ -6,6 +6,26 @@ IDE - Android Studio
 This app was written in Java using Android SDK and Android Studio. This app will only work in the Android Studio emulator and in Android devices 
 with a minimum SKD of 21. 
 
+***Build/Install Instructions***
+
+(Note, this requires JDK 16+, gradle, and adb/avd if running on an android emulator)
+
+Build:
+	- Navigate to the tcd-android/ directory
+	- Enter the following command: gradlew assemble
+
+Run:
+	If using an Android Virtual Device (AVD):
+		- Start the desired AVD device
+		- Enter the following command: adb install <Your-path-to-tcd-folder>/tcd-android/app/build/outputs/apk/release/app-release.apk
+
+	If installing on a physical device:
+		- Enable USB Debugging in the developer options
+		- Enter the following command: adb -d install <Your-path-to-tcd-folder>/tcd-android/app/build/outputs/apk/release/app-release.apk
+
+If you run into any problems please consult https://developer.android.com/studio/build/building-cmdline or feel free to reach out to any of us via Canvas or email.  Thanks!
+
+
 **MainActivity**
 
 ***Walk through***
