@@ -21,10 +21,12 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
 
     Context ctx;
 
+    /**
+     * Basic constructor
+     * @param context application context
+     */
     public Intro_ViewPagerAdapter(Context context) {
-
         this.ctx = context;
-
     }
 
     @Nullable

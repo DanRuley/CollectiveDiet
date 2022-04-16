@@ -15,9 +15,10 @@ import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
-
+/**
+ * Popup dialog for inputting goal data e.g. calorie/weight goals.
+ */
 public class GoalsDialog extends Dialog implements View.OnClickListener {
 
     Context ctx;

@@ -1,14 +1,13 @@
 package com.example.thecollectivediet.Goals_Fragment_Components;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
@@ -24,10 +23,17 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
 
     ViewModelUser viewModelUser;
 
+    /**
+     * Required empty public constructor
+     */
     public FragmentGoals() {
-        // Required empty public constructor
     }
 
+    /**
+     * Instantiate view components for Goals Fragment.
+     *
+     * @return Goals Fragment view.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +60,6 @@ public class FragmentGoals extends Fragment implements View.OnClickListener {
      * 1- Enter current weight
      * 2- Enter weight goal
      * 3- Enter calorie goal
-     * @param v
      */
     @Override
     public void onClick(View v) {

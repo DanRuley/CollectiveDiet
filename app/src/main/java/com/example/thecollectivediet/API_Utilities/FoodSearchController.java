@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Controller class for Food Search API calls using the Volley Library.
+ */
 public class FoodSearchController {
 
     private final Context ctx;
@@ -36,7 +38,9 @@ public class FoodSearchController {
         headers.put("x-app-key", "4d6be0c8e692f9a473f0b30d5377ce69");
     }
 
-
+    /**
+     * Given a foodID, returns the food nutrients from the backend database.  This data is sent to the provided callback method.
+     */
     public void getNutrients(String foodID, @NonNull VolleyResponseListener<FoodNutrients> listener) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/FoodIdSearch?food_id=" + foodID;
 
@@ -60,6 +64,9 @@ public class FoodSearchController {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Makes an API call to search for the given food name string.  Returns a list of FoodItems found in the database to the provided callback listener.
+     */
     public void searchFoodByName(String foodName, @NonNull VolleyResponseListener<List<FoodResult>> listener) {
         List<FoodResult> foods = new ArrayList<>();
 

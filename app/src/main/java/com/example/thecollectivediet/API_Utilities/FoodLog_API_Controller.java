@@ -25,8 +25,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Controller class for Food Log API calls using the Volley Library.
+ */
 public class FoodLog_API_Controller {
 
+    /**
+     * Get a well formatted date stamp to use for time stamping food logs.
+     *
+     * @return datetime string
+     */
     @NonNull
     public static String getDateString() {
         java.util.Date dts = new java.util.Date();
@@ -34,6 +42,9 @@ public class FoodLog_API_Controller {
         return sdf.format(dts);
     }
 
+    /**
+     * Makes a POST request to our backend, uploading one food log entry.
+     */
     public static void pushFoodLogEntry(Context ctx, @NonNull FoodResult food, @NonNull User user, Float portionSize, String portionUnit, String mealCategory, String date) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_food_log_item";
 
@@ -61,6 +72,9 @@ public class FoodLog_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Get all food log entries for the given user and date.
+     */
     public static void getFoodLogEntries(Context ctx, @NonNull User user, String dt, @NonNull VolleyResponseListener<HashMap<String, List<FoodLogItemView>>> listener) {
         String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/get_food_log_items?uid=%s&date=%s", user.getUser_id(), dt);
 
@@ -100,6 +114,9 @@ public class FoodLog_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Create a map on meal types which will contain their food log items.
+     */
     @NonNull
     private static HashMap<String, List<FoodLogItemView>> getEmptyFoodItemMap() {
         HashMap<String, List<FoodLogItemView>> map = new HashMap<>();

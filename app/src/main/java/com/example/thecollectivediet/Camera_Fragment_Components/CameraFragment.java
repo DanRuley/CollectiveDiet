@@ -64,6 +64,11 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     ImageCapture imageCapture;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
+    /**
+     * Called when camera fragment is instantiated.  Initializes view components.
+     *
+     * @return the CameraFragment view.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_camera, container, false);
@@ -129,8 +134,9 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
     /**
      * Bind camerax components together
-     * @param cameraProvider
-     * @param view
+     *
+     * @param cameraProvider camera provider service
+     * @param view           relevant view component
      */
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider, @NonNull View view) {
 
@@ -157,10 +163,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
     /**
      * Resize bitmap to send to TFLite
-     * @param bitmap
-     * @param newHeight
-     * @param newWidth
-     * @return
+     * @return The resized bitmap image.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Bitmap resizeBitmap(@NonNull Bitmap bitmap, int newHeight, int newWidth) {
@@ -224,7 +227,9 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         return BitmapFactory.decodeByteArray(clonedBytes, 0, clonedBytes.length);
     }
 
-
+    /**
+     * Called when user clicks the "take picture" button.  Creates the bitmap and then calls TFLite components to classify image.
+     */
     @Override
     public void onClick(View v) {
 

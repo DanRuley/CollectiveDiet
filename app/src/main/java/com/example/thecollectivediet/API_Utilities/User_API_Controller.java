@@ -29,8 +29,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Controller class for User related API calls using the Volley Library.
+ */
 public class User_API_Controller {
 
+    /**
+     * Handle a new sign in by a user.  If it is a new user, add their data to our backend DB.  Otherwise, pull in existing user info from the DB.
+     * This is sent to the provided callback function.
+     */
     public static void handleNewSignIn(@NonNull GoogleSignInAccount account, Context ctx, @NonNull VolleyResponseListener<User> listener) {
 
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getUser?uid=" + account.getId();
@@ -64,9 +71,6 @@ public class User_API_Controller {
      * Calls database to get the weights and dates of the user. The database will only send over
      * a limited amount of the most current weigh ins so the received array of weigh ins will
      * need to be reversed.
-     * @param ctx
-     * @param user
-     * @param listener
      */
     public static void getWeighIns(Context ctx, @NonNull User user, @NonNull VolleyResponseListener<DataPoint[]> listener) {
         String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getWeighIns?uid=%s", user.getUser_id());
@@ -102,6 +106,9 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Make an API call to add a new user to our database.
+     */
     private static void addNewUser(User signedInUser, Context ctx) {
 
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/addUser";
