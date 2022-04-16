@@ -3,6 +3,8 @@ package com.example.thecollectivediet.API_Utilities;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -23,19 +25,30 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Controller class for Food Log API calls using the Volley Library.
+ */
 public class FoodLog_API_Controller {
 
-
+    /**
+     * Get a well formatted date stamp to use for time stamping food logs.
+     *
+     * @return datetime string
+     */
+    @NonNull
     public static String getDateString() {
         java.util.Date dts = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         return sdf.format(dts);
     }
 
-    public static void pushFoodLogEntry(Context ctx, FoodResult food, User user, Float portionSize, String portionUnit, String mealCategory) {
+    /**
+     * Makes a POST request to our backend, uploading one food log entry.
+     */
+    public static void pushFoodLogEntry(Context ctx, @NonNull FoodResult food, @NonNull User user, Float portionSize, String portionUnit, String mealCategory, String date) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_food_log_item";
 
-        FoodLogUploadItem toAdd = new FoodLogUploadItem(user.getUser_id(), food.getId(), getDateString(), portionSize, portionUnit, mealCategory);
+        FoodLogUploadItem toAdd = new FoodLogUploadItem(user.getUser_id(), food.getId(), date, portionSize, portionUnit, mealCategory);
 
         JSONObject foodLogJSON = null;
 
@@ -47,6 +60,7 @@ public class FoodLog_API_Controller {
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, foodLogJSON,
                 response -> Log.d("success!", response.toString()), error -> Log.d("add food log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -58,12 +72,13 @@ public class FoodLog_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
-    public static void getFoodLogEntries(Context ctx, User user, String dt, VolleyResponseListener<HashMap<String, List<FoodLogItemView>>> listener) {
+    /**
+     * Get all food log entries for the given user and date.
+     */
+    public static void getFoodLogEntries(Context ctx, @NonNull User user, String dt, @NonNull VolleyResponseListener<HashMap<String, List<FoodLogItemView>>> listener) {
         String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/get_food_log_items?uid=%s&date=%s", user.getUser_id(), dt);
 
-
         HashMap<String, List<FoodLogItemView>> results = getEmptyFoodItemMap();
-
 
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
@@ -85,12 +100,12 @@ public class FoodLog_API_Controller {
                                     Objects.requireNonNull(results.get("Dinner")).add(logItem);
                                     break;
                                 default:
-                                    Objects.requireNonNull(results.get("Snack")).add(logItem);
+                                    Objects.requireNonNull(results.get("Snacks")).add(logItem);
                                     break;
                             }
                         }
                         listener.onResponse(results);
-                    } catch (JSONException | JsonSyntaxException e) {
+                    } catch (@NonNull JSONException | JsonSyntaxException e) {
                         listener.onError(e.getMessage());
                     }
                 },
@@ -99,12 +114,16 @@ public class FoodLog_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    /**
+     * Create a map on meal types which will contain their food log items.
+     */
+    @NonNull
     private static HashMap<String, List<FoodLogItemView>> getEmptyFoodItemMap() {
         HashMap<String, List<FoodLogItemView>> map = new HashMap<>();
         map.put("Breakfast", new ArrayList<>());
         map.put("Lunch", new ArrayList<>());
         map.put("Dinner", new ArrayList<>());
-        map.put("Snack", new ArrayList<>());
+        map.put("Snacks", new ArrayList<>());
 
         return map;
     }

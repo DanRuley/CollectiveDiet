@@ -1,5 +1,7 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
+import androidx.annotation.NonNull;
+
 public class FoodLogUploadItem {
 
     Long entry_id;
@@ -86,6 +88,7 @@ public class FoodLogUploadItem {
         this.category = category;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "FoodLogItem{" +

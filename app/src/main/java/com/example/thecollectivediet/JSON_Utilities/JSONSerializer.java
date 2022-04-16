@@ -2,6 +2,8 @@ package com.example.thecollectivediet.JSON_Utilities;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.example.thecollectivediet.JSON_Marshall_Objects.EditFoodObject;
 
 import org.json.JSONArray;
@@ -21,15 +23,15 @@ import java.util.List;
 
 public class JSONSerializer {
 
-    private String fileName;
-    private Context context;
+    private final String fileName;
+    private final Context context;
 
     public JSONSerializer(String fileName, Context context) {
         this.fileName = fileName;
         this.context = context;
     }
 
-    public void save(List<EditFoodObject> list) throws IOException, JSONException {
+    public void save(@NonNull List<EditFoodObject> list) throws IOException, JSONException {
 
         //Make an array in JSON format
         JSONArray jsonArray = new JSONArray();
@@ -42,7 +44,7 @@ public class JSONSerializer {
         //Now write to private disk space of our app
         Writer writer = null;
         try {
-            OutputStream out = context.openFileOutput(fileName, context.MODE_PRIVATE);
+            OutputStream out = context.openFileOutput(fileName, Context.MODE_PRIVATE);
 
             writer = new OutputStreamWriter(out);
             writer.write(jsonArray.toString());
@@ -76,6 +78,7 @@ public class JSONSerializer {
     }
 
     //load list used in edit meals frag
+    @NonNull
     public ArrayList<EditFoodObject> load() throws IOException, JSONException {
 
         ArrayList<EditFoodObject> list = new ArrayList<EditFoodObject>();

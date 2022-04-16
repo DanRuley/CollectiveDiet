@@ -5,18 +5,25 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.API_Utilities.FoodSearchController;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
+/**
+ * Gives user options to choose from when choosing food to add to list.
+ */
 public class MealSelectDialog extends Dialog implements View.OnClickListener {
 
     FragmentActivity ctx;
     FoodSearchController controller;
     FragmentFoodLog parent;
     MealType mealType;
+    ViewModelUser viewModelUser;
 
     public enum MealType {
         Breakfast,
@@ -30,6 +37,7 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
         this.ctx = ctx;
         this.parent = parent;
         initializeComponents();
+        viewModelUser = new ViewModelProvider(ctx).get(ViewModelUser.class);
     }
 
     private void initializeComponents() {
@@ -48,11 +56,12 @@ public class MealSelectDialog extends Dialog implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
 
         int id = v.getId();
 
-        if (MainActivity.getCurrentUser() == null) {
+        //Ensure that user is signed in before adding meals
+        if (viewModelUser.getUser() == null) {
             ((MainActivity)ctx).requireSignInPrompt("Please sign in before logging meals");
             return;
         }

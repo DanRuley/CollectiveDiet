@@ -4,17 +4,21 @@
     package="com.example.thecollectivediet">
     <!-- Declare features -->
     <uses-feature
-        android:name="android.hardware.camera"
+        android:name="android.hardware.camera.any"
         android:required="true" /> <!-- Declare permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>
+
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+        android:maxSdkVersion="31"
+        />
 
     <application
+        android:name=".tcdandroid"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="The Collective Diet"

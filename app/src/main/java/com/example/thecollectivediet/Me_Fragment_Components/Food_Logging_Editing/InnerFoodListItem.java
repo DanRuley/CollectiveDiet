@@ -1,9 +1,13 @@
 package com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing;
 
+/**
+ * Used as inner list in nested recycler view list
+ */
 public class InnerFoodListItem {
     String name;
     Double serving;
     int calories;
+
 
     public  InnerFoodListItem(){
 

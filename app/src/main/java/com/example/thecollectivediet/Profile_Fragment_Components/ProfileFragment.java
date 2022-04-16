@@ -13,24 +13,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.FragmentSignIn;
+import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-
+/**
+ * Controls layout that show user information
+ */
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    @Nullable
     Context context;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -53,7 +61,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     String profilePicPath;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    ViewModelUser viewModelUser;
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -61,30 +71,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
-        //hook elements in view
+        viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
+
+        //set the observer to get info for user created in User repository
+        viewModelUser.getUserData().observe(getViewLifecycleOwner(), observer);
+
         mEdit = v.findViewById(R.id.ac_button_profile_edit);
         mEdit.setOnClickListener(this);
         mProfilePic = v.findViewById(R.id.profile_image);
 
-//        mFirstName = v.findViewById(R.id.textview_profile_firstname);
-//        mFirstName.setText(prefs.getString("profile_first", "").toString());
         mNickName = v.findViewById(R.id.textview_profile_lastname);
-        mNickName.setText(prefs.getString("profile_last", ""));
         mAge = v.findViewById(R.id.textview_profile_age);
-
-        int x = prefs.getInt("profile_age", 0);
-        mAge.setText("Age: " + prefs.getInt("profile_age", 0));
         mSex = v.findViewById(R.id.textview_profile_sex);
-        mSex.setText("Sex: " + prefs.getString("profile_sex", ""));
         mWeight = v.findViewById(R.id.textview_profile_weight);
-        mWeight.setText("Weight: " + prefs.getString("profile_weight", ""));
         mHeight = v.findViewById(R.id.textview_profile_height);
-        mHeight.setText("Height: " + prefs.getInt("profile_feet", 0) + "'" + prefs.getInt("profile_inches", 0) + "' '");
-
         mCity = v.findViewById(R.id.textview_profile_city);
-        mCity.setText("City: " + prefs.getString("profile_city", ""));
         mCountry = v.findViewById(R.id.textview_profile_country);
-        mCountry.setText("Country: " + prefs.getString("profile_country", ""));
+
 
         if (isSignedIn()) {
             mLogout = v.findViewById(R.id.ac_button_logout);
@@ -109,18 +112,40 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * This observer will keep track of user changes and change
+     * views as needed.
+     */
+    final Observer<User> observer = new Observer<User>() {
+        @Override
+        public void onChanged(User userData) {
+            if(userData != null)
+            {
+                mNickName.setText(userData.getUser_name());
+                mAge.setText("Age: " + userData.getUser_dob());
+                mSex.setText("Sex: " + userData.getUser_gender());
+                mWeight.setText("Weight: " + userData.getCurrent_wgt());
+
+                int feet = (int) Math.floor(userData.getUser_hgt()/12);
+                int inches = (int) Math.floor(userData.getUser_hgt()%12);
+                mHeight.setText("Height: " + feet + "' " + inches + "''");
+
+                mCity.setText("City: " + userData.getUser_city());
+                mCountry.setText("Country: " + userData.getUser_country());
+            }
+        }
+    };
+
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         switch (v.getId()) {
 
             case R.id.ac_button_profile_edit: {
-                EditProfileFragment frag = new EditProfileFragment();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
+//                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new EditProfileFragment());
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new EditProfileFragment());
                 break;
             }
 
@@ -130,15 +155,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
 
             case R.id.ac_button_login: {
-                FragmentSignIn frag = new FragmentSignIn();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentContainerView, new FragmentSignIn());
                 break;
             }
         }
-
-
     }
 
     private boolean isSignedIn() {
@@ -155,14 +175,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onComplete(@NonNull Task<Void> task) {
 
                 TextView login = getActivity().findViewById(R.id.toolbar_login);
-                MainActivity.setCurrentUser(null);
+
+                viewModelUser.signOut();
                 login.setText("sign in");
 
-                FragmentSignIn frag = new FragmentSignIn();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentHolder, frag);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new FragmentSignIn());
             }
         });
     }

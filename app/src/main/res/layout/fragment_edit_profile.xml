@@ -1,70 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginBottom="56dp"
-    android:background="@drawable/gradient_animation_profile">
+    >
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".EditProfileFragment">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/iv_backbutton"
-            style="@style/white_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginVertical="10dp"
-            android:drawableLeft="@drawable/ic_action_back"
-            tools:ignore="SpeakableTextPresentCheck">
-
-        </androidx.appcompat.widget.AppCompatButton>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/iv_backbutton"
-            android:padding="10dp"
-            android:text="Edit Profile"
-            android:textSize="35sp">
+            android:orientation="horizontal">
 
-        </TextView>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/edit_profile_back_btn"
+                style="@style/white_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
+                android:drawableLeft="@drawable/ic_action_back"
+                tools:ignore="SpeakableTextPresentCheck"
+                android:background="@drawable/rounded_button_white"
+                />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/ac_button_savechanges"
-            style="@style/white_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginVertical="10dp"
-            android:padding="10dp"
-            android:text="save changes"
-            android:textColor="#00695C"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Edit Profile"
+                android:textSize="35sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
-            android:textSize="15sp">
-
-        </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/edit_profile_button_save_top"
+                style="@style/white_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="10dp"
+                android:padding="10dp"
+                android:text="Save Changes"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_button_white"/>
+        </LinearLayout>
 
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_below="@id/iv_backbutton"
-            android:background="?android:attr/listDivider">
-
-        </View>
+            android:background="?android:attr/listDivider" />
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_below="@id/divider"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:layout_margin="15dp"
             android:src="@drawable/ic_menu_camera"
             app:civ_border_color="#FF000000"
@@ -75,284 +79,189 @@
             style="@style/white_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profile_image"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:text="Edit Photo"
-            android:textColor="@color/teal_700"
-            android:textSize="20sp">
-
-        </androidx.appcompat.widget.AppCompatButton>
-
-<!--        <EditText-->
-<!--            android:id="@+id/ev_firstname"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/ac_button_editphoto"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:hint="First Name"-->
-<!--            android:inputType="text"-->
-<!--            android:textColorHint="#607D8B"-->
-<!--            android:textSize="20sp">-->
-
-<!--        </EditText>-->
-
-<!--        <View-->
-<!--            android:id="@+id/divider2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="3dp"-->
-<!--            android:layout_below="@id/ev_firstname"-->
-<!--            android:background="?android:attr/listDivider">-->
-
-<!--        </View>-->
-
-        <EditText
-            android:id="@+id/ev_nick_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ac_button_editphoto"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="Nick Name"
-            android:inputType="text"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
-
-        </EditText>
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_button_white"/>
 
         <View
-            android:id="@+id/divider3"
+            android:id="@+id/divider1"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/ev_nick_name"
-            android:background="?android:attr/listDivider">
-
-        </View>
-
-        <TextView
-            android:id="@+id/tv_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider3"
-            android:layout_marginStart="10dp"
+            android:layout_height="2dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="age"
-            android:inputType="number"
-            android:minWidth="48dp"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
+            android:background="?android:attr/listDivider" />
 
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spin_age"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/divider3"
-            android:layout_margin="10dp"
-            android:layout_toRightOf="@id/tv_age">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
-        </Spinner>
+            <com.google.android.material.textfield.TextInputLayout
+
+                style="@style/CustomOutlineBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Nick name"
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                style="@style/CustomOutlineBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Date of birth"
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_dob_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <View
-            android:id="@+id/divider4"
+            android:id="@+id/divider2"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/tv_age"
-            android:background="?android:attr/listDivider">
+            android:layout_height="2dp"
+            android:background="?android:attr/listDivider" />
 
-        </View>
-
-        <EditText
-            android:id="@+id/ev_gender"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/divider4"
-            android:layout_margin="10dp"
-            android:hint="gender"
-            android:inputType="text"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
-        </EditText>
+            <com.google.android.material.textfield.TextInputLayout
+
+                style="@style/CustomOutlineBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:hint="Gender"
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_sex_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                style="@style/CustomOutlineBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Weight"
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_weight_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/CustomOutlineBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:hint="Height"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_height_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
         <View
             android:id="@+id/divider5"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/ev_gender"
-            android:background="?android:attr/listDivider">
+            android:layout_height="2dp"
+            android:background="?android:attr/listDivider" />
 
-        </View>
-
-        <EditText
-            android:id="@+id/ev_weight"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/divider5"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="weight"
-            android:inputType="number"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
 
-        </EditText>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/CustomOutlineBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="City"
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_city_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/CustomOutlineBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Country"
+                android:padding="10dp"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_profile_country_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <View
             android:id="@+id/divider6"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/ev_weight"
-            android:background="?android:attr/listDivider">
-
-        </View>
-
-        <TextView
-            android:id="@+id/ev_height"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider6"
-
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="height"
-            android:inputType="number"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
-
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spin_feet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider6"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@id/ev_height"
-            >
-
-        </Spinner>
-
-        <TextView
-            android:id="@+id/tv_feet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider6"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@id/spin_feet"
-            android:text="'"
-            android:textSize="20sp">
-
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spin_inches"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider6"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@id/tv_feet">
-
-        </Spinner>
-
-        <TextView
-            android:id="@+id/tv_inches"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider6"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@id/spin_inches"
-            android:text="' '"
-            android:textSize="20sp">
-
-        </TextView>
-
-        <View
-            android:id="@+id/divider7"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/ev_height"
-            android:background="?android:attr/listDivider">
-
-        </View>
-
-        <EditText
-            android:id="@+id/ev_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider7"
-            android:layout_margin="10dp"
-            android:hint="Country"
-            android:inputType="text"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
-
-        </EditText>
-
-        <View
-            android:id="@+id/divider8"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/ev_country"
-            android:background="?android:attr/listDivider">
-
-        </View>
-
-        <EditText
-            android:id="@+id/ev_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/divider8"
-            android:layout_margin="10dp"
-            android:hint="City"
-            android:inputType="text"
-            android:textColorHint="#607D8B"
-            android:textSize="20sp">
-
-        </EditText>
-
-        <View
-            android:id="@+id/divider9"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@id/ev_city"
+            android:layout_height="2dp"
             android:background="?android:attr/listDivider" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bottom_save_button"
+            android:id="@+id/edit_profile_bottom_save_button"
             style="@style/white_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:padding="15dp"
             android:text="save changes"
-            android:textColor="#00695C"
-            android:layout_below="@id/divider9"
-            android:layout_centerHorizontal="true"
-            android:textSize="15sp">
-
-        </androidx.appcompat.widget.AppCompatButton>
-
-
-    </RelativeLayout>
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:background="@drawable/rounded_button_white"/>
+    </LinearLayout>
 </ScrollView>

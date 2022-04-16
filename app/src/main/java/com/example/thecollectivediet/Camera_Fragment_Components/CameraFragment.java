@@ -10,12 +10,10 @@ import android.graphics.ColorSpace;
 import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -31,10 +29,10 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LifecycleOwner;
 
+import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.ManualFoodSearch;
+import com.example.thecollectivediet.Me_Fragment_Components.TodayFragment;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ml.LiteModelAiyVisionClassifierFoodV11;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -45,188 +43,130 @@ import org.tensorflow.lite.support.label.Category;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-
-public class CameraFragment extends Fragment {
+/**
+ * This class controls the view and camerax for the food vision fragment that allows
+ * users to take pictures of food items to have TFLite predict the food using
+ * object detection.
+ */
+public class CameraFragment extends Fragment implements View.OnClickListener {
 
     //Buttons and views
+    View v;
     PreviewView previewView;
     Button takePic;
-    ImageView imageView2;
 
     //camera
+    Camera camera;
     Preview preview;
     CameraSelector cameraSelector;
     ImageCapture imageCapture;
-    ProcessCameraProvider cameraProvider;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-    Display display;
 
-    private ActivityResultLauncher<String> requestPermissionLauncher;
-
-
+    /**
+     * Called when camera fragment is instantiated.  Initializes view components.
+     *
+     * @return the CameraFragment view.
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_camera, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.fragment_camera, container, false);
 
-        Map<String, String> env = System.getenv();
-
-        // Register the permissions callback, which handles the user's response to the
-// system permissions dialog. Save the return value, an instance of
-// ActivityResultLauncher, as an instance variable.
-        requestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (isGranted) {
-                        // Permission is granted. Continue the action or workflow in your
-                        // app.
-
-                        //initialize components
-                        initializeComponents(v);
-
-                        //set up preview, imageCapture,
-                        cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
-                        cameraProviderFuture.addListener(() -> {
-                            try {
-                                cameraProvider = cameraProviderFuture.get();
-                                bindPreview(cameraProvider, v);
-                            } catch (ExecutionException | InterruptedException e) {
-                                // No errors need to be handled for this Future.
-                                // This should never be reached.
-                            }
-                        }, ContextCompat.getMainExecutor(getActivity()));
-                    } else {
-                        // Explain to the user that the feature is unavailable because the
-                        // features requires a permission that the user has denied. At the
-                        // same time, respect the user's decision. Don't link to system
-                        // settings in an effort to convince the user to change their
-                        // decision.
-                    }
-                });
+        //hook elements
+        previewView = v.findViewById(R.id.view_camera);
+        takePic = v.findViewById(R.id.take_pic);
+        takePic.setOnClickListener(this);
 
 
         if (ContextCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.CAMERA) ==
+                getContext(), Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED) {
             // You can use the API that requires the permission.
-            //initialize components
-            initializeComponents(v);
-
-            //set up preview, imageCapture,
             cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
+
             cameraProviderFuture.addListener(() -> {
                 try {
-                    cameraProvider = cameraProviderFuture.get();
+                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                     bindPreview(cameraProvider, v);
                 } catch (ExecutionException | InterruptedException e) {
                     // No errors need to be handled for this Future.
                     // This should never be reached.
                 }
             }, ContextCompat.getMainExecutor(getActivity()));
-        }
-//        else if (shouldShowRequestPermissionRationale(...)) {
-//            // In an educational UI, explain to the user why your app requires this
-//            // permission for a specific feature to behave as expected. In this UI,
-//            // include a "cancel" or "no thanks" button that allows the user to
-//            // continue using your app without granting the permission.
-//            showInContextUI(...);
-//        }
-        else {
+        } else {
             // You can directly ask for the permission.
             // The registered ActivityResultCallback gets the result of this request.
             requestPermissionLauncher.launch(
                     Manifest.permission.CAMERA);
         }
 
-
         return v;
     }
 
-    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, View view) {
+    // Register the permissions callback, which handles the user's response to the
+    // system permissions dialog. Save the return value, an instance of
+    // ActivityResultLauncher, as an instance variable.
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+                    cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
 
-        preview = new Preview.Builder()
-                .build();
+                    cameraProviderFuture.addListener(() -> {
+                        try {
+                            ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                            bindPreview(cameraProvider, v);
+                        } catch (ExecutionException | InterruptedException e) {
+                            // No errors need to be handled for this Future.
+                            // This should never be reached.
+                        }
+                    }, ContextCompat.getMainExecutor(getActivity()));
+                } else {
+                    // Explain to the user that the feature is unavailable because the
+                    // features requires a permission that the user has denied. At the
+                    // same time, respect the user's decision. Don't link to system
+                    // settings in an effort to convince the user to change their
+                    // decision.
+                }
+            });
 
-        cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
+    /**
+     * Bind camerax components together
+     *
+     * @param cameraProvider camera provider service
+     * @param view           relevant view component
+     */
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, @NonNull View view) {
 
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+        try {
+            preview = new Preview.Builder()
+                    .build();
 
-        imageCapture =
-                new ImageCapture.Builder()
-                        .setTargetRotation(view.getDisplay().getRotation())
-                        .build();
+            cameraSelector = new CameraSelector.Builder()
+                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                    .build();
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageCapture, preview);
-    }
+            preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-    private void initializeComponents(View view) {
-        //views
-        previewView = view.findViewById(R.id.view_camera);
-
-
-        //buttons
-        takePic = view.findViewById(R.id.take_pic);
-
-        /*
-        Listener for "take pic" button in camera view. This listener will take a pic,
-        place pic in an image view, and then be used for inference using Tensorflow lite.
-        A string will be returned to be used in the food search function.
-        */
-        takePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback() {
-                    int x = 5;
-
-
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onCaptureSuccess(ImageProxy imageProxy) {
-                        //Change imageProxy to bitmap to be used with imageView
-                        Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
-
-                        // Get a prediction given the image taken from camera
-                        String prediction = classifyImage(bitmap);
-
-                        //Save string in SharedPreferences to use in ManualFoodSearch frag
-                        SharedPreferences prefs;
-                        SharedPreferences.Editor editor;
-
-                        //Any class in this app can use this
-                        prefs = getActivity().getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
-
-                        editor = prefs.edit();
-
-                        editor.putString("prediction", prediction);
-                        editor.commit();
-
-                        //Make sure to close the image buffer for next picture
-                        imageProxy.close();
-
-                        //Switch over to ManualFoodSearch frag
-                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragmentHolder, new ManualFoodSearch());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-
-
-                    @Override
-                    public void onError(ImageCaptureException e) {
-                        super.onError(e);
-                    }
-                });
-            }
-        });
+            imageCapture =
+                    new ImageCapture.Builder()
+                            .setTargetRotation(view.getDisplay().getRotation())
+                            .build();
+            camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture, preview);
+        } catch (Exception e) {
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new TodayFragment());
+        }
     }
 
 
+    /**
+     * Resize bitmap to send to TFLite
+     * @return The resized bitmap image.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Bitmap resizeBitmap(Bitmap bitmap, int newHeight, int newWidth) {
+    public Bitmap resizeBitmap(@NonNull Bitmap bitmap, int newHeight, int newWidth) {
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();
         float scaleHeight = ((float) newHeight) / height;
@@ -278,7 +218,7 @@ public class CameraFragment extends Fragment {
     /*
     Converts ImageProxy to Bitmap
      */
-    private Bitmap convertImageProxyToBitmap(ImageProxy image) {
+    private Bitmap convertImageProxyToBitmap(@NonNull ImageProxy image) {
         ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
         byteBuffer.rewind();
         byte[] bytes = new byte[byteBuffer.capacity()];
@@ -287,5 +227,52 @@ public class CameraFragment extends Fragment {
         return BitmapFactory.decodeByteArray(clonedBytes, 0, clonedBytes.length);
     }
 
+    /**
+     * Called when user clicks the "take picture" button.  Creates the bitmap and then calls TFLite components to classify image.
+     */
+    @Override
+    public void onClick(View v) {
 
+        switch (v.getId()) {
+
+            case R.id.take_pic: {
+
+                imageCapture.takePicture(ContextCompat.getMainExecutor(getActivity()), new ImageCapture.OnImageCapturedCallback() {
+
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
+                        //Change imageProxy to bitmap to be used with imageView
+                        Bitmap bitmap = convertImageProxyToBitmap(imageProxy);
+
+                        // Get a prediction given the image taken from camera
+                        String prediction = classifyImage(bitmap);
+
+                        //Save string in SharedPreferences to use in ManualFoodSearch frag
+                        SharedPreferences prefs;
+                        SharedPreferences.Editor editor;
+
+                        //Any class in this app can use this
+                        prefs = getActivity().getSharedPreferences("TheCollectiveDiet", Context.MODE_PRIVATE);
+
+                        editor = prefs.edit();
+
+                        editor.putString("prediction", prediction);
+                        editor.commit();
+
+                        //Make sure to close the image buffer for next picture
+                        imageProxy.close();
+
+                        //Switch over to ManualFoodSearch frag
+                        MainActivity.commitFragmentTransaction(getActivity(), R.id.fragmentHolder, new ManualFoodSearch());
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCaptureException e) {
+                        super.onError(e);
+                    }
+                });
+            }
+        }
+    }
 }

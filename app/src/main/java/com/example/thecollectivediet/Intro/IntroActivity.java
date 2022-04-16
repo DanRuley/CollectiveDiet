@@ -1,23 +1,20 @@
 package com.example.thecollectivediet.Intro;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.thecollectivediet.Intro.Intro_ViewPagerAdapter;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -28,7 +25,9 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.Task;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
-
+/**
+ * Shows the User basic information on the app
+ */
 public class IntroActivity extends AppCompatActivity {
 
     static final int WELCOME = 0;
@@ -43,6 +42,11 @@ public class IntroActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private Activity ctx;
 
+    /**
+     * Instantiate Intro Activity, setup view components
+     *
+     * @param savedInstanceState saved instance data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +89,7 @@ public class IntroActivity extends AppCompatActivity {
 
         ActivityResultLauncher<Intent> signInResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
-            public void onActivityResult(ActivityResult result) {
+            public void onActivityResult(@NonNull ActivityResult result) {
                 Task<GoogleSignInAccount> task1 = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
 
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -112,7 +116,7 @@ public class IntroActivity extends AppCompatActivity {
         });
 
         //progress bar shown as dots
-        dotsIndicator = (DotsIndicator) findViewById(R.id.dots_indicator);
+        dotsIndicator = findViewById(R.id.dots_indicator);
 
         viewPager = findViewById(R.id.intro_viewpager);
         viewPagerAdapter = new Intro_ViewPagerAdapter(this);
@@ -163,9 +167,11 @@ public class IntroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Handle signin result when user registers in the intro activity.
+     */
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         this.setResult(RESULT_OK);
-        //finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

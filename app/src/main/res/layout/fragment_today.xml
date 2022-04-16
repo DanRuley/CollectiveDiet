@@ -2,10 +2,9 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_animation_today">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +23,9 @@
                 android:layout_margin="10dp"
                 android:layout_weight="3"
                 android:text="Hello! How are you feeling today? "
-                android:textSize="25sp">
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/black">
 
             </TextView>
 
@@ -42,36 +43,59 @@
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="18dp"
+            android:layout_margin="10dp">
+        <LinearLayout
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:background="@drawable/gradient_background_today2"
+            android:orientation="vertical"
+
+            android:paddingTop="25dp">
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_calories"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-          android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:id="@+id/ll_todays_calories_holder"
+                android:orientation="vertical"
+                android:background="@drawable/gradient_animation_today">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:paddingVertical="5dp"
-                    android:text="Calories"
-                    android:textSize="14sp">
+                    android:text="Today's Calories"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black">
 
                 </TextView>
 
                 <TextView
+                    android:id="@+id/tv_today_frag_calories"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp">
+                    android:text="2035.6"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black">
 
                 </TextView>
             </LinearLayout>
@@ -80,10 +104,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_bmi"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-           android:layout_weight="1">>
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -93,27 +117,32 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_animation_today">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:paddingVertical="5dp"
                         android:text="BMI"
-                        android:textSize="14sp">
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
 
                     </TextView>
 
                     <TextView
                         android:id="@+id/tv_bmi_result"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:text="0"
-                        android:textSize="14sp">
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
 
                     </TextView>
                 </LinearLayout>
@@ -123,10 +152,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_bmr"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -136,26 +165,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_animation_today">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
+
                         android:gravity="center_horizontal"
                         android:paddingVertical="5dp"
-                        android:text="Calories"
-                        android:textSize="14sp">
+                        android:text="BMR"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
 
                     </TextView>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_bmr"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0"
-                        android:textSize="14sp">
+                        android:text="2200"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
 
                     </TextView>
                 </LinearLayout>
@@ -165,10 +201,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_calorie_goal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:cardCornerRadius="40dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardCornerRadius="40dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -178,240 +214,41 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_animation_today">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:paddingVertical="5dp"
-                        android:text="Calories"
-                        android:textSize="14sp">
+                        android:text="Goal"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
 
                     </TextView>
 
                     <TextView
+                        android:id="@+id/tv_cal_goal"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0"
-                        android:textSize="14sp">
-
+                        android:text="2000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
                     </TextView>
                 </LinearLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
 
-
-
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/mood_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Mood"-->
-<!--                android:textSize="20sp"-->
-<!--                android:layout_weight="1">-->
-
-<!--            </TextView>-->
-
-<!--            <RatingBar-->
-<!--                android:id="@+id/mood_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-<!--            <View-->
-<!--                android:id="@+id/divider"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="3dp"-->
-<!--                android:background="?android:attr/listDivider"-->
-<!--                android:backgroundTint="@color/material_on_background_disabled"-->
-<!--                android:backgroundTintMode="src_over"-->
-<!--                />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/energy_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Energy"-->
-<!--                android:textSize="20sp"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </TextView>-->
-
-
-<!--            <RatingBar-->
-<!--                android:id="@+id/energy_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-
-<!--            <View-->
-<!--                android:id="@+id/divider2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="3dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="?android:attr/listDivider"-->
-<!--                android:backgroundTint="@color/material_on_background_disabled"-->
-<!--                android:backgroundTintMode="src_over"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/hunger_text"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/energy_ratingbar" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/hunger_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Hunger"-->
-<!--                android:textSize="20sp"-->
-<!--                android:layout_weight="1">-->
-
-<!--            </TextView>-->
-
-
-<!--            <RatingBar-->
-<!--                android:id="@+id/hunger_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-<!--            <View-->
-<!--                android:id="@+id/divider3"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="3dp"-->
-
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="?android:attr/listDivider"-->
-<!--                android:backgroundTint="@color/material_on_background_disabled"-->
-<!--                android:backgroundTintMode="src_over"-->
-
-<!--                app:layout_constraintBottom_toTopOf="@id/focus_text"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/hunger_ratingbar"-->
-<!--                app:layout_constraintVertical_weight="1" />-->
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/focus_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:fontFamily="@font/quintessential_regular"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Focus"-->
-<!--                android:textSize="20sp"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </TextView>-->
-
-
-<!--            <RatingBar-->
-<!--                android:id="@+id/focus_ratingbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:numStars="4"-->
-<!--                android:progressTint="@color/gold"-->
-<!--                android:rating="3"-->
-<!--                android:stepSize="1"-->
-<!--               android:layout_weight="1">-->
-
-<!--            </RatingBar>-->
-
-<!--            &lt;!&ndash;images&ndash;&gt;-->
-<!--            <ImageView-->
-<!--                android:id="@+id/mood_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/mood_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/mood_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent">-->
-
-<!--            </ImageView>-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/energy_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/energy_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/energy_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/divider">-->
-
-<!--            </ImageView>-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/hunger_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/hunger_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/hunger_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/divider2">-->
-
-<!--            </ImageView>-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/focus_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:src="@drawable/ex_mark"-->
-<!--                app:layout_constraintBottom_toTopOf="@id/focus_ratingbar"-->
-<!--                app:layout_constraintHorizontal_weight="1"-->
-<!--                app:layout_constraintLeft_toRightOf="@id/focus_text"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/divider3">-->
-
-<!--            </ImageView>-->
-
-<!--      -->
-
-<!--        <TextView-->
-<!--            android:id="@+id/spacer"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="56dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/cl_survey">-->
-
-<!--        </TextView>-->
-
+                <TextView
+                    android:id="@+id/spacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp">
+                </TextView>
     </LinearLayout>
-</ScrollView><!--</ScrollView>-->
+    </ScrollView>

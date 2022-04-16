@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Goals_Fragment_Components.FragmentGoals">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:text="Today's Weigh In:"
+            android:textSize="25sp"
+            android:textColor="@color/black">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/acb_goals_enter_current_weight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Enter Weight"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight=".7"
+                android:background="@drawable/rounded_button_white"
+                android:layout_margin="10dp"
+                android:elevation="2dp"
+                >
+
+            </androidx.appcompat.widget.AppCompatButton>
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Be sure to weigh in every day!"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:textColor="@color/black">
+
+            </TextView>
+        </LinearLayout>
+
+        <!--Weight goal-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Your Weight Goal:"
+            android:textSize="25sp"
+            android:textColor="@color/black">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/acb_goals_enter_weight_goal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Enter Goal"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight=".7"
+                android:background="@drawable/rounded_button_white"
+                android:layout_margin="10dp"
+                android:elevation="2dp">
+
+            </androidx.appcompat.widget.AppCompatButton>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Talk to your doctor about finding an Ideal body weight for you."
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textColor="@color/black">
+
+            </TextView>
+        </LinearLayout>
+
+        <!--Calorie goal-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Your Calorie Goal:"
+            android:textSize="25sp"
+            android:textColor="@color/black">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/gradient_animation_today">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/acb_goals_enter_calorie_goal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Enter Goal"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_weight=".7"
+                android:background="@drawable/rounded_button_white"
+                android:layout_margin="10dp"
+                android:elevation="2dp"
+                >
+
+            </androidx.appcompat.widget.AppCompatButton>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Choose a reasonable calorie goal."
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="15dp"
+            >
+
+        </TextView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>

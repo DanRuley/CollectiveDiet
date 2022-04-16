@@ -8,34 +8,47 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.thecollectivediet.R;
 
 
+/**
+ * Used to configue IntroActivity swipe view
+ */
 public class Intro_ViewPagerAdapter extends PagerAdapter {
 
     Context ctx;
 
+    /**
+     * Basic constructor
+     * @param context application context
+     */
     public Intro_ViewPagerAdapter(Context context) {
-
         this.ctx = context;
-
     }
 
+    @Nullable
     LayoutInflater layoutInflater = null;
 
+    @NonNull
     int[] list = new int[]{R.drawable.ic_launcher_foreground, R.drawable.food_pic, R.drawable.googleg_color};
 
+    @NonNull
     String[] textHeader = new String[]{
             "WELCOME",
-            "Collective Diet is cool because....",
+            "Start Logging!",
             "Sign in to get started!"
     };
 
+
+    @NonNull
     String[] textBody = new String[]{
-            "Food Entry",
-            "Take pics and stuff...",
+            "Our application lets you track your diet by logging your food to gain insights into how your diet affects your life.",
+            "The Collective Diet app will allow you to log your meals manually or by camera using object" +
+                    "detection. Your meals will be tracked by our database and can be viewed at" +
+                    "any time!",
             "Use your google account to sign in"
     };
 
@@ -49,6 +62,12 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
+    /**
+     * Used to create the view page in the intro
+     * @param container
+     * @param position
+     * @return
+     */
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -58,6 +77,7 @@ public class Intro_ViewPagerAdapter extends PagerAdapter {
         ImageView img = view.findViewById(R.id.intro_image_1);
         TextView txt_head = view.findViewById(R.id.txt_header);
         TextView txt_body = view.findViewById(R.id.txt_body);
+
 
         img.setImageResource(list[position]);
         txt_head.setText(textHeader[position]);

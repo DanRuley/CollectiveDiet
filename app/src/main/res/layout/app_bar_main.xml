@@ -24,8 +24,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/blue"
-            app:popupTheme="@style/Theme.TheCollectiveDiet.PopupOverlay">
+            android:background="@drawable/gradient_animation_today"
+            app:popupTheme="@style/Theme.TheCollectiveDiet.PopupOverlay"
+            >
 
             <TextView
                 android:id="@+id/toolbar_login"
@@ -36,7 +37,8 @@
                 android:layout_marginRight="16dp"
                 android:text="Login"
                 android:textSize="20dp"
-                />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
         </androidx.appcompat.widget.Toolbar>
 
         <include layout="@layout/content_main">
@@ -51,10 +53,11 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="bottom"
-        android:background="@color/blue"
+        android:background="@drawable/gradient_animation_today"
         android:theme="@style/Theme.TheCollectiveDiet.AppBarOverlay"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:menu="@menu/bottom_nav_menu">

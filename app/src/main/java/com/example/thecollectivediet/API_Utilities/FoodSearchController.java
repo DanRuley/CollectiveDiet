@@ -2,6 +2,8 @@ package com.example.thecollectivediet.API_Utilities;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -19,10 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Controller class for Food Search API calls using the Volley Library.
+ */
 public class FoodSearchController {
 
-    private Context ctx;
+    private final Context ctx;
     private static HashMap<String, String> headers;
 
     public FoodSearchController(Context _ctx) {
@@ -34,8 +38,10 @@ public class FoodSearchController {
         headers.put("x-app-key", "4d6be0c8e692f9a473f0b30d5377ce69");
     }
 
-
-    public void getNutrients(String foodID, VolleyResponseListener<FoodNutrients> listener) {
+    /**
+     * Given a foodID, returns the food nutrients from the backend database.  This data is sent to the provided callback method.
+     */
+    public void getNutrients(String foodID, @NonNull VolleyResponseListener<FoodNutrients> listener) {
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/FoodIdSearch?food_id=" + foodID;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -58,7 +64,10 @@ public class FoodSearchController {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
-    public void searchFoodByName(String foodName, VolleyResponseListener<List<FoodResult>> listener) {
+    /**
+     * Makes an API call to search for the given food name string.  Returns a list of FoodItems found in the database to the provided callback listener.
+     */
+    public void searchFoodByName(String foodName, @NonNull VolleyResponseListener<List<FoodResult>> listener) {
         List<FoodResult> foods = new ArrayList<>();
 
         String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/RelatedFoods?food=" + foodName;
@@ -71,7 +80,7 @@ public class FoodSearchController {
                             foods.add(gson.fromJson(food.toString(), FoodResult.class));
                         }
                         listener.onResponse(foods);
-                    } catch (JSONException | JsonSyntaxException e) {
+                    } catch (@NonNull JSONException | JsonSyntaxException e) {
                         e.printStackTrace();
                         listener.onError(e.getMessage());
                     }

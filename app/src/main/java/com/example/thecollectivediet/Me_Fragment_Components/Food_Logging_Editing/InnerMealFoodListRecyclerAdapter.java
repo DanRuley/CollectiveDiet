@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,11 +14,15 @@ import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
 
+/**
+ * Used to configure inner list in nested recycler list
+ */
 public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<InnerMealFoodListRecyclerAdapter.HorizontalRVViewHolder> {
 
     Context context;
     ArrayList<FoodLogItemView> arrayList;
-    public InnerMealFoodListRecyclerAdapter(Context context, ArrayList<FoodLogItemView> arrayList){
+
+    public InnerMealFoodListRecyclerAdapter(Context context, ArrayList<FoodLogItemView> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -27,18 +30,18 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
     @NonNull
     @Override
     public HorizontalRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_log_recycler_item,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_inner_food, parent, false);
         return new HorizontalRVViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalRVViewHolder holder, int position) {
-        FoodLogItemView innerFoodListItem = arrayList.get(position);
+        FoodLogItemView food = arrayList.get(position);
 
 
-        holder.mTitle.setText(innerFoodListItem.getProduct_name());
-        holder.mServing.setText(String.valueOf(innerFoodListItem.getPortion_size()));
-        holder.mCalories.setText(String.valueOf(innerFoodListItem.getEnergy_kcal_100g()));
+        holder.mTitle.setText(food.getProduct_name());
+        holder.mServing.setText("Serving Size: " + food.getPortion_size() + food.getPortion_unit());
+        holder.mCalories.setText(Converter.getCalorieString(food.getEnergy_kcal_100g(), food.getPortion_unit(), food.getPortion_size()));
     }
 
     @Override
@@ -46,14 +49,13 @@ public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<Inner
         return arrayList.size();
     }
 
-    public class HorizontalRVViewHolder extends RecyclerView.ViewHolder{
+    public class HorizontalRVViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTitle;
-        ImageView mImage;
         TextView mServing;
         TextView mCalories;
 
-        public HorizontalRVViewHolder(View itemView){
+        public HorizontalRVViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mTitle = itemView.findViewById(R.id.tv_recycler_item_food_name);

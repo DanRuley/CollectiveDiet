@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,10 +23,13 @@ import com.example.thecollectivediet.JSON_Marshall_Objects.FoodNutrients;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodResult;
 import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
 import java.util.List;
-import java.util.Objects;
 
+/**
+ * shows user list of items from their meal history categorized by meal types.
+ */
 public class ManualFoodSearch extends Fragment {
 
     static String savedText;
@@ -31,20 +37,32 @@ public class ManualFoodSearch extends Fragment {
     boolean mealTypePrompt;
     EditText foodInput;
     Button searchBtn;
+    @Nullable
     Context ctx;
+    @Nullable
     FoodSearchController controller;
     RecyclerView recyclerView;
+    @Nullable
     FoodSearchRecyclerViewAdapter mAdapter;
+    @Nullable
     RecyclerView.LayoutManager layoutManager;
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
+    ManualFoodSearch manualFoodSearch;
+
+    ViewModelUser viewModelUser;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_food_search, container, false);
+
+        viewModelUser = new ViewModelProvider(getActivity()).get(ViewModelUser.class);
+
+        manualFoodSearch = this;
 
         Bundle args = getArguments();
 
@@ -74,7 +92,7 @@ public class ManualFoodSearch extends Fragment {
         return v;
     }
 
-    private void initializeComponents(View v) {
+    private void initializeComponents(@NonNull View v) {
         ctx = this.getActivity();
         controller = new FoodSearchController(ctx);
 
@@ -104,16 +122,19 @@ public class ManualFoodSearch extends Fragment {
         }));
     }
 
-
+    /**
+     * Fills nested recycler list with meals from user history
+     * @param response
+     */
     private void populateRecycler(List<FoodResult> response) {
-        MainActivity.hideKeyboard(Objects.requireNonNull(getActivity()));
+        MainActivity.hideKeyboard(requireActivity());
 
         mAdapter = new FoodSearchRecyclerViewAdapter(response, ctx, foodItem -> {
 
             controller.getNutrients(String.valueOf(foodItem.getId()), new VolleyResponseListener<FoodNutrients>() {
                 @Override
                 public void onResponse(FoodNutrients nutrients) {
-                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem, mealType);
+                    FoodConfirmDialog dialog = new FoodConfirmDialog(ctx, nutrients, foodItem, mealType, requireActivity());
                     dialog.show();
                 }
 

@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -14,7 +14,7 @@ import com.example.thecollectivediet.R;
 import com.google.android.material.tabs.TabLayout;
 
 
-/*
+/**
     This fragment will hold a tab layout for other fragments related to the "Me" part of the app.
     This class/fragment will use the class FragmentAdapter to allow users to navigate the tabs
     by swiping left or right.
@@ -36,7 +36,7 @@ public class MeTabLayoutFragment extends Fragment {
         this.pos = pos;
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //Inflate the view
         View v = inflater.inflate(R.layout.fragment_me_tab_layout, container, false);
@@ -56,14 +56,13 @@ public class MeTabLayoutFragment extends Fragment {
             //Set tab layout to ProfileFragment
             pager2.setCurrentItem(pos);
             //Set scroll bar to proper position
-            tabLayout.setScrollPosition(pos,0, true);
+            tabLayout.setScrollPosition(pos, 0, true);
         }
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(@NonNull TabLayout.Tab tab) {
                 pager2.setCurrentItem(tab.getPosition());
-
             }
 
             @Override

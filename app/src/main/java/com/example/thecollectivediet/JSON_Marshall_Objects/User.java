@@ -1,5 +1,10 @@
 package com.example.thecollectivediet.JSON_Marshall_Objects;
 
+import androidx.annotation.Nullable;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class User {
 
     String user_id;
@@ -15,12 +20,22 @@ public class User {
     String user_lifestyle;
     Float user_hgt;
     String user_city;
+    int goal_cals;
+
+    public User(){
+
+    }
 
     public User(String id, String name, String email, String dts) {
         user_id = id;
         user_email = email;
         user_name = name;
         signup_dts = dts;
+
+        this.start_wgt = 0f;
+        this.current_wgt = 0f;
+        this.goal_cals = 0;
+
     }
 
     public String getUser_country() {
@@ -60,7 +75,10 @@ public class User {
     }
 
     public void setUser_dob(String user_dob) {
-        this.user_dob = user_dob;
+        Pattern p = Pattern.compile("(\\d{2})/(\\d{2})/(\\d{4})");
+        Matcher m = p.matcher(user_dob);
+        if (m.find())
+            this.user_dob = String.format("%s-%s-%s", m.group(3), m.group(1), m.group(2));
     }
 
     public String getUser_gender() {
@@ -71,27 +89,27 @@ public class User {
         this.user_gender = user_gender;
     }
 
-    public float getStart_wgt() {
+    public Float getStart_wgt() {
         return start_wgt;
     }
 
-    public void setStart_wgt(float start_wgt) {
+    public void setStart_wgt(Float start_wgt) {
         this.start_wgt = start_wgt;
     }
 
-    public float getCurrent_wgt() {
+    public Float getCurrent_wgt() {
         return current_wgt;
     }
 
-    public void setCurrent_wgt(float current_wgt) {
+    public void setCurrent_wgt(Float current_wgt) {
         this.current_wgt = current_wgt;
     }
 
-    public float getGoal_wgt() {
+    public Float getGoal_wgt() {
         return goal_wgt;
     }
 
-    public void setGoal_wgt(float goal_wgt) {
+    public void setGoal_wgt(Float goal_wgt) {
         this.goal_wgt = goal_wgt;
     }
 
@@ -115,7 +133,7 @@ public class User {
         return user_hgt;
     }
 
-    public void setUser_hgt(float user_hgt) {
+    public void setUser_hgt(Float user_hgt) {
         this.user_hgt = user_hgt;
     }
 
@@ -127,4 +145,23 @@ public class User {
         return user_city;
     }
 
+    public int getGoal_cals() {
+        return goal_cals;
+    }
+
+    public void setGoal_cals(int goal_cals) {
+        this.goal_cals = goal_cals;
+    }
+
+    @Nullable
+    public String getPrettyDob() {
+        if (user_dob == null)
+            return null;
+
+        Pattern p = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2})");
+        Matcher m = p.matcher(user_dob);
+        if (m.find())
+            return String.format("%s/%s/%s", m.group(2), m.group(3), m.group(1));
+        else return null;
+    }
 }

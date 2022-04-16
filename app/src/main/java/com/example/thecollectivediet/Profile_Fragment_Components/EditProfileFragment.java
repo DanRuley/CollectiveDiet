@@ -3,6 +3,7 @@ package com.example.thecollectivediet.Profile_Fragment_Components;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,47 +14,53 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.MainActivity;
-import com.example.thecollectivediet.Me_Fragment_Components.MeTabLayoutFragment;
 import com.example.thecollectivediet.R;
+import com.example.thecollectivediet.ViewModelUser;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-public class EditProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+/**
+ * This will control the layout that will allow users to edit their profile
+ */
+@SuppressLint("ClickableViewAccessibility")
+public class EditProfileFragment extends Fragment implements View.OnClickListener {
 
     private ActivityResultLauncher<Intent> cameraActivityResultLauncher;
-    private ActivityResultLauncher<String> requestPermissionLauncher;
-    private ActivityResultLauncher<String> cameraRequestPermissionLauncher;
     private ActivityResultLauncher<String> readRequestPermissionLauncher;
 
-    private boolean photoChanged;
+    EditText nickNameInput;
+    EditText dobInput;
+    EditText genderInput;
+    EditText heightInput;
+    EditText countryInput;
+    EditText cityInput;
+    EditText weightInput;
 
-    private ActivityResultContracts.RequestMultiplePermissions requestMultiplePermissionsContract;
-    private ActivityResultLauncher<String[]> multiplePermissionActivityResultLauncher;
+    DatePickerDialog dobPicker;
+
+    private boolean photoChanged;
 
     final String[] PERMISSIONS = {
             // Manifest.permission.MANAGE_EXTERNAL_STORAGE,
@@ -62,20 +69,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             Manifest.permission.CAMERA
 
     };
-    /*
-    Shared Preferences
-        profile_pic = profile pic
-        profile_first = first name
-        profile_last = last name
-        profile_age = age
-        profile_sex = sex
-        profile_weight = weight
-        profile_height = height
-        profile_city = city
-        profile_country = country
-     */
+
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    @Nullable
     Context context;
 
     //buttons
@@ -84,46 +81,36 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     AppCompatButton saveChangesBottom;
     AppCompatButton back_button;
 
-    //editViews
-    //EditText mFirstName;
-    EditText mNickName;
-    TextView mAge;
-    EditText mGender;
-    EditText mWeight;
-    TextView mHeight;
-    EditText mCity;
-    EditText mCountry;
-
     //profile pic
     CircleImageView photo;
 
     //bitmap that holds profile pic
     Bitmap bitmap;
 
-    //age spinner
-    Spinner ageSpinner;
-    Integer[] ageArray;
-    int ageTemp = -1;
-
-    //spinners for height
-    Spinner feetSpinner;
-    Spinner inchSpinner;
-    Integer[] feetArray;
-    Integer[] inchArray;
-    int feetTemp;
-    int inchTemp;
+    ViewModelUser modelViewUser;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
+        initializeComponents(v);
+
+        return v;
+    }
+
+
+    private void initializeComponents(@NonNull View v) {
         //took new photo?
         photoChanged = false;
 
+        //Creates or gets existing view model to pass around the user data
+        modelViewUser = new ViewModelProvider(requireActivity()).get(ViewModelUser.class);
+
         context = this.getActivity();
+        assert context != null;
         prefs = context.getSharedPreferences("Lifestyle App Project", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
@@ -131,88 +118,10 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         editPhoto = v.findViewById(R.id.ac_button_editphoto);
         editPhoto.setOnClickListener(this);
 
-
-        //fill out fields if available
-//        mFirstName = v.findViewById(R.id.ev_firstname);
-//        mFirstName.setHint("first name: " + prefs.getString("profile_first", ""));
-        mNickName = v.findViewById(R.id.ev_nick_name);
-        mNickName.setHint("Nick name: " + prefs.getString("profile_last", ""));
-        mAge = v.findViewById(R.id.tv_age);
-//        mAge.setHint("age: " + prefs.getInt("profile_age", 0));
-        mGender = v.findViewById(R.id.ev_gender);
-        mGender.setHint("sex: " + prefs.getString("profile_sex", ""));
-        mWeight = v.findViewById(R.id.ev_weight);
-        mWeight.setHint("weight: " + prefs.getString("profile_weight", ""));
-        mHeight = v.findViewById(R.id.ev_height);
-        mHeight.setHint("height: " + prefs.getString("profile_height", ""));
-        mCity = v.findViewById(R.id.ev_city);
-        mCity.setHint("city: " + prefs.getString("profile_city", ""));
-        mCountry = v.findViewById(R.id.ev_country);
-        mCountry.setHint("country: " + prefs.getString("profile_country", ""));
-
-        //spinner for age
-        ageArray = new Integer[100];
-        for(int i = 0; i < 100; i++)
-        {
-            ageArray[i] = i + 1;
-        }
-        ageSpinner =v.findViewById(R.id.spin_age);
-        ArrayAdapter<Integer> ageSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, ageArray);
-        ageSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ageSpinner.setAdapter(ageSpinAdapter);
-        ageSpinner.setOnItemSelectedListener(this);
-
-        int ageSpinSaved = prefs.getInt("profile_age", 0);
-        if(ageSpinSaved != 0)
-        {
-            int ageSpinPos = ageSpinAdapter.getPosition(ageSpinSaved);
-            ageSpinner.setSelection(ageSpinPos);
-        }
-
-        //spinners for height
-        //spinners for height
-        feetArray = new Integer[10];
-        for(int i = 0; i <= 9; i++)
-        {
-            feetArray[i] = i;
-        }
-
-        inchArray = new Integer[13];
-        for(int i = 0; i <= 12; i++)
-        {
-            inchArray[i] = i;
-        }
-
-        feetSpinner = v.findViewById(R.id.spin_feet);
-        ArrayAdapter<Integer> feetSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, feetArray);
-        feetSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        feetSpinner.setAdapter(feetSpinAdapter);
-        feetSpinner.setOnItemSelectedListener(this);
-
-        int feetSpinSaved = prefs.getInt("profile_feet", 0);
-        if(feetSpinSaved != 0)
-        {
-            int feetSpinPos = feetSpinAdapter.getPosition(feetSpinSaved);
-            feetSpinner.setSelection(feetSpinPos);
-        }
-
-        inchSpinner = v.findViewById(R.id.spin_inches);
-        ArrayAdapter<Integer> inchSpinAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, inchArray);
-        inchSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        inchSpinner.setAdapter(inchSpinAdapter);
-        inchSpinner.setOnItemSelectedListener(this);
-
-        int inchSpinSaved = prefs.getInt("profile_feet", 0);
-        if(inchSpinSaved != 0)
-        {
-            int inchSpinPos = inchSpinAdapter.getPosition(inchSpinSaved);
-            inchSpinner.setSelection(inchSpinPos);
-        }
-
-        saveChanges = v.findViewById(R.id.ac_button_savechanges);
+        saveChanges = v.findViewById(R.id.edit_profile_button_save_top);
         saveChanges.setOnClickListener(this);
 
-        saveChangesBottom = v.findViewById(R.id.bottom_save_button);
+        saveChangesBottom = v.findViewById(R.id.edit_profile_bottom_save_button);
         saveChangesBottom.setOnClickListener(this);
 
         photo = v.findViewById(R.id.profile_image);
@@ -224,154 +133,206 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             photo.setImageBitmap(thumbnailPic);
         }
 
+        assert (modelViewUser.getUser() != null);
 
-        back_button = v.findViewById(R.id.iv_backbutton);
+
+        dobPicker = new DatePickerDialog(requireActivity(), this);
+
+        User currentUser = modelViewUser.getUser();
+
+        //This listener is added to all edittext fields, it just clears the existing text when the user focuses on it and replaces the text
+        //if the user makes no changes.
+        EditTextEventListener clearInputListener = new EditTextEventListener();
+
+        nickNameInput = v.findViewById(R.id.edit_profile_name_input);
+        Objects.requireNonNull(nickNameInput).setOnFocusChangeListener(clearInputListener);
+        cityInput = v.findViewById(R.id.edit_profile_city_input);
+        Objects.requireNonNull(cityInput).setOnFocusChangeListener(clearInputListener);
+        weightInput = v.findViewById(R.id.edit_profile_weight_input);
+        Objects.requireNonNull(weightInput).setOnFocusChangeListener(clearInputListener);
+
+        dobInput = v.findViewById(R.id.edit_profile_dob_input);
+        dobInput.setFocusable(false);
+        dobInput.setOnTouchListener((v1, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                dobPicker.show();
+            }
+            return false;
+        });
+
+        genderInput = v.findViewById(R.id.edit_profile_sex_input);
+        genderInput.setFocusable(false);
+        genderInput.setOnTouchListener((v1, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                GenderPickerDialog dialog = new GenderPickerDialog(requireActivity(), this, currentUser.getUser_gender());
+                dialog.show();
+            }
+            return false;
+        });
+
+        heightInput = v.findViewById(R.id.edit_profile_height_input);
+        heightInput.setFocusable(false);
+        heightInput.setOnTouchListener((v1, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                HeightPickerDialog dialog = new HeightPickerDialog(requireActivity(), this, currentUser.getUser_hgt());
+                dialog.show();
+            }
+            return false;
+        });
+
+        countryInput = v.findViewById(R.id.edit_profile_country_input);
+        Objects.requireNonNull(countryInput).setOnFocusChangeListener(clearInputListener);
+
+
+        if (currentUser.getUser_name() != null)
+            nickNameInput.setText(currentUser.getUser_name());
+
+
+        String dob = currentUser.getPrettyDob();
+        if (dob != null)
+            dobInput.setText(dob);
+
+
+        if (currentUser.getUser_gender() != null)
+            genderInput.setText(currentUser.getUser_gender());
+
+        if (currentUser.getUser_hgt() != null) {
+            Float hgt = currentUser.getUser_hgt();
+            int ft = Math.round(hgt) / 12;
+            float in = hgt - ft * 12.0f;
+            String hgtStr = "" + ft + "' " + in + "\"";
+            heightInput.setText(hgtStr);
+        }
+
+        if (currentUser.getUser_country() != null)
+            countryInput.setText(currentUser.getUser_country());
+
+        if (currentUser.getUser_city() != null)
+            cityInput.setText(currentUser.getUser_city());
+
+        if (currentUser.getCurrent_wgt() != null)
+            weightInput.setText(String.valueOf(currentUser.getCurrent_wgt()));
+
+        back_button = v.findViewById(R.id.edit_profile_back_btn);
         back_button.setOnClickListener(this);
 
-////////////////////////////////////////////////////////////////////
-        requestMultiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
-        multiplePermissionActivityResultLauncher = registerForActivityResult(requestMultiplePermissionsContract, isGranted -> {
+        setupCameraAndFilePermissions();
+        setupUI(v);
+    }
+
+    private void setupCameraAndFilePermissions() {
+        ActivityResultContracts.RequestMultiplePermissions requestMultiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
+        //multiplePermissionActivityResultLauncher.launch(PERMISSIONS);
+        ActivityResultLauncher<String[]> multiplePermissionActivityResultLauncher = registerForActivityResult(requestMultiplePermissionsContract, isGranted -> {
             Log.d("PERMISSIONS", "Launcher result: " + isGranted.toString());
             if (isGranted.containsValue(false)) {
                 Log.d("PERMISSIONS", "At least one of the permissions was not granted, launching again...");
-                //multiplePermissionActivityResultLauncher.launch(PERMISSIONS);
             }
         });
 
-        //askPermissions(PERMISSIONS);
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        //ActivityLauncher for camera
         cameraActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        //get intent data from result
+                        Intent data = result.getData();
 
-                        if (result.getResultCode() == RESULT_OK) {
-                            //get intent data from result
-                            Intent data = result.getData();
-
-                            //get the bitmap
-                            photoChanged = true;
+                        //get the bitmap
+                        photoChanged = true;
+                        if (data != null) {
                             Bundle extras = data.getExtras();
                             bitmap = (Bitmap) extras.get("data");
                             //saveTempProfileImage(bitmap);
                             photo.setImageBitmap(bitmap);
                         }
                     }
-
                 });
 
+        ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            if (isGranted) {readRequestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+        });
 
-        // Register the permissions callback, which handles the user's response to the
-// system permissions dialog. Save the return value, an instance of
-// ActivityResultLauncher, as an instance variable.
-
-        requestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (isGranted) {
-                        // Permission is granted. Continue to save profile picture
-
-//                        if (isExternalStorageWritable()) {
-//                            saveProfileImage(bitmap);
-//                        }
-
-                        readRequestPermissionLauncher.launch(
-                                Manifest.permission.READ_EXTERNAL_STORAGE);
-
-
-                    } else {
-                        // Explain to the user that the feature is unavailable because the
-                        // features requires a permission that the user has denied. At the
-                        // same time, respect the user's decision. Don't link to system
-                        // settings in an effort to convince the user to change their
-                        // decision.
-                    }
-                });
-
-        cameraRequestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (isGranted) {
-                        // Permission is granted. Continue to take picture
-
-                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        cameraActivityResultLauncher.launch(cameraIntent);
-
-                    } else {
-                        // Explain to the user that the feature is unavailable because the
-                        // features requires a permission that the user has denied. At the
-                        // same time, respect the user's decision. Don't link to system
-                        // settings in an effort to convince the user to change their
-                        // decision.
-                    }
-                });
 
         readRequestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                     if (isGranted) {
-                        // Permission is granted. Continue to take picture
-
-                        if (isExternalStorageWritable()) {
+                        if (isExternalStorageWritable())
                             saveProfileImage(bitmap);
-                        }
-
-                    } else {
-                        // Explain to the user that the feature is unavailable because the
-                        // features requires a permission that the user has denied. At the
-                        // same time, respect the user's decision. Don't link to system
-                        // settings in an effort to convince the user to change their
-                        // decision.
                     }
                 });
 
         multiplePermissionActivityResultLauncher.launch(PERMISSIONS);
-        return v;
+    }
+
+    /**
+     * Makes it so that clicking outside of text fields hides the keyboard
+     * Sets onTouchListener for each non edit text view that hides the keyboard on touch.
+     *
+     * @param view - view component
+     */
+    public void setupUI(View view) {
+
+
+        // Set up touch clearInputListener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener((v, event) -> {
+
+                if(view.getId() == R.id.ac_button_editphoto){
+                    return false;
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    MainActivity.hideKeyboard(requireActivity());
+                    Log.i("touch event", v.toString());
+                    v.clearFocus();
+                    v.performClick();
+                }
+
+                return false;
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
 
         int viewID = v.getId();
         if (viewID == R.id.ac_button_editphoto) {
 
             //Open camera
-
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            cameraActivityResultLauncher.launch(cameraIntent);/////////////////
-
+            cameraActivityResultLauncher.launch(cameraIntent);
         }
 
-        if (viewID == R.id.bottom_save_button || viewID == R.id.ac_button_savechanges) {
+        if (viewID == R.id.edit_profile_bottom_save_button || viewID == R.id.edit_profile_button_save_top) {
 
             if (isExternalStorageWritable()) {
                 saveProfileImage(bitmap);
             }
 
             saveProfileChanges();
-
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
-            transaction.replace(R.id.fragmentHolder, frag);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
 
-        if (viewID == R.id.iv_backbutton) {
-
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            MeTabLayoutFragment frag = new MeTabLayoutFragment(2);
-            transaction.replace(R.id.fragmentHolder, frag);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
+        if (viewID == R.id.edit_profile_back_btn) {
+            MainActivity.commitFragmentTransaction(requireActivity(), R.id.fragmentHolder, new ProfileFragment());
         }
     }
 
-
-    //Method used to save many images to storage
-    //Not used in this app at this time.
-    private String saveImage(Bitmap finalBitmap) {
+    /**Method used to save many images to storage
+       Not used in this app at this time.
+     */
+    @NonNull
+    private String saveImage(@NonNull Bitmap finalBitmap) {
 
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/saved_images");
@@ -395,22 +356,17 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         }
 
         return file.getAbsolutePath();
-
     }
 
 
-    //method used to save profile picture
-    private void saveProfileImage(Bitmap finalBitmap) {
+    /**method used to save profile picture
+     *
+     * @param finalBitmap
+     */
+    private void saveProfileImage(@NonNull Bitmap finalBitmap) {
 
         if (photoChanged) {
-
-
-            File rt = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            //File root = context.getFilesDir();
-            String m = Environment.getExternalStorageState();
-            File myDir = new File(root, "/saved_images1");
-            //myDir.mkdirs();
+            File rt = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             String fname = "Thumbnail_profile.jpg";
 
             File file = new File(rt, fname);
@@ -424,116 +380,82 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                 out.flush();
                 out.close();
 
-
                 // You can use the API that requires the permission.
                 editor.putString("profile_pic", file.getAbsolutePath());
                 editor.commit();
 
             } catch (Exception e) {
-
                 e.printStackTrace();
             }
         }
     }
 
+    private String getEditTextString(EditText input) {
+        if (input != null)
+            return input.getText().toString();
+        else
+            return "";
+    }
+
+    /**
+     * Change the User members to the changes made by the user and
+     * push to AWS RDS
+     */
     private void saveProfileChanges() {
 
-        User currentUser = MainActivity.getCurrentUser();
+        User currentUser = modelViewUser.getUser();
+        assert currentUser != null;
 
-//        if (!isEditTextEmpty(mFirstName)) {
-//            currentUser.setUser_name(mFirstName.getText().toString());
-//            editor.putString("profile_first", mFirstName.getText().toString());
-//        }
-
-        if (!isEditTextEmpty(mNickName)) {
-            editor.putString("profile_last", mNickName.getText().toString());
-        }
-
-        //TODO: change to dob
-//        if (!isEditTextEmpty(mAge)) {
-//            editor.putString("profile_age", mAge.getText().toString());
-//            currentUser.setUser_dob(mAge.getText().toString());
-//        }
-        if(ageTemp > -1)
-        {
-            editor.putInt("profile_age", Integer.valueOf(ageTemp));
-        }
-
-        if (!isEditTextEmpty(mGender)) {
-            editor.putString("profile_sex", mGender.getText().toString());
-            currentUser.setUser_gender(mGender.getText().toString());
-        }
-
-        if (!isEditTextEmpty(mWeight)) {
-            editor.putString("profile_weight", mWeight.getText().toString());
-            currentUser.setCurrent_wgt(Float.parseFloat(mWeight.getText().toString()));
-        }
-        if(feetTemp > -1)
-            editor.putInt("profile_feet", feetTemp);
-
-        if(inchTemp > -1)
-            editor.putInt("profile_inches", inchTemp);
-
-//        if (!isEditTextEmpty(mHeight)) {
-//            editor.putString("profile_height", mHeight.getText().toString());
-//            currentUser.setUser_hgt(Float.parseFloat(mHeight.getText().toString()));
-//        }
-
-        if (!isEditTextEmpty(mCity)) {
-            editor.putString("profile_city", mCity.getText().toString());
-            currentUser.setUser_city(mCity.getText().toString());
-        }
-
-        if (!isEditTextEmpty(mCountry)) {
-            editor.putString("profile_country", mCountry.getText().toString());
-            currentUser.setUser_country(mCountry.getText().toString());
-        }
+        currentUser.setUser_name(getEditTextString(nickNameInput));
+        currentUser.setUser_dob(getEditTextString(dobInput));
+        currentUser.setUser_city(getEditTextString(cityInput));
+        currentUser.setUser_country(getEditTextString(countryInput));
+        currentUser.setUser_gender(getEditTextString(genderInput));
+        currentUser.setCurrent_wgt(Float.parseFloat(getEditTextString(weightInput)));
 
         User_API_Controller.updateUserProfile(currentUser, context);
-
-        editor.commit();
     }
 
-    private boolean isEditTextEmpty(EditText et) {
-        if (et.getText().toString().matches("")) {
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * Ensure that device has writable storage
+     * @return
+     */
     private boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-
-        switch (parent.getId()){
-
-            case R.id.spin_age:{
-                ageTemp = Integer.valueOf(parent.getItemAtPosition(pos).toString());
-                break;
-            }
-            case R.id.spin_feet:{
-                feetTemp = (int)parent.getItemAtPosition(pos);
-                break;
-            }
-            case R.id.spin_inches:{
-                inchTemp = (int)parent.getItemAtPosition(pos);
-                break;
-            }
-        }
+    protected void datePickerCallBack(String dateString) {
+        dobInput.setText(dateString);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void heightChangeCallback(int ft, float in) {
+        modelViewUser.getUser().setUser_hgt((float) ft * 12 + in);
+        String heightTxt = "" + ft + "' " + in + "\"";
+        heightInput.setText(heightTxt);
+    }
 
+    public void genderChangeCallback(String gender) {
+        genderInput.setText(gender);
+        modelViewUser.getUser().setUser_gender(gender);
+    }
+
+
+    static class EditTextEventListener implements View.OnFocusChangeListener {
+
+        String oldTextVal;
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            EditText et = ((EditText) v);
+
+            if (hasFocus) {
+                oldTextVal = et.getText().toString();
+                et.setText("");
+            } else {
+                if (et.getText().toString().equals(""))
+                    et.setText(oldTextVal);
+            }
+        }
     }
 }
