@@ -14,6 +14,9 @@ import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.ViewModelUser;
 
+/**
+ * Gives user options to choose from when choosing food to add to list.
+ */
 public class MealSelectDialog extends Dialog implements View.OnClickListener {
 
     FragmentActivity ctx;

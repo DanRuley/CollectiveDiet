@@ -14,6 +14,9 @@ import com.example.thecollectivediet.R;
 
 import java.util.ArrayList;
 
+/**
+ * Used to configure inner list in nested recycler list
+ */
 public class InnerMealFoodListRecyclerAdapter extends RecyclerView.Adapter<InnerMealFoodListRecyclerAdapter.HorizontalRVViewHolder> {
 
     Context context;

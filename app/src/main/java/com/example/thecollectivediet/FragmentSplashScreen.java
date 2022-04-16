@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+/**
+ * Controls the layout that creates a loading screen to allow the app
+ * to finish with making calls to AWS RDS and AWS S3.
+ */
 public class FragmentSplashScreen extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedStateInstance) {

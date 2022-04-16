@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This view model will be used throughout the app to keep track of the user information, goals, etc
+ */
 public class ViewModelUser extends AndroidViewModel {
 
     private GoogleSignInOptions googleSignInOptions;
@@ -34,8 +37,8 @@ public class ViewModelUser extends AndroidViewModel {
     private GoogleSignInAccount googleSignInAccount;
     private Application application;
 
+    //Mutable live data to be passed around to other fragments.
     MutableLiveData<HashMap<String,List<FoodLogItemView>>> list = new MutableLiveData<>();
-
     private final MutableLiveData<User> userData = new MutableLiveData<User>();
     private final MutableLiveData<DataPoint[]> weights = new MutableLiveData<>();
     private final MutableLiveData<Float> calorieForToday = new MutableLiveData<Float>();

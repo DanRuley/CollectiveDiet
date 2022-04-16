@@ -32,6 +32,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.Task;
 
+/**
+ * Controls the layout that allows users to sign into the app.
+ */
 public class FragmentSignIn extends Fragment implements View.OnClickListener {
 
     private ActivityResultLauncher<Intent> signInActivityResultLauncher;
@@ -95,6 +98,10 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Calls AWS RDS to either add a new user and/or to get the user information.
+     * @param task
+     */
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> task) {
         String msg = "Hello, " + task.getResult().getDisplayName();
         GoogleSignInAccount account = task.getResult();

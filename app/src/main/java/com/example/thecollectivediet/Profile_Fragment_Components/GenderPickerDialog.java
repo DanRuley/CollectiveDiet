@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 
 import com.example.thecollectivediet.R;
 
+/**
+ * Creates dialog that will help user choose gender.
+ */
 public class GenderPickerDialog extends Dialog {
     EditProfileFragment parent;
     Spinner genderSpinner;

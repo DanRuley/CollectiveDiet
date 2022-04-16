@@ -18,6 +18,10 @@ import com.example.thecollectivediet.MainActivity;
 import com.example.thecollectivediet.R;
 import com.example.thecollectivediet.UserPostFragment;
 
+/**
+ * this will control the layout that will display all the posts made
+ * by all users
+ */
 public class SharedFragment extends Fragment {
 
     //elements
@@ -51,6 +55,11 @@ public class SharedFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Calls AWS RDS to get all the posts made by users and puts the posts into
+     * the dataset array
+     * @param v
+     */
     private void InitializeDataset(View v){
 
         User_API_Controller.getPosts(getContext(), new VolleyResponseListener<UserPostUploadItem[]>() {

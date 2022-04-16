@@ -8,6 +8,10 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
+/**
+ * Used to configure Amplify to be used to send user post images to
+ * AWS S3
+ */
 public class tcdandroid extends Application {
 
     public void onCreate() {

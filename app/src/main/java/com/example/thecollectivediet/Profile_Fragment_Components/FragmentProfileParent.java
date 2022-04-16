@@ -11,6 +11,9 @@ import androidx.fragment.app.FragmentContainerView;
 
 import com.example.thecollectivediet.R;
 
+/**
+ * Controls the layout the shows the user their profile.
+ */
 public class FragmentProfileParent extends Fragment {
     FragmentContainerView fcv;
 

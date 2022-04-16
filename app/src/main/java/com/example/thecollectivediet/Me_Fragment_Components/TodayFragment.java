@@ -112,6 +112,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * This observer tracks the calories of the user even as they change and updates
+     * views as necessary.
+     */
     final Observer<Float> todayObserver = new Observer<Float>() {
         @Override
         public void onChanged(Float t) {
@@ -133,7 +137,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
     };
 
-    //create an observer that watches the LiveData<User> object
+    /**create an observer that watches the LiveData<User> object
+     * and updates the necessary views.
+     */
     final Observer<User> nameObserver = new Observer<User>() {
         @Override
         public void onChanged(User user) {
@@ -151,8 +157,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
     };
 
-    //create an observer that watches the LiveData<Hashmap<Integer, Date>> weights object
+    /**create an observer that watches the LiveData<Hashmap<Integer, Date>> weights object
     //this will keep the weight graph updated.
+     */
     final Observer<DataPoint[]> weightsObserver = new Observer<DataPoint[]>() {
         @Override
         public void onChanged(DataPoint[] w) {
@@ -189,6 +196,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Calculates the user's bmi using the formula from www.calculator.net
+     */
     private void setUserBMI() {
 
         Float height = viewModelUser.getUser().getUser_hgt();
@@ -209,6 +219,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Flag used to help determine when to update today frag with the user stats
+     */
     private void update() {
         if (viewModelUser.getUpdateFlag() == 1) {
             viewModelUser.setUpdateFlag(0);
@@ -216,6 +229,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Calculates the user's bmi using the formula from www.calculator.net
+     */
     private String setBMR(User user) {
 
         if (user.getUser_gender() == null || user.getCurrent_wgt() == null || user.getUser_hgt() == null || user.getUser_dob() == null) {
@@ -240,7 +256,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     }
 
-
+    /**
+     * Sets up the graph view in the today fragment.
+     */
     class CustomGraphView extends GraphView {
         public CustomGraphView(Context context) {
             super(context);

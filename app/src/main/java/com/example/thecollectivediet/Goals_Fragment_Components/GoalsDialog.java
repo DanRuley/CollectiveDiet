@@ -87,21 +87,27 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
             case 1: {
                 mHeader.setText("Today's Weight");
                 userInputLength = 3;
+                int par = (viewModelUser.getUser().getCurrent_wgt()).intValue();
+                mInput.setText(String.valueOf(par));
                 break;
             }
             //user wants to set weight goal
             case 2: {
                 mHeader.setText("Weight Goal");
-                ((TextInputLayout) this.findViewById(R.id.txt_input_layout)).setHint("Enter Weight Goal");
+                //((TextInputLayout) this.findViewById(R.id.txt_input_layout)).setHint("Enter Weight Goal");
                 userInputLength = 3;
+                int par = (viewModelUser.getUser().getCurrent_wgt()).intValue();
+                mInput.setText(String.valueOf(par));
                 break;
             }
             //user wants to set calorie goal
             case 3: {
                 mHeader.setText("Calorie Goal");
                 mUserInputUnit.setText("Calories");
-                ((TextInputLayout) this.findViewById(R.id.txt_input_layout)).setHint("Enter Calorie Goal");
+                //((TextInputLayout) this.findViewById(R.id.txt_input_layout)).setHint("Enter Calorie Goal");
                 userInputLength = 5;
+                int par = (viewModelUser.getUser().getGoal_cals());
+                mInput.setText(String.valueOf(par));
                 break;
             }
         }
@@ -112,12 +118,19 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         mInput.setFilters(filters);
     }
 
+    /**
+     * Stop the dialog
+     */
     @Override
     protected void onStop() {
         super.onStop();
         dismiss();
     }
 
+    /**
+     * Controls the control of the dialog buttons
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 
@@ -138,7 +151,6 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
             }
 
             case R.id.iv_dialog_goals_accept: {
-                //todo need to determine best way to update user info. For now, no helper methods used here
 
                 if (mInput.getEditableText().toString().matches("")) {
                     onStop();
@@ -164,10 +176,14 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+    /**
+     * Arrow up control
+     */
     private void arrowUp() {
-        int num = 0;
+
+        int num = Integer.valueOf(mInput.getEditableText().toString());
         if (mInput.getEditableText().toString().matches("")) {
-            mInput.setText(String.valueOf(num));
+            mInput.setText("150");
         } else if (userInputLength == 5) {
             num = Integer.valueOf(mInput.getEditableText().toString());
             num++;
@@ -187,6 +203,9 @@ public class GoalsDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+    /**
+     * Arrow down control
+     */
     private void arrowDown() {
 
         int num = 0;

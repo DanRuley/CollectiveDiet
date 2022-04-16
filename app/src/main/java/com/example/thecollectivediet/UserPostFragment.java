@@ -40,7 +40,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 //import java.io.InputStream;
 
-
+/**
+ * This will control the layout that will allow users to create
+ * posts to be shown in the SharedFragment.
+ */
 public class UserPostFragment extends Fragment implements View.OnClickListener {
 
     //Elements
@@ -162,6 +165,9 @@ public class UserPostFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Brings up grid view that will be populated with images from the user's device.
+     */
     private void setupGridView() {
         Log.d(TAG, "setting up grid view");
 

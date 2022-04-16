@@ -16,6 +16,9 @@ import com.example.thecollectivediet.R;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Sets up convenient way to choose Date
+ */
 public class DatePickerDialog extends Dialog {
 
     DatePicker datePicker;
