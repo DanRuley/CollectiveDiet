@@ -58,6 +58,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:background="@drawable/gradient_animation_today"
+                android:textSize="20sp"
+                android:hint="Enter comment..."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/iv_post_image"
                 app:layout_constraintRight_toRightOf="parent"
@@ -94,7 +96,7 @@
         android:layout_margin="15dp"
         android:horizontalSpacing="1dp"
         android:maxWidth="300dp"
-        android:maxHeight="300in"
+        
         android:numColumns="3"
         android:verticalSpacing="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
