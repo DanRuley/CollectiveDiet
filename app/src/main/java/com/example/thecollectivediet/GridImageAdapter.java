@@ -13,9 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 //import com.android.volley.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -46,6 +49,16 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         ProgressBar progressBar;
     }
 
+//    @Override public void getView(int position, View convertView, ViewGroup parent) {
+//         ViewHolder view = (ViewHolder) convertView.getTag();
+//        if (view == null) {
+//            view = new ViewHolder();
+//        }
+//        String url = getItem(position);
+//
+//        Picasso.get().load(url).into(view);
+//    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
@@ -74,7 +87,11 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         ImageLoader imageLoader = ImageLoader.getInstance();
 
 
-        imageLoader.displayImage(append + imgURL , holder.image, new ImageLoadingListener() {
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                .considerExifParams(true)
+                .cacheOnDisk(true).imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2).build();
+
+        imageLoader.displayImage(append + imgURL , holder.image,options, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 if(holder.progressBar != null){

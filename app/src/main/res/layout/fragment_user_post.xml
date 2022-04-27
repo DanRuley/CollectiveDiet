@@ -57,6 +57,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="10dp"
                 android:background="@drawable/gradient_animation_today"
                 android:textSize="20sp"
                 android:hint="Enter comment..."
