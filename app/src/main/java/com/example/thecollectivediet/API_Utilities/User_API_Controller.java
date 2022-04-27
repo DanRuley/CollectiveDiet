@@ -11,6 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.thecollectivediet.JSON_Marshall_Objects.StatsUploadItem;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.JSON_Marshall_Objects.UserPostUploadItem;
 import com.example.thecollectivediet.JSON_Marshall_Objects.WeightUploadItem;
@@ -58,6 +59,44 @@ public class User_API_Controller {
                     listener.onError(error.getMessage());
                 });
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(stringRequest);
+    }
+
+    public static void getStats(Context ctx, @NonNull User user, String date, @NonNull VolleyResponseListener<StatsUploadItem[]> listener) {
+        String url = String.format(Locale.US, "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/getStats?uid=%s", user.getUser_id());
+
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        StatsUploadItem[] results = new StatsUploadItem[response.length()];
+
+                        for (int i = 0; i < response.length(); i++) {
+
+                            //parse json response to get date
+                            JSONObject statJson = (JSONObject) response.get(i);
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                            int calories = statJson.getInt("calories");
+                            int carbs = statJson.getInt("carbs");
+                            int fat = statJson.getInt("fat");
+                            String date1 = statJson.getString("log_date");
+//                            double wgt = statJson.getDouble("user_weight");
+//                            Date dt = formatter.parse(statJson.getString("log_date"));
+
+                            results[i] = new StatsUploadItem(calories, carbs, fat, user.getUser_id(), date1);
+                        }
+
+                        //The received array of weigh ins are the most current in descending order
+                        //so the array needs to be reversed.
+                        results = reverse(results);
+
+                        listener.onResponse(results);
+                    } catch (@NonNull JSONException | JsonSyntaxException e) {
+                        listener.onError(e.getMessage());
+                    }
+                },
+                error -> listener.onError(error.toString())
+        );
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
     /**
@@ -154,6 +193,36 @@ public class User_API_Controller {
         API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
     }
 
+    public static void pushStatsLogEntry(Context ctx, Float energy_kcal_100g, Float fat_100g, Float carbohydrates_100g, User user) {
+
+        String url = "https://k1gc92q8zk.execute-api.us-east-2.amazonaws.com/add_stats_log_item";
+
+        java.util.Date dts = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        StatsUploadItem toAdd = new StatsUploadItem( energy_kcal_100g.intValue(), carbohydrates_100g.intValue(), fat_100g.intValue(), user.getUser_id(), sdf.format(dts));
+
+        JSONObject statLogJSON = null;
+
+        try {
+           statLogJSON = new JSONObject(new Gson().toJson(toAdd, StatsUploadItem.class));
+        } catch (JSONException e) {
+            Log.d("stat log json parse", e.getMessage());
+        }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, statLogJSON,
+                response -> Log.d("success!", response.toString()), error -> Log.d("add stat log lambda", error.getMessage() == null ? "See AWS logs" : error.getMessage())) {
+            @NonNull
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        API_RequestSingleton.getInstance(ctx).addToRequestQueue(req);
+    }
     /**
      * Push today's weigh-in of the user to the database.
      * @param user Current user
@@ -298,6 +367,7 @@ public class User_API_Controller {
                                     postItem.getImage_key(),
                                     result -> {
 
+
                                         Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
 
                                     },
@@ -333,6 +403,25 @@ public class User_API_Controller {
             }
             return arr;
         }
+
+    /**
+     * GeeksforGeeks.com algorithm function swaps the array's first element with last
+     * element, second element with last second element and so on.
+     * @param arr
+     * @return reversed array.
+     */
+    private static StatsUploadItem[] reverse(StatsUploadItem[] arr)
+    {
+        int i;
+        StatsUploadItem t;
+        for (i = 0; i < arr.length / 2; i++) {
+            t = arr[i];
+            arr[i] = arr[arr.length - i - 1];
+            arr[arr.length - i - 1] = t;
+        }
+        return arr;
+    }
+
 
 
 }

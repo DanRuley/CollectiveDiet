@@ -59,6 +59,54 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="18dp"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:id="@+id/graph2"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:background="@drawable/gradient_background_today2"
+                android:orientation="vertical"
+
+                android:paddingTop="25dp">
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="18dp"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:id="@+id/graph3"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:background="@drawable/gradient_background_today2"
+                android:orientation="vertical"
+
+                android:paddingTop="25dp">
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="18dp"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:id="@+id/graph4"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:background="@drawable/gradient_background_today2"
+                android:orientation="vertical"
+
+                android:paddingTop="25dp">
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_calories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

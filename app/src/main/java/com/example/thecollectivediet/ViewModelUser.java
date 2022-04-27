@@ -13,6 +13,7 @@ import com.example.thecollectivediet.API_Utilities.FoodLog_API_Controller;
 import com.example.thecollectivediet.API_Utilities.User_API_Controller;
 import com.example.thecollectivediet.API_Utilities.VolleyResponseListener;
 import com.example.thecollectivediet.JSON_Marshall_Objects.FoodLogItemView;
+import com.example.thecollectivediet.JSON_Marshall_Objects.StatsUploadItem;
 import com.example.thecollectivediet.JSON_Marshall_Objects.User;
 import com.example.thecollectivediet.Me_Fragment_Components.Food_Logging_Editing.Converter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,6 +24,9 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -41,6 +45,9 @@ public class ViewModelUser extends AndroidViewModel {
     MutableLiveData<HashMap<String,List<FoodLogItemView>>> list = new MutableLiveData<>();
     private final MutableLiveData<User> userData = new MutableLiveData<User>();
     private final MutableLiveData<DataPoint[]> weights = new MutableLiveData<>();
+    private final MutableLiveData<DataPoint[]> calories = new MutableLiveData<>();
+    private final MutableLiveData<DataPoint[]> carbs = new MutableLiveData<>();
+    private final MutableLiveData<DataPoint[]> fat = new MutableLiveData<>();
     private final MutableLiveData<Float> calorieForToday = new MutableLiveData<Float>();
 
     private User user; //This user will have its data passed around the app via userData
@@ -91,6 +98,35 @@ public class ViewModelUser extends AndroidViewModel {
         });
     }
 
+    public void getStats(){
+
+        User_API_Controller.getStats(ctx, user, chosenDate, new VolleyResponseListener<StatsUploadItem[]>() {
+            @Override
+            public void onResponse(StatsUploadItem[] response) {
+
+                //stats.setValue(response);
+                setCalorieDataPoints(response);
+                setCarbsDataPoints(response);
+                setFatDataPoints(response);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
+    public MutableLiveData<DataPoint[]> getCalories(){
+        return calories;
+    }
+    public MutableLiveData<DataPoint[]> getCarbs(){
+        return carbs;
+    }
+    public MutableLiveData<DataPoint[]> getFat(){
+        return fat;
+    }
+
     public MutableLiveData<DataPoint[]> getWeights(){
         return weights;
     }
@@ -130,6 +166,7 @@ public class ViewModelUser extends AndroidViewModel {
             public void onResponse(User user) {
                 setUser(user);
                 getWeighIns();
+                getStats();
                 pullMealsData(mainActivity, user);
                // commitFragmentTransaction(MainActivity.this, R.id.fragmentHolder, new MeTabLayoutFragment());
             }
@@ -235,5 +272,59 @@ public class ViewModelUser extends AndroidViewModel {
 
     public void setUpdateFlag(int updateFlag) {
         this.updateFlag = updateFlag;
+    }
+
+    private void setCalorieDataPoints(StatsUploadItem[] response){
+
+        DataPoint[] dp = new DataPoint[response.length];
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        for(int i = 0; i < response.length; i++){
+            Date dt = null;
+            try {
+                dt = formatter.parse(response[i].getLog_date());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dp[i] = new DataPoint(dt, response[i].getCalories());
+        }
+
+        calories.setValue(dp);
+    }
+
+    private void setCarbsDataPoints(StatsUploadItem[] response){
+
+        DataPoint[] dp = new DataPoint[response.length];
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        for(int i = 0; i < response.length; i++){
+            Date dt = null;
+            try {
+                dt = formatter.parse(response[i].getLog_date());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dp[i] = new DataPoint(dt, response[i].getCarbs());
+        }
+
+        carbs.setValue(dp);
+    }
+
+    private void setFatDataPoints(StatsUploadItem[] response){
+
+        DataPoint[] dp = new DataPoint[response.length];
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        for(int i = 0; i < response.length; i++){
+            Date dt = null;
+            try {
+                dt = formatter.parse(response[i].getLog_date());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dp[i] = new DataPoint(dt, response[i].getFat());
+        }
+
+        fat.setValue(dp);
     }
 }

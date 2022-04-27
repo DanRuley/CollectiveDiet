@@ -55,8 +55,19 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     //graph elements
     CustomGraphView gg;
+    CustomGraphView calsGraph;
+    CustomGraphView carbsGraph;
+    CustomGraphView fatGraph;
+
     LinearLayout graphContainer;
+    LinearLayout graphContainer2;
+    LinearLayout graphContainer3;
+    LinearLayout graphContainer4;
+
     LineGraphSeries<DataPoint> weightSeries;
+    LineGraphSeries<DataPoint> caloriesSeries;
+    LineGraphSeries<DataPoint> carbsSeries;
+    LineGraphSeries<DataPoint> fatSeries;
 
     ViewModelUser viewModelUser;
 
@@ -82,8 +93,14 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         mProfilePic.setOnClickListener(this);
 
         graphContainer = v.findViewById(R.id.graph);
+        graphContainer2 = v.findViewById(R.id.graph2);
+        graphContainer3 = v.findViewById(R.id.graph3);
+        graphContainer4 = v.findViewById(R.id.graph4);
 
         weightSeries = new LineGraphSeries<DataPoint>();
+        caloriesSeries = new LineGraphSeries<DataPoint>();
+        carbsSeries = new LineGraphSeries<DataPoint>();
+        fatSeries = new LineGraphSeries<DataPoint>();
 
         //display pic
         profilePicPath = prefs.getString("profile_pic", null);
@@ -102,6 +119,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         //set the observer to get info for weights created in User repository
         viewModelUser.getCals().observe(getViewLifecycleOwner(), todayObserver);
+
+        viewModelUser.getCalories().observe(getViewLifecycleOwner(), caloriesObserver);
+        viewModelUser.getCarbs().observe(getViewLifecycleOwner(), carbsObserver);
+        viewModelUser.getFat().observe(getViewLifecycleOwner(), fatObserver);
 
         //hook elements
         mTodaysCalories = v.findViewById(R.id.tv_today_frag_calories);
@@ -180,11 +201,95 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
                 gg = new CustomGraphView(requireActivity());
 
-                gg.myInit(w[0].getX(), w[w.length - 1].getX(), minWgt, maxWgt);
+                gg.myInit(w[0].getX(), w[w.length - 1].getX(), minWgt, maxWgt, "Weight");
                 gg.addSeries(weightSeries);
                 graphContainer.addView(gg);
             }
             }
+
+    };
+
+    final Observer<DataPoint[]> caloriesObserver = new Observer<DataPoint[]>() {
+        @Override
+        public void onChanged(DataPoint[] w) {
+            if (w != null) {
+
+                double minWgt, maxWgt;
+                minWgt = maxWgt = w[0].getY();
+                for (DataPoint dp : w) {
+                    minWgt = Math.min(minWgt, dp.getY());
+                    maxWgt = Math.max(maxWgt, dp.getY());
+                }
+
+                caloriesSeries = new LineGraphSeries<>(w);
+                caloriesSeries.setAnimated(true);
+                caloriesSeries.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                caloriesSeries.setDrawBackground(true);
+
+
+                calsGraph = new CustomGraphView(requireActivity());
+
+                calsGraph.myInit(w[0].getX(), w[w.length - 1].getX(), minWgt, maxWgt, "Calories");
+                calsGraph.addSeries(caloriesSeries);
+                graphContainer2.addView(calsGraph);
+            }
+        }
+
+    };
+
+    final Observer<DataPoint[]> carbsObserver = new Observer<DataPoint[]>() {
+        @Override
+        public void onChanged(DataPoint[] w) {
+            if (w != null) {
+
+                double minWgt, maxWgt;
+                minWgt = maxWgt = w[0].getY();
+                for (DataPoint dp : w) {
+                    minWgt = Math.min(minWgt, dp.getY());
+                    maxWgt = Math.max(maxWgt, dp.getY());
+                }
+
+                carbsSeries = new LineGraphSeries<>(w);
+                carbsSeries.setAnimated(true);
+                carbsSeries.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                carbsSeries.setDrawBackground(true);
+
+
+                carbsGraph = new CustomGraphView(requireActivity());
+
+                carbsGraph.myInit(w[0].getX(), w[w.length - 1].getX(), minWgt, maxWgt, "Carbs");
+                carbsGraph.addSeries(carbsSeries);
+                graphContainer3.addView(carbsGraph);
+            }
+        }
+
+    };
+
+    final Observer<DataPoint[]> fatObserver = new Observer<DataPoint[]>() {
+        @Override
+        public void onChanged(DataPoint[] w) {
+            if (w != null) {
+
+                double minWgt, maxWgt;
+                minWgt = maxWgt = w[0].getY();
+                for (DataPoint dp : w) {
+                    minWgt = Math.min(minWgt, dp.getY());
+                    maxWgt = Math.max(maxWgt, dp.getY());
+                }
+
+                fatSeries = new LineGraphSeries<>(w);
+                fatSeries.setAnimated(true);
+                fatSeries.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                fatSeries.setDrawBackground(true);
+
+
+                fatGraph = new CustomGraphView(requireActivity());
+
+                fatGraph.myInit(w[0].getX(), w[w.length - 1].getX(), minWgt, maxWgt, "Fats");
+                fatGraph.addSeries(fatSeries);
+                graphContainer4.addView(fatGraph);
+            }
+        }
 
     };
 
@@ -272,9 +377,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
             super(context, attrs, defStyle);
         }
 
-        public void myInit(double minX, double maxX, double minY, double maxY) {
+        public void myInit(double minX, double maxX, double minY, double maxY, String type) {
             super.init();
-            setTitle("My Weight Graph");
+            setTitle("My " + type + " Graph");
             getGridLabelRenderer().setHorizontalAxisTitle("Date");
             getGridLabelRenderer().setVerticalAxisTitle("Weight");
             getGridLabelRenderer().setPadding(50);
